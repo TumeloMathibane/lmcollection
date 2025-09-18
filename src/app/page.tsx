@@ -1,16 +1,11 @@
 import Link from "next/link";
 import Image from "next/image";
 import Categories from "./ui/Categories";
-import SeedBtn from "./ui/SeedButton";
 import ProductList from "./ui/products/ProductList";
-import { Suspense } from "react";
 
 export default function Home() {
   return (
     <div className="font-sans flex justify-center min-h-fit">
-      <div className="fixed bottom-5 right-5 z-100">
-        <SeedBtn />
-      </div>
       <main className="container space-y-10">
         <section className="w-full min-h-[16em] lg:min-h-screen bg-[url('/images/ali-pazani-3w14X-Yxffk-unsplash.jpg')] bg-cover bg-no-repeat flex items-center-safe justify-around mask-alpha mask-b-from-70% md:mask-b-from-80% lg:mask-l-from-90% lg:mask-r-from-90%">
           <Link
