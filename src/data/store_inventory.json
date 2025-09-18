@@ -1,0 +1,777 @@
+[
+  {
+    "id": 1,
+    "itemCode": "WIG001",
+    "name": "Premium Human Hair Lace Front Wig",
+    "price": 299.99,
+    "discount": 15,
+    "shortDescription": "Natural-looking 100% human hair lace front wig with pre-plucked hairline",
+    "availableSizes": ["Small", "Medium", "Large"],
+    "availableQuantity": 24,
+    "category": "Hair",
+    "image": "https://example.com/images/lace-front-wig.jpg",
+    "additional_options": {
+      "color_options": [
+        "Jet Black",
+        "Dark Brown",
+        "Light Brown",
+        "Blonde",
+        "Auburn"
+      ]
+    }
+  },
+  {
+    "id": 2,
+    "itemCode": "EXT001",
+    "name": "Clip-in Hair Extensions Set",
+    "price": 89.99,
+    "discount": 20,
+    "shortDescription": "7-piece clip-in hair extensions made from premium synthetic fibers",
+    "availableSizes": ["16 inch", "18 inch", "20 inch", "22 inch"],
+    "availableQuantity": 45,
+    "category": "Hair",
+    "image": "https://example.com/images/clip-extensions.jpg",
+    "additional_options": {
+      "color_options": ["Black", "Brown", "Blonde", "Red", "Ombre"]
+    }
+  },
+  {
+    "id": 3,
+    "itemCode": "HAIR001",
+    "name": "Argan Oil Hair Treatment Serum",
+    "price": 34.99,
+    "discount": 10,
+    "shortDescription": "Intensive repair serum with pure argan oil for damaged and dry hair",
+    "availableSizes": ["50ml", "100ml"],
+    "availableQuantity": 78,
+    "category": "Hair",
+    "image": "https://example.com/images/argan-oil-serum.jpg",
+    "additional_options": {
+      "hair_type": ["All Hair Types", "Damaged Hair", "Dry Hair"]
+    }
+  },
+  {
+    "id": 4,
+    "itemCode": "BAND001",
+    "name": "Silk Hair Scrunchies Pack",
+    "price": 19.99,
+    "discount": 0,
+    "shortDescription": "Set of 6 mulberry silk scrunchies to prevent hair breakage and frizz",
+    "availableSizes": ["One Size"],
+    "availableQuantity": 156,
+    "category": "Hair",
+    "image": "https://example.com/images/silk-scrunchies.jpg",
+    "additional_options": {
+      "color_options": [
+        "Pastel Mix",
+        "Earth Tones",
+        "Bright Colors",
+        "Neutrals"
+      ]
+    }
+  },
+  {
+    "id": 5,
+    "itemCode": "HEAT001",
+    "name": "Ceramic Hair Straightener",
+    "price": 79.99,
+    "discount": 25,
+    "shortDescription": "Professional ceramic flat iron with adjustable temperature settings",
+    "availableSizes": ["One Size"],
+    "availableQuantity": 32,
+    "category": "Hair",
+    "image": "https://example.com/images/hair-straightener.jpg",
+    "additional_options": {
+      "temperature_range": ["120°F - 450°F"]
+    }
+  },
+  {
+    "id": 6,
+    "itemCode": "WASH001",
+    "name": "Smart Front-Load Washing Machine",
+    "price": 849.99,
+    "discount": 12,
+    "shortDescription": "Energy-efficient 7kg front-load washer with WiFi connectivity and steam cleaning",
+    "availableSizes": ["Standard"],
+    "availableQuantity": 15,
+    "category": "Appliances",
+    "image": "https://example.com/images/washing-machine.jpg",
+    "additional_options": {
+      "capacity": ["7kg"]
+    }
+  },
+  {
+    "id": 7,
+    "itemCode": "FRIDGE001",
+    "name": "Double Door Refrigerator",
+    "price": 1299.99,
+    "discount": 18,
+    "shortDescription": "528L double door refrigerator with inverter compressor and frost-free technology",
+    "availableSizes": ["Standard"],
+    "availableQuantity": 8,
+    "category": "Appliances",
+    "image": "https://example.com/images/refrigerator.jpg",
+    "additional_options": {
+      "capacity": ["528L"]
+    }
+  },
+  {
+    "id": 8,
+    "itemCode": "MICRO001",
+    "name": "Convection Microwave Oven",
+    "price": 249.99,
+    "discount": 8,
+    "shortDescription": "25L convection microwave with grill function and pre-set cooking modes",
+    "availableSizes": ["Standard"],
+    "availableQuantity": 22,
+    "category": "Appliances",
+    "image": "https://example.com/images/microwave-oven.jpg",
+    "additional_options": {
+      "capacity": ["25L"]
+    }
+  },
+  {
+    "id": 9,
+    "itemCode": "LAP001",
+    "name": "Gaming Laptop Pro X1",
+    "price": 1799.99,
+    "discount": 10,
+    "shortDescription": "High-performance gaming laptop with RTX 4060, Intel i7, 16GB RAM, 1TB SSD",
+    "availableSizes": ["15.6 inch"],
+    "availableQuantity": 12,
+    "category": "Laptops",
+    "image": "https://example.com/images/gaming-laptop.jpg",
+    "additional_options": {
+      "specifications": [
+        "Intel i7-12700H",
+        "16GB DDR4",
+        "1TB NVMe SSD",
+        "RTX 4060"
+      ]
+    }
+  },
+  {
+    "id": 10,
+    "itemCode": "LAP002",
+    "name": "Business Ultrabook Elite",
+    "price": 1299.99,
+    "discount": 15,
+    "shortDescription": "Lightweight business laptop with Intel i5, 8GB RAM, 512GB SSD, 14-inch display",
+    "availableSizes": ["14 inch"],
+    "availableQuantity": 18,
+    "category": "Laptops",
+    "image": "https://example.com/images/business-laptop.jpg",
+    "additional_options": {
+      "specifications": [
+        "Intel i5-1235U",
+        "8GB DDR4",
+        "512GB SSD",
+        "Intel Iris Xe"
+      ]
+    }
+  },
+  {
+    "id": 11,
+    "itemCode": "LAP003",
+    "name": "Student Laptop Budget",
+    "price": 599.99,
+    "discount": 5,
+    "shortDescription": "Affordable laptop for students with AMD Ryzen 5, 8GB RAM, 256GB SSD",
+    "availableSizes": ["15.6 inch"],
+    "availableQuantity": 28,
+    "category": "Laptops",
+    "image": "https://example.com/images/student-laptop.jpg",
+    "additional_options": {
+      "specifications": [
+        "AMD Ryzen 5 5500U",
+        "8GB DDR4",
+        "256GB SSD",
+        "AMD Radeon"
+      ]
+    }
+  },
+  {
+    "id": 12,
+    "itemCode": "LAP004",
+    "name": "Creative Workstation Laptop",
+    "price": 2299.99,
+    "discount": 8,
+    "shortDescription": "Professional laptop for creators with i9 processor, 32GB RAM, RTX 4070",
+    "availableSizes": ["16 inch"],
+    "availableQuantity": 6,
+    "category": "Laptops",
+    "image": "https://example.com/images/creative-laptop.jpg",
+    "additional_options": {
+      "specifications": ["Intel i9-12900H", "32GB DDR5", "1TB SSD", "RTX 4070"]
+    }
+  },
+  {
+    "id": 13,
+    "itemCode": "ACC001",
+    "name": "Wireless Gaming Mouse",
+    "price": 89.99,
+    "discount": 12,
+    "shortDescription": "High-precision wireless gaming mouse with RGB lighting and programmable buttons",
+    "availableSizes": ["One Size"],
+    "availableQuantity": 45,
+    "category": "Accessories",
+    "image": "https://example.com/images/gaming-mouse.jpg",
+    "additional_options": {
+      "connectivity": ["Wireless 2.4GHz", "Bluetooth", "USB-C"]
+    }
+  },
+  {
+    "id": 14,
+    "itemCode": "ACC002",
+    "name": "Laptop Cooling Pad",
+    "price": 39.99,
+    "discount": 20,
+    "shortDescription": "Adjustable cooling pad with 6 quiet fans for laptops up to 17 inches",
+    "availableSizes": ["15-17 inch"],
+    "availableQuantity": 67,
+    "category": "Accessories",
+    "image": "https://example.com/images/cooling-pad.jpg",
+    "additional_options": {
+      "compatibility": ["Universal"]
+    }
+  },
+  {
+    "id": 15,
+    "itemCode": "PHONE001",
+    "name": "Smartphone Pro Max 256GB",
+    "price": 1099.99,
+    "discount": 5,
+    "shortDescription": "Latest flagship smartphone with triple camera system and 256GB storage",
+    "availableSizes": ["6.7 inch"],
+    "availableQuantity": 34,
+    "category": "Cellphones",
+    "image": "https://example.com/images/smartphone-pro.jpg",
+    "additional_options": {
+      "storage_options": ["128GB", "256GB", "512GB"]
+    }
+  },
+  {
+    "id": 16,
+    "itemCode": "PHONE002",
+    "name": "Budget Android Phone",
+    "price": 299.99,
+    "discount": 10,
+    "shortDescription": "Reliable Android phone with dual camera, 128GB storage, and long battery life",
+    "availableSizes": ["6.1 inch"],
+    "availableQuantity": 52,
+    "category": "Cellphones",
+    "image": "https://example.com/images/budget-phone.jpg",
+    "additional_options": {
+      "storage_options": ["64GB", "128GB"]
+    }
+  },
+  {
+    "id": 17,
+    "itemCode": "PACC001",
+    "name": "Wireless Phone Charger Stand",
+    "price": 49.99,
+    "discount": 15,
+    "shortDescription": "Fast wireless charging stand compatible with all Qi-enabled devices",
+    "availableSizes": ["One Size"],
+    "availableQuantity": 89,
+    "category": "Accessories",
+    "image": "https://example.com/images/wireless-charger.jpg",
+    "additional_options": {
+      "compatibility": ["Universal Qi-enabled"]
+    }
+  },
+  {
+    "id": 18,
+    "itemCode": "PACC002",
+    "name": "Rugged Phone Case",
+    "price": 29.99,
+    "discount": 8,
+    "shortDescription": "Military-grade protection case with screen protector and belt clip",
+    "availableSizes": ["Multiple Phone Models"],
+    "availableQuantity": 143,
+    "category": "Accessories",
+    "image": "https://example.com/images/rugged-case.jpg",
+    "additional_options": {
+      "phone_compatibility": [
+        "iPhone 14/15",
+        "Samsung Galaxy S23/S24",
+        "Google Pixel 7/8"
+      ]
+    }
+  },
+  {
+    "id": 19,
+    "itemCode": "PACC003",
+    "name": "Bluetooth Earbuds Pro",
+    "price": 179.99,
+    "discount": 22,
+    "shortDescription": "Premium wireless earbuds with active noise cancellation and 30-hour battery",
+    "availableSizes": ["One Size"],
+    "availableQuantity": 76,
+    "category": "Accessories",
+    "image": "https://example.com/images/bluetooth-earbuds.jpg",
+    "additional_options": {
+      "features": ["ANC", "Wireless Charging Case", "Water Resistant"]
+    }
+  },
+  {
+    "id": 20,
+    "itemCode": "WIG002",
+    "name": "Synthetic Bob Wig",
+    "price": 45.99,
+    "discount": 30,
+    "shortDescription": "Trendy synthetic bob wig with heat-resistant fibers and natural parting",
+    "availableSizes": ["One Size"],
+    "availableQuantity": 38,
+    "category": "Hair",
+    "image": "https://example.com/images/bob-wig.jpg",
+    "additional_options": {
+      "color_options": ["Black", "Brown", "Blonde", "Silver", "Pink"]
+    }
+  },
+  {
+    "id": 21,
+    "itemCode": "HAIR002",
+    "name": "Keratin Hair Mask",
+    "price": 28.99,
+    "discount": 0,
+    "shortDescription": "Deep conditioning keratin treatment mask for smooth and shiny hair",
+    "availableSizes": ["200ml", "500ml"],
+    "availableQuantity": 92,
+    "category": "Hair",
+    "image": "https://example.com/images/keratin-mask.jpg",
+    "additional_options": {
+      "hair_type": ["Frizzy Hair", "Damaged Hair", "All Hair Types"]
+    }
+  },
+  {
+    "id": 22,
+    "itemCode": "BLOW001",
+    "name": "Ionic Hair Dryer",
+    "price": 129.99,
+    "discount": 18,
+    "shortDescription": "Professional ionic hair dryer with multiple heat settings and diffuser attachment",
+    "availableSizes": ["One Size"],
+    "availableQuantity": 25,
+    "category": "Hair",
+    "image": "https://example.com/images/ionic-dryer.jpg",
+    "additional_options": {
+      "wattage": ["1800W"]
+    }
+  },
+  {
+    "id": 23,
+    "itemCode": "AIR001",
+    "name": "Smart Air Purifier",
+    "price": 399.99,
+    "discount": 15,
+    "shortDescription": "HEPA air purifier with smart app control and real-time air quality monitoring",
+    "availableSizes": ["Standard"],
+    "availableQuantity": 19,
+    "category": "Appliances",
+    "image": "https://example.com/images/air-purifier.jpg",
+    "additional_options": {
+      "coverage": ["450 sq ft"]
+    }
+  },
+  {
+    "id": 24,
+    "itemCode": "VAC001",
+    "name": "Cordless Stick Vacuum",
+    "price": 279.99,
+    "discount": 12,
+    "shortDescription": "Lightweight cordless vacuum with multiple attachments and 60-minute runtime",
+    "availableSizes": ["Standard"],
+    "availableQuantity": 31,
+    "category": "Appliances",
+    "image": "https://example.com/images/stick-vacuum.jpg",
+    "additional_options": {
+      "battery_life": ["60 minutes"]
+    }
+  },
+  {
+    "id": 25,
+    "itemCode": "BLEND001",
+    "name": "High-Speed Blender",
+    "price": 159.99,
+    "discount": 20,
+    "shortDescription": "1400W blender with variable speeds and pre-programmed settings for smoothies",
+    "availableSizes": ["64oz"],
+    "availableQuantity": 14,
+    "category": "Appliances",
+    "image": "https://example.com/images/blender.jpg",
+    "additional_options": {
+      "power": ["1400W"]
+    }
+  },
+  {
+    "id": 26,
+    "itemCode": "LAP005",
+    "name": "2-in-1 Convertible Laptop",
+    "price": 899.99,
+    "discount": 7,
+    "shortDescription": "Versatile 2-in-1 laptop with touchscreen, Intel i5, 12GB RAM, 512GB SSD",
+    "availableSizes": ["13.3 inch"],
+    "availableQuantity": 21,
+    "category": "Laptops",
+    "image": "https://example.com/images/convertible-laptop.jpg",
+    "additional_options": {
+      "specifications": [
+        "Intel i5-1135G7",
+        "12GB DDR4",
+        "512GB SSD",
+        "Touchscreen"
+      ]
+    }
+  },
+  {
+    "id": 27,
+    "itemCode": "LAP006",
+    "name": "Chromebook Essential",
+    "price": 349.99,
+    "discount": 25,
+    "shortDescription": "Lightweight Chromebook perfect for web browsing and basic tasks",
+    "availableSizes": ["14 inch"],
+    "availableQuantity": 42,
+    "category": "Laptops",
+    "image": "https://example.com/images/chromebook.jpg",
+    "additional_options": {
+      "specifications": [
+        "MediaTek MT8183",
+        "4GB LPDDR4X",
+        "64GB eMMC",
+        "Chrome OS"
+      ]
+    }
+  },
+  {
+    "id": 28,
+    "itemCode": "ACC003",
+    "name": "Mechanical Keyboard RGB",
+    "price": 149.99,
+    "discount": 10,
+    "shortDescription": "Mechanical gaming keyboard with RGB backlighting and programmable macros",
+    "availableSizes": ["Full Size", "Compact"],
+    "availableQuantity": 33,
+    "category": "Accessories",
+    "image": "https://example.com/images/mechanical-keyboard.jpg",
+    "additional_options": {
+      "switch_type": ["Blue", "Red", "Brown"]
+    }
+  },
+  {
+    "id": 29,
+    "itemCode": "ACC004",
+    "name": "Portable Monitor",
+    "price": 249.99,
+    "discount": 8,
+    "shortDescription": "15.6-inch portable USB-C monitor for dual-screen productivity on the go",
+    "availableSizes": ["15.6 inch"],
+    "availableQuantity": 16,
+    "category": "Accessories",
+    "image": "https://example.com/images/portable-monitor.jpg",
+    "additional_options": {
+      "resolution": ["1920x1080", "2560x1440"]
+    }
+  },
+  {
+    "id": 30,
+    "itemCode": "ACC005",
+    "name": "Laptop Stand Adjustable",
+    "price": 59.99,
+    "discount": 15,
+    "shortDescription": "Ergonomic aluminum laptop stand with adjustable height and angle",
+    "availableSizes": ["Universal"],
+    "availableQuantity": 58,
+    "category": "Accessories",
+    "image": "https://example.com/images/laptop-stand.jpg",
+    "additional_options": {
+      "material": ["Aluminum"]
+    }
+  },
+  {
+    "id": 31,
+    "itemCode": "PHONE003",
+    "name": "5G Smartphone Mid-Range",
+    "price": 649.99,
+    "discount": 12,
+    "shortDescription": "5G enabled smartphone with quad camera system and 128GB storage",
+    "availableSizes": ["6.4 inch"],
+    "availableQuantity": 47,
+    "category": "Cellphones",
+    "image": "https://example.com/images/5g-phone.jpg",
+    "additional_options": {
+      "storage_options": ["128GB", "256GB"]
+    }
+  },
+  {
+    "id": 32,
+    "itemCode": "PHONE004",
+    "name": "Senior-Friendly Smartphone",
+    "price": 199.99,
+    "discount": 5,
+    "shortDescription": "Easy-to-use smartphone with large buttons, loud speaker, and emergency features",
+    "availableSizes": ["5.5 inch"],
+    "availableQuantity": 29,
+    "category": "Cellphones",
+    "image": "https://example.com/images/senior-phone.jpg",
+    "additional_options": {
+      "features": ["Large Icons", "Emergency Button", "Loud Speaker"]
+    }
+  },
+  {
+    "id": 33,
+    "itemCode": "PACC004",
+    "name": "Car Phone Mount",
+    "price": 24.99,
+    "discount": 20,
+    "shortDescription": "Magnetic car mount with 360-degree rotation and strong suction cup",
+    "availableSizes": ["Universal"],
+    "availableQuantity": 125,
+    "category": "Accessories",
+    "image": "https://example.com/images/car-mount.jpg",
+    "additional_options": {
+      "mounting_type": ["Dashboard", "Windshield", "Vent"]
+    }
+  },
+  {
+    "id": 34,
+    "itemCode": "PACC005",
+    "name": "Power Bank 20000mAh",
+    "price": 39.99,
+    "discount": 18,
+    "shortDescription": "High-capacity power bank with fast charging and multiple USB ports",
+    "availableSizes": ["Standard"],
+    "availableQuantity": 84,
+    "category": "Accessories",
+    "image": "https://example.com/images/power-bank.jpg",
+    "additional_options": {
+      "capacity": ["20000mAh"]
+    }
+  },
+  {
+    "id": 35,
+    "itemCode": "PACC006",
+    "name": "Phone Camera Lens Kit",
+    "price": 79.99,
+    "discount": 25,
+    "shortDescription": "Professional lens attachment kit with wide-angle, macro, and fisheye lenses",
+    "availableSizes": ["Universal"],
+    "availableQuantity": 41,
+    "category": "Accessories",
+    "image": "https://example.com/images/lens-kit.jpg",
+    "additional_options": {
+      "lens_types": ["Wide-angle", "Macro", "Fisheye", "Telephoto"]
+    }
+  },
+  {
+    "id": 36,
+    "itemCode": "TAB001",
+    "name": "10-inch Android Tablet",
+    "price": 249.99,
+    "discount": 10,
+    "shortDescription": "Versatile Android tablet with HD display, 64GB storage, and long battery life",
+    "availableSizes": ["10.1 inch"],
+    "availableQuantity": 35,
+    "category": "Accessories",
+    "image": "https://example.com/images/android-tablet.jpg",
+    "additional_options": {
+      "storage_options": ["64GB", "128GB"]
+    }
+  },
+  {
+    "id": 37,
+    "itemCode": "TAB002",
+    "name": "iPad Pro Alternative",
+    "price": 599.99,
+    "discount": 8,
+    "shortDescription": "Premium tablet with stylus support, 11-inch display, and desktop-class performance",
+    "availableSizes": ["11 inch"],
+    "availableQuantity": 18,
+    "category": "Accessories",
+    "image": "https://example.com/images/pro-tablet.jpg",
+    "additional_options": {
+      "storage_options": ["128GB", "256GB", "512GB"]
+    }
+  },
+  {
+    "id": 38,
+    "itemCode": "WATCH001",
+    "name": "Fitness Smartwatch",
+    "price": 199.99,
+    "discount": 22,
+    "shortDescription": "Advanced fitness tracker with heart rate monitor, GPS, and 7-day battery",
+    "availableSizes": ["42mm", "46mm"],
+    "availableQuantity": 63,
+    "category": "Accessories",
+    "image": "https://example.com/images/fitness-watch.jpg",
+    "additional_options": {
+      "band_options": ["Silicone", "Nylon", "Leather"]
+    }
+  },
+  {
+    "id": 39,
+    "itemCode": "AUDIO001",
+    "name": "Over-Ear Noise Cancelling Headphones",
+    "price": 299.99,
+    "discount": 15,
+    "shortDescription": "Premium headphones with active noise cancellation and 30-hour battery life",
+    "availableSizes": ["One Size"],
+    "availableQuantity": 27,
+    "category": "Accessories",
+    "image": "https://example.com/images/noise-cancel-headphones.jpg",
+    "additional_options": {
+      "color_options": ["Black", "Silver", "Blue"]
+    }
+  },
+  {
+    "id": 40,
+    "itemCode": "GAME001",
+    "name": "Wireless Gaming Controller",
+    "price": 69.99,
+    "discount": 12,
+    "shortDescription": "Universal wireless controller compatible with PC, mobile, and console gaming",
+    "availableSizes": ["Standard"],
+    "availableQuantity": 54,
+    "category": "Accessories",
+    "image": "https://example.com/images/wireless-controller.jpg",
+    "additional_options": {
+      "compatibility": ["PC", "Android", "iOS", "Nintendo Switch"]
+    }
+  },
+  {
+    "id": 41,
+    "itemCode": "CAM001",
+    "name": "4K Action Camera",
+    "price": 179.99,
+    "discount": 20,
+    "shortDescription": "Waterproof 4K action camera with image stabilization and WiFi connectivity",
+    "availableSizes": ["Compact"],
+    "availableQuantity": 31,
+    "category": "Accessories",
+    "image": "https://example.com/images/action-camera.jpg",
+    "additional_options": {
+      "video_quality": ["4K@30fps", "1080p@60fps"]
+    }
+  },
+  {
+    "id": 42,
+    "itemCode": "SPEAK001",
+    "name": "Bluetooth Portable Speaker",
+    "price": 89.99,
+    "discount": 15,
+    "shortDescription": "Waterproof Bluetooth speaker with 360-degree sound and 24-hour battery",
+    "availableSizes": ["Medium"],
+    "availableQuantity": 72,
+    "category": "Accessories",
+    "image": "https://example.com/images/portable-speaker.jpg",
+    "additional_options": {
+      "features": ["Waterproof", "Voice Assistant", "Party Mode"]
+    }
+  },
+  {
+    "id": 43,
+    "itemCode": "CABLE001",
+    "name": "USB-C Cable 3-Pack",
+    "price": 19.99,
+    "discount": 25,
+    "shortDescription": "Fast charging USB-C cables in 3ft, 6ft, and 10ft lengths",
+    "availableSizes": ["3ft", "6ft", "10ft"],
+    "availableQuantity": 156,
+    "category": "Accessories",
+    "image": "https://example.com/images/usbc-cables.jpg",
+    "additional_options": {
+      "cable_type": ["USB-C to USB-C", "USB-A to USB-C"]
+    }
+  },
+  {
+    "id": 44,
+    "itemCode": "HUB001",
+    "name": "7-Port USB Hub",
+    "price": 34.99,
+    "discount": 8,
+    "shortDescription": "Powered USB hub with 7 ports including USB-C and fast charging capability",
+    "availableSizes": ["Desktop"],
+    "availableQuantity": 43,
+    "category": "Accessories",
+    "image": "https://example.com/images/usb-hub.jpg",
+    "additional_options": {
+      "port_types": ["USB 3.0", "USB-C", "Fast Charge"]
+    }
+  },
+  {
+    "id": 45,
+    "itemCode": "LIGHT001",
+    "name": "RGB LED Strip Lights",
+    "price": 29.99,
+    "discount": 30,
+    "shortDescription": "Smart RGB LED strips with app control and music sync, 16ft length",
+    "availableSizes": ["16ft", "32ft", "65ft"],
+    "availableQuantity": 89,
+    "category": "Accessories",
+    "image": "https://example.com/images/led-strips.jpg",
+    "additional_options": {
+      "features": ["App Control", "Music Sync", "Voice Control"]
+    }
+  },
+  {
+    "id": 46,
+    "itemCode": "SECURITY001",
+    "name": "WiFi Security Camera",
+    "price": 79.99,
+    "discount": 18,
+    "shortDescription": "1080p wireless security camera with night vision and motion detection",
+    "availableSizes": ["Indoor", "Outdoor"],
+    "availableQuantity": 37,
+    "category": "Accessories",
+    "image": "https://example.com/images/security-camera.jpg",
+    "additional_options": {
+      "features": ["Night Vision", "Motion Detection", "Two-Way Audio"]
+    }
+  },
+  {
+    "id": 47,
+    "itemCode": "DOCK001",
+    "name": "Laptop Docking Station",
+    "price": 149.99,
+    "discount": 10,
+    "shortDescription": "Universal USB-C docking station with dual monitor support and multiple ports",
+    "availableSizes": ["Standard"],
+    "availableQuantity": 24,
+    "category": "Accessories",
+    "image": "https://example.com/images/docking-station.jpg",
+    "additional_options": {
+      "ports": ["USB-C", "HDMI", "DisplayPort", "Ethernet", "Audio"]
+    }
+  },
+  {
+    "id": 48,
+    "itemCode": "STORAGE001",
+    "name": "External SSD 1TB",
+    "price": 119.99,
+    "discount": 22,
+    "shortDescription": "Portable external SSD with USB-C connectivity and 540MB/s transfer speed",
+    "availableSizes": ["500GB", "1TB", "2TB"],
+    "availableQuantity": 48,
+    "category": "Accessories",
+    "image": "https://example.com/images/external-ssd.jpg",
+    "additional_options": {
+      "interface": ["USB-C", "USB 3.2"]
+    }
+  },
+  {
+    "id": 49,
+    "itemCode": "ROUTER001",
+    "name": "WiFi 6 Mesh Router System",
+    "price": 199.99,
+    "discount": 15,
+    "shortDescription": "Dual-band mesh WiFi system covering up to 4000 sq ft with parental controls",
+    "availableSizes": ["2-Pack", "3-Pack"],
+    "availableQuantity": 19,
+    "category": "Accessories",
+    "image": "https://example.com/images/mesh-router.jpg",
+    "additional_options": {
+      "coverage": ["2500 sq ft", "4000 sq ft"]
+    }
+  }
+]
