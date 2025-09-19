@@ -1,9 +1,9 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
+import ImageWithFallback from "../ImageWithFallback";
 
 export default function ProductList({ count }: { count?: number }) {
   const _products = useQuery(api.products.get, { count: count });
@@ -21,13 +21,13 @@ export default function ProductList({ count }: { count?: number }) {
         <Link key={_id} href={`/collection/products/${_id}`}>
           <div className="w-48 md:w-60 lg:w-full bg-stone-100 shadow-sm md:shadow-md group hover:cursor-pointer rounded-xl overflow-hidden relative">
             <figure className="overflow-hidden flex items-center">
-              <Image
-                src={image}
-                alt={name}
-                width={500}
-                height={500}
-                className="transition-all duration-500 group-hover:scale-105 size-full"
-              />
+              <div className="transition-all duration-500 group-hover:scale-105 size-full">
+                <ImageWithFallback
+                  src={image}
+                  alt={name}
+                  fallbackSrc="https://placehold.jp/ffffff/595959/400x400.png?text=No%20Image&css=%7B%22border-radius%22%3A%2215px%22%2C%22background%22%3A%22%20-webkit-gradient(linear%2C%20left%20top%2C%20left%20bottom%2C%20from(%23666666)%2C%20to(%23cccccc))%22%7D"
+                />
+              </div>
             </figure>
             <div className="p-3 transition-all duration-300 ease-out lg:translate-y-[150%] lg:absolute bottom-0 left-0 right-0 group-hover:translate-0 lg:bg-stone-100">
               <h2 className="capitalize w-full text-md md:text-xl lg:text-base font-bold text-nowrap truncate">

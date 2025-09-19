@@ -1,19 +1,26 @@
-import Image from "next/image";
 import type { Product } from "@/app/collection/products/types";
 import { BiPlusCircle } from "react-icons/bi";
 import Link from "next/link";
+import ImageWithFallback from "../ImageWithFallback";
 
 export function ProductCard({ product }: { product: Product }) {
   return (
     <Link href={`/collection/products/${product._id}`} className="group">
       <div className="relative overflow-hidden rounded-md">
-        <Image
+        {/* <Image
           src={`${product.image.includes("example.com") ? `/category-img/${product.category}.jpg` : product.image}`}
           alt={product.name}
           width={500}
           height={500}
           className="w-full size-max object-cover object-top transition-all duration-500 group-hover:scale-105 origin-center"
-        />
+        /> */}
+        <div className="w-full size-max object-cover object-top transition-all duration-500 group-hover:scale-105 origin-center">
+          <ImageWithFallback
+            src={product.image}
+            alt={product.name}
+            fallbackSrc="https://placehold.jp/ffffff/595959/500x500.png?text=No%20Image&css=%7B%22border-radius%22%3A%2215px%22%2C%22background%22%3A%22%20-webkit-gradient(linear%2C%20left%20top%2C%20left%20bottom%2C%20from(%23666666)%2C%20to(%23cccccc))%22%7D"
+          />
+        </div>
         <div className="add-to-cart absolute top-0 left-0 right-0 w-full h-full">
           <BiPlusCircle
             size={"2em"}
