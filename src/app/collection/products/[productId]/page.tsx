@@ -6,10 +6,10 @@ import { useParams } from "next/navigation";
 import { BiHeart } from "react-icons/bi";
 import { useState } from "react";
 import Loading from "./loading";
-import Image from "next/image";
 import ProductList from "@/app/ui/products/ProductList";
 import QuantityInput from "@/app/ui/products/QuantityInput";
 import SizeInput from "@/app/ui/products/SizeInput";
+import ImageWithFallback from "@/app/ui/ImageWithFallback";
 
 export default function Product() {
   const { productId } = useParams();
@@ -19,7 +19,7 @@ export default function Product() {
   });
 
   const [quantity, setQuantity] = useState<number>(1);
-  const [size, setSize] = useState<string | number | undefined>("");
+  const [size, setSize] = useState<string | undefined>("");
 
   if (product === undefined) return <Loading />;
 
@@ -28,13 +28,13 @@ export default function Product() {
       <div className="space-y-2 md:flex md:space-x-4 xl:space-x-6">
         <section className="space-y-2 md:w-1/2">
           <div className="overflow-hidden rounded-2xl flex justify-items-center-safe md:shadow-lg xl:size-100">
-            <Image
-              src={product?.image ?? ""}
-              alt={product?.name ?? ""}
-              width={500}
-              height={500}
-              className="object-fill object-center"
-            />
+            <div className="object-fill object-center">
+              <ImageWithFallback
+                src={product?.image ?? undefined}
+                alt={product?.name ?? undefined}
+                fallbackSrc="https://placehold.jp/ffffff/595959/400x500.png?text=No%20Image&css=%7B%22border-radius%22%3A%2215px%22%2C%22background%22%3A%22%20-webkit-gradient(linear%2C%20left%20top%2C%20left%20bottom%2C%20from(%23666666)%2C%20to(%23cccccc))%22%7D"
+              />
+            </div>
           </div>
           <div className="border border-stone-900 px-4 w-fit rounded-full">
             <p className="capitalize">{product?.category}</p>
@@ -73,9 +73,7 @@ export default function Product() {
                 <SizeInput
                   size={size}
                   availableSizes={product?.availableSizes}
-                  onSizeChange={(value: string | number | undefined) =>
-                    setSize(value)
-                  }
+                  onSizeChange={(value: string | undefined) => setSize(value)}
                 />
               </div>
             </div>
