@@ -37,7 +37,6 @@ export default function Product() {
                   <ImageWithFallback
                     src={product?.image ?? undefined}
                     alt={product?.name ?? undefined}
-                    fallbackSrc="https://placehold.jp/ffffff/595959/400x500.png?text=No%20Image&css=%7B%22border-radius%22%3A%2215px%22%2C%22background%22%3A%22%20-webkit-gradient(linear%2C%20left%20top%2C%20left%20bottom%2C%20from(%23666666)%2C%20to(%23cccccc))%22%7D"
                   />
                 </div>
               </div>
@@ -97,7 +96,15 @@ export default function Product() {
           </div>
           <section className="w-full flex items-center-safe space-x-2 py-2 md:w-1/2">
             <button
-              onClick={() => addItem(product?._id, size, quantity)}
+              onClick={() =>
+                addItem(
+                  product?._id,
+                  product?.name,
+                  product?.image,
+                  size,
+                  quantity
+                )
+              }
               className="py-1 px-4 bg-stone-900 text-stone-200 rounded-full w-full md:py-2 xl:py-3"
             >
               Add to cart
