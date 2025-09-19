@@ -7,8 +7,11 @@ import logo from "../../../public/logos/Liphiwe_business_logo_white.svg";
 import { useEffect, useState } from "react";
 import { BiSearch, BiShoppingBag, BiMenu, BiX } from "react-icons/bi";
 import { usePathname } from "next/navigation";
+import { useCartStore } from "@/stores/cart";
 
 export default function Header() {
+  const { getCartTotal } = useCartStore();
+
   const [navOpen, setNavOpen] = useState(false);
   const [searchWidgetOpen, setSearchWidgetOpen] = useState(false);
 
@@ -90,13 +93,18 @@ export default function Header() {
               className="size-15 md:size-30 xl:size-25"
             />
           </Link>
-          <Link href="/cart">
+          <Link href="/cart" className="relative">
             <BiShoppingBag
               size={"2em"}
               stroke="white"
               fill="white"
               className="hover:cursor-pointer"
             />
+            {getCartTotal() > 0 && (
+              <span className="text-stone-800 bg-stone-200 text-left text-nowrap font-semibold absolute -top-1 -right-2 w-fit h-fit px-2 rounded-full">
+                {getCartTotal()}
+              </span>
+            )}
           </Link>
         </div>
       </section>
