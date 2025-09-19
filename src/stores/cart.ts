@@ -3,13 +3,23 @@ import { persist } from "zustand/middleware";
 
 type CartItem = {
   productId: string;
+  productName: string;
+  productImg: string;
   productSize: string;
   productQty: number;
+  productPrice: number;
 };
 
 type CartStore = {
   items: CartItem[];
-  addItem: (id?: string, size?: string, qty?: number) => void;
+  addItem: (
+    id: string,
+    name: string,
+    img: string,
+    size: string,
+    qty: number,
+    price: number
+  ) => void;
   removeItem: (id: string, size: string) => void;
   updateItemQty: (id: string, size: string, qty: number) => void;
   clearCart: () => void;
@@ -25,7 +35,7 @@ export const useCartStore = create<CartStore>()(
       createdAt: null,
       lastModified: null,
 
-      addItem: (id, size, qty = 1) => {
+      addItem: (id, name, img, size, qty = 1, price) => {
         set((state) => {
           const now = Date.now();
           const exist = state.items.find(
@@ -47,7 +57,14 @@ export const useCartStore = create<CartStore>()(
           return {
             items: [
               ...state.items,
-              { productId: id, productSize: size, productQty: qty },
+              {
+                productId: id,
+                productName: name,
+                productImg: img,
+                productSize: size,
+                productQty: qty,
+                productPrice: price,
+              },
             ],
           };
         });
