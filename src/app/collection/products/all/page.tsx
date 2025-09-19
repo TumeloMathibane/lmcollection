@@ -14,7 +14,7 @@ export default function Catalog() {
   });
 
   return (
-    <main className="container place-self-center-safe p-2 space-y-4 xl:w-[70%]">
+    <main className="container place-self-center-safe p-2 space-y-4 xl:w-[70%] min-h-[42em] md:min-h-[52em] lg:min-h-[64em] xl:min-h-[22em]">
       <p className="text-4xl font-bold text-stone-900 text-center xl:text-6xl xl:py-2">
         Products
       </p>

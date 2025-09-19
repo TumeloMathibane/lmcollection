@@ -5,7 +5,7 @@ import ImageWithFallback from "./ui/ImageWithFallback";
 
 export default function Home() {
   return (
-    <div className="font-sans flex justify-center min-h-fit">
+    <div className="font-sans flex justify-center min-h-[42em] md:min-h-[52em] lg:min-h-[64em] xl:min-h-[22em]">
       <main className="container space-y-10">
         <section className="w-full min-h-[16em] lg:min-h-screen bg-[url('/images/ali-pazani-3w14X-Yxffk-unsplash.jpg')] bg-cover bg-no-repeat flex items-center-safe justify-around mask-alpha mask-b-from-70% md:mask-b-from-80% lg:mask-l-from-90% lg:mask-r-from-90%">
           <Link
