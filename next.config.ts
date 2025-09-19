@@ -10,6 +10,20 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "example.com" },
     ],
   },
+  async redirects() {
+    return [
+      {
+        source: "/collection/products",
+        destination: "/collection/products/all",
+        permanent: true,
+      },
+      {
+        source: "/collection",
+        destination: "/collection/products/all",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;
