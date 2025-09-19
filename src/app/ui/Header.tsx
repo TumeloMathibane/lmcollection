@@ -46,6 +46,7 @@ export default function Header() {
             fill="white"
             stroke="white"
             onClick={() => setSearchWidgetOpen(false)}
+            className="hover:cursor-pointer"
           />
         </div>
         <div className="h-full backdrop-blur-xl"></div>
@@ -58,6 +59,7 @@ export default function Header() {
               stroke="white"
               fill="white"
               onClick={() => setSearchWidgetOpen(true)}
+              className="hover:cursor-pointer"
             />
           </i>
           <i className="md:hidden">
@@ -67,6 +69,7 @@ export default function Header() {
                 fill="white"
                 stroke="white"
                 onClick={() => setNavOpen(false)}
+                className="hover:cursor-pointer"
               />
             ) : (
               <BiMenu
@@ -74,6 +77,7 @@ export default function Header() {
                 fill="white"
                 stroke="white"
                 onClick={() => setNavOpen(true)}
+                className="hover:cursor-pointer"
               />
             )}
           </i>
@@ -86,9 +90,14 @@ export default function Header() {
               className="size-15 md:size-30 xl:size-25"
             />
           </Link>
-          <i>
-            <BiShoppingBag size={"2em"} stroke="white" fill="white" />
-          </i>
+          <Link href="/cart">
+            <BiShoppingBag
+              size={"2em"}
+              stroke="white"
+              fill="white"
+              className="hover:cursor-pointer"
+            />
+          </Link>
         </div>
       </section>
 
