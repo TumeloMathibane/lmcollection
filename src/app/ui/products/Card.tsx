@@ -15,11 +15,7 @@ export function ProductCard({ product }: { product: Product }) {
           className="w-full size-max object-cover object-top transition-all duration-500 group-hover:scale-105 origin-center"
         /> */}
         <div className="w-full size-max object-cover object-top transition-all duration-500 group-hover:scale-105 origin-center">
-          <ImageWithFallback
-            src={product.image}
-            alt={product.name}
-            fallbackSrc="https://placehold.jp/ffffff/595959/500x500.png?text=No%20Image&css=%7B%22border-radius%22%3A%2215px%22%2C%22background%22%3A%22%20-webkit-gradient(linear%2C%20left%20top%2C%20left%20bottom%2C%20from(%23666666)%2C%20to(%23cccccc))%22%7D"
-          />
+          <ImageWithFallback src={product.image} alt={product.name} />
         </div>
         <div className="add-to-cart absolute top-0 left-0 right-0 w-full h-full">
           <BiPlusCircle

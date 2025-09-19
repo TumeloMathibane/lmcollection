@@ -27,11 +27,7 @@ export default function Categories() {
             >
               <figure className="overflow-hidden">
                 <div className="transition-all origin-center duration-500 ease-in-out group-hover:scale-105 size-55 md:size-full">
-                  <ImageWithFallback
-                    src={image}
-                    alt={description}
-                    fallbackSrc="https://placehold.jp/ffffff/595959/400x500.png?text=No%20Image&css=%7B%22border-radius%22%3A%2215px%22%2C%22background%22%3A%22%20-webkit-gradient(linear%2C%20left%20top%2C%20left%20bottom%2C%20from(%23666666)%2C%20to(%23cccccc))%22%7D"
-                  />
+                  <ImageWithFallback src={image} alt={description} />
                 </div>
               </figure>
               <div className="w-full p-3 justify-center">
