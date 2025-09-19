@@ -10,8 +10,11 @@ import ProductList from "@/app/ui/products/ProductList";
 import QuantityInput from "@/app/ui/products/QuantityInput";
 import SizeInput from "@/app/ui/products/SizeInput";
 import ImageWithFallback from "@/app/ui/ImageWithFallback";
+import { useCartStore } from "@/stores/cart";
 
 export default function Product() {
+  const { addItem } = useCartStore();
+
   const { productId } = useParams();
 
   const product = useQuery(api.products.getProduct, {
@@ -20,8 +23,6 @@ export default function Product() {
 
   const [quantity, setQuantity] = useState<number>(1);
   const [size, setSize] = useState<string | undefined>("");
-
-  // if (product === undefined) return <Loading />;
 
   return (
     <main className="p-2 space-y-2 xl:w-[70%] xl:place-self-center-safe xl:py-10 min-h-[42em] md:min-h-[52em] lg:min-h-[64em] xl:min-h-[22em]">
@@ -95,7 +96,10 @@ export default function Product() {
             </section>
           </div>
           <section className="w-full flex items-center-safe space-x-2 py-2 md:w-1/2">
-            <button className="py-1 px-4 bg-stone-900 text-stone-200 rounded-full w-full md:py-2 xl:py-3">
+            <button
+              onClick={() => addItem(product?._id, size, quantity)}
+              className="py-1 px-4 bg-stone-900 text-stone-200 rounded-full w-full md:py-2 xl:py-3"
+            >
               Add to cart
             </button>
             <BiHeart
