@@ -97,12 +97,19 @@ export default function Product() {
           <section className="w-full flex items-center-safe space-x-2 py-2 md:w-1/2">
             <button
               onClick={() =>
+                product?._id &&
+                product?.name &&
+                product?.image &&
+                size &&
+                quantity &&
+                product?.price &&
                 addItem(
                   product?._id,
                   product?.name,
                   product?.image,
                   size,
-                  quantity
+                  quantity,
+                  product?.price
                 )
               }
               className="py-1 px-4 bg-stone-900 text-stone-200 rounded-full w-full md:py-2 xl:py-3"
