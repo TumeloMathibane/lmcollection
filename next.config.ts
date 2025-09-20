@@ -22,6 +22,21 @@ const nextConfig: NextConfig = {
         destination: "/collection/products/all",
         permanent: true,
       },
+      {
+        source: "/policies",
+        destination: "/info/policies",
+        permanent: true,
+      },
+      {
+        source: "/about",
+        destination: "/info/about",
+        permanent: true,
+      },
+      {
+        source: "/contact",
+        destination: "/info/contact",
+        permanent: true,
+      },
     ];
   },
 };
