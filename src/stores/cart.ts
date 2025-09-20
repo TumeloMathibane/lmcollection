@@ -73,7 +73,7 @@ export const useCartStore = create<CartStore>()(
       removeItem: (id, size) =>
         set((state) => ({
           items: state.items.filter(
-            (i) => i.productId === id && i.productSize === size
+            (i) => i.productId !== id && i.productSize !== size
           ),
           createdAt: state.createdAt,
           lastModified: Date.now(),
