@@ -1,0 +1,29 @@
+import type { CartItem } from "@/stores/types";
+
+interface CartSummaryProps {
+  items: CartItem[];
+}
+
+export default function CartSummary({ items }: CartSummaryProps) {
+  const total = items.reduce(
+    (total, item) => total + item.productPrice * item.productQty,
+    0
+  );
+
+  return (
+    <div className="flex flex-col space-y-3">
+      <p className="text-2xl font-bold text-stone-900">Cart summary</p>
+      <div>
+        <p className="flex justify-between">
+          Estimated total:{" "}
+          <span className="before:content-['R'] before:mr-2">
+            {total.toFixed(2)}
+          </span>
+        </p>
+      </div>
+      <button className="btn self-center-safe w-full">
+        Proceed to checkout
+      </button>
+    </div>
+  );
+}
