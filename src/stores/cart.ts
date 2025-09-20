@@ -1,32 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-
-type CartItem = {
-  productId: string;
-  productName: string;
-  productImg: string;
-  productSize: string;
-  productQty: number;
-  productPrice: number;
-};
-
-type CartStore = {
-  items: CartItem[];
-  addItem: (
-    id: string,
-    name: string,
-    img: string,
-    size: string,
-    qty: number,
-    price: number
-  ) => void;
-  removeItem: (id: string, size: string) => void;
-  updateItemQty: (id: string, size: string, qty: number) => void;
-  clearCart: () => void;
-  getCartTotal: () => number;
-  createdAt: number | null;
-  lastModified: number | null;
-};
+import { CartStore } from "./types";
 
 export const useCartStore = create<CartStore>()(
   persist(
@@ -35,7 +9,14 @@ export const useCartStore = create<CartStore>()(
       createdAt: null,
       lastModified: null,
 
-      addItem: (id, name, img, size, qty = 1, price) => {
+      addItem: (
+        id: string,
+        name: string,
+        img: string,
+        size: string,
+        qty = 1,
+        price
+      ) => {
         set((state) => {
           const now = Date.now();
           const exist = state.items.find(
@@ -70,16 +51,16 @@ export const useCartStore = create<CartStore>()(
         });
       },
 
-      removeItem: (id, size) =>
+      removeItem: (id: string, size: string) =>
         set((state) => ({
           items: state.items.filter(
-            (i) => i.productId !== id && i.productSize !== size
+            (i) => i.productId !== id || i.productSize !== size
           ),
           createdAt: state.createdAt,
           lastModified: Date.now(),
         })),
 
-      updateItemQty: (id, size, qty) =>
+      updateItemQty: (id: string, size: string, qty: number) =>
         set((state) => ({
           items: state.items.map((i) =>
             i.productId === id && i.productSize === size
