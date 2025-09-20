@@ -15,15 +15,19 @@ export const navlinks = [
     sublinks: [
       {
         name: "Shipping",
-        href: "#shipping",
+        href: "/policies#shipping",
+      },
+      {
+        name: "Returns",
+        href: "/policies#returns",
       },
       {
         name: "Refunds",
-        href: "#returns&refunds",
+        href: "/policies#refunds",
       },
       {
         name: "Contact",
-        href: "#contact",
+        href: "/policies#contact",
       },
     ],
   },
