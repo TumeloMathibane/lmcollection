@@ -72,7 +72,7 @@ export default function Home() {
   );
 }
 
-//! TODO: Implement Cart & Checkout page
+//! TODO: Implement Checkout page
 //! TODO: ...try the payment gateway after implementing some parts of the Checkout page; if possible
 //! TODO: FIX the letter casing of the category fields in the db...
 //! TODO: Implement review feature...

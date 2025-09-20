@@ -10,7 +10,9 @@ import { usePathname } from "next/navigation";
 import { useCartStore } from "@/stores/cart";
 
 export default function Header() {
-  const { getCartTotal } = useCartStore();
+  const totalItems = useCartStore((state) =>
+    state.items.reduce((total, item) => total + item.productQty, 0)
+  );
 
   const [navOpen, setNavOpen] = useState(false);
   const [searchWidgetOpen, setSearchWidgetOpen] = useState(false);
@@ -100,9 +102,9 @@ export default function Header() {
               fill="white"
               className="hover:cursor-pointer"
             />
-            {getCartTotal() > 0 && (
+            {totalItems > 0 && (
               <span className="text-stone-800 bg-stone-200 text-left text-nowrap font-semibold absolute -top-1 -right-2 w-fit h-fit px-2 rounded-full">
-                {getCartTotal()}
+                {totalItems}
               </span>
             )}
           </Link>
