@@ -1,4 +1,5 @@
 import type { CartItem } from "@/stores/types";
+import Link from "next/link";
 
 interface CartSummaryProps {
   items: CartItem[];
@@ -21,9 +22,9 @@ export default function CartSummary({ items }: CartSummaryProps) {
           </span>
         </p>
       </div>
-      <button className="btn self-center-safe w-full">
+      <Link href="/payment/checkout" className="btn self-center-safe w-full">
         Proceed to checkout
-      </button>
+      </Link>
     </div>
   );
 }
