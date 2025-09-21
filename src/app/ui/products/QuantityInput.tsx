@@ -19,7 +19,7 @@ export default function QuantityInput({
   onDecrement,
   incrementDisable,
 }: IQuantityInput) {
-  const handleOnChange = (e: React.InputEvent<HTMLInputElement>) => {
+  const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onChange(e.target.valueAsNumber);
   };
 
