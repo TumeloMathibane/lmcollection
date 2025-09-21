@@ -11,34 +11,34 @@ export const navlinks = [
   },
   {
     name: "Policies",
-    href: "/policies",
+    href: "/info/policies",
     sublinks: [
       {
         name: "Shipping",
-        href: "/policies#shipping",
+        href: "/info/policies#shipping",
       },
       {
         name: "Returns",
-        href: "/policies#returns",
+        href: "/info/policies#returns",
       },
       {
         name: "Refunds",
-        href: "/policies#refunds",
+        href: "/info/policies#refunds",
       },
       {
         name: "Contact",
-        href: "/policies#contact",
+        href: "/info/policies#contact",
       },
     ],
   },
   {
     name: "About",
-    href: "/about",
+    href: "/info/about",
     sublinks: [],
   },
   {
     name: "Contact store",
-    href: "/contact",
+    href: "/info/contact",
     sublinks: [],
   },
 ];

@@ -23,18 +23,8 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
-        source: "/policies",
+        source: "/policy",
         destination: "/info/policies",
-        permanent: true,
-      },
-      {
-        source: "/about",
-        destination: "/info/about",
-        permanent: true,
-      },
-      {
-        source: "/contact",
-        destination: "/info/contact",
         permanent: true,
       },
     ];
