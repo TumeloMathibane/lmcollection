@@ -155,7 +155,7 @@ export default function Policies() {
             <h3 className="text-left font-semibold text-stone-700 border-b border-stone-500 pb-2 ps-4">
               Non-returnable Items
             </h3>
-            <p className="ps-4">
+            <div className="ps-4">
               The following cannot be returned:
               <ol className="list-disc list-inside">
                 <li>Sale items or digital products</li>
@@ -166,7 +166,7 @@ export default function Policies() {
                 </li>
                 <li>Hazardous materials, flammable liquids, or gases</li>
               </ol>
-            </p>
+            </div>
           </article>
 
           <article className="border border-stone-700 rounded-xl p-2 space-y-3 text-sm min-w-full">
