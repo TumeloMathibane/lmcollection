@@ -103,14 +103,16 @@ export default function Product() {
                 size &&
                 quantity &&
                 product?.price &&
-                addItem(
+                (addItem(
                   product?._id,
                   product?.name,
                   product?.image,
                   size,
                   quantity,
                   product?.price
-                )
+                ),
+                setSize(""),
+                setQuantity(0))
               }
               className="py-1 px-4 bg-stone-900 text-stone-200 rounded-full w-full md:py-2 xl:py-3"
             >
