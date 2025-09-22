@@ -111,7 +111,7 @@ export default function Cart() {
           ))}
         </div>
         <div className="hidden lg:block lg:border-l border-stone-400 mx-5 my-3" />
-        <div className="w-full lg:w-1/3 p-3 pb-6 lg:h-full sticky bottom-0 lg:top-6 bg-white rounded-t-2xl border-t lg:border-0 border-stone-400">
+        <div className="w-full lg:w-1/3 p-3 lg:h-full sticky bottom-0 lg:top-6 bg-white border-0">
           <CartSummary items={items} />
         </div>
       </div>
