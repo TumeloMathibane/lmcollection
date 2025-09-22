@@ -1,15 +1,25 @@
 // app/api/items/route.ts
 
-export async function POST(request: Request) {
-  try {
-    const body = (await request.json()) || []; // For JSON data
-    console.log("(notify) Received data:", body);
+import { NextRequest, NextResponse } from "next/server";
 
-    return Response.json(
-      { message: "(notify) Data received successfully", data: body },
+export async function POST(request: NextRequest) {
+  try {
+    const body = await request.text(); // For JSON data
+    const resolvedBody = await Promise.resolve(body); // Resolve the Promise
+    console.log(
+      "(notify - resolvedBody) Received data:",
+      decodeURIComponent(resolvedBody).split("&")
+    );
+
+    return NextResponse.json(
+      { message: "(notify) Data received successfully", data: resolvedBody },
       { status: 200 }
     );
   } catch (error) {
     console.error("(notify) Error: ", error);
+    return NextResponse.json(
+      { error: "(notify) An error occurred" },
+      { status: 500 }
+    );
   }
 }
