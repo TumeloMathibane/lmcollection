@@ -13,9 +13,9 @@ export default function OrderSummary() {
   const [open, setOpen] = useState<boolean>(false);
 
   return (
-    <main className="bg-stone-200 w-full">
+    <main className="bg-stone-100 w-full">
       <button
-        className="border-b border-stone-400 flex justify-between w-full p-4"
+        className="flex justify-between w-full p-4"
         onClick={() => setOpen(!open)}
       >
         <p>Order summary</p>
@@ -23,7 +23,7 @@ export default function OrderSummary() {
       </button>
 
       <div
-        className={`transition-all duration-1000 ${open ? "max-h-[100em] z-0" : "max-h-0 -z-10"}`}
+        className={`transition-all duration-1000 border-y border-stone-300 ${open ? "max-h-[100em] z-0" : "max-h-0 -z-10"}`}
       >
         <div className="space-y-4 p-5">
           {items.map((item, key) => (
