@@ -12,7 +12,7 @@ export default function ItemCard({ item }: ItemCardProp) {
         <div className="size-20 overflow-hidden rounded-lg shadow-md h-fit">
           <ImageWithFallback src={item.productImg} alt={item.productName} />
         </div>
-        <span className="absolute -top-2 -right-2 bg-stone-800 text-stone-200 px-2 rounded-full z-100">
+        <span className="absolute -top-2 -right-2 bg-stone-800 text-stone-200 px-2 rounded-full z-auto">
           {item.productQty}
         </span>
       </div>
