@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
-import ImageWithFallback from "../ImageWithFallback";
+import ImageWithFallback from "./ImageWithFallback";
 
 export default function ProductList({ count }: { count?: number }) {
   const _products = useQuery(api.products.get, { count: count });

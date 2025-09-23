@@ -1,7 +1,7 @@
 import Link from "next/link";
-import Categories from "./ui/Categories";
-import ProductList from "./ui/products/ProductList";
-import ImageWithFallback from "./ui/ImageWithFallback";
+import Categories from "./components/Categories";
+import ProductList from "./components/ProductList";
+import ImageWithFallback from "./components/ImageWithFallback";
 
 export default function Home() {
   return (
@@ -72,12 +72,15 @@ export default function Home() {
   );
 }
 
-//! TODO: Implement Checkout page
-//! TODO: ...try the payment gateway after implementing some parts of the Checkout page; if possible
+//! TODO: Do onsite payment method...
+//! TODO: Complete implement Checkout page
 //! TODO: FIX the letter casing of the category fields in the db...
 //! TODO: Implement review feature...
+//! TODO: Implement contact page logic
 //!
 //! ==================================================
 //!
+//! NOTE: Transfer all quick links to the side bar on mobile...
+//! NOTE: Look into the route grouping concept...
 //! NOTE: Put pointer cursors to all relevent elements...
 //! NOTE: Construct a placeholder image so that it is hosted locally in the app
