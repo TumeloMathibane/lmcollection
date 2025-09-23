@@ -6,10 +6,10 @@ import { useParams } from "next/navigation";
 import { BiHeart } from "react-icons/bi";
 import { useState } from "react";
 import Loading from "./loading";
-import ProductList from "@/app/ui/products/ProductList";
-import QuantityInput from "@/app/ui/products/QuantityInput";
-import SizeInput from "@/app/ui/products/SizeInput";
-import ImageWithFallback from "@/app/ui/ImageWithFallback";
+import ProductList from "@/app/components/ProductList";
+import QuantityInput from "@/app/components/QuantityInput";
+import SizeInput from "@/app/components/ui/products/SizeInput";
+import ImageWithFallback from "@/app/components/ImageWithFallback";
 import { useCartStore } from "@/stores/cart";
 
 export default function Product() {

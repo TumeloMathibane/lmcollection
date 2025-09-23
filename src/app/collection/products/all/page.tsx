@@ -3,7 +3,7 @@
 import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 
-import { ProductCard } from "@/app/ui/products/Card";
+import { ProductCard } from "@/app/components/ui/products/Card";
 import Loading from "./loading";
 import { useSearchParams } from "next/navigation";
 

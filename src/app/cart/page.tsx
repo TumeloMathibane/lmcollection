@@ -4,8 +4,8 @@ import { useCartStore } from "@/stores/cart";
 import Link from "next/link";
 import { BiX } from "react-icons/bi";
 import Image from "next/image";
-import QuantityInput from "../ui/products/QuantityInput";
-import CartSummary from "../ui/cart/CartSummary";
+import QuantityInput from "../components/QuantityInput";
+import CartSummary from "../components/ui/cart/CartSummary";
 
 export default function Cart() {
   const { items, updateItemQty, removeItem } = useCartStore();
