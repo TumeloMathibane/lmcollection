@@ -21,6 +21,7 @@ export type CartStore = {
   updateItemQty: (id: string, size: string, qty: number) => void;
   clearCart: () => void;
   getCartTotal: () => number;
+  getTotalPrice: () => number;
   createdAt: number | null;
   lastModified: number | null;
 };
