@@ -140,3 +140,27 @@ export default function Header() {
     </div>
   );
 }
+
+export function CheckoutHeader() {
+  return (
+    <nav className="border-b border-stone-300 flex justify-between p-3 items-center-safe md:px-30 lg:px-50">
+      <div className="size-15 h-auto">
+        <Link href={"/"}>
+          <Image
+            src="/logos/Liphiwe_business_logo_black.svg"
+            alt="business-logo"
+            width={"70"}
+            height={"100"}
+            className="h-auto"
+          />
+        </Link>
+      </div>
+
+      <div>
+        <Link href={"/cart"}>
+          <BiShoppingBag size={"2rem"} className="fill-blue-600" />
+        </Link>
+      </div>
+    </nav>
+  );
+}
