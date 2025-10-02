@@ -1,4 +1,4 @@
-import type { Product } from "@/app/collection/products/types";
+import type { Product } from "@/app/(overview)/collection/products/types";
 import { BiPlusCircle } from "react-icons/bi";
 import Link from "next/link";
 import ImageWithFallback from "../../ImageWithFallback";
