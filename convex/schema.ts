@@ -19,4 +19,16 @@ export default defineSchema({
     image: v.string(),
     additional_options: v.optional(v.record(v.string(), v.any())),
   }),
+  orders: defineTable({
+    orderNumber: v.optional(v.string()),
+    items: v.array(v.record(v.string(), v.string())),
+    totalPrice: v.number(),
+  }),
+  customers: defineTable({
+    contact: v.string(),
+    name_first: v.string(),
+    name_last: v.string(),
+    secondary_contact: v.string(),
+    address: v.string(),
+  }),
 });
