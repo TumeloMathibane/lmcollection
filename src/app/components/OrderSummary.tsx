@@ -45,7 +45,7 @@ export default function OrderSummaryWidget({
             className={`ml-2 self-center-safe transition-all duration-500 ${open ? "rotate-180" : "-rotate-0"}`}
           />
         </p>
-        <span className="text-xl font-bold before:content-['R'] before:mr-1 self-center-safe">
+        <span className="text-xl font-semibold before:content-['R'] before:mr-1 self-center-safe">
           {cartTotal.toFixed(2)}
         </span>
       </button>
@@ -67,14 +67,10 @@ export default function OrderSummaryWidget({
               type="text"
               name="discount-coupon"
               id="discount-coupon"
-              className="w-full p-3 rounded-lg border border-stone-300"
+              className="w-full input input-md focus:outline-offset-0 focus:outline-0 focus:border-2 focus:border-blue-600"
               placeholder="Discount code"
             />
-            <button
-              type="button"
-              className="rounded-lg p-3 border border-stone-400 bg-stone-200 disabled:text-stone-400 disabled:border-0"
-              disabled
-            >
+            <button type="button" className="rounded-lg btn btn-md" disabled>
               Apply
             </button>
           </div>
@@ -85,7 +81,7 @@ export default function OrderSummaryWidget({
             </p>
           </div>
         </div>
-        <div className="w-full flex justify-between py-3 px-5">
+        <div className="w-full flex justify-between px-5">
           <p>Shipping</p>
           <p className="text-stone-600 italic">
             {shippingPrice === 0 ? (
@@ -98,7 +94,7 @@ export default function OrderSummaryWidget({
           </p>
         </div>
 
-        <div className="w-full px-5 py-3 flex justify-between text-xl font-bold">
+        <div className="w-full px-5 flex justify-between text-xl font-semibold">
           <p>Total</p>
           <p className="before:content-['R'] before:mr-1">
             {cartTotal.toFixed(2)}
@@ -184,7 +180,7 @@ export function OrderSummary({ items, shippingPrice }: OrderSummaryProp) {
         </p>
       </div>
 
-      <div className="w-full flex justify-between text-xl font-bold">
+      <div className="w-full flex justify-between text-xl font-semibold">
         <p>Total</p>
         <p className="before:content-['R'] before:mr-1">
           {cartTotal.toFixed(2)}

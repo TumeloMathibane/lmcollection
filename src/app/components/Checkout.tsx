@@ -79,6 +79,12 @@ export default function CheckoutMain({
 
     if (shippingData.hasOwnProperty(name)) {
       setShippingData((prevVal) => ({ ...prevVal, [name]: value }));
+
+      if (name === "method" && value === "tcg")
+        setShippingData((prevVal) => ({ ...prevVal, price: 110 }));
+
+      if (name === "method" && value === "paxi")
+        setShippingData((prevVal) => ({ ...prevVal, price: 55 }));
     }
 
     if (paymentData.hasOwnProperty(name)) {
@@ -92,6 +98,18 @@ export default function CheckoutMain({
         [name]: name === "save_info" ? checked : value,
       }));
     }
+  };
+
+  const validateInput = (data: object) => {
+    Object.entries(data).map(([key, value]) => {
+      if (value !== "") {
+        const elmt = document.getElementById(`${key}`);
+
+        if (!elmt?.classList.contains("border"))
+          elmt?.classList.add("border-2", "border-green-600");
+        else elmt?.classList.add("border-green-600");
+      }
+    });
   };
 
   useEffect(() => setCartTotal(getTotalPrice), [getTotalPrice]);
@@ -161,7 +179,7 @@ export default function CheckoutMain({
                   type="text"
                   name="name_first"
                   id="name_first"
-                  className="input input-md w-full md:input-lg lg:input-md focus:outline-offset-0 focus:outline-0 focus:border-2 focus:border-blue-600"
+                  className="input input-md w-full focus:outline-offset-0 focus:outline-0 focus:border-2 focus:border-blue-600"
                   placeholder="First name"
                   value={data.name_first}
                   onChange={handleInputChange}
@@ -170,7 +188,7 @@ export default function CheckoutMain({
                   type="text"
                   name="name_last"
                   id="name_last"
-                  className="input input-md w-full md:input-lg lg:input-md focus:outline-offset-0 focus:outline-0 focus:border-2 focus:border-blue-600"
+                  className="input input-md w-full focus:outline-offset-0 focus:outline-0 focus:border-2 focus:border-blue-600"
                   placeholder="Last name"
                   value={data.name_last}
                   onChange={handleInputChange}
@@ -181,7 +199,7 @@ export default function CheckoutMain({
                   type="email"
                   name="email_address"
                   id="email_address"
-                  className="input input-md w-full md:input-lg lg:input-md focus:outline-offset-0 focus:outline-0 focus:border-2 focus:border-blue-600"
+                  className="input input-md w-full focus:outline-offset-0 focus:outline-0 focus:border-2 focus:border-blue-600"
                   placeholder="Email address"
                   value={data.email_address}
                   onChange={handleInputChange}
@@ -190,7 +208,7 @@ export default function CheckoutMain({
                   type="tel"
                   name="cell_number"
                   id="cell_number"
-                  className="input input-md w-full md:input-lg lg:input-md focus:outline-offset-0 focus:outline-0 focus:border-2 focus:border-blue-600"
+                  className="input input-md w-full focus:outline-offset-0 focus:outline-0 focus:border-2 focus:border-blue-600"
                   placeholder="Cellphone number"
                   maxLength={10}
                   value={data.cell_number}
@@ -202,7 +220,7 @@ export default function CheckoutMain({
                   type="text"
                   name="street_address"
                   id="street_address"
-                  className="input input-md w-full md:input-lg lg:input-md focus:outline-offset-0 focus:outline-0 focus:border-2 focus:border-blue-600"
+                  className="input input-md w-full focus:outline-offset-0 focus:outline-0 focus:border-2 focus:border-blue-600"
                   placeholder="Street address"
                   value={data.street_address}
                   onChange={handleInputChange}
@@ -210,8 +228,8 @@ export default function CheckoutMain({
                 <input
                   type="text"
                   name="apartment_no"
-                  id="apart_suite_no"
-                  className="input input-md w-full md:input-lg lg:input-md focus:outline-offset-0 focus:outline-0 focus:border-2 focus:border-blue-600"
+                  id="apartment_no"
+                  className="input input-md w-full focus:outline-offset-0 focus:outline-0 focus:border-2 focus:border-blue-600"
                   placeholder="Apartment, suite, etc (opt.)"
                   value={data.apartment_no}
                   onChange={handleInputChange}
@@ -222,7 +240,7 @@ export default function CheckoutMain({
                   type="text"
                   name="suburb"
                   id="suburb"
-                  className="input input-md w-full md:input-lg lg:input-md focus:outline-offset-0 focus:outline-0 focus:border-2 focus:border-blue-600"
+                  className="input input-md w-full focus:outline-offset-0 focus:outline-0 focus:border-2 focus:border-blue-600"
                   placeholder="Suburb"
                   value={data.suburb}
                   onChange={handleInputChange}
@@ -231,7 +249,7 @@ export default function CheckoutMain({
                   type="text"
                   name="city"
                   id="city"
-                  className="input input-md w-full md:input-lg lg:input-md focus:outline-offset-0 focus:outline-0 focus:border-2 focus:border-blue-600"
+                  className="input input-md w-full focus:outline-offset-0 focus:outline-0 focus:border-2 focus:border-blue-600"
                   placeholder="City"
                   value={data.city}
                   onChange={handleInputChange}
@@ -240,7 +258,7 @@ export default function CheckoutMain({
                   type="text"
                   name="postal_code"
                   id="postal_code"
-                  className="input input-md w-full md:input-lg lg:input-md focus:outline-offset-0 focus:outline-0 focus:border-2 focus:border-blue-600 md:w-30"
+                  className="input input-md w-full focus:outline-offset-0 focus:outline-0 focus:border-2 focus:border-blue-600 md:w-30"
                   placeholder="Postal Code"
                   value={data.postal_code}
                   onChange={handleInputChange}
@@ -250,7 +268,7 @@ export default function CheckoutMain({
                 <select
                   name="province"
                   id="province"
-                  className="select select-md w-full md:select-lg lg:select-md focus-within:outline-offset-0 focus-within:outline-0 focus-within:border-2 focus-within:border-blue-600"
+                  className="select select-md w-full focus-within:outline-offset-0 focus-within:outline-0 focus-within:border-2 focus-within:border-blue-600"
                   value={data.province}
                   onChange={handleInputChange}
                 >
@@ -265,12 +283,9 @@ export default function CheckoutMain({
                 <select
                   name="country"
                   id="country"
-                  className="select select-md w-full md:select-lg lg:select-md focus-within:outline-offset-0 focus-within:outline-0 focus-within:border-2 focus-within:border-blue-600"
+                  className="select select-md w-full focus-within:outline-offset-0 focus-within:outline-0 focus-within:border-2 focus-within:border-blue-600"
                   value={data.country}
-                  onChange={(e) => {
-                    console.log(e.target?.value);
-                    handleInputChange(e);
-                  }}
+                  onChange={handleInputChange}
                 >
                   <option value="default">Select country</option>
                   <option value="za">South Africa</option>
@@ -296,24 +311,44 @@ export default function CheckoutMain({
                 <p className="text-xl font-semibold text-shadow-stone-900">
                   Shipping
                 </p>
-                <div>
-                  <DeliverySelector
-                    method={shippingData?.method}
-                    onChange={(val) => {
-                      if (val === "tcg")
-                        setShippingData((prevVal) => ({
-                          ...prevVal,
-                          method: val,
-                          price: 110,
-                        }));
-                      if (val === "paxi")
-                        setShippingData((prevVal) => ({
-                          ...prevVal,
-                          method: val,
-                          price: 50,
-                        }));
-                    }}
-                  />
+                <div className="bg-stone-200 p-4 rounded-xl space-y-2">
+                  <div className="flex flex-col space-y-2 md:px-5">
+                    <p className="text-stone-500">Select shipping service:</p>
+                    <div className="join join-horizontal flex w-full space-x-0.5">
+                      <DeliverySelector
+                        value={shippingData?.method}
+                        onChange={(e) => {
+                          handleInputChange(e);
+                        }}
+                      />
+                    </div>
+
+                    <div>
+                      <div
+                        hidden={
+                          shippingData?.method === "tcg" ||
+                          shippingData.method === ""
+                        }
+                      >
+                        <p>
+                          Information relating to <em>paxi</em> services will be
+                          requested here
+                        </p>
+                      </div>
+
+                      <div
+                        hidden={
+                          shippingData?.method === "paxi" ||
+                          shippingData.method === ""
+                        }
+                      >
+                        <p>
+                          Information relating to <em>the courier guy</em>{" "}
+                          services will be requested here
+                        </p>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -321,13 +356,13 @@ export default function CheckoutMain({
             <div className="space-y-4">
               <div>
                 <p className="text-2xl font-bold text-stone-900">Payment</p>
-                <span className="text-stone-400 italic">
+                <span className="text-stone-400 italic text-sm">
                   All payments are handled securely
                 </span>
               </div>
               <div>
                 <div className="ring ring-blue-800 bg-stone-200 rounded-2xl overflow-hidden px-6 py-7 flex flex-col space-y-3">
-                  <p className="text-center text-stone-600 text-sm">
+                  <p className="text-center text-stone-600 text-xs md:text-sm">
                     After clicking <strong>&quot;Pay now&quot;</strong> button,
                     customer will be redirected to Payfast payment gateway to
                     complete the payment process.
@@ -337,7 +372,7 @@ export default function CheckoutMain({
                     alt="payment-handler"
                     width={"500"}
                     height={"500"}
-                    className="self-center-safe size-40 h-fit md:size-70 md:h-fit"
+                    className="self-center-safe size-40 h-fit"
                   />
                 </div>
               </div>
@@ -371,9 +406,8 @@ export default function CheckoutMain({
                 onClick={(e) => {
                   e.preventDefault();
 
-                  console.log("Data: ", data);
-                  console.log("Shipping Data: ", shippingData);
-                  console.log("Payment Data: ", paymentData);
+                  validateInput(data);
+                  console.log(shippingData);
                 }}
                 disabled={shippingData.method === ""}
               >
