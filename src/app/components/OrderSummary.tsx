@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import ItemCard from "./ui/checkout/ItemCard";
 import { BiCaretDown } from "react-icons/bi";
 import type { CartItem } from "@/stores/types";
@@ -8,9 +8,13 @@ import type { CartItem } from "@/stores/types";
 export default function OrderSummaryWidget({
   shippingPrice,
   items,
+  coupon,
+  onCouponChange,
 }: {
   shippingPrice: number;
   items: CartItem[];
+  coupon?: string;
+  onCouponChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }) {
   const [open, setOpen] = useState<boolean>(false);
 
@@ -69,8 +73,14 @@ export default function OrderSummaryWidget({
               id="discount-coupon"
               className="w-full input input-md focus:outline-offset-0 focus:outline-0 focus:border-2 focus:border-blue-600"
               placeholder="Discount code"
+              value={coupon}
+              onChange={onCouponChange}
             />
-            <button type="button" className="rounded-lg btn btn-md" disabled>
+            <button
+              type="button"
+              className="rounded-sm btn btn-md btn-primary"
+              disabled={coupon === ""}
+            >
               Apply
             </button>
           </div>
@@ -108,8 +118,15 @@ export default function OrderSummaryWidget({
 type OrderSummaryProp = {
   items: CartItem[];
   shippingPrice: number;
+  coupon: string;
+  onCouponChange: (e: ChangeEvent<HTMLInputElement>) => void;
 };
-export function OrderSummary({ items, shippingPrice }: OrderSummaryProp) {
+export function OrderSummary({
+  items,
+  shippingPrice,
+  coupon,
+  onCouponChange,
+}: OrderSummaryProp) {
   const [subTotal, setSubTotal] = useState<number>(0);
   const [cartTotal, setCartTotal] = useState<number>(subTotal);
 
@@ -149,13 +166,15 @@ export function OrderSummary({ items, shippingPrice }: OrderSummaryProp) {
             type="text"
             name="discount-coupon"
             id="discount-coupon"
-            className="border border-stone-200 p-3 w-full rounded-lg"
+            className="input input-md w-full focus:outline-offset-0 focus:outline-0 focus:border-2 focus:border-blue-600"
             placeholder="Discount code"
+            value={coupon}
+            onChange={onCouponChange}
           />
           <button
             type="button"
-            className="rounded-lg p-3 border border-stone-400 disabled:text-stone-400 disabled:bg-stone-200 disabled:border-0"
-            disabled
+            className="rounded-sm btn btn-md btn-primary"
+            disabled={coupon === ""}
           >
             Apply
           </button>

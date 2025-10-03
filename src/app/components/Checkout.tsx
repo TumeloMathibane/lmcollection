@@ -60,6 +60,7 @@ export default function CheckoutMain({
     merchant_id: m_id,
     merchant_key: m_key,
     notify_url: "https://gkhg4mlb-3000.euw.devtunnels.ms/api/payment/notify",
+    name_first: "",
     name_last: "",
     m_payment_id: "",
     amount: cartTotal,
@@ -67,6 +68,8 @@ export default function CheckoutMain({
   });
 
   const ordersCount = useQuery(api.orders.orderCount) ?? 0;
+
+  const [coupon, setCoupon] = useState<string>("");
 
   const handleInputChange = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -164,7 +167,12 @@ export default function CheckoutMain({
   return (
     <main className="bg-white flex flex-col min-h-screen md:min-h-[52em] lg:min-h-screen xl:min-h-screen">
       <div className="lg:hidden">
-        <OrderSummaryWidget shippingPrice={shippingData.price} items={items} />
+        <OrderSummaryWidget
+          shippingPrice={shippingData.price}
+          items={items}
+          coupon={coupon}
+          onCouponChange={(e) => setCoupon(e.currentTarget?.value)}
+        />
       </div>
 
       <section className="bg-white z-10 lg:flex">
@@ -384,6 +392,8 @@ export default function CheckoutMain({
                 <OrderSummary
                   items={items}
                   shippingPrice={shippingData.price}
+                  coupon={coupon}
+                  onCouponChange={(e) => setCoupon(e.currentTarget?.value)}
                 />
               </div>
             </div>
@@ -407,7 +417,10 @@ export default function CheckoutMain({
                   e.preventDefault();
 
                   validateInput(data);
-                  console.log(shippingData);
+
+                  console.log("Data: ", data);
+                  console.log("Shipping data: ", shippingData);
+                  console.log("Payment data: ", paymentData);
                 }}
                 disabled={shippingData.method === ""}
               >
@@ -424,7 +437,12 @@ export default function CheckoutMain({
         {/* !! THIS WILL BE DISPLAYED ON LARGE DISPLAY !! */}
         <div className="hidden lg:block w-1/2 h-screen sticky top-0 bg-stone-100 border-l border-stone-300">
           <div className="space-y-4 p-10 max-w-[500px]">
-            <OrderSummary items={items} shippingPrice={shippingData.price} />
+            <OrderSummary
+              items={items}
+              shippingPrice={shippingData.price}
+              coupon={coupon}
+              onCouponChange={(e) => setCoupon(e.currentTarget?.value)}
+            />
           </div>
         </div>
       </section>
