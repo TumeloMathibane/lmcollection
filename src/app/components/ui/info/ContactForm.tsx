@@ -5,7 +5,7 @@ export default function ContactForm() {
         type="text"
         name="customer-name"
         id="customer-name"
-        placeholder="Name & surname..."
+        placeholder="First & last name..."
         className="input input-sm md:input-lg xl:input-md"
       />
       <input

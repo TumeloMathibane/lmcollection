@@ -30,7 +30,7 @@ export default function Policies() {
             <p className="table-cell border border-stone-600 p-1 font-semibold text-stone-500 xl:p-3">
               Processing time:
             </p>
-            <p className="table-cell border border-stone-600 p-1 px-2 xl:p-3">
+            <div className="table-cell border border-stone-600 p-1 px-2 xl:p-3">
               <ol className="list-disc list-inside">
                 <li>
                   Orders are typically processed within 14 business days of
@@ -42,7 +42,7 @@ export default function Policies() {
                   on the volume of orders and immediate availability of stock.
                 </li>
               </ol>
-            </p>
+            </div>
           </section>
           <section className="table-row">
             <p className="table-cell border border-stone-600 p-1 font-semibold text-stone-500 xl:p-3">
