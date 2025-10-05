@@ -6,7 +6,11 @@ import { useCartStore } from "@/stores/cart";
 import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 
-import { generatePaymentId, generateSignature } from "../utils/helper";
+import {
+  generatePaymentId,
+  generateSignature,
+  validateInput,
+} from "../utils/helper";
 import OrderSummaryWidget, { OrderSummary } from "./OrderSummary";
 import { CheckoutFooter } from "./Footer";
 import DeliverySelector from "./checkout/DeliverySel";
@@ -103,18 +107,6 @@ export default function CheckoutMain({
     }
   };
 
-  const validateInput = (data: object) => {
-    Object.entries(data).map(([key, value]) => {
-      if (value !== "") {
-        const elmt = document.getElementById(`${key}`);
-
-        if (!elmt?.classList.contains("border"))
-          elmt?.classList.add("border-2", "border-green-600");
-        else elmt?.classList.add("border-green-600");
-      }
-    });
-  };
-
   useEffect(() => setCartTotal(getTotalPrice), [getTotalPrice]);
 
   // add item_name field
@@ -182,7 +174,7 @@ export default function CheckoutMain({
               <h1 className="text-2xl font-bold text-shadow-stone-900 pt-2">
                 Delivery
               </h1>
-              <div className="name-first-last space-y-4 md:flex md:space-x-2 md:space-y-0">
+              <div className="name-first-last space-y-4 sm:flex sm:space-x-4 sm:space-y-0">
                 <input
                   type="text"
                   name="name_first"
@@ -202,7 +194,7 @@ export default function CheckoutMain({
                   onChange={handleInputChange}
                 />
               </div>
-              <div className="space-y-4 lg:flex lg:space-x-2 lg:space-y-0">
+              <div className="border-y border-stone-300 py-2 sm:border-0 sm:py-0 sm:flex lg:space-x-2 lg:space-y-0">
                 <input
                   type="email"
                   name="email_address"
@@ -212,6 +204,9 @@ export default function CheckoutMain({
                   value={data.email_address}
                   onChange={handleInputChange}
                 />
+                <div className="divider text-xs text-stone-400 my-2 uppercase sm:lowercase sm:my-auto">
+                  or
+                </div>
                 <input
                   type="tel"
                   name="cell_number"
@@ -223,7 +218,7 @@ export default function CheckoutMain({
                   onChange={handleInputChange}
                 />
               </div>
-              <div className="space-y-4 md:flex md:space-x-2 md:space-y-0">
+              <div className="space-y-4 sm:flex sm:space-x-2 sm:space-y-0">
                 <input
                   type="text"
                   name="street_address"
@@ -243,7 +238,7 @@ export default function CheckoutMain({
                   onChange={handleInputChange}
                 />
               </div>
-              <div className="space-y-4 md:flex md:space-x-2 md:space-y-0">
+              <div className="space-y-4 sm:flex sm:space-x-2 sm:space-y-0">
                 <input
                   type="text"
                   name="suburb"
@@ -280,7 +275,7 @@ export default function CheckoutMain({
                   value={data.province}
                   onChange={handleInputChange}
                 >
-                  <option value="default">Select province</option>
+                  <option value="">Select province</option>
                   {states.map((state, key) => (
                     <option key={key} value={state.code}>
                       {state.name}
@@ -295,7 +290,7 @@ export default function CheckoutMain({
                   value={data.country}
                   onChange={handleInputChange}
                 >
-                  <option value="default">Select country</option>
+                  <option value="">Select country</option>
                   <option value="za">South Africa</option>
                 </select>
               </div>
@@ -417,10 +412,6 @@ export default function CheckoutMain({
                   e.preventDefault();
 
                   validateInput(data);
-
-                  console.log("Data: ", data);
-                  console.log("Shipping data: ", shippingData);
-                  console.log("Payment data: ", paymentData);
                 }}
                 disabled={shippingData.method === ""}
               >
