@@ -6,11 +6,7 @@ import { useCartStore } from "@/stores/cart";
 import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 
-import {
-  generatePaymentId,
-  generateSignature,
-  validateInput,
-} from "../utils/helper";
+import { generatePaymentId, generateSignature } from "../utils/helper";
 import OrderSummaryWidget, { OrderSummary } from "./OrderSummary";
 import { CheckoutFooter } from "./Footer";
 import DeliverySelector from "./checkout/DeliverySel";
@@ -105,6 +101,51 @@ export default function CheckoutMain({
         [name]: name === "save_info" ? checked : value,
       }));
     }
+  };
+
+  const validateInput = () => {
+    const elmts: HTMLElement[] = [];
+
+    Object.entries(data).map(([key, value]) => {
+      const elmt = document.getElementById(`${key}`);
+
+      // validating first name and last name...
+      if (
+        value === "" &&
+        key !== "cell_number" &&
+        key !== "email_address" &&
+        key !== "apartment_no" &&
+        key !== "save_info"
+      ) {
+        if (elmt) elmts.push(elmt);
+
+        elmt?.classList.add("border", "border-red-600");
+      } else {
+        if (elmt?.classList.contains("border-red-600"))
+          elmt?.classList.remove("border", "border-red-600");
+      }
+
+      // validating optional fields; email & cell number...
+      if (value === "") {
+        if (
+          key === "cell_number" &&
+          document.getElementById("email_address")?.getAttribute("value") === ""
+        ) {
+          if (elmt) elmts.push(elmt);
+          elmt?.classList.add("border", "border-red-600");
+        }
+
+        if (
+          key === "email_address" &&
+          document.getElementById("cell_number")?.getAttribute("value") === ""
+        ) {
+          if (elmt) elmts.push(elmt);
+          elmt?.classList.add("border", "border-red-600");
+        }
+      }
+    });
+
+    if (elmts.length > 0) elmts[0].focus();
   };
 
   useEffect(() => setCartTotal(getTotalPrice), [getTotalPrice]);
@@ -211,14 +252,13 @@ export default function CheckoutMain({
                   type="tel"
                   name="cell_number"
                   id="cell_number"
-                  className="input input-md w-full focus:outline-offset-0 focus:outline-0 focus:border-2 focus:border-blue-600"
+                  className="input input-md w-35 focus:outline-offset-0 focus:outline-0 focus:border-2 focus:border-blue-600"
                   placeholder="Cellphone number"
-                  maxLength={10}
                   value={data.cell_number}
                   onChange={handleInputChange}
                 />
               </div>
-              <div className="space-y-4 sm:flex sm:space-x-2 sm:space-y-0">
+              <div className="space-y-4 sm:flex sm:space-x-4 sm:space-y-0">
                 <input
                   type="text"
                   name="street_address"
@@ -238,7 +278,7 @@ export default function CheckoutMain({
                   onChange={handleInputChange}
                 />
               </div>
-              <div className="space-y-4 sm:flex sm:space-x-2 sm:space-y-0">
+              <div className="space-y-4 sm:flex sm:space-x-4 sm:space-y-0">
                 <input
                   type="text"
                   name="suburb"
@@ -261,13 +301,13 @@ export default function CheckoutMain({
                   type="text"
                   name="postal_code"
                   id="postal_code"
-                  className="input input-md w-full focus:outline-offset-0 focus:outline-0 focus:border-2 focus:border-blue-600 md:w-30"
+                  className="input input-md w-30 focus:outline-offset-0 focus:outline-0 focus:border-2 focus:border-blue-600 md:w-30"
                   placeholder="Postal Code"
                   value={data.postal_code}
                   onChange={handleInputChange}
                 />
               </div>
-              <div className="flex gap-3">
+              <div className="flex space-x-4">
                 <select
                   name="province"
                   id="province"
@@ -410,8 +450,7 @@ export default function CheckoutMain({
                 className="btn btn-primary btn-md w-full rounded-lg"
                 onClick={(e) => {
                   e.preventDefault();
-
-                  validateInput(data);
+                  validateInput();
                 }}
                 disabled={shippingData.method === ""}
               >
