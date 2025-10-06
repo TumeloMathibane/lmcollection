@@ -11,6 +11,7 @@ import OrderSummaryWidget, { OrderSummary } from "./OrderSummary";
 import { CheckoutFooter } from "./Footer";
 import DeliverySelector from "./checkout/DeliverySel";
 import { states } from "../../data/sa_provinces.json";
+import Loading from "../(payments)/loading";
 
 type MerchantProp = {
   m_key: string;
@@ -18,6 +19,9 @@ type MerchantProp = {
   passphrase?: string;
   formAction: string;
 };
+
+//! TODO: Implement skeleton for loading screen...
+//! NOTE: Implement way of storing user info as they input it, and load it in relevent inputs on page reload...
 
 export default function CheckoutMain({
   m_key,
@@ -197,11 +201,14 @@ export default function CheckoutMain({
     }
   }, [data]);
 
+  if (!items || cartTotal === 0 || getTotalPrice() === 0) return <Loading />;
+
   return (
     <main className="bg-white flex flex-col min-h-screen md:min-h-[52em] lg:min-h-screen xl:min-h-screen">
       <div className="lg:hidden">
         <OrderSummaryWidget
           shippingPrice={shippingData.price}
+          cartTotal={cartTotal}
           items={items}
           coupon={coupon}
           onCouponChange={(e) => setCoupon(e.currentTarget?.value)}
@@ -252,7 +259,7 @@ export default function CheckoutMain({
                   type="tel"
                   name="cell_number"
                   id="cell_number"
-                  className="input input-md w-35 focus:outline-offset-0 focus:outline-0 focus:border-2 focus:border-blue-600"
+                  className="input input-md w-full focus:outline-offset-0 focus:outline-0 focus:border-2 focus:border-blue-600 sm:w-36"
                   placeholder="Cellphone number"
                   value={data.cell_number}
                   onChange={handleInputChange}
@@ -290,20 +297,20 @@ export default function CheckoutMain({
                 />
                 <input
                   type="text"
+                  name="postal_code"
+                  id="postal_code"
+                  className="input input-md w-full focus:outline-offset-0 focus:outline-0 focus:border-2 focus:border-blue-600 sm:w-25"
+                  placeholder="Postal Code"
+                  value={data.postal_code}
+                  onChange={handleInputChange}
+                />
+                <input
+                  type="text"
                   name="city"
                   id="city"
                   className="input input-md w-full focus:outline-offset-0 focus:outline-0 focus:border-2 focus:border-blue-600"
                   placeholder="City"
                   value={data.city}
-                  onChange={handleInputChange}
-                />
-                <input
-                  type="text"
-                  name="postal_code"
-                  id="postal_code"
-                  className="input input-md w-30 focus:outline-offset-0 focus:outline-0 focus:border-2 focus:border-blue-600 md:w-30"
-                  placeholder="Postal Code"
-                  value={data.postal_code}
                   onChange={handleInputChange}
                 />
               </div>
@@ -426,6 +433,7 @@ export default function CheckoutMain({
               <div>
                 <OrderSummary
                   items={items}
+                  cartTotal={cartTotal}
                   shippingPrice={shippingData.price}
                   coupon={coupon}
                   onCouponChange={(e) => setCoupon(e.currentTarget?.value)}
@@ -469,6 +477,7 @@ export default function CheckoutMain({
           <div className="space-y-4 p-10 max-w-[500px]">
             <OrderSummary
               items={items}
+              cartTotal={cartTotal}
               shippingPrice={shippingData.price}
               coupon={coupon}
               onCouponChange={(e) => setCoupon(e.currentTarget?.value)}

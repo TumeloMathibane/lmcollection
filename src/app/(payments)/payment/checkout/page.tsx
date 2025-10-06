@@ -1,7 +1,5 @@
 import CheckoutMain from "@/app/components/Checkout";
-import Loading from "../../loading";
 import { Metadata } from "next";
-import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "Checkout | LMCollection",
@@ -16,14 +14,12 @@ export default function Checkout() {
 
   return (
     <>
-      <Suspense fallback={<Loading />}>
-        <CheckoutMain
-          m_key={merchant_key}
-          m_id={merchant_id}
-          passphrase={passphrase}
-          formAction={formActionURL}
-        />
-      </Suspense>
+      <CheckoutMain
+        m_key={merchant_key}
+        m_id={merchant_id}
+        passphrase={passphrase}
+        formAction={formActionURL}
+      />
     </>
   );
 }
