@@ -8,18 +8,20 @@ import type { CartItem } from "@/stores/types";
 export default function OrderSummaryWidget({
   shippingPrice,
   items,
+  cartTotal,
   coupon,
   onCouponChange,
 }: {
   shippingPrice: number;
   items: CartItem[];
+  cartTotal: number;
   coupon?: string;
   onCouponChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }) {
   const [open, setOpen] = useState<boolean>(false);
 
-  const [subTotal, setSubTotal] = useState<number>(0);
-  const [cartTotal, setCartTotal] = useState<number>(subTotal);
+  const [subTotal, setSubTotal] = useState<number>(cartTotal);
+  const [cTotal, setCTotal] = useState<number>(subTotal);
 
   useEffect(
     () =>
@@ -34,7 +36,7 @@ export default function OrderSummaryWidget({
   );
 
   useEffect(() => {
-    if (shippingPrice !== undefined) setCartTotal(subTotal + shippingPrice);
+    if (shippingPrice !== undefined) setCTotal(subTotal + shippingPrice);
   }, [shippingPrice, subTotal]);
 
   return (
@@ -50,7 +52,7 @@ export default function OrderSummaryWidget({
           />
         </p>
         <span className="text-xl font-semibold before:content-['R'] before:mr-1 self-center-safe">
-          {cartTotal.toFixed(2)}
+          {cTotal?.toFixed(2)}
         </span>
       </button>
 
@@ -87,7 +89,7 @@ export default function OrderSummaryWidget({
           <div className="w-full space-x-5 flex justify-between px-5">
             <p>Subtotal</p>
             <p className="before:content-['R'] before:mr-1">
-              {subTotal.toFixed(2)}
+              {subTotal?.toFixed(2)}
             </p>
           </div>
         </div>
@@ -107,7 +109,7 @@ export default function OrderSummaryWidget({
         <div className="w-full px-5 flex justify-between text-xl font-semibold">
           <p>Total</p>
           <p className="before:content-['R'] before:mr-1">
-            {cartTotal.toFixed(2)}
+            {cTotal?.toFixed(2)}
           </p>
         </div>
       </div>
@@ -117,18 +119,20 @@ export default function OrderSummaryWidget({
 
 type OrderSummaryProp = {
   items: CartItem[];
+  cartTotal: number;
   shippingPrice: number;
   coupon: string;
   onCouponChange: (e: ChangeEvent<HTMLInputElement>) => void;
 };
 export function OrderSummary({
   items,
+  cartTotal,
   shippingPrice,
   coupon,
   onCouponChange,
 }: OrderSummaryProp) {
-  const [subTotal, setSubTotal] = useState<number>(0);
-  const [cartTotal, setCartTotal] = useState<number>(subTotal);
+  const [subTotal, setSubTotal] = useState<number>(cartTotal);
+  const [cTotal, setcTotal] = useState<number>(subTotal);
 
   useEffect(
     () =>
@@ -143,11 +147,11 @@ export function OrderSummary({
   );
 
   useEffect(() => {
-    if (shippingPrice !== undefined) setCartTotal(subTotal + shippingPrice);
+    if (shippingPrice !== undefined) setcTotal(subTotal + shippingPrice);
   }, [shippingPrice, subTotal]);
 
   useEffect(() => {
-    setCartTotal(subTotal + shippingPrice);
+    setcTotal(subTotal + shippingPrice);
   }, [shippingPrice, subTotal]);
 
   return (
@@ -182,7 +186,7 @@ export function OrderSummary({
         <div className="w-full flex justify-between">
           <p>Subtotal</p>
           <p className="before:content-['R'] before:mr-1">
-            {subTotal.toFixed(2)}
+            {subTotal?.toFixed(2)}
           </p>
         </div>
       </div>
@@ -201,9 +205,7 @@ export function OrderSummary({
 
       <div className="w-full flex justify-between text-xl font-semibold">
         <p>Total</p>
-        <p className="before:content-['R'] before:mr-1">
-          {cartTotal.toFixed(2)}
-        </p>
+        <p className="before:content-['R'] before:mr-1">{cTotal?.toFixed(2)}</p>
       </div>
     </div>
   );
