@@ -40,3 +40,24 @@ export function generatePaymentId(
 
   return paymentId;
 }
+
+export function verifySignature(data: string): boolean {
+  // convert to object for clearer processing...
+  const processedData = Object.fromEntries(
+    data.split("&").map((item) => item.split("="))
+  );
+
+  // create a new data string without the signature field...
+  let dataString = "";
+  for (const key in processedData) {
+    if (processedData.hasOwnProperty(key) && key !== "signature")
+      dataString += `${key}=${processedData[key]?.trim().replace(/%20/g, "+")}&`;
+  }
+  dataString = dataString.slice(0, -1);
+
+  // confirm the signature...
+  if (process.env.PAYGATE_SALT_PASSPHRASE)
+    dataString += `&passphrase=${process.env.PAYGATE_SALT_PASSPHRASE?.trim().replace(/%20/g, "+")}`;
+
+  return processedData["signature"] === md5(dataString);
+}
