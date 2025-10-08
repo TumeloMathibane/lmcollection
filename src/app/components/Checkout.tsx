@@ -21,9 +21,6 @@ type MerchantProp = {
   formAction: string;
 };
 
-//! TODO: Implement skeleton for loading screen...
-//! NOTE: Implement way of storing user info as they input it, and load it in relevent inputs on page reload...
-
 export default function CheckoutMain({
   m_key,
   m_id,
