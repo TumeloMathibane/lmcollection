@@ -1,6 +1,6 @@
 "use client";
 
-import { ChangeEvent, useEffect, useState } from "react";
+import React, { ChangeEvent, MouseEvent, useEffect, useState } from "react";
 import Image from "next/image";
 import { useCartStore } from "@/stores/cart";
 import { useQuery } from "convex/react";
@@ -12,6 +12,7 @@ import { CheckoutFooter } from "./Footer";
 import DeliverySelector from "./checkout/DeliverySel";
 import { states } from "../../data/sa_provinces.json";
 import Loading from "../(payments)/loading";
+import { BiCheck, BiLoaderAlt } from "react-icons/bi";
 
 type MerchantProp = {
   m_key: string;
@@ -63,7 +64,7 @@ export default function CheckoutMain({
   const [paymentData, setPaymentData] = useState({
     merchant_id: m_id,
     merchant_key: m_key,
-    notify_url: "https://gkhg4mlb-3000.euw.devtunnels.ms/api/payment/notify",
+    notify_url: "https://gkhg4mlb-3000.euw.devtunnels.ms/payment/notify",
     name_first: "",
     name_last: "",
     m_payment_id: "",
@@ -74,6 +75,10 @@ export default function CheckoutMain({
   const ordersCount = useQuery(api.orders.orderCount) ?? 0;
 
   const [coupon, setCoupon] = useState<string>("");
+
+  const [status, setStatus] = useState<
+    "" | "submitting" | "validated" | "error"
+  >("");
 
   const handleInputChange = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -107,9 +112,11 @@ export default function CheckoutMain({
     }
   };
 
-  const validateInput = () => {
+  const validateInput = (e: MouseEvent<HTMLButtonElement>) => {
     const elmts: HTMLElement[] = [];
 
+    setStatus("submitting");
+    e.preventDefault();
     Object.entries(data).map(([key, value]) => {
       const elmt = document.getElementById(`${key}`);
 
@@ -149,7 +156,16 @@ export default function CheckoutMain({
       }
     });
 
-    if (elmts.length > 0) elmts[0].focus();
+    if (elmts.length > 0) {
+      setStatus("");
+      elmts[0].focus();
+    }
+
+    if (elmts.length === 0) {
+      setStatus("validated");
+      setTimeout(() => setStatus(""), 5000);
+      e.currentTarget.form?.submit();
+    }
   };
 
   useEffect(() => setCartTotal(getTotalPrice), [getTotalPrice]);
@@ -456,13 +472,26 @@ export default function CheckoutMain({
               <button
                 form="payment-form"
                 className="btn btn-primary btn-md w-full rounded-lg"
-                onClick={(e) => {
-                  e.preventDefault();
-                  validateInput();
+                onClick={(e: MouseEvent<HTMLButtonElement>) => {
+                  validateInput(e);
                 }}
-                disabled={shippingData.method === ""}
+                disabled={shippingData.method === "" || status === "submitting"}
               >
-                Pay now
+                {status === "" ? (
+                  "Pay now"
+                ) : status === "submitting" ? (
+                  <>
+                    <BiLoaderAlt className="size-8 animate-spin" />
+                    {"Processing..."}
+                  </>
+                ) : (
+                  status === "validated" && (
+                    <>
+                      <BiCheck className="size-8" />
+                      {"Processed!"}
+                    </>
+                  )
+                )}
               </button>
             </div>
 

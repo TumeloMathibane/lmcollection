@@ -2,7 +2,7 @@
 
 import { ChangeEvent, useEffect, useState } from "react";
 import ItemCard from "./ui/checkout/ItemCard";
-import { BiCaretDown } from "react-icons/bi";
+import { BiChevronDown } from "react-icons/bi";
 import type { CartItem } from "@/stores/types";
 
 export default function OrderSummaryWidget({
@@ -47,8 +47,8 @@ export default function OrderSummaryWidget({
       >
         <p className="flex self-center-safe text-blue-800/80">
           Order summary{" "}
-          <BiCaretDown
-            className={`ml-2 self-center-safe transition-all duration-500 ${open ? "rotate-180" : "-rotate-0"}`}
+          <BiChevronDown
+            className={`ml-2 self-center-safe origin-center transition-all duration-500 ${open ? "rotate-180" : "-rotate-0"}`}
           />
         </p>
         <span className="text-xl font-semibold before:content-['R'] before:mr-1 self-center-safe">
