@@ -73,11 +73,14 @@ export default function Home() {
 }
 
 //! TODO: Complete implement Checkout page
-//! TODO: FIX the letter casing of the category fields in the db
-//! TODO: Implement review feature
 //! TODO: Implement contact page logic
 //! TODO: Put pointer cursors to all relevent elements...
+//! TODO: Implement all page.tsx files to server components for metadata editing...
+//! TODO: Implement review feature
+//! TODO: FIX the letter casing of the category fields in the db
+//! TODO: Implement skeleton for loading screen...
 //!
 //! ==================================================
 //!
 //! NOTE: Construct a placeholder image so that it is hosted locally in the app
+//! NOTE: Implement way of storing user info as they input it, and load it in relevent inputs on page reload...

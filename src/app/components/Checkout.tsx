@@ -409,6 +409,17 @@ export default function CheckoutMain({
                           Information relating to <em>the courier guy</em>{" "}
                           services will be requested here
                         </p>
+                        {/* <table>
+                          <thead>
+                            <tr>
+                              <th>Service Type</th>
+                              <th>Price charge {"(R.)"}</th>
+                              <th>Package mass range {"kg"}</th>
+                              <th>Delivery time</th>
+                            </tr>
+                          </thead>
+                          <tbody></tbody>
+                        </table> */}
                       </div>
                     </div>
                   </div>
