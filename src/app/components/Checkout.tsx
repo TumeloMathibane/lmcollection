@@ -14,6 +14,9 @@ import { states } from "../../data/sa_provinces.json";
 import Loading from "../(payments)/loading";
 import { BiCheck, BiLoaderAlt } from "react-icons/bi";
 
+import packages from "../../data/delivery_packages.json";
+import { DeliveryPackage } from "./DeliveryOpt";
+
 type MerchantProp = {
   m_key: string;
   m_id: string;
@@ -47,6 +50,9 @@ export default function CheckoutMain({
     country: "",
     save_info: false,
   });
+  const [delivery, setDelivery] = useState<{
+    [key: string]: string | number | boolean | undefined;
+  }>({});
   const [shippingData, setShippingData] = useState({
     method: "",
     price: 0,
@@ -377,49 +383,20 @@ export default function CheckoutMain({
                 <div className="bg-stone-200 p-4 rounded-xl space-y-2">
                   <div className="flex flex-col space-y-2 md:px-5">
                     <p className="text-stone-500">Select shipping service:</p>
-                    <div className="join join-horizontal flex w-full space-x-0.5">
-                      <DeliverySelector
-                        value={shippingData?.method}
-                        onChange={(e) => {
-                          handleInputChange(e);
-                        }}
-                      />
-                    </div>
-
-                    <div>
-                      <div
-                        hidden={
-                          shippingData?.method === "tcg" ||
-                          shippingData.method === ""
-                        }
-                      >
-                        <p>
-                          Information relating to <em>paxi</em> services will be
-                          requested here
-                        </p>
+                    <div className="space-y-4">
+                      <div className="join join-horizontal flex w-full space-x-0.5">
+                        <DeliverySelector
+                          value={shippingData?.method}
+                          onChange={(e) => handleInputChange(e)}
+                        />
                       </div>
 
-                      <div
-                        hidden={
-                          shippingData?.method === "paxi" ||
-                          shippingData.method === ""
-                        }
-                      >
-                        <p>
-                          Information relating to <em>the courier guy</em>{" "}
-                          services will be requested here
-                        </p>
-                        {/* <table>
-                          <thead>
-                            <tr>
-                              <th>Service Type</th>
-                              <th>Price charge {"(R.)"}</th>
-                              <th>Package mass range {"kg"}</th>
-                              <th>Delivery time</th>
-                            </tr>
-                          </thead>
-                          <tbody></tbody>
-                        </table> */}
+                      {/* //! start here... */}
+                      <div hidden={shippingData.method === ""}>
+                        <DeliveryPackage
+                          shippingMethod={shippingData.method}
+                          onChange={(e) => console.log(e)}
+                        />
                       </div>
                     </div>
                   </div>
