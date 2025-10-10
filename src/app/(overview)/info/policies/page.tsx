@@ -87,7 +87,7 @@ export default function Policies() {
             <p className="table-cell border border-stone-600 p-1 font-semibold text-stone-500 xl:p-3">
               Shipping Delays:
             </p>
-            <p className="table-cell border border-stone-600 p-1 px-2 xl:p-3">
+            <div className="table-cell border border-stone-600 p-1 px-2 xl:p-3">
               <ol className="list-disc list-inside">
                 <li>
                   While we strive to deliver your order on time, unforeseen
@@ -99,7 +99,7 @@ export default function Policies() {
                   you with the latest information.
                 </li>
               </ol>
-            </p>
+            </div>
           </section>
         </div>
       </section>
@@ -121,7 +121,7 @@ export default function Policies() {
             <p className="table-cell border border-stone-600 p-1 font-semibold text-stone-500 xl:p-3">
               Process:
             </p>
-            <p className="table-cell border border-stone-600 p-1 px-2 xl:p-3">
+            <div className="table-cell border border-stone-600 p-1 px-2 xl:p-3">
               <ol className="list-decimal list-inside">
                 <li>
                   Contact us at (business email to be inserted) to request a
@@ -135,7 +135,7 @@ export default function Policies() {
                   Items sent back without prior approval will not be accepted.
                 </li>
               </ol>
-            </p>
+            </div>
           </section>
           <section className="table-row">
             <p className="table-cell border border-stone-600 p-1 font-semibold text-stone-500 xl:p-3">
