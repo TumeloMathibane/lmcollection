@@ -50,11 +50,9 @@ export default function CheckoutMain({
     country: "",
     save_info: false,
   });
-  const [delivery, setDelivery] = useState<{
-    [key: string]: string | number | boolean | undefined;
-  }>({});
   const [shippingData, setShippingData] = useState({
     method: "",
+    type: "",
     price: 0,
     street_address: "",
     apartment_no: "",
@@ -95,11 +93,11 @@ export default function CheckoutMain({
     if (shippingData.hasOwnProperty(name)) {
       setShippingData((prevVal) => ({ ...prevVal, [name]: value }));
 
-      if (name === "method" && value === "tcg")
-        setShippingData((prevVal) => ({ ...prevVal, price: 110 }));
+      // if (name === "method" && value === "tcg")
+      //   setShippingData((prevVal) => ({ ...prevVal, price: 110 }));
 
-      if (name === "method" && value === "paxi")
-        setShippingData((prevVal) => ({ ...prevVal, price: 55 }));
+      // if (name === "method" && value === "paxi")
+      //   setShippingData((prevVal) => ({ ...prevVal, price: 55 }));
     }
 
     if (paymentData.hasOwnProperty(name)) {
@@ -113,6 +111,10 @@ export default function CheckoutMain({
         [name]: name === "save_info" ? checked : value,
       }));
     }
+  };
+
+  const handleDeliveryData = (key: string, value: string | number) => {
+    setShippingData((prevVal) => ({ ...prevVal, [key]: value }));
   };
 
   const validateInput = (e: MouseEvent<HTMLButtonElement>) => {
@@ -226,7 +228,7 @@ export default function CheckoutMain({
     <main className="bg-white flex flex-col min-h-screen md:min-h-[52em] lg:min-h-screen xl:min-h-screen">
       <div className="lg:hidden">
         <OrderSummaryWidget
-          shippingPrice={shippingData.price}
+          shippingPrice={shippingData?.price}
           cartTotal={cartTotal}
           items={items}
           coupon={coupon}
@@ -391,11 +393,11 @@ export default function CheckoutMain({
                         />
                       </div>
 
-                      {/* //! start here... */}
+                      {/* //! START HERE: flip to the component file... */}
                       <div hidden={shippingData.method === ""}>
                         <DeliveryPackage
-                          shippingMethod={shippingData.method}
-                          onChange={(e) => console.log(e)}
+                          deliveryData={shippingData}
+                          onChange={handleDeliveryData}
                         />
                       </div>
                     </div>
@@ -458,7 +460,10 @@ export default function CheckoutMain({
                 form="payment-form"
                 className="btn btn-primary btn-md w-full rounded-lg"
                 onClick={(e: MouseEvent<HTMLButtonElement>) => {
-                  validateInput(e);
+                  // validateInput(e);
+
+                  e.preventDefault();
+                  console.log("Shipping data: ", shippingData);
                 }}
                 disabled={shippingData.method === "" || status === "submitting"}
               >
