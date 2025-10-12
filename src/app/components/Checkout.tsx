@@ -477,6 +477,9 @@ export default function CheckoutMain({
                 className="btn btn-primary btn-md w-full rounded-lg"
                 onClick={(e: MouseEvent<HTMLButtonElement>) => {
                   validateInput(e);
+
+                  // e.preventDefault();
+                  // console.log("Shipping data: ", shippingData);
                 }}
                 disabled={shippingData.method === "" || status === "submitting"}
               >
