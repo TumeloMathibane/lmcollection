@@ -5,16 +5,10 @@ import ImageWithFallback from "../ImageWithFallback";
 
 interface DeliverySelProp {
   value?: string;
-  onChange: (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
+  onChange: (key: string, value: string) => void;
 }
 
 export default function DeliverySelector({ value, onChange }: DeliverySelProp) {
-  const handleChange = (
-    e: ChangeEvent<HTMLSelectElement | HTMLInputElement>
-  ) => {
-    onChange(e);
-  };
-
   return (
     <>
       <div className="join-item flex justify-center-safe w-1/2 has-checked:ring ring-blue-800 has-checked:rounded-l-lg has-checked:bg-blue-800/10">
@@ -25,7 +19,7 @@ export default function DeliverySelector({ value, onChange }: DeliverySelProp) {
           className="radio hidden"
           value="tcg"
           onChange={(e) => {
-            handleChange(e);
+            onChange("method", e.target?.value);
           }}
           checked={value === "tcg"}
         />
@@ -47,7 +41,7 @@ export default function DeliverySelector({ value, onChange }: DeliverySelProp) {
           className="radio hidden"
           value="paxi"
           onChange={(e) => {
-            handleChange(e);
+            onChange("method", e.target?.value);
           }}
           checked={value === "paxi"}
         />

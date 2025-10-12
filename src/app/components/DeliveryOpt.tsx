@@ -1,6 +1,5 @@
 "use client";
 
-import { ChangeEvent, useEffect } from "react";
 import packages from "../../data/delivery_packages.json";
 
 interface DeliveryOptProps {
@@ -87,7 +86,10 @@ export function DeliveryPackage({ deliveryData, onChange }: DeliveryOptProps) {
                 <p>Select prefered delivery type:</p>
                 <select
                   className="select select-md w-full"
-                  onChange={(e) => onChange("type", e.target?.value)}
+                  onChange={(e) => {
+                    onChange("type", e.target?.value);
+                    onChange("price", 0);
+                  }}
                 >
                   <option value="">Delivery type</option>
                   {packages.map(({ name, abbr }, index) => (

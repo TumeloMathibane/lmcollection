@@ -14,7 +14,6 @@ import { states } from "../../data/sa_provinces.json";
 import Loading from "../(payments)/loading";
 import { BiCheck, BiLoaderAlt } from "react-icons/bi";
 
-import packages from "../../data/delivery_packages.json";
 import { DeliveryPackage } from "./DeliveryOpt";
 
 type MerchantProp = {
@@ -389,11 +388,17 @@ export default function CheckoutMain({
                       <div className="join join-horizontal flex w-full space-x-0.5">
                         <DeliverySelector
                           value={shippingData?.method}
-                          onChange={(e) => handleInputChange(e)}
+                          onChange={(key, value) =>
+                            setShippingData((prevVal) => ({
+                              ...prevVal,
+                              [key]: value,
+                              type: "",
+                              price: 0,
+                            }))
+                          }
                         />
                       </div>
 
-                      {/* //! START HERE: flip to the component file... */}
                       <div hidden={shippingData.method === ""}>
                         <DeliveryPackage
                           deliveryData={shippingData}
