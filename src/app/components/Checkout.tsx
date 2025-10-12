@@ -150,6 +150,22 @@ export default function CheckoutMain({
       }
     });
 
+    Object.entries(shippingData).map(([key, value]) => {
+      if (key !== "apartment_no") {
+        const elmt = document.getElementById(key);
+
+        if (value === "" || value === 0) {
+          if (elmt) {
+            elmts.push(elmt);
+          }
+          elmt?.classList.add("border", "border-red-600");
+        } else {
+          if (elmt?.classList.contains("border-red-600"))
+            elmt?.classList.remove("border", "border-red-600");
+        }
+      }
+    });
+
     if (elmts.length > 0) {
       setStatus("");
       elmts[0].focus();

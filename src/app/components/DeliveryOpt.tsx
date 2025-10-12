@@ -18,6 +18,7 @@ export function DeliveryPackage({ deliveryData, onChange }: DeliveryOptProps) {
                 <p>Select prefered delivery type:</p>
                 <select
                   className="select select-md w-full"
+                  id="type"
                   onChange={(e) => {
                     onChange("type", e.target?.value);
                     onChange(
@@ -86,6 +87,7 @@ export function DeliveryPackage({ deliveryData, onChange }: DeliveryOptProps) {
                 <p>Select prefered delivery type:</p>
                 <select
                   className="select select-md w-full"
+                  id="type"
                   onChange={(e) => {
                     onChange("type", e.target?.value);
                     onChange("price", 0);
@@ -132,6 +134,7 @@ export function DeliveryPackage({ deliveryData, onChange }: DeliveryOptProps) {
                               <p>Select delivery time:</p>
                               <select
                                 className="select select-md w-full"
+                                id="price"
                                 onChange={(e) =>
                                   onChange("price", Number(e.target?.value))
                                 }
