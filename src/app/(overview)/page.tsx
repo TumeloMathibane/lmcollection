@@ -72,15 +72,14 @@ export default function Home() {
   );
 }
 
-//! TODO: Complete implement Checkout page
-//! TODO: Complete implementing the component for selecting delivery package...
-//! TODO: Implement contact page logic
-
-//! TODO: Put pointer cursors to all relevent elements...
 //! TODO: Implement all page.tsx files to server components for metadata editing...
-//! TODO: Implement review feature
-//! TODO: FIX the letter casing of the category fields in the db
+//! TODO: Put pointer cursors to all relevent elements...
 //! TODO: Implement skeleton for loading screen...
+//! TODO: FIX the letter casing of the category fields in the db
+//! TODO: Implement review feature
+
+//! TODO: Implement contact page logic
+//! TODO: Complete implement Checkout page [production]
 //!
 //! ==================================================
 //!
