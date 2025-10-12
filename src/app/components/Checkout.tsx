@@ -10,7 +10,7 @@ import { generatePaymentId, generateSignature } from "../utils/helper";
 import OrderSummaryWidget, { OrderSummary } from "./OrderSummary";
 import { CheckoutFooter } from "./Footer";
 import DeliverySelector from "./checkout/DeliverySel";
-import { states } from "../../data/sa_provinces.json";
+import { states } from "../lib/sa_provinces.json";
 import Loading from "../(payments)/loading";
 import { BiCheck, BiLoaderAlt } from "react-icons/bi";
 
