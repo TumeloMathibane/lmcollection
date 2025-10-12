@@ -1,3 +1,9 @@
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "About us",
+};
+
 export default function About() {
   return (
     <main className="min-h-[42em] md:min-h-[52em] lg:min-h-[64em] xl:min-h-[22em] space-y-3 md:space-y-5 p-2 mb-5 md:m-0 md:flex md:flex-col md:justify-center-safe md:align-middle xl:w-[70%] xl:place-self-center-safe xl:py-5">

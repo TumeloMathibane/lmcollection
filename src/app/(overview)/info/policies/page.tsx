@@ -1,3 +1,10 @@
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Policies",
+};
+
+// generate dynamic metadata to get page position...
 export default function Policies() {
   return (
     <main className="min-h-[42em] md:min-h-[52em] lg:min-h-[64em] xl:min-h-[22em] space-y-3 py-5 px-2 md:px-10 xl:w-[70%] xl:px-0 xl:place-self-center-safe">

@@ -1,4 +1,9 @@
 import ContactForm from "@/app/components/ui/info/ContactForm";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Contact us",
+};
 
 export default function Contact() {
   return (
