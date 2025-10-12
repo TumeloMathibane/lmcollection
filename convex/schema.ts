@@ -2,11 +2,6 @@ import { defineSchema, defineTable } from "convex/server";
 import { v } from "convex/values";
 
 export default defineSchema({
-  category: defineTable({
-    name: v.string(),
-    description: v.string(),
-    image: v.string(),
-  }),
   product: defineTable({
     itemCode: v.string(),
     name: v.string(),
