@@ -1,13 +1,10 @@
 "use client";
 
-import { useQuery } from "convex/react";
-import { api } from "@/convex/_generated/api";
+import { categories } from "../lib/categories.json";
 import Link from "next/link";
 import ImageWithFallback from "./ImageWithFallback";
 
 export default function Categories() {
-  const categories = useQuery(api.categories.get);
-
   if (categories === undefined)
     return (
       <>
@@ -16,9 +13,9 @@ export default function Categories() {
     );
 
   return (
-    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-3 text-black z-100">
+    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2 md:gap-3 text-black z-100">
       {categories?.map(({ name, image, description }, key) => {
-        if (name !== "accessories")
+        if (name !== "accessories" && name !== "appliances")
           return (
             <Link
               href={`/collection/products/all?category=${name}`}
@@ -31,7 +28,7 @@ export default function Categories() {
                 </div>
               </figure>
               <div className="w-full p-3 justify-center">
-                <h2 className="capitalize text-xl md:text-2xl text-center font-bold group-hover:underline group-hover:underline-offset-3">
+                <h2 className="capitalize text-xl text-center font-bold group-hover:underline group-hover:underline-offset-3">
                   {name}
                 </h2>
               </div>

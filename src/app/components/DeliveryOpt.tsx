@@ -1,6 +1,6 @@
 "use client";
 
-import packages from "../lib/delivery/delivery_packages.json";
+import packages from "../lib/delivery_packages.json";
 
 interface DeliveryOptProps {
   deliveryData: { [key: string]: string | number | boolean | undefined };
