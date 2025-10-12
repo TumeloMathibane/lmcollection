@@ -91,12 +91,6 @@ export default function CheckoutMain({
 
     if (shippingData.hasOwnProperty(name)) {
       setShippingData((prevVal) => ({ ...prevVal, [name]: value }));
-
-      // if (name === "method" && value === "tcg")
-      //   setShippingData((prevVal) => ({ ...prevVal, price: 110 }));
-
-      // if (name === "method" && value === "paxi")
-      //   setShippingData((prevVal) => ({ ...prevVal, price: 55 }));
     }
 
     if (paymentData.hasOwnProperty(name)) {
@@ -110,10 +104,6 @@ export default function CheckoutMain({
         [name]: name === "save_info" ? checked : value,
       }));
     }
-  };
-
-  const handleDeliveryData = (key: string, value: string | number) => {
-    setShippingData((prevVal) => ({ ...prevVal, [key]: value }));
   };
 
   const validateInput = (e: MouseEvent<HTMLButtonElement>) => {
@@ -402,7 +392,12 @@ export default function CheckoutMain({
                       <div hidden={shippingData.method === ""}>
                         <DeliveryPackage
                           deliveryData={shippingData}
-                          onChange={handleDeliveryData}
+                          onChange={(key, value) =>
+                            setShippingData((prevVal) => ({
+                              ...prevVal,
+                              [key]: value,
+                            }))
+                          }
                         />
                       </div>
                     </div>
@@ -465,10 +460,7 @@ export default function CheckoutMain({
                 form="payment-form"
                 className="btn btn-primary btn-md w-full rounded-lg"
                 onClick={(e: MouseEvent<HTMLButtonElement>) => {
-                  // validateInput(e);
-
-                  e.preventDefault();
-                  console.log("Shipping data: ", shippingData);
+                  validateInput(e);
                 }}
                 disabled={shippingData.method === "" || status === "submitting"}
               >

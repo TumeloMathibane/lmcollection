@@ -1,6 +1,5 @@
 "use client";
 
-import { ChangeEvent } from "react";
 import ImageWithFallback from "../ImageWithFallback";
 
 interface DeliverySelProp {

@@ -3,7 +3,7 @@
 import packages from "../../data/delivery_packages.json";
 
 interface DeliveryOptProps {
-  deliveryData: object;
+  deliveryData: { [key: string]: string | number | boolean | undefined };
   onChange: (key: string, value: string | number) => void;
 }
 
@@ -25,7 +25,7 @@ export function DeliveryPackage({ deliveryData, onChange }: DeliveryOptProps) {
                       Number(e.target?.value?.split("|")[1] ?? 0)
                     );
                   }}
-                  value={deliveryData?.type}
+                  value={deliveryData?.type as string}
                 >
                   <option value="">Delivery type</option>
                   {packages.map(({ name, abbr, minimum_charge }, index) => (
