@@ -17,7 +17,7 @@ export function DeliveryPackage({ deliveryData, onChange }: DeliveryOptProps) {
               <div key={index}>
                 <p>Select prefered delivery type:</p>
                 <select
-                  className="select select-md w-full"
+                  className="select select-md w-full focus-within:outline-offset-0 focus-within:outline-0 focus-within:border-2 focus-within:border-blue-600"
                   id="type"
                   onChange={(e) => {
                     onChange("type", e.target?.value);
@@ -86,7 +86,7 @@ export function DeliveryPackage({ deliveryData, onChange }: DeliveryOptProps) {
               <div key={index}>
                 <p>Select prefered delivery type:</p>
                 <select
-                  className="select select-md w-full"
+                  className="select select-md w-full focus-within:outline-offset-0 focus-within:outline-0 focus-within:border-2 focus-within:border-blue-600"
                   id="type"
                   onChange={(e) => {
                     onChange("type", e.target?.value);
@@ -133,7 +133,7 @@ export function DeliveryPackage({ deliveryData, onChange }: DeliveryOptProps) {
                             <div className="mt-4 indent-0">
                               <p>Select delivery time:</p>
                               <select
-                                className="select select-md w-full"
+                                className="select select-md w-full focus-within:outline-offset-0 focus-within:outline-0 focus-within:border-2 focus-within:border-blue-600"
                                 id="price"
                                 onChange={(e) =>
                                   onChange("price", Number(e.target?.value))

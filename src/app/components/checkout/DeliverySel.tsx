@@ -1,6 +1,6 @@
 "use client";
 
-import ImageWithFallback from "../ImageWithFallback";
+import Image from "next/image";
 
 interface DeliverySelProp {
   value?: string;
@@ -24,11 +24,13 @@ export default function DeliverySelector({ value, onChange }: DeliverySelProp) {
         />
         <label
           htmlFor="shipping-the-courier-guy"
-          className="size-25 h-fit self-center md:size-40 md:h-fit lg:size-25 lg:h-fit"
+          className="size-30 h-fit self-center md:size-40 md:h-fit lg:size-25 lg:h-fit"
         >
-          <ImageWithFallback
-            src="https://thecourierguy.co.za/wp-content/uploads/2025/03/tcg-logo.svg"
-            alt="the-courier-guy"
+          <Image
+            src={"/images/tcg_assets/The Courier Guy_id8GRqw8Lq_1.svg"}
+            alt="tcg"
+            width={500}
+            height={500}
           />
         </label>
       </div>
@@ -46,11 +48,13 @@ export default function DeliverySelector({ value, onChange }: DeliverySelProp) {
         />
         <label
           htmlFor="shipping-paxi"
-          className="size-25 p-3 h-fit self-center md:size-40 md:h-fit lg:size-25 lg:h-fit"
+          className="size-30 h-fit self-center md:size-40 md:h-fit lg:size-25 lg:h-fit"
         >
-          <ImageWithFallback
-            src="https://cdn.prod.website-files.com/632874eb357ffe9936d5498d/636a4b9640d40d161b81e109_PAXI_logo%5B93%5D.webp"
+          <Image
+            src={"/images/paxi_assets/PAXI Full Colur 1.png"}
             alt="paxi"
+            width={500}
+            height={500}
           />
         </label>
       </div>
