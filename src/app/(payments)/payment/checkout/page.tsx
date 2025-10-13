@@ -12,14 +12,14 @@ export default async function Checkout() {
   const formActionURL = process.env.PAYGATE_TEST_URL ?? "";
 
   const gatewayURL = {
-    return: process.env.VERCEL_URL
-      ? `https://${process.env.VERCEL_URL}/payments/return`
+    return: process.env.VERCEL_PROJECT_PRODUCTION_URL
+      ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}/payments/return`
       : "https://gkhg4mlb-3000.euw.devtunnels.ms/payments/return",
-    notify: process.env.VERCEL_URL
-      ? `https://${process.env.VERCEL_URL}/payments/notify`
+    notify: process.env.VERCEL_PROJECT_PRODUCTION_URL
+      ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}/payments/notify`
       : "https://gkhg4mlb-3000.euw.devtunnels.ms/payments/notify",
-    cancel: process.env.VERCEL_URL
-      ? `https://${process.env.VERCEL_URL}/payments/cancel`
+    cancel: process.env.VERCEL_PROJECT_PRODUCTION_URL
+      ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}/payments/cancel`
       : "https://gkhg4mlb-3000.euw.devtunnels.ms/payments/cancel",
   };
 
