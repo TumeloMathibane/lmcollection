@@ -2,8 +2,7 @@ import CheckoutMain from "@/app/components/Checkout";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Checkout | LMCollection",
-  description: "Checkout page for LM Collection",
+  title: "Checkout",
 };
 
 export default function Checkout() {
