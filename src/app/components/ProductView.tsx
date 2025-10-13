@@ -51,7 +51,7 @@ export default function ProductView({ productId }: { productId: string }) {
               </p>
               <div className="stock-status-price flex text-lg font-light justify-between">
                 <p>Stock status</p>
-                <p className="before:content-['R'] before:mr-2">
+                <p className="before:content-['R'] before:mr-1">
                   {product?.price}
                 </p>
               </div>

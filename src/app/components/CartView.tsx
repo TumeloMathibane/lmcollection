@@ -64,7 +64,7 @@ export default function CartView() {
                 <div className="flex justify-between text-stone-600 font-light lg:text-md">
                   <p>
                     <span className="before:content-['R'] before:mr-2">
-                      {item.productPrice.toFixed(2)}{" "}
+                      {item.productPrice}{" "}
                       <span className="text-xs font-light italic">
                         per unit
                       </span>

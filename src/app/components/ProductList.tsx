@@ -29,7 +29,7 @@ export default function ProductList({ count }: { count?: number }) {
               <h2 className="capitalize w-full text-md md:text-xl lg:text-base font-bold text-nowrap truncate">
                 {name}
               </h2>
-              <p>{price}</p>
+              <p className="before:content-['R'] before:mr-1">{price}</p>
             </div>
           </div>
         </Link>

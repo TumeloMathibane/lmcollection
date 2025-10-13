@@ -1,20 +1,18 @@
 "use client";
 
 import React, { ChangeEvent, MouseEvent, useEffect, useState } from "react";
-import Image from "next/image";
-import { useCartStore } from "@/stores/cart";
-import { useQuery } from "convex/react";
-import { api } from "@/convex/_generated/api";
-
 import { generatePaymentId, generateSignature } from "../utils/helper";
 import OrderSummaryWidget, { OrderSummary } from "./OrderSummary";
-import { CheckoutFooter } from "./Footer";
-import DeliverySelector from "./checkout/DeliverySel";
-import { states } from "../lib/sa_provinces.json";
-import Loading from "../(payments)/loading";
 import { BiCheck, BiLoaderAlt } from "react-icons/bi";
-
 import { DeliveryPackage } from "./DeliveryOpt";
+import { CheckoutFooter } from "./Footer";
+import { useCartStore } from "@/stores/cart";
+import { useQuery } from "convex/react";
+import { states } from "../lib/sa_provinces.json";
+import { api } from "@/convex/_generated/api";
+import DeliverySelector from "./checkout/DeliverySel";
+import Loading from "../(payments)/loading";
+import Image from "next/image";
 
 type MerchantProp = {
   m_key: string;
@@ -94,7 +92,10 @@ export default function CheckoutMain({
     }
 
     if (paymentData.hasOwnProperty(name)) {
-      setPaymentData((prevVal) => ({ ...prevVal, [name]: value }));
+      setPaymentData((prevVal) => ({
+        ...prevVal,
+        [name]: name === "amount" ? Number(value).toFixed(2) : value,
+      }));
     }
 
     if (e.currentTarget instanceof HTMLInputElement) {
@@ -202,7 +203,10 @@ export default function CheckoutMain({
 
   // update payment data when cartTotal changes
   useEffect(() => {
-    setPaymentData((prevVal) => ({ ...prevVal, amount: cartTotal }));
+    setPaymentData((prevVal) => ({
+      ...prevVal,
+      amount: Number(cartTotal.toFixed(2)),
+    }));
   }, [cartTotal]);
 
   // update total amount to be paid by customer when shipping method changes
