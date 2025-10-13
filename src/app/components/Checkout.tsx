@@ -62,7 +62,9 @@ export default function CheckoutMain({
   const [paymentData, setPaymentData] = useState({
     merchant_id: m_id,
     merchant_key: m_key,
-    notify_url: "https://gkhg4mlb-3000.euw.devtunnels.ms/payment/notify",
+    notify_url: process.env.VERCEL_URL
+      ? `https://${process.env.VERCEL_URL}/payment/notify`
+      : "https://gkhg4mlb-3000.euw.devtunnels.ms/payment/notify",
     name_first: "",
     name_last: "",
     m_payment_id: "",
