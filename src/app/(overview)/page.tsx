@@ -72,14 +72,12 @@ export default function Home() {
   );
 }
 
-//! TODO: Implement all page.tsx files to server components for metadata editing...
-//! TODO: Put pointer cursors to all relevent elements...
+//! TODO: In collection, and product view; implement method to display items in database if environment is 'production'. Display local items from local file if environment is 'development'
 //! TODO: Implement skeleton for loading screen...
-//! TODO: FIX the letter casing of the category fields in the db
+//! TODO: Implement pages with dynamic routes to have dynamic metadata...
 //! TODO: Implement review feature
 
 //! TODO: Implement contact page logic
-//! TODO: Complete implement Checkout page [production]
 //!
 //! ==================================================
 //!
