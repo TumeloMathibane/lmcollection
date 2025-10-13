@@ -58,6 +58,7 @@ export default function CartView() {
                   </Link>
                   <BiX
                     size={"1.5em"}
+                    className="hover:cursor-pointer"
                     onClick={() => removeItem(item.productId, item.productSize)}
                   />
                 </div>

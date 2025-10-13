@@ -95,7 +95,7 @@ export default function ProductView({ productId }: { productId: string }) {
               </div>
             </section>
           </div>
-          <section className="w-full flex items-center-safe space-x-2 py-2 md:w-1/2">
+          <section className="w-full flex items-center-safe space-x-2 py-2 md:w-1/2 lg:py-0">
             <button
               onClick={() =>
                 product?._id &&
@@ -115,13 +115,13 @@ export default function ProductView({ productId }: { productId: string }) {
                 setSize(""),
                 setQuantity(0))
               }
-              className="py-1 px-4 bg-stone-900 text-stone-200 rounded-full w-full md:py-2 xl:py-3"
+              className="py-1 px-4 bg-stone-900 text-stone-200 rounded-full w-full hover:cursor-pointer md:py-2 xl:py-3"
             >
               Add to cart
             </button>
             <BiHeart
-              size={"2rem"}
-              className="h-full w-fit md:border-2 border-stone-900 rounded-full md:p-1 xl:p-2"
+              size={"2.5rem"}
+              className="h-full w-fit hover:cursor-pointer md:border-2 border-stone-900 rounded-full md:p-1 xl:p-1"
             />
           </section>
           <div className="border-t border-stone-900 w-[50%] place-self-center-safe my-4" />
