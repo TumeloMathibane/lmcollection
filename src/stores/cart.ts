@@ -15,7 +15,7 @@ export const useCartStore = create<CartStore>()(
         img: string,
         size: string,
         qty = 1,
-        price
+        price: number
       ) => {
         set((state) => {
           const now = Date.now();
@@ -44,7 +44,7 @@ export const useCartStore = create<CartStore>()(
                 productImg: img,
                 productSize: size,
                 productQty: qty,
-                productPrice: price,
+                productPrice: Number(price.toFixed(2)),
               },
             ],
           };
@@ -72,9 +72,13 @@ export const useCartStore = create<CartStore>()(
       clearCart: () => set({ items: [] }),
 
       getTotalPrice: () => {
-        return get().items.reduce(
-          (total, item) => total + item.productQty * item.productPrice,
-          0
+        return Number(
+          get()
+            .items.reduce(
+              (total, item) => total + item.productQty * item.productPrice,
+              0
+            )
+            .toFixed(2)
         );
       },
     }),
