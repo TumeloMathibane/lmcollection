@@ -1,3 +1,5 @@
+import { Id } from "@/convex/_generated/dataModel";
+
 export type Category = {
   name: string;
   image: string;
@@ -5,7 +7,7 @@ export type Category = {
 };
 
 export type Product = {
-  _id: string;
+  _id: Id<"product"> | string;
   name: string;
   price: number;
   discount: number;
