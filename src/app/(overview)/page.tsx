@@ -3,7 +3,7 @@ import Categories from "../components/Categories";
 import ProductList from "../components/ProductList";
 import ImageWithFallback from "../components/ImageWithFallback";
 
-export default function Home() {
+export default async function Home() {
   return (
     <div className="font-sans flex justify-center min-h-[42em] md:min-h-[52em] lg:min-h-[64em] xl:min-h-[22em]">
       <main className="container space-y-10">
@@ -72,7 +72,6 @@ export default function Home() {
   );
 }
 
-//! TODO: In collection, and product view; implement method to display items in database if environment is 'production'. Display local items from local file if environment is 'development'
 //! TODO: Implement skeleton for loading screen...
 //! TODO: Implement pages with dynamic routes to have dynamic metadata...
 //! TODO: Implement review feature
