@@ -12,7 +12,7 @@ export default defineSchema({
     availableQuantity: v.number(),
     category: v.string(),
     image: v.string(),
-    additional_options: v.optional(v.record(v.string(), v.any())),
+    additional_options: v.optional(v.record(v.string(), v.array(v.string()))),
   }),
   orders: defineTable({
     orderNumber: v.optional(v.string()),
