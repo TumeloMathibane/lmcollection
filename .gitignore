@@ -42,5 +42,5 @@ next-env.d.ts
 
 # redundant
 data/
-scripts.ts
+scripts.*
 policy.lm.md
