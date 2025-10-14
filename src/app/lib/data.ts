@@ -24,9 +24,10 @@ export function getProducts(category?: string, count?: number): Product[] {
         countedProducts?.push(localProducts[i]);
       }
     }
+    return countedProducts;
+  } else {
+    return filteredProducts;
   }
-
-  return countedProducts;
 }
 
 export function getProduct(id: string): Product {
