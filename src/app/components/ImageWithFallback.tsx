@@ -4,12 +4,15 @@ import Image from "next/image";
 import { useState } from "react";
 import { fallbackImage } from "@/constants/images";
 
-interface IImageWithFallback {
+interface ImageWithFallbackProps {
   src?: string;
   alt?: string;
 }
 
-export default function ImageWithFallback({ src, alt }: IImageWithFallback) {
+export default function ImageWithFallback({
+  src,
+  alt,
+}: ImageWithFallbackProps) {
   const [imgSrc, setImgSrc] = useState<string | undefined>(
     src ?? fallbackImage
   );

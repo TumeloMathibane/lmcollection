@@ -1,4 +1,4 @@
-interface ISizeInput {
+interface SizeInputProps {
   size: string | undefined;
   availableSizes: string[] | undefined;
   onSizeChange: (size: string | undefined) => void;
@@ -8,7 +8,7 @@ export default function SizeInput({
   size,
   availableSizes,
   onSizeChange,
-}: ISizeInput) {
+}: SizeInputProps) {
   const handleSizeChange = (value: string | undefined) => {
     onSizeChange(value);
   };

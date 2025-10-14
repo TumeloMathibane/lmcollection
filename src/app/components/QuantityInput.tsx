@@ -3,7 +3,7 @@
 import React from "react";
 import { BiMinus, BiPlus } from "react-icons/bi";
 
-interface IQuantityInput {
+interface QuantityInputProps {
   quantity: number;
   onChange: (value: number) => void;
   onIncrement: () => void;
@@ -18,7 +18,7 @@ export default function QuantityInput({
   onIncrement,
   onDecrement,
   incrementDisable,
-}: IQuantityInput) {
+}: QuantityInputProps) {
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onChange(e.target.valueAsNumber);
   };
