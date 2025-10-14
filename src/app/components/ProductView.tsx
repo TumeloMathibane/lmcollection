@@ -1,23 +1,16 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useQuery } from "convex/react";
-import { api } from "@/convex/_generated/api";
 import { useCartStore } from "@/stores/cart";
 import ImageWithFallback from "./ImageWithFallback";
 import QuantityInput from "./QuantityInput";
 import SizeInput from "./ui/products/SizeInput";
-import ProductList from "./ProductList";
 import { BiHeart } from "react-icons/bi";
 
 import Loading from "../(overview)/collection/products/[productId]/loading";
-import { Id } from "@/convex/_generated/dataModel";
+import { Product } from "../(overview)/collection/products/types";
 
-export default function ProductView({ productId }: { productId: string }) {
-  const product = useQuery(api.products.getProduct, {
-    id: productId as Id<"product">,
-  });
-
+export default function ProductView({ product }: { product: Product }) {
   const { addItem } = useCartStore();
 
   const [quantity, setQuantity] = useState<number>(1);
@@ -129,7 +122,7 @@ export default function ProductView({ productId }: { productId: string }) {
             <p className="text-lg font-bold text-stone-900">
               Products you may like...
             </p>
-            <ProductList count={5} />
+            {/* <ProductList products={[]} /> */}
           </section>
         </>
       )}

@@ -1,19 +1,11 @@
 "use client";
 
-import { useQuery } from "convex/react";
-import { api } from "@/convex/_generated/api";
-
 import { ProductCard } from "@/app/components/ui/products/Card";
 import Loading from "../(overview)/collection/products/all/loading";
-import { useSearchParams } from "next/navigation";
 import { useEffect } from "react";
+import type { Product } from "../(overview)/collection/products/types";
 
-export default function CollectionView() {
-  const filter = useSearchParams();
-  const products = useQuery(api.products.get, {
-    category: filter?.get("category") || undefined,
-  });
-
+export default function CollectionView({ products }: { products: Product[] }) {
   useEffect(() => window.scrollTo(0, 0));
 
   return (

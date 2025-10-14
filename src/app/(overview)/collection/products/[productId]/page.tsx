@@ -1,4 +1,5 @@
 import ProductView from "@/app/components/ProductView";
+import { getProduct } from "@/app/lib/data";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -15,7 +16,7 @@ export default async function Product({
 
   return (
     <>
-      <ProductView productId={productId} />
+      <ProductView product={getProduct(productId)} />
     </>
   );
 }
