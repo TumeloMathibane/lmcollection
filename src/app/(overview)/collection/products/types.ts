@@ -11,7 +11,10 @@ export type Product = {
   name: string;
   price: number;
   discount: number;
+  shortDescription: string;
+  availableSizes: string[];
   availableQuantity: number;
-  image: string;
   category: string;
+  image: string;
+  additional_options?: { [key: string]: string[] } | object;
 };
