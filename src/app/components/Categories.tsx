@@ -2,16 +2,9 @@
 
 import { categories } from "../lib/categories.json";
 import Link from "next/link";
-import ImageWithFallback from "./ImageWithFallback";
+import Image from "next/image";
 
 export default function Categories() {
-  if (categories === undefined)
-    return (
-      <>
-        <p className="text-center">Loading categories...</p>
-      </>
-    );
-
   return (
     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2 md:gap-3 text-black z-100">
       {categories?.map(({ name, image, description }, key) => {
@@ -24,7 +17,12 @@ export default function Categories() {
             >
               <figure className="overflow-hidden">
                 <div className="transition-all origin-center duration-500 ease-in-out group-hover:scale-105 size-55 md:size-full">
-                  <ImageWithFallback src={image} alt={description} />
+                  <Image
+                    src={image}
+                    alt={description}
+                    width={500}
+                    height={625}
+                  />
                 </div>
               </figure>
               <div className="w-full p-3 justify-center">
