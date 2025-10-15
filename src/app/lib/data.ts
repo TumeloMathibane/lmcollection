@@ -3,31 +3,34 @@ import { Product } from "../(overview)/collection/products/types";
 
 // this function is for the local retrieval of products...
 export function getProducts(category?: string, count?: number): Product[] {
-  const filteredProducts: Product[] = [];
-  const countedProducts: Product[] = [];
+  if (category === undefined && (count === undefined || count === undefined))
+    return localProducts;
 
-  if (category === undefined && count === undefined) return localProducts;
-
-  if (category !== undefined) {
-    localProducts.map((product) => {
-      if (product?.category === category) filteredProducts?.push(product);
-    });
+  // filter by category
+  let categorisedProducts: Product[] = [];
+  if (category) {
+    categorisedProducts = localProducts?.filter(
+      (product) => product?.category === category
+    );
   }
 
-  if (count !== undefined) {
-    if (filteredProducts.length > 0) {
-      for (let i = 0; i < count; i++) {
-        countedProducts?.push(filteredProducts[i]);
-      }
+  // return n products as per 'count' params
+  let countedProducts: Product[] = [];
+  if (count) {
+    if (categorisedProducts.length > 0) {
+      categorisedProducts.forEach(
+        (product, index) => index < count && countedProducts.push(product)
+      );
     } else {
-      for (let i = 0; i < count; i++) {
-        countedProducts?.push(localProducts[i]);
-      }
+      localProducts.forEach(
+        (product, index) => index < count && countedProducts.push(product)
+      );
     }
-    return countedProducts;
   } else {
-    return filteredProducts;
+    countedProducts = categorisedProducts;
   }
+
+  return countedProducts;
 }
 
 export function getProduct(id: string): Product {
