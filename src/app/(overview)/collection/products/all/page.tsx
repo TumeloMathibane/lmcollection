@@ -16,7 +16,7 @@ export default async function Collection({
 
   return (
     <>
-      <CollectionView products={await getProducts(query)} />
+      <CollectionView products={(await getProducts(query)) ?? undefined} />
     </>
   );
 }

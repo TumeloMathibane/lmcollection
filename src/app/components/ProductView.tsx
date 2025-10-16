@@ -9,6 +9,7 @@ import { BiHeart } from "react-icons/bi";
 
 import Loading from "../(overview)/collection/products/[productId]/loading";
 import { Product } from "../(overview)/collection/products/types";
+import ProductList from "./ProductList";
 
 export default function ProductView({ product }: { product: Product }) {
   const { addItem } = useCartStore();
@@ -122,7 +123,9 @@ export default function ProductView({ product }: { product: Product }) {
             <p className="text-lg font-bold text-stone-900">
               Products you may like...
             </p>
-            {/* <ProductList products={[]} /> */}
+            <section>
+              <ProductList category={product?.category} count={5} />
+            </section>
           </section>
         </>
       )}
