@@ -1,15 +1,24 @@
 import localProducts from "@/data/new-product-catalog.json";
 import { Product } from "../(overview)/collection/products/types";
+import { fetchQuery } from "convex/nextjs";
+import { api } from "@/convex/_generated/api";
 
 // this function is for the local retrieval of products...
-export function getProducts(category?: string, count?: number): Product[] {
-  if (category === undefined && (count === undefined || count === undefined))
-    return localProducts;
+export async function getProducts(
+  category?: string,
+  count?: number
+): Promise<Product[]> {
+  const products: Product[] =
+    process.env.VERCEL_ENV === "production"
+      ? await fetchQuery(api.products.get, {})
+      : localProducts;
+
+  if (category === undefined && count === undefined) return products;
 
   // filter by category
   let categorisedProducts: Product[] = [];
   if (category) {
-    categorisedProducts = localProducts?.filter(
+    categorisedProducts = products?.filter(
       (product) => product?.category === category
     );
   }
