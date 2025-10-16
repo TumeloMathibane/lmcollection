@@ -1,11 +1,35 @@
 "use client";
 
 import Link from "next/link";
-import type { Product } from "../(overview)/collection/products/types";
 import ProductListSkeleton from "./ui/home/ProductListSkeleton";
 import Image from "next/image";
+import type { Product } from "../(overview)/collection/products/types";
 
-export default function ProductList({ products }: { products?: Product[] }) {
+import { useState, useEffect } from "react";
+import { getProducts } from "../lib/data";
+
+export default function ProductList({
+  category,
+  count,
+}: {
+  category?: string;
+  count?: number;
+}) {
+  const [products, setProducts] = useState<Product[] | undefined>(undefined);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const newProducts = await getProducts(category, count);
+        setProducts(newProducts);
+      } catch (error) {
+        throw new Error(`ProductList Error: , ${error}`);
+      }
+    };
+
+    fetchProducts();
+  }, [category, count, setProducts]);
+
   if (!products) {
     return (
       <div className="flex space-x-4">
