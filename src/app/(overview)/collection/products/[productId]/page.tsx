@@ -12,11 +12,11 @@ export default async function Product({
 }: {
   params: Promise<{ productId: string }>;
 }) {
-  const { productId } = await params;
+  const { productId } = (await params) ?? undefined;
 
   return (
     <>
-      <ProductView product={getProduct(productId)} />
+      <ProductView product={getProduct(productId) ?? undefined} />
     </>
   );
 }

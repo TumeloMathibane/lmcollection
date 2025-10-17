@@ -11,13 +11,19 @@ import Loading from "../(overview)/collection/products/[productId]/loading";
 import { Product } from "../(overview)/collection/products/types";
 import ProductList from "./ProductList";
 
-export default function ProductView({ product }: { product: Product }) {
+export default function ProductView({
+  product,
+}: {
+  product: Product | undefined;
+}) {
   const { addItem } = useCartStore();
 
   const [quantity, setQuantity] = useState<number>(1);
   const [size, setSize] = useState<string | undefined>("");
 
   useEffect(() => window.scrollTo(0, 0));
+
+  if (!product) return <Loading />;
 
   return (
     <main className="p-2 space-y-2 xl:w-[70%] xl:place-self-center-safe xl:py-10 min-h-[42em] md:min-h-[52em] lg:min-h-[64em] xl:min-h-[22em]">
