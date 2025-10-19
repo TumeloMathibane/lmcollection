@@ -9,7 +9,8 @@ import CartSummary from "./ui/cart/CartSummary";
 import Loading from "../(overview)/cart/loading";
 
 export default function CartView() {
-  const { loading, items, updateItemQty, removeItem } = useCartStore();
+  const { loading, items, updateItemQty, removeItem, clearCart } =
+    useCartStore();
 
   if (loading) return <Loading />;
 
@@ -116,7 +117,17 @@ export default function CartView() {
         </div>
         <div className="hidden lg:block lg:border-l border-stone-400 mx-5 my-3" />
         <div className="w-full lg:w-1/3 p-3 lg:h-full sticky bottom-0 lg:top-6 bg-white border-0">
-          <CartSummary items={items} />
+          <div className="flex flex-col space-y-3 rounded-lg border lg:border-0 border-stone-400 p-3">
+            <CartSummary items={items} />
+
+            <p
+              className="text-red-500 font-semibold hover:cursor-pointer flex flex-col w-fit group"
+              onClick={() => clearCart()}
+            >
+              Clear cart {`(${items?.length})`}{" "}
+              <span className="border-b w-0 transition-all duration-500 group-hover:w-[100%]" />
+            </p>
+          </div>
         </div>
       </div>
     </main>
