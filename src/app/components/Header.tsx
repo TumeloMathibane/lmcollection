@@ -4,6 +4,7 @@ import { navlinks } from "@/constants/links";
 import Image from "next/image";
 import Link from "next/link";
 import logo from "../../../public/logos/Liphiwe_business_logo_white.svg";
+import blackLogo from "../../../public/logos/Liphiwe_business_logo_black.svg";
 import { useEffect, useState } from "react";
 import { BiSearch, BiShoppingBag, BiMenu, BiX } from "react-icons/bi";
 import { usePathname } from "next/navigation";
@@ -144,24 +145,14 @@ export default function Header() {
 export function CheckoutHeader() {
   return (
     <nav className="border-b border-stone-300 lg:place-items-center-safe">
-      <div className="flex justify-between p-3 w-full items-center-safe md:px-30 lg:max-w-[1000px] lg:px-3">
-        <div className="size-15 h-auto">
-          <Link href={"/"}>
-            <Image
-              src="/logos/Liphiwe_business_logo_black.svg"
-              alt="business-logo"
-              width={"70"}
-              height={"100"}
-              className="h-auto"
-            />
-          </Link>
-        </div>
+      <div className="flex justify-between p-3 w-full place-self-center-safe items-center-safe md:max-w-[750px] lg:max-w-[1050px]">
+        <Link href={"/"}>
+          <Image src={blackLogo} alt="business-logo" width={"60"} />
+        </Link>
 
-        <div>
-          <Link href={"/cart"}>
-            <BiShoppingBag size={"2rem"} className="fill-blue-600" />
-          </Link>
-        </div>
+        <Link href={"/cart"}>
+          <BiShoppingBag size={"2rem"} className="fill-blue-600" />
+        </Link>
       </div>
     </nav>
   );

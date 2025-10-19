@@ -247,11 +247,11 @@ export default function CheckoutMain({
         />
       </div>
 
-      <section className="bg-white z-10 lg:flex">
-        <div className="md:mx-25 lg:w-1/2 lg:mx-4">
-          <div className="space-y-4 px-4 pb-5 lg:max-w-[500px] lg:float-end">
-            <div className="space-y-4 pt-3">
-              <h1 className="text-2xl font-bold text-shadow-stone-900 pt-2">
+      <section className="bg-white z-10 flex place-content-center-safe md:max-w-[750px] md:place-self-center-safe lg:min-w-full">
+        <div className="w-full p-3 lg:px-10 lg:w-1/2">
+          <div className="space-y-4 xl:max-w-[470px] xl:float-right">
+            <div className="space-y-4">
+              <h1 className="text-2xl font-bold text-shadow-stone-900">
                 Delivery
               </h1>
               <div className="name-first-last space-y-4 sm:flex sm:space-x-4 sm:space-y-0">
@@ -514,8 +514,8 @@ export default function CheckoutMain({
         </div>
 
         {/* !! THIS WILL BE DISPLAYED ON LARGE DISPLAY !! */}
-        <div className="hidden lg:block w-1/2 h-screen sticky top-0 bg-stone-100 border-l border-stone-300">
-          <div className="space-y-4 p-10 max-w-[500px]">
+        <div className="hidden lg:block lg:w-1/2 h-screen sticky top-0 bg-stone-100 lg:border-l border-stone-300">
+          <div className="space-y-4 p-10 max-w-[550px]">
             <OrderSummary
               items={items}
               cartTotal={cartTotal}
