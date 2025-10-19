@@ -12,7 +12,7 @@ export default function CartSummary({ items }: CartSummaryProps) {
   );
 
   return (
-    <div className="flex flex-col space-y-3 rounded-lg border lg:border-0 border-stone-400 p-3">
+    <>
       <p className="text-2xl font-bold text-stone-900">Cart summary</p>
       <div>
         <p className="flex justify-between">
@@ -28,6 +28,6 @@ export default function CartSummary({ items }: CartSummaryProps) {
       >
         Proceed to checkout
       </Link>
-    </div>
+    </>
   );
 }
