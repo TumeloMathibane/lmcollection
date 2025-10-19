@@ -124,7 +124,8 @@ export default function CartView() {
               className="text-red-500 font-semibold hover:cursor-pointer flex flex-col w-fit group"
               onClick={() => clearCart()}
             >
-              Clear cart {`(${items?.length})`}{" "}
+              Clear cart{" "}
+              {`(${items?.reduce((acc, item) => item?.productQty + acc, 0)})`}{" "}
               <span className="border-b w-0 transition-all duration-500 group-hover:w-[100%]" />
             </p>
           </div>
