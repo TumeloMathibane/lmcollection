@@ -6,9 +6,12 @@ import { BiX } from "react-icons/bi";
 import Image from "next/image";
 import QuantityInput from "./QuantityInput";
 import CartSummary from "./ui/cart/CartSummary";
+import Loading from "../(overview)/cart/loading";
 
 export default function CartView() {
-  const { items, updateItemQty, removeItem } = useCartStore();
+  const { loading, items, updateItemQty, removeItem } = useCartStore();
+
+  if (loading) return <Loading />;
 
   if (items.length === 0) {
     return (

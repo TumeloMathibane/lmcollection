@@ -6,6 +6,7 @@ export const useCartStore = create<CartStore>()(
   persist(
     (set, get) => ({
       items: [],
+      loading: true,
       createdAt: null,
       lastModified: null,
 
@@ -84,6 +85,10 @@ export const useCartStore = create<CartStore>()(
     }),
     {
       name: "cart",
+      partialize: (state) => ({ items: state?.items }),
+      onRehydrateStorage: () => (state) => {
+        if (state) state.loading = false;
+      },
     }
   )
 );

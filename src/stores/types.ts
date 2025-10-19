@@ -9,6 +9,7 @@ export type CartItem = {
 
 export type CartStore = {
   items: CartItem[];
+  loading: boolean;
   addItem: (
     id: string,
     name: string,
