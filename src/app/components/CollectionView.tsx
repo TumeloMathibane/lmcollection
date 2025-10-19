@@ -4,7 +4,6 @@ import { ProductCard } from "@/app/components/ui/products/Card";
 import Loading from "../(overview)/collection/products/all/loading";
 import { useEffect } from "react";
 import type { Product } from "../(overview)/collection/products/types";
-// import { CollectionItemSkeleton } from "./ui/products/CollectionItemSkeleton";
 
 export default function CollectionView({
   products,
@@ -12,8 +11,6 @@ export default function CollectionView({
   products: Product[] | undefined;
 }) {
   useEffect(() => window.scrollTo(0, 0));
-
-  if (!products) return <Loading />;
 
   return (
     <main className="container place-self-center-safe p-2 space-y-4 xl:w-[70%] min-h-[42em] md:min-h-[52em] lg:min-h-[64em] xl:min-h-[22em]">
