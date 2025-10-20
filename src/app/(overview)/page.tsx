@@ -2,12 +2,9 @@ import Link from "next/link";
 import Categories from "../components/Categories";
 import ProductList from "../components/ProductList";
 import welcomeBizLogo from "../../../public/emblems/Liphiwe_business_emblem_black.png";
-import { getProducts } from "../lib/data";
 import Image from "next/image";
 
 export default async function Home() {
-  console.log("Environment: ", process.env.NEXT_PUBLIC_ENV);
-
   return (
     <div className="font-sans flex justify-center min-h-[42em] md:min-h-[52em] lg:min-h-[64em] xl:min-h-[22em]">
       <main className="container space-y-10">
@@ -70,7 +67,7 @@ export default async function Home() {
             Products of interest
           </p>
           <div>
-            <ProductList products={getProducts(undefined, 5) ?? undefined} />
+            <ProductList count={5} />
           </div>
         </section>
       </main>
@@ -78,10 +75,11 @@ export default async function Home() {
   );
 }
 
-//! TODO: Implement skeleton for loading screen... [for components with images, refer to 'nextjs/image component' docs]
+//! TODO: Implement skeleton for loading screen... [implement checkout view page]
 //! TODO: Implement pages with dynamic routes to have dynamic metadata...
 //! TODO: Implement review feature
-
+//! TODO: For scollable elements/components, have the movable cursor for scrolling through element/component...
+//!
 //! TODO: Implement contact page logic
 //!
 //! ==================================================

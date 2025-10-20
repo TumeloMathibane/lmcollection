@@ -28,7 +28,7 @@ export default function ProductList({
     };
 
     fetchProducts();
-  }, [category, count, setProducts]);
+  }, [category, count]);
 
   if (!products) {
     return (
