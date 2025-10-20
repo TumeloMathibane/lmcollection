@@ -11,8 +11,8 @@ import { useQuery } from "convex/react";
 import { states } from "../lib/sa_provinces.json";
 import { api } from "@/convex/_generated/api";
 import DeliverySelector from "./checkout/DeliverySel";
-import Loading from "../(payments)/loading";
 import Image from "next/image";
+import Loading from "../(payments)/payment/checkout/loading";
 
 type MerchantProp = {
   m_key: string;
@@ -233,7 +233,7 @@ export default function CheckoutMain({
     }
   }, [data]);
 
-  if (!items || cartTotal === 0 || getTotalPrice() === 0) return <Loading />;
+  if (items || cartTotal === 0 || getTotalPrice() === 0) return <Loading />;
 
   return (
     <main className="bg-white flex flex-col min-h-screen md:min-h-[52em] lg:min-h-screen xl:min-h-screen">

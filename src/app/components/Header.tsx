@@ -145,7 +145,7 @@ export default function Header() {
 export function CheckoutHeader() {
   return (
     <nav className="border-b border-stone-300 lg:place-items-center-safe">
-      <div className="flex justify-between p-3 w-full place-self-center-safe items-center-safe md:max-w-[750px] lg:max-w-[1050px]">
+      <div className="flex justify-between p-3 w-full place-self-center-safe items-center-safe md:max-w-[750px] lg:max-w-[1100px] lg:px-10">
         <Link href={"/"}>
           <Image src={blackLogo} alt="business-logo" width={"60"} />
         </Link>
