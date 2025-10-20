@@ -233,7 +233,7 @@ export default function CheckoutMain({
     }
   }, [data]);
 
-  if (items || cartTotal === 0 || getTotalPrice() === 0) return <Loading />;
+  if (!items || cartTotal === 0 || getTotalPrice() === 0) return <Loading />;
 
   return (
     <main className="bg-white flex flex-col min-h-screen md:min-h-[52em] lg:min-h-screen xl:min-h-screen">
