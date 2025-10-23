@@ -13,7 +13,9 @@ export default defineSchema({
     category: v.string(),
     image: v.string(),
     additional_options: v.optional(v.record(v.string(), v.array(v.string()))),
-  }),
+  })
+    .searchIndex("search_name", { searchField: "name" })
+    .searchIndex("search_description", { searchField: "shortDescription" }),
   orders: defineTable({
     orderNumber: v.optional(v.string()),
     items: v.array(v.record(v.string(), v.string())),

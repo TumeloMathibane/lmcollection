@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import { BiSearch, BiShoppingBag, BiMenu, BiX } from "react-icons/bi";
 import { usePathname } from "next/navigation";
 import { useCartStore } from "@/stores/cart";
+import SearchWidget from "./SearchWidget";
 
 export default function Header() {
   const totalItems = useCartStore((state) =>
@@ -39,24 +40,12 @@ export default function Header() {
       <section
         className={`${searchWidgetOpen ? "block" : "hidden"} w-full h-screen fixed top-0 left-0 right-0 z-100`}
       >
-        <div className="bg-stone-950 flex items-center justify-center-safe px-20 md:h-30 xl:h-25">
-          <input
-            type="text"
-            name="home-search"
-            id="home-search"
-            placeholder="Search products"
-            className="bg-stone-50 border border-stone-400 rounded-md w-1/2 py-2 ps-4 focus:outline-none focus:placeholder:mx-10"
-          />
-          <BiX
-            size={"3em"}
-            fill="white"
-            stroke="white"
-            onClick={() => setSearchWidgetOpen(false)}
-            className="hover:cursor-pointer"
-          />
-        </div>
-        <div className="h-full backdrop-blur-xl"></div>
+        <SearchWidget
+          isOpen={searchWidgetOpen}
+          closeWidget={(close) => setSearchWidgetOpen(close)}
+        />
       </section>
+
       <section>
         <div className="flex items-center justify-between mx-5 md:mx-20">
           <i className="hidden md:block">

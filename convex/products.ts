@@ -51,6 +51,77 @@ export const getProduct = query({
   },
 });
 
+// Query: search products by name and description
+export const searchProducts = query({
+  args: {
+    searchTerm: v.string(),
+    limit: v.optional(v.number()),
+  },
+  handler: async (ctx, args) => {
+    const { searchTerm, limit = 10 } = args;
+    if (!searchTerm || searchTerm.trim() === "") {
+      return await ctx.db.query("product").order("desc").take(limit);
+    }
+
+    // search by name
+    const nameResults = await ctx.db
+      .query("product")
+      .withSearchIndex("search_name", (q) => q.search("name", searchTerm))
+      .take(limit);
+
+    // search by description
+    const descriptionResults = await ctx.db
+      .query("product")
+      .withSearchIndex("search_description", (q) =>
+        q.search("shortDescription", searchTerm)
+      )
+      .take(limit);
+
+    // combine and deduplicate results
+    const combinedResults = [...nameResults, ...descriptionResults];
+    const uniqueResults = Array.from(
+      new Map(combinedResults.map((item) => [item._id, item])).values()
+    );
+
+    // Sort by relevence (name  matches first)
+    const sorted = uniqueResults.sort((a, b) => {
+      const aNameMatch = a.name
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase());
+      const bNameMatch = b.name
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase());
+
+      if (aNameMatch && !bNameMatch) return -1;
+      if (!aNameMatch && bNameMatch) return 1;
+      return 0;
+    });
+
+    return sorted.slice(0, limit);
+  },
+});
+
+// Get search suggestions
+export const getSearchSuggestion = query({
+  args: {
+    searchTerm: v.string(),
+    limit: v.optional(v.number()),
+  },
+  handler: async (ctx, { searchTerm, limit = 10 }) => {
+    if (!searchTerm || searchTerm.trim() === "") return [];
+
+    const results = await ctx.db
+      .query("product")
+      .withSearchIndex("search_name", (q) => q.search("name", searchTerm))
+      .take(limit);
+
+    return results.map((product) => ({
+      _id: product._id,
+      name: product.name,
+    }));
+  },
+});
+
 // Add many products (array of products)
 export const addMany = mutation({
   args: {
