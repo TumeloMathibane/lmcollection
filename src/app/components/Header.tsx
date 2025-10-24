@@ -39,10 +39,13 @@ export default function Header() {
     <div className="bg-stone-950">
       <section
         className={`${searchWidgetOpen ? "block" : "hidden"} w-full h-screen fixed top-0 left-0 right-0 z-100`}
+        onKeyDown={(e) => {
+          if (e.key === "Escape") setSearchWidgetOpen(false);
+        }}
       >
         <SearchWidget
           isOpen={searchWidgetOpen}
-          closeWidget={(close) => setSearchWidgetOpen(close)}
+          closeWidget={(isOpen) => setSearchWidgetOpen(isOpen)}
         />
       </section>
 
