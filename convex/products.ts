@@ -1,5 +1,5 @@
-import { query } from "./_generated/server";
 import { mutation } from "./_generated/server";
+import { query } from "./_generated/server";
 import { v } from "convex/values";
 
 // Query: list all or n product/s
@@ -44,10 +44,10 @@ export const getCategoryProducts = query({
 // Query: get one specific product...
 export const getProduct = query({
   args: {
-    id: v.id("product"),
+    id: v.id("product") || v.string(),
   },
-  handler: async (ctx, args) => {
-    return await ctx.db.get(args.id);
+  handler: async (ctx, { id }) => {
+    return await ctx.db.get(id);
   },
 });
 
