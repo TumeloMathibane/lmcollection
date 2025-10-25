@@ -14,8 +14,8 @@ export default async function Collection({
 }: {
   searchParams: Promise<{ category?: string }>;
 }) {
-  const query = (await searchParams).category;
-  const products = await fetchQuery(api.products.get, { category: query });
+  const { category } = await searchParams;
+  const products = await fetchQuery(api.products.get, { category: category });
 
   if (!products || products?.length === 0) return <Loading />;
 

@@ -243,7 +243,7 @@ export default function CheckoutMain({
           cartTotal={cartTotal}
           items={items}
           coupon={coupon}
-          onCouponChange={(e) => setCoupon(e.currentTarget?.value)}
+          onCouponChange={(e) => setCoupon(e.target?.value)}
         />
       </div>
 
@@ -461,7 +461,7 @@ export default function CheckoutMain({
                   cartTotal={cartTotal}
                   shippingPrice={shippingData.price}
                   coupon={coupon}
-                  onCouponChange={(e) => setCoupon(e.currentTarget?.value)}
+                  onCouponChange={(e) => setCoupon(e.target?.value)}
                 />
               </div>
             </div>
@@ -521,7 +521,7 @@ export default function CheckoutMain({
               cartTotal={cartTotal}
               shippingPrice={shippingData.price}
               coupon={coupon}
-              onCouponChange={(e) => setCoupon(e.currentTarget?.value)}
+              onCouponChange={(e) => setCoupon(e.target?.value)}
             />
           </div>
         </div>

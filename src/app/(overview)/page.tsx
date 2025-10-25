@@ -1,10 +1,14 @@
-import Link from "next/link";
-import Categories from "../components/Categories";
-import ProductList from "../components/ProductList";
 import welcomeBizLogo from "../../../public/emblems/Liphiwe_business_emblem_black.png";
+import ProductList from "../components/ProductList";
+import Categories from "../components/Categories";
 import Image from "next/image";
+import Link from "next/link";
+import { fetchQuery } from "convex/nextjs";
+import { api } from "@/convex/_generated/api";
 
 export default async function Home() {
+  const products = await fetchQuery(api.products.get, { count: 5 });
+
   return (
     <div className="font-sans flex justify-center min-h-[42em] md:min-h-[52em] lg:min-h-[64em] xl:min-h-[22em]">
       <main className="container space-y-10">
@@ -67,7 +71,7 @@ export default async function Home() {
             Products of interest
           </p>
           <div>
-            <ProductList count={5} />
+            <ProductList products={products} />
           </div>
         </section>
       </main>
@@ -79,6 +83,7 @@ export default async function Home() {
 //! TODO: ...continue search component implementation; and convert all data retreivals to be from the database and not the file...
 //! TODO: Implement a search input components that is different from the traditional input element...
 //! TODO: Implement search logic
+//! TODO: Implement admin page and components... 📌
 //! TODO: For scollable elements/components, have the movable cursor for scrolling through element/component...
 //! ----  [above] possible change to select element...
 //! TODO: Implement review feature
@@ -89,5 +94,6 @@ export default async function Home() {
 //!
 //! ==================================================
 //!
+//! TODO: Change ProductList component to ui component 📌
 //! NOTE: Construct a placeholder image so that it is hosted locally in the app
 //! NOTE: Implement way of storing user info as they input it, and load it in relevent inputs on page reload...
