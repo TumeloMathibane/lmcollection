@@ -2,14 +2,11 @@
 
 import { useEffect, useState } from "react";
 import { useCartStore } from "@/stores/cart";
+import type { Product } from "../(overview)/collection/products/types";
+import { BiHeart } from "react-icons/bi";
 import ImageWithFallback from "./ImageWithFallback";
 import QuantityInput from "./QuantityInput";
 import SizeInput from "./ui/products/SizeInput";
-import { BiHeart } from "react-icons/bi";
-
-import Loading from "../(overview)/collection/products/[productId]/loading";
-import { Product } from "../(overview)/collection/products/types";
-import ProductList from "./ProductList";
 
 export default function ProductView({
   product,
@@ -23,10 +20,8 @@ export default function ProductView({
 
   useEffect(() => window.scrollTo(0, 0), []);
 
-  if (!product) return <Loading />;
-
   return (
-    <main className="p-2 space-y-2 xl:w-[70%] xl:place-self-center-safe xl:py-10 min-h-[42em] md:min-h-[52em] lg:min-h-[64em] xl:min-h-[22em]">
+    <>
       <div className="space-y-2 md:flex md:space-x-4 xl:space-x-6">
         <section className="space-y-2 md:w-1/2">
           <div className="overflow-hidden rounded-2xl flex justify-items-center-safe md:shadow-lg xl:size-100">
@@ -116,15 +111,6 @@ export default function ProductView({
           className="h-full w-fit hover:cursor-pointer md:border-2 border-stone-900 rounded-full md:p-1 xl:p-1"
         />
       </section>
-      <div className="border-t border-stone-900 w-[50%] place-self-center-safe my-4" />
-      <section>
-        <p className="text-lg font-bold text-stone-900">
-          Products you may like...
-        </p>
-        <section>
-          <ProductList category={product?.category} count={5} />
-        </section>
-      </section>
-    </main>
+    </>
   );
 }
