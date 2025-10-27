@@ -149,11 +149,3 @@ export function CheckoutHeader() {
     </nav>
   );
 }
-
-export function AdminHeader() {
-  return (
-    <header>
-      <p>Admin Header</p>
-    </header>
-  );
-}
