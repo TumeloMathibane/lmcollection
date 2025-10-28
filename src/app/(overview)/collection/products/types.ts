@@ -16,5 +16,5 @@ export type Product = {
   availableQuantity: number;
   category: string;
   image: string;
-  additional_options?: { [key: string]: string[] } | object;
+  additional_options?: { [key: string]: string[] | string } | object;
 };
