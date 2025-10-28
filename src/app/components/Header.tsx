@@ -37,17 +37,19 @@ export default function Header() {
 
   return (
     <div className="bg-stone-950">
-      <section
-        className={`${searchWidgetOpen ? "block" : "hidden"} w-full h-screen fixed top-0 left-0 right-0 z-100`}
-        onKeyDown={(e) => {
-          if (e.key === "Escape") setSearchWidgetOpen(false);
-        }}
-      >
-        <SearchWidget
-          isOpen={searchWidgetOpen}
-          closeWidget={(isOpen) => setSearchWidgetOpen(isOpen)}
-        />
-      </section>
+      {searchWidgetOpen && (
+        <section
+          className="hidden md:block w-full h-screen fixed top-0 left-0 right-0 z-100"
+          onKeyDown={(e) => {
+            if (e.key === "Escape") setSearchWidgetOpen(false);
+          }}
+        >
+          <SearchWidget
+            isOpen={searchWidgetOpen}
+            closeWidget={(isOpen) => setSearchWidgetOpen(isOpen)}
+          />
+        </section>
+      )}
 
       <section>
         <div className="flex items-center justify-between mx-5 md:mx-20">

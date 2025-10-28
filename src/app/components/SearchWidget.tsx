@@ -66,13 +66,13 @@ export default function SearchWidget({
     <>
       <div
         ref={searchRef}
-        className="bg-stone-950 flex flex-col items-center justify-center-safe space-x-3 md:h-30 xl:h-25"
+        className="bg-stone-950 flex flex-col items-center justify-center-safe space-x-3 h-30 xl:h-25"
       >
-        <div className="z-10 relative">
-          <div className="flex relative mt-3">
+        <div className="z-10 relative w-full px-10">
+          <div className="flex relative mt-3 w-full place-self-center-safe md:max-w-[850px]">
             <input
               ref={inputRef}
-              className="w-[850px] py-4 ps-2 pe-[2em] text-white focus:outline-0 placeholder-stone-400 border-b border-white"
+              className="w-full py-4 ps-2 pe-[3em] text-white border-b border-stone-200 focus:outline-1 focus:outline-stone-200 placeholder-stone-400"
               placeholder="Search products..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target?.value)}
@@ -80,7 +80,7 @@ export default function SearchWidget({
             {searchTerm && searchTerm?.length > 0 && (
               <BsX
                 size={"2em"}
-                className="fill-stone-50 w-fit h-fit absolute right-0 flex place-self-center-safe origin-center hover:cursor-pointer"
+                className="fill-stone-50 w-fit h-fit mx-2 absolute right-0 flex place-self-center-safe origin-center hover:cursor-pointer"
                 onClick={() => {
                   setSearchTerm("");
                   inputRef.current?.focus();
@@ -91,67 +91,69 @@ export default function SearchWidget({
 
           {/* <div className="w-full h-full flex flex-col items-center-safe z-10"> */}
           {searchTerm && (
-            <div className="bg-white w-[850px] absolute flex py-2 px-4 shadow-sm shadow-stone-900">
-              <div className="flex flex-col w-full space-y-2">
-                <div className="flex space-x-4">
-                  {isLoading ? (
-                    <BsOpencollective
-                      className="flex my-5 mx-auto animate-spin"
-                      size={"3em"}
-                    />
-                  ) : (
-                    <>
-                      <div className="w-2/5">
-                        <div className="font-semibold text-stone-700">
-                          <p>Suggestions:</p>
-                          <div className="w-full border-b border-stone-300" />
+            <div className="relative">
+              <div className="bg-white w-full absolute flex place-self-center-safe py-2 px-4 shadow-sm shadow-stone-900 max-w-[850px]">
+                <div className="flex flex-col w-full space-y-2">
+                  <div className="flex space-x-4">
+                    {isLoading ? (
+                      <BsOpencollective
+                        className="flex my-5 mx-auto animate-spin"
+                        size={"3em"}
+                      />
+                    ) : (
+                      <>
+                        <div className="w-2/5">
+                          <div className="font-semibold text-stone-700">
+                            <p>Suggestions:</p>
+                            <div className="w-full border-b border-stone-300" />
+                          </div>
+
+                          <div>
+                            {suggestions && suggestions?.length > 0 ? (
+                              suggestions?.map((item, index) => (
+                                <p key={index} className="py-1">
+                                  {item?.name}
+                                </p>
+                              ))
+                            ) : (
+                              <p>No suggestions</p>
+                            )}
+                          </div>
                         </div>
 
-                        <div>
-                          {suggestions && suggestions?.length > 0 ? (
-                            suggestions?.map((item, index) => (
-                              <p key={index} className="py-1">
-                                {item?.name}
-                              </p>
-                            ))
-                          ) : (
-                            <p>No suggestions</p>
-                          )}
-                        </div>
-                      </div>
-
-                      <div className="flex flex-col w-3/5">
-                        <div className="px-2 font-semibold text-stone-700">
-                          <p>Products</p>
-                          <div className="w-full border-b border-stone-300" />
-                        </div>
-                        {searchResults?.map((item, index) => (
-                          <Link
-                            href={`/collection/products/${item?._id}`}
-                            key={index}
-                            className="p-2 hover:cursor-pointer hover:bg-stone-800/5"
-                            onClick={() => handleProductClick()}
-                          >
-                            <div className="flex space-x-2">
-                              <div className="h-auto size-15">
-                                <ImageWithFallback
-                                  src={item?.image}
-                                  alt={item?.name}
-                                />
+                        <div className="flex flex-col w-3/5">
+                          <div className="px-2 font-semibold text-stone-700">
+                            <p>Products</p>
+                            <div className="w-full border-b border-stone-300" />
+                          </div>
+                          {searchResults?.map((item, index) => (
+                            <Link
+                              href={`/collection/products/${item?._id}`}
+                              key={index}
+                              className="p-2 hover:cursor-pointer hover:bg-stone-800/5"
+                              onClick={() => handleProductClick()}
+                            >
+                              <div className="flex space-x-2">
+                                <div className="h-auto size-15">
+                                  <ImageWithFallback
+                                    src={item?.image}
+                                    alt={item?.name}
+                                  />
+                                </div>
+                                <p className="self-center-safe">{item?.name}</p>
                               </div>
-                              <p className="self-center-safe">{item?.name}</p>
-                            </div>
-                          </Link>
-                        ))}
-                      </div>
-                    </>
-                  )}
+                            </Link>
+                          ))}
+                        </div>
+                      </>
+                    )}
+                  </div>
+                  <p
+                    className={`${searchResults && searchResults?.length > 0 && "border-t border-stone-400 py-2 "} w-full`}
+                  >
+                    Search results for: {searchTerm}
+                  </p>
                 </div>
-                <p
-                  className={`${searchResults && searchResults?.length > 0 && "border-t border-stone-400 py-2 "} w-full`}
-                >
-                  Search results for: {searchTerm}
-                </p>
               </div>
             </div>
           )}
