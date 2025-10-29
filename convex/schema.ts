@@ -2,6 +2,11 @@ import { defineSchema, defineTable } from "convex/server";
 import { v } from "convex/values";
 
 export default defineSchema({
+  category: defineTable({
+    name: v.string(),
+    no_of_items: v.number(),
+    image: v.optional(v.string()),
+  }).searchIndex("search_category", { searchField: "name" }),
   product: defineTable({
     itemCode: v.string(),
     name: v.string(),
