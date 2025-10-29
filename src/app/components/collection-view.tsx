@@ -1,7 +1,7 @@
 "use client";
 
 import type { Product } from "../(overview)/collection/products/types";
-import { ProductCard } from "./ui/products/Card";
+import { ProductCard } from "./ui/products/card";
 import { useEffect } from "react";
 
 export default function CollectionView({
