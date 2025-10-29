@@ -1,5 +1,5 @@
 import type { CartItem } from "@/stores/types";
-import ImageWithFallback from "../../ImageWithFallback";
+import ImageWithFallback from "../../image-with-fallback";
 
 type ItemCardProp = {
   item: CartItem;

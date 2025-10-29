@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 import { BiSearch, BiShoppingBag, BiMenu, BiX } from "react-icons/bi";
 import { usePathname } from "next/navigation";
 import { useCartStore } from "@/stores/cart";
-import SearchWidget from "./SearchWidget";
+import SearchWidget from "./search-widget";
 
 export default function Header() {
   const totalItems = useCartStore((state) =>

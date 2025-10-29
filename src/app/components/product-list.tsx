@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import ProductListSkeleton from "./ui/home/ProductListSkeleton";
+import ProductListSkeleton from "./ui/home/productlist-skeleton";
 import Image from "next/image";
 import type { Product } from "../(overview)/collection/products/types";
 

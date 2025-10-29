@@ -2,15 +2,15 @@
 
 import React, { ChangeEvent, MouseEvent, useEffect, useState } from "react";
 import { generatePaymentId, generateSignature } from "../utils/helper";
-import OrderSummaryWidget, { OrderSummary } from "./OrderSummary";
+import OrderSummaryWidget, { OrderSummary } from "./order-summary";
 import { BiCheck, BiLoaderAlt } from "react-icons/bi";
-import { DeliveryPackage } from "./DeliveryOpt";
-import { CheckoutFooter } from "./Footer";
+import { DeliveryPackage } from "./delivery-option";
+import { CheckoutFooter } from "./footer";
 import { useCartStore } from "@/stores/cart";
 import { useQuery } from "convex/react";
 import { states } from "../lib/sa_provinces.json";
 import { api } from "@/convex/_generated/api";
-import DeliverySelector from "./checkout/DeliverySel";
+import DeliverySelector from "./checkout/delivery-selector";
 import Image from "next/image";
 import Loading from "../(payments)/payment/checkout/loading";
 

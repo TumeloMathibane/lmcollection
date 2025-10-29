@@ -1,18 +1,19 @@
 import welcomeBizLogo from "../../../public/emblems/Liphiwe_business_emblem_black.png";
-import ProductList from "../components/ProductList";
-import Categories from "../components/Categories";
+import ProductList from "../components/product-list";
+import Categories from "../components/categories";
 import Image from "next/image";
 import Link from "next/link";
 import { fetchQuery } from "convex/nextjs";
 import { api } from "@/convex/_generated/api";
 
 export default async function Home() {
-  const products = await fetchQuery(api.products.get, { count: 5 });
+  const products =
+    (await fetchQuery(api.products.get, { count: 5 })) ?? undefined;
 
   return (
     <div className="font-sans flex justify-center min-h-[42em] md:min-h-[52em] lg:min-h-[64em] xl:min-h-[22em]">
       <main className="container space-y-10">
-        <section className="w-full min-h-[16em] lg:min-h-screen bg-[url('/images/ali-pazani-3w14X-Yxffk-unsplash.jpg')] bg-cover bg-no-repeat flex items-center-safe justify-around mask-alpha mask-b-from-70% md:mask-b-from-80% lg:mask-l-from-90% lg:mask-r-from-90%">
+        <section className="w-full min-h-[16em] lg:min-h-screen bg-[url('/images/ali-pazani-3w14X-Yxffk-unsplash.jpg')] bg-cover bg-no-repeat flex items-center-safe justify-around mask-alpha mask-b-from-70% md:mask-b-from-80% sm:mask-l-from-90% sm:mask-r-from-90%">
           <Link
             href="#categories"
             className="btn px-4 py-2 md:px-6 md:py-3 bg-stone-900/50 border border-white rounded-md w-fit h-fit text-white z-100"
@@ -70,9 +71,7 @@ export default async function Home() {
           <p className="text-2xl font-bold text-stone-950">
             Products of interest
           </p>
-          <div>
-            <ProductList products={products} />
-          </div>
+          <ProductList products={products} />
         </section>
       </main>
     </div>
@@ -81,7 +80,6 @@ export default async function Home() {
 
 //! TODO: Find way of sorting product information; which piece of info is necessary and which is additional info as per categorised product...📌
 //! TODO: Implement admin page and components... 📌
-//! ----  [above] possible change to select element...
 //! TODO: Implement review feature
 //! TODO: Implement pages with dynamic routes to have dynamic metadata...
 //! TODO: For scrollable elements/components, have the movable cursor for scrolling through element/component...
@@ -91,6 +89,5 @@ export default async function Home() {
 //!
 //! ==================================================
 //!
-//! TODO: Change ProductList component to ui component 📌
 //! NOTE: Construct a placeholder image so that it is hosted locally in the app
 //! NOTE: Implement way of storing user info as they input it, and load it in relevent inputs on page reload...

@@ -1,7 +1,7 @@
 "use client";
 
 import { ChangeEvent, useEffect, useState } from "react";
-import ItemCard from "./ui/checkout/ItemCard";
+import ItemCard from "./ui/checkout/item-card";
 import { BiChevronDown } from "react-icons/bi";
 import type { CartItem } from "@/stores/types";
 

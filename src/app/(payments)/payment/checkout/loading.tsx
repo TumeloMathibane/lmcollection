@@ -1,4 +1,4 @@
-import CheckoutSkeleton from "@/app/components/ui/checkout/CheckoutSkeleton";
+import CheckoutSkeleton from "@/app/components/ui/checkout/checkout-skeleton";
 
 export default function Loading() {
   return (

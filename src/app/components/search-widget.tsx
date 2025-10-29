@@ -6,7 +6,7 @@ import { useDebounce } from "../hooks/useDebouce";
 import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import Link from "next/link";
-import ImageWithFallback from "./ImageWithFallback";
+import ImageWithFallback from "./image-with-fallback";
 
 export default function SearchWidget({
   isOpen,

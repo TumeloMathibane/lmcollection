@@ -4,9 +4,9 @@ import { useEffect, useState } from "react";
 import { useCartStore } from "@/stores/cart";
 import type { Product } from "../(overview)/collection/products/types";
 import { BiHeart } from "react-icons/bi";
-import ImageWithFallback from "./ImageWithFallback";
-import QuantityInput from "./QuantityInput";
-import SizeInput from "./ui/products/SizeInput";
+import ImageWithFallback from "./image-with-fallback";
+import QuantityInput from "./quantity-input";
+import SizeInput from "./ui/products/size-input";
 
 export default function ProductView({
   product,

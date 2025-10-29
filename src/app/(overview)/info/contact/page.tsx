@@ -1,4 +1,4 @@
-import ContactForm from "@/app/components/ui/info/ContactForm";
+import ContactForm from "@/app/components/ui/info/contact-form";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

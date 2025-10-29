@@ -4,8 +4,8 @@ import { useCartStore } from "@/stores/cart";
 import Link from "next/link";
 import { BiX } from "react-icons/bi";
 import Image from "next/image";
-import QuantityInput from "./QuantityInput";
-import CartSummary from "./ui/cart/CartSummary";
+import QuantityInput from "./quantity-input";
+import CartSummary from "./ui/cart/cart-summary";
 import Loading from "../(overview)/cart/loading";
 
 export default function CartView() {
