@@ -108,15 +108,15 @@ export default function Header() {
 
       {/* Mobile nav */}
       <section
-        className={`flex fixed z-10 w-full h-screen ${navOpen ? "translate-0" : "transition-all delay-100 -translate-x-[100%]"}`}
+        className={`flex fixed z-10 w-full h-screen ${navOpen ? "translate-0" : "transition-all delay-100 -translate-x-full"}`}
       >
         <div
-          className={`backdrop-blur-sm w-full h-full fixed z-4 ${navOpen ? "translate-0" : "transition-all delay-75 duration-25 -translate-x-[100%]"}`}
+          className={`backdrop-blur-sm w-full h-full fixed z-4 ${navOpen ? "translate-0" : "transition-all delay-75 duration-25 -translate-x-full"}`}
           onClick={() => setNavOpen(!navOpen)}
         />
         {/* Nav links must be mapped here... */}
         <nav
-          className={`md:hidden flex flex-col space-y-3 py-4 px-5 w-[70%] md:w-[50%] bg-stone-200 h-full z-5 transition-all ${navOpen ? "duration-700 translate-0 ease-out" : "duration-100 -translate-x-[100%]"}`}
+          className={`md:hidden flex flex-col space-y-3 py-4 px-5 w-[70%] md:w-[50%] bg-stone-200 h-full z-5 transition-all ${navOpen ? "duration-700 translate-0 ease-out" : "duration-100 -translate-x-full"}`}
         >
           {navlinks.map(
             ({ name, href }, key) =>
