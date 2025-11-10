@@ -8,7 +8,10 @@ import { api } from "@/convex/_generated/api";
 import type { Product } from "./collection/products/types";
 
 export default async function Home() {
-  const products: Product[] = await fetchQuery(api.products.get, { count: 5 });
+  const products: Product[] = await fetchQuery(api.products.get, {
+    category: undefined,
+    count: 5,
+  });
 
   return (
     <div className="font-sans flex justify-center min-h-[42em] md:min-h-[52em] lg:min-h-[64em] xl:min-h-[22em]">
