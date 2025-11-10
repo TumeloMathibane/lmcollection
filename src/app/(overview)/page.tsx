@@ -81,8 +81,7 @@ export default async function Home() {
   );
 }
 
-//! TODO: Find way of sorting product information; which piece of info is necessary and which is additional info as per categorised product...📌
-//! TODO: Implement admin page and components... 📌
+//! TODO: Implement admin page and components... [side nav bar for starters] 📌
 //! TODO: Implement review feature
 //! TODO: Implement pages with dynamic routes to have dynamic metadata...
 //! TODO: For scrollable elements/components, have the movable cursor for scrolling through element/component...
