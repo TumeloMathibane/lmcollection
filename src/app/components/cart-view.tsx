@@ -126,7 +126,7 @@ export default function CartView() {
             >
               Clear cart{" "}
               {`(${items?.reduce((acc, item) => item?.productQty + acc, 0)})`}{" "}
-              <span className="border-b w-0 transition-all duration-500 group-hover:w-[100%]" />
+              <span className="border-b w-0 transition-all duration-500 group-hover:w-full" />
             </p>
           </div>
         </div>
