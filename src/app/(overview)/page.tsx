@@ -74,7 +74,11 @@ export default async function Home() {
           <p className="text-2xl font-bold text-stone-950">
             Products of interest
           </p>
-          <ProductList products={products} />
+          {!products || products?.length === 0 ? (
+            <p className="font-light text-xl italic">Products not available</p>
+          ) : (
+            <ProductList products={products} />
+          )}
         </section>
       </main>
     </div>
