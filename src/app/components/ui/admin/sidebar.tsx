@@ -21,7 +21,7 @@ export default function AdminSidebar() {
       icon: (
         <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" aria-hidden>
           <path
-            d="M3 13h8V3H3v10zM3 21h8v-6H3v6zM13 21h8V11h-8v10zM13 3v6h8V3h-8z"
+            d="M3 10.5L12 4l9 6.5V20a1 1 0 01-1 1h-5v-6H9v6H4a1 1 0 01-1-1V10.5z"
             fill="currentColor"
           />
         </svg>
@@ -45,8 +45,20 @@ export default function AdminSidebar() {
       icon: (
         <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" aria-hidden>
           <path
-            d="M3 7l9-5 9 5v8a2 2 0 01-2 2h-6v4l-4-2-4 2v-4H5a2 2 0 01-2-2V7z"
-            fill="currentColor"
+            d="M12 3v2"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            fill="none"
+          />
+          <path
+            d="M3 12l9-7 9 7"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            fill="none"
           />
         </svg>
       ),
@@ -57,9 +69,15 @@ export default function AdminSidebar() {
       icon: (
         <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" aria-hidden>
           <path
-            d="M3 6h18v2H3V6zm2 5h14v2H5v-2zm2 5h10v2H7v-2z"
-            fill="currentColor"
+            d="M3 3h2l1.68 9.39A2 2 0 008.65 14h7.7a2 2 0 001.97-1.61L21 6H6"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            fill="none"
           />
+          <circle cx="10" cy="19" r="1.25" fill="currentColor" />
+          <circle cx="18" cy="19" r="1.25" fill="currentColor" />
         </svg>
       ),
     },
@@ -79,7 +97,7 @@ export default function AdminSidebar() {
 
   return (
     <aside
-      className="flex flex-col bg-gray-900 text-gray-100 h-screen w-full transition-width duration-200 ease-in-out"
+      className="flex flex-col bg-gray-900 text-gray-100 h-screen w-64"
       aria-label="Admin sidebar"
     >
       <div className="flex items-center px-3 py-4">
