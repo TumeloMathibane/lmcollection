@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    template: "%s | LMCollection",
+    template: "Admin(%s) | LMCollection",
     default: "Admin | LMCollection",
   },
   description: "LMCollection - Like it, Love it, & Wear it.",
