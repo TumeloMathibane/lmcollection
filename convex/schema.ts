@@ -8,16 +8,14 @@ export default defineSchema({
     image: v.optional(v.string()),
   }).searchIndex("search_category", { searchField: "name" }),
   product: defineTable({
-    itemCode: v.string(),
     name: v.string(),
     price: v.number(),
     discount: v.number(),
     shortDescription: v.string(),
-    availableSizes: v.array(v.string()),
-    availableQuantity: v.number(),
+    quantity: v.number(),
     category: v.string(),
-    image: v.string(),
-    additional_options: v.optional(v.record(v.string(), v.array(v.string()))),
+    images: v.array(v.string()),
+    additional_options: v.record(v.string(), v.array(v.string())),
   })
     .searchIndex("search_name", { searchField: "name" })
     .searchIndex("search_description", { searchField: "shortDescription" }),

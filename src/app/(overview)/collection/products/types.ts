@@ -12,9 +12,8 @@ export type Product = {
   price: number;
   discount: number;
   shortDescription: string;
-  availableSizes: string[];
-  availableQuantity: number;
+  quantity: number;
   category: string;
-  image: string;
-  additional_options?: { [key: string]: string[] | string } | object;
+  images: string[];
+  additional_options: { [key: string]: string | string[] } | object;
 };
