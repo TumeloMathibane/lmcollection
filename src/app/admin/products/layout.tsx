@@ -1,4 +1,4 @@
-import Banner from "@/app/components/ui/admin/page-banner";
+import Banner from "@/components/ui/admin/page-banner";
 
 export default function RootLayout({
   children,

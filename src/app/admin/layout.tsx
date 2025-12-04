@@ -35,7 +35,7 @@ export default function RootLayout({
           <aside className="w-full flex-[0_0_280px]">
             <AdminSidebar />
           </aside>
-          <main className="flex-1 min-h-screen">
+          <main className="flex-1 min-h-screen px-25">
             <ConvexClientProvider>{children}</ConvexClientProvider>
           </main>
         </div>

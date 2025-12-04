@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import CartView from "@/app/components/cart-view";
+import CartView from "@/components/cart-view";
 
 export const metadata: Metadata = {
   title: "Cart",

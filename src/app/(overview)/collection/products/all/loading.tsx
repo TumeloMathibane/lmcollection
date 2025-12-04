@@ -1,4 +1,4 @@
-import { CollectionSkeleton } from "@/app/components/ui/products/collectionitem-skeleton";
+import { CollectionSkeleton } from "@/components/ui/products/collectionitem-skeleton";
 
 export default function Loading() {
   return (

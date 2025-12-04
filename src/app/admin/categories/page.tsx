@@ -1,4 +1,9 @@
-import Banner from "@/app/components/ui/admin/page-banner";
+import Banner from "@/components/ui/admin/page-banner";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Categories",
+};
 
 export default async function Home() {
   return (
@@ -8,8 +13,7 @@ export default async function Home() {
         <Banner title="categories" />
       </section>
 
-      <section className="h-full">
-      </section>
+      <section className="h-full"></section>
     </main>
   );
 }

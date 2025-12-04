@@ -9,7 +9,6 @@ import type { Product } from "./collection/products/types";
 
 export default async function Home() {
   const products: Product[] = await fetchQuery(api.products.get, {
-    category: undefined,
     count: 5,
   });
 
@@ -19,8 +18,7 @@ export default async function Home() {
         <section className="w-full min-h-[16em] lg:min-h-screen bg-[url('/images/ali-pazani-3w14X-Yxffk-unsplash.jpg')] bg-cover bg-no-repeat flex items-center-safe justify-around mask-alpha mask-b-from-70% md:mask-b-from-80% sm:mask-l-from-90% sm:mask-r-from-90%">
           <Link
             href="#categories"
-            className="btn px-4 py-2 md:px-6 md:py-3 bg-stone-900/50 border border-white rounded-md w-fit h-fit text-white z-100"
-          >
+            className="btn px-4 py-2 md:px-6 md:py-3 bg-stone-900/50 border border-white rounded-md w-fit h-fit text-white z-100">
             Shop now
           </Link>
         </section>
@@ -58,8 +56,7 @@ export default async function Home() {
 
         <section
           id="categories"
-          className="space-y-8 py-4 md:px-2 md:py-8 md:place-self-center-safe lg:w-[70%] lg:flex flex-col lg:place-self-center-safe"
-        >
+          className="space-y-8 py-4 md:px-2 md:py-8 md:place-self-center-safe lg:w-[70%] lg:flex flex-col lg:place-self-center-safe">
           <div>
             <p className="text-5xl text-stone-950 font-bold text-center">
               Categories
@@ -74,11 +71,9 @@ export default async function Home() {
           <p className="text-2xl font-bold text-stone-950">
             Products of interest
           </p>
-          {!products || products?.length === 0 ? (
+          {!products || products?.length === 0 ?
             <p className="font-light text-xl italic">Products not available</p>
-          ) : (
-            <ProductList products={products} />
-          )}
+          : <ProductList products={products} />}
         </section>
       </main>
     </div>

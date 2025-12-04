@@ -1,6 +1,6 @@
 "use client";
 
-import { navlinks } from "@/constants/links";
+import { navlinks } from "../../constants/links";
 import Image from "next/image";
 import Link from "next/link";
 import logo from "../../../public/logos/Liphiwe_business_logo_white.svg";
@@ -8,7 +8,7 @@ import blackLogo from "../../../public/logos/Liphiwe_business_logo_black.svg";
 import { useEffect, useState } from "react";
 import { BiSearch, BiShoppingBag, BiMenu, BiX } from "react-icons/bi";
 import { usePathname } from "next/navigation";
-import { useCartStore } from "@/stores/cart";
+import { useCartStore } from "../../stores/cart";
 import SearchWidget from "./search-widget";
 
 export default function Header() {
@@ -42,8 +42,7 @@ export default function Header() {
           className="hidden md:block w-full h-screen fixed top-0 left-0 right-0 z-100"
           onKeyDown={(e) => {
             if (e.key === "Escape") setSearchWidgetOpen(false);
-          }}
-        >
+          }}>
           <SearchWidget
             isOpen={searchWidgetOpen}
             closeWidget={(isOpen) => setSearchWidgetOpen(isOpen)}
@@ -63,7 +62,7 @@ export default function Header() {
             />
           </i>
           <i className="md:hidden">
-            {navOpen ? (
+            {navOpen ?
               <BiX
                 size={"2em"}
                 fill="white"
@@ -71,15 +70,14 @@ export default function Header() {
                 onClick={() => setNavOpen(false)}
                 className="hover:cursor-pointer"
               />
-            ) : (
-              <BiMenu
+            : <BiMenu
                 size={"2em"}
                 fill="white"
                 stroke="white"
                 onClick={() => setNavOpen(true)}
                 className="hover:cursor-pointer"
               />
-            )}
+            }
           </i>
           <Link href={"/"}>
             <Image
@@ -108,24 +106,21 @@ export default function Header() {
 
       {/* Mobile nav */}
       <section
-        className={`flex fixed z-10 w-full h-screen ${navOpen ? "translate-0" : "transition-all delay-100 -translate-x-full"}`}
-      >
+        className={`flex fixed z-10 w-full h-screen ${navOpen ? "translate-0" : "transition-all delay-100 -translate-x-full"}`}>
         <div
           className={`backdrop-blur-sm w-full h-full fixed z-4 ${navOpen ? "translate-0" : "transition-all delay-75 duration-25 -translate-x-full"}`}
           onClick={() => setNavOpen(!navOpen)}
         />
         {/* Nav links must be mapped here... */}
         <nav
-          className={`md:hidden flex flex-col space-y-3 py-4 px-5 w-[70%] md:w-[50%] bg-stone-200 h-full z-5 transition-all ${navOpen ? "duration-700 translate-0 ease-out" : "duration-100 -translate-x-full"}`}
-        >
+          className={`md:hidden flex flex-col space-y-3 py-4 px-5 w-[70%] md:w-[50%] bg-stone-200 h-full z-5 transition-all ${navOpen ? "duration-700 translate-0 ease-out" : "duration-100 -translate-x-full"}`}>
           {navlinks.map(
             ({ name, href }, key) =>
               name !== "Policies" && (
                 <Link
                   key={key}
                   href={href}
-                  className="font-semibold text-shadow-stone-950"
-                >
+                  className="font-semibold text-shadow-stone-950">
                   {name}
                 </Link>
               )

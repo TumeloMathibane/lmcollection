@@ -1,4 +1,4 @@
-import CollectionView from "@/app/components/collection-view";
+import CollectionView from "@/components/collection-view";
 import Loading from "./loading";
 import { fetchQuery } from "convex/nextjs";
 import { Metadata } from "next";

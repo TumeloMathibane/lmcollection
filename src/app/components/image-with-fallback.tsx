@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useState } from "react";
-import { fallbackImage } from "@/constants/images";
+import { fallbackImage } from "../../constants/images";
 
 interface ImageWithFallbackProps {
   src?: string;

@@ -1,6 +1,6 @@
-import Card from "@/app/components/ui/admin/card";
-import Banner from "@/app/components/ui/admin/page-banner";
-import Construction from "@/app/components/ui/under-construction";
+import Card from "@/components/ui/admin/card";
+import Banner from "@/components/ui/admin/page-banner";
+import Construction from "@/components/ui/under-construction";
 
 export default async function Home() {
   return (

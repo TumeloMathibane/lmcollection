@@ -1,6 +1,6 @@
 "use client";
 
-import { useCartStore } from "@/stores/cart";
+import { useCartStore } from "../../stores/cart";
 import Link from "next/link";
 import { BiX } from "react-icons/bi";
 import Image from "next/image";
@@ -40,8 +40,7 @@ export default function CartView() {
           {items.map((item, key) => (
             <div
               key={key}
-              className="w-full py-5 flex border-t first:border-0 border-stone-400 space-x-3 md:space-x-5 xl:space-x-10"
-            >
+              className="w-full py-5 flex border-t first:border-0 border-stone-400 space-x-3 md:space-x-5 xl:space-x-10">
               <div className="item-img size-40 h-fit overflow-hidden rounded-md shadow-md">
                 <Link href={`collection/products/${item?.productId}`}>
                   <Image
@@ -56,8 +55,7 @@ export default function CartView() {
                 <div className="flex items-center-safe justify-between">
                   <Link
                     href={`collection/products/${item?.productId}`}
-                    className="text-xl font-bold text-stone-950"
-                  >
+                    className="text-xl font-bold text-stone-950">
                     {item.productName}
                   </Link>
                   <BiX
@@ -122,8 +120,7 @@ export default function CartView() {
 
             <p
               className="text-red-500 font-semibold hover:cursor-pointer flex flex-col w-fit group"
-              onClick={() => clearCart()}
-            >
+              onClick={() => clearCart()}>
               Clear cart{" "}
               {`(${items?.reduce((acc, item) => item?.productQty + acc, 0)})`}{" "}
               <span className="border-b w-0 transition-all duration-500 group-hover:w-full" />
