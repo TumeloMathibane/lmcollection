@@ -6,8 +6,8 @@ export const metadata: Metadata = {
 
 export default function About() {
   return (
-    <main className="container flex-1 p-4 md:flex md:justify-center-safe md:items-center-safe">
-      <div className="space-y-4">
+    <main className="container place-self-center-safe flex-1 p-4 md:flex md:justify-center-safe">
+      <div className="space-y-4 md:py-10 lg:max-w-[70%]">
         <h1 className="text-4xl font-bold text-stone-900 text-center">
           About us - LM Collection
         </h1>

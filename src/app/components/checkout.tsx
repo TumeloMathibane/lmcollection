@@ -6,7 +6,7 @@ import OrderSummaryWidget, { OrderSummary } from "./order-summary";
 import { BiCheck, BiLoaderAlt } from "react-icons/bi";
 import { DeliveryPackage } from "./delivery-option";
 import { CheckoutFooter } from "./footer";
-import { useCartStore } from "@/stores/cart";
+import { useCartStore } from "../../stores/cart";
 import { useQuery } from "convex/react";
 import { states } from "../lib/sa_provinces.json";
 import { api } from "@/convex/_generated/api";
@@ -233,10 +233,23 @@ export default function CheckoutMain({
     }
   }, [data]);
 
+  // write a useffect for logging if items are present or not after 10 seconds
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (items?.length > 0) {
+        console.log("Items are present in the cart.");
+      } else {
+        console.log("No items in the cart.");
+      }
+    }, 10000);
+
+    return () => clearTimeout(timer);
+  }, [items]);
+
   if (!items || cartTotal === 0 || getTotalPrice() === 0) return <Loading />;
 
   return (
-    <main className="bg-white flex flex-col min-h-screen md:min-h-[52em] lg:min-h-screen xl:min-h-screen">
+    <main className="bg-white flex-1 flex flex-col">
       <div className="lg:hidden">
         <OrderSummaryWidget
           shippingPrice={shippingData?.price}
@@ -352,8 +365,7 @@ export default function CheckoutMain({
                   id="province"
                   className="select select-md w-full focus-within:outline-offset-0 focus-within:outline-0 focus-within:border-2 focus-within:border-blue-600"
                   value={data.province}
-                  onChange={handleInputChange}
-                >
+                  onChange={handleInputChange}>
                   <option value="">Select province</option>
                   {states.map((state, key) => (
                     <option key={key} value={state.code}>
@@ -367,8 +379,7 @@ export default function CheckoutMain({
                   id="country"
                   className="select select-md w-full focus-within:outline-offset-0 focus-within:outline-0 focus-within:border-2 focus-within:border-blue-600"
                   value={data.country}
-                  onChange={handleInputChange}
-                >
+                  onChange={handleInputChange}>
                   <option value="">Select country</option>
                   <option value="za">South Africa</option>
                 </select>
@@ -487,23 +498,23 @@ export default function CheckoutMain({
                   // e.preventDefault();
                   // console.log("Shipping data: ", shippingData);
                 }}
-                disabled={shippingData.method === "" || status === "submitting"}
-              >
-                {status === "" ? (
+                disabled={
+                  shippingData.method === "" || status === "submitting"
+                }>
+                {status === "" ?
                   "Pay now"
-                ) : status === "submitting" ? (
+                : status === "submitting" ?
                   <>
                     <BiLoaderAlt className="size-8 animate-spin" />
                     {"Processing..."}
                   </>
-                ) : (
-                  status === "validated" && (
+                : status === "validated" && (
                     <>
                       <BiCheck className="size-8" />
                       {"Processed!"}
                     </>
                   )
-                )}
+                }
               </button>
             </div>
 

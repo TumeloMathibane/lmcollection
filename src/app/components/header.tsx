@@ -50,8 +50,8 @@ export default function Header() {
         </section>
       )}
 
-      <section>
-        <div className="flex items-center justify-between mx-5 md:mx-20">
+      <section className="place-items-center-safe">
+        <div className="flex items-center justify-between w-[95%] md:w-[80%]">
           <i className="hidden md:block">
             <BiSearch
               size={"2em"}
@@ -85,7 +85,7 @@ export default function Header() {
               alt="lmcollection-logo"
               width={100}
               height={100}
-              className="size-15 md:size-30 xl:size-25"
+              className="size-15 md:size-20"
             />
           </Link>
           <Link href="/cart" className="relative">
@@ -133,7 +133,7 @@ export default function Header() {
 
 export function CheckoutHeader() {
   return (
-    <nav className="border-b border-stone-300 lg:place-items-center-safe">
+    <nav className="border-b border-stone-300 lg:place-items-center-safe h-16">
       <div className="flex justify-between p-3 w-full place-self-center-safe items-center-safe md:max-w-[750px] lg:max-w-[1100px] lg:px-10">
         <Link href={"/"}>
           <Image src={blackLogo} alt="business-logo" width={"60"} />

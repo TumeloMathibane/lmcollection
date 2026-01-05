@@ -1,4 +1,4 @@
-import type { CartItem } from "@/stores/types";
+import type { CartItem } from "../../../../stores/types";
 import ImageWithFallback from "../../image-with-fallback";
 
 type ItemCardProp = {

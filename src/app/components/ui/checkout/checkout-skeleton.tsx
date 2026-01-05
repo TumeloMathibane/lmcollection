@@ -3,15 +3,8 @@
 export default function CheckoutSkeleton() {
   return (
     <>
-      <div className="bg-stone-100 border-b border-stone-300 lg:hidden">
-        <div className="h-12 w-full flex justify-between items-center-safe place-self-center-safe px-4 md:max-w-[760px]">
-          <div className="h-3 w-12 bg-stone-200 rounded-lg" />
-          <div className="h-5 w-15 bg-stone-200 rounded-lg" />
-        </div>
-      </div>
-
-      <div className="lg:flex lg:divide-x divide-stone-300 lg:h-[618px]">
-        <div className="lg:w-1/2 lg:h-full">
+      <div className="lg:flex lg:divide-x divide-stone-300">
+        <div className="lg:w-1/2">
           <div>
             <div className="space-y-2 divide-y divide-stone-300 px-4 md:max-w-[760px] md:mx-auto lg:max-w-[550px] lg:p-10 lg:mx-0 lg:ml-auto">
               <div className="space-y-2 py-3">
@@ -63,7 +56,7 @@ export default function CheckoutSkeleton() {
           </div>
         </div>
 
-        <div className="hidden lg:block lg:w-1/2 lg:h-full lg:bg-stone-200">
+        <div className="hidden lg:block lg:w-1/2 lg:bg-stone-200">
           <div>
             <div className="lg:p-10 lg:max-w-[550px]">
               <div className="flex space-x-2 py-3">

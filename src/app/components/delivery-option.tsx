@@ -1,7 +1,7 @@
 "use client";
 
-import { tcg } from "@/constants/tcg";
-import { paxi } from "@/constants/paxi";
+import { tcg } from "../../constants/tcg";
+import { paxi } from "../../constants/paxi";
 
 interface DeliveryOptProps {
   deliveryData: { [key: string]: string | number | boolean | undefined };
@@ -21,8 +21,7 @@ export function DeliveryPackage({ deliveryData, onChange }: DeliveryOptProps) {
               onChange("type", e.target?.value);
               onChange("price", Number(e.target?.value?.split("|")[1] ?? 0));
             }}
-            value={deliveryData?.type as string}
-          >
+            value={deliveryData?.type as string}>
             <option value="">Delivery type</option>
             {tcg.map(({ name, abbr, minimum_charge }, index) => (
               <option key={index} value={`${abbr}|${minimum_charge}`}>
@@ -49,17 +48,16 @@ export function DeliveryPackage({ deliveryData, onChange }: DeliveryOptProps) {
                   `${abbr}|${minimum_charge}` === deliveryData?.type && (
                     <div
                       key={index}
-                      className="list list-disc list-inside indent-2"
-                    >
+                      className="list list-disc list-inside indent-2">
                       <li>
                         Max. mass/Mass range: <span>{mass_range} kg</span>
                       </li>
                       <li>
                         Rate per kilogram:{" "}
                         <span>
-                          {rate_per_kg === "-"
-                            ? "no charge"
-                            : `${rate_per_kg} kg`}
+                          {rate_per_kg === "-" ?
+                            "no charge"
+                          : `${rate_per_kg} kg`}
                         </span>
                       </li>
                       <li>
@@ -82,8 +80,7 @@ export function DeliveryPackage({ deliveryData, onChange }: DeliveryOptProps) {
             onChange={(e) => {
               onChange("type", e.target?.value);
               onChange("price", 0);
-            }}
-          >
+            }}>
             <option value="">Delivery type</option>
             {paxi.map(({ name, abbr }, index) => (
               <option key={index} value={abbr}>
@@ -100,8 +97,7 @@ export function DeliveryPackage({ deliveryData, onChange }: DeliveryOptProps) {
                   deliveryData?.type === abbr && (
                     <div
                       key={index}
-                      className="list list-disc list-inside indent-2"
-                    >
+                      className="list list-disc list-inside indent-2">
                       <li>
                         Max. width: <span>{max_width}</span>
                       </li>
@@ -123,8 +119,7 @@ export function DeliveryPackage({ deliveryData, onChange }: DeliveryOptProps) {
               <select
                 className="select select-md w-full focus-within:outline-offset-0 focus-within:outline-0 focus-within:border-2 focus-within:border-blue-600"
                 id="price"
-                onChange={(e) => onChange("price", Number(e.target?.value))}
-              >
+                onChange={(e) => onChange("price", Number(e.target?.value))}>
                 <option value={0}>Delivery time</option>
                 {paxi.map(({ abbr, delivery_times }) =>
                   delivery_times.map(
