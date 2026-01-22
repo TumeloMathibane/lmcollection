@@ -73,14 +73,14 @@ export const searchProducts = query({
     const descriptionResults = await ctx.db
       .query("product")
       .withSearchIndex("search_description", (q) =>
-        q.search("shortDescription", searchTerm)
+        q.search("shortDescription", searchTerm),
       )
       .take(limit);
 
     // combine and deduplicate results
     const combinedResults = [...nameResults, ...descriptionResults];
     const uniqueResults = Array.from(
-      new Map(combinedResults.map((item) => [item._id, item])).values()
+      new Map(combinedResults.map((item) => [item._id, item])).values(),
     );
 
     // Sort by relevence (name  matches first)
@@ -127,17 +127,15 @@ export const addMany = mutation({
   args: {
     products: v.array(
       v.object({
-        itemCode: v.string(),
         name: v.string(),
         price: v.number(),
         discount: v.number(),
         shortDescription: v.string(),
-        availableSizes: v.array(v.string()),
-        availableQuantity: v.number(),
+        quantity: v.number(),
         category: v.string(),
-        image: v.string(),
-        additional_options: v.optional(v.record(v.string(), v.any())),
-      })
+        images: v.array(v.string()),
+        additional_options: v.record(v.string(), v.array(v.string())),
+      }),
     ),
   },
   handler: async (ctx, args) => {
