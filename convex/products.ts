@@ -2,6 +2,39 @@ import { mutation } from "./_generated/server";
 import { query } from "./_generated/server";
 import { v } from "convex/values";
 
+export const generateUploadURL = mutation(async (ctx) => {
+  return await ctx.storage.generateUploadUrl();
+});
+
+// Mutation: add a product
+export const addProduct = mutation({
+  args: {
+    name: v.string(),
+    price: v.number(),
+    discount: v.number(),
+    shortDescription: v.string(),
+    quantity: v.number(),
+    category: v.string(),
+    images: v.array(v.string()),
+    additional_options: v.array(
+      v.record(v.string(), v.union(v.string(), v.array(v.string()))),
+    ),
+  },
+  handler: async (ctx, args) => {
+    const productId = await ctx.db.insert("product", {
+      name: args.name,
+      price: args.price,
+      discount: args.discount,
+      shortDescription: args.shortDescription,
+      quantity: args.quantity,
+      category: args.category,
+      images: args.images,
+      additional_options: args.additional_options,
+    });
+    return productId;
+  },
+});
+
 // Query: list all or n product/s
 export const get = query({
   args: { category: v.optional(v.string()), count: v.optional(v.number()) },
@@ -73,14 +106,14 @@ export const searchProducts = query({
     const descriptionResults = await ctx.db
       .query("product")
       .withSearchIndex("search_description", (q) =>
-        q.search("shortDescription", searchTerm)
+        q.search("shortDescription", searchTerm),
       )
       .take(limit);
 
     // combine and deduplicate results
     const combinedResults = [...nameResults, ...descriptionResults];
     const uniqueResults = Array.from(
-      new Map(combinedResults.map((item) => [item._id, item])).values()
+      new Map(combinedResults.map((item) => [item._id, item])).values(),
     );
 
     // Sort by relevence (name  matches first)
@@ -127,17 +160,17 @@ export const addMany = mutation({
   args: {
     products: v.array(
       v.object({
-        itemCode: v.string(),
         name: v.string(),
         price: v.number(),
         discount: v.number(),
         shortDescription: v.string(),
-        availableSizes: v.array(v.string()),
-        availableQuantity: v.number(),
+        quantity: v.number(),
         category: v.string(),
-        image: v.string(),
-        additional_options: v.optional(v.record(v.string(), v.any())),
-      })
+        images: v.array(v.string()),
+        additional_options: v.array(
+          v.record(v.string(), v.union(v.string(), v.array(v.string()))),
+        ),
+      }),
     ),
   },
   handler: async (ctx, args) => {

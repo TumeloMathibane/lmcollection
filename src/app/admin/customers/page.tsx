@@ -1,4 +1,3 @@
-import Banner from "@/components/ui/admin/page-banner";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -7,13 +6,9 @@ export const metadata: Metadata = {
 
 export default async function Home() {
   return (
-    <main className="p-6 space-y-4 flex flex-col h-screen">
+    <main className="p-4 space-y-4 flex flex-col">
       <section>
-        <Banner title="orders" />
-      </section>
-
-      <section className="h-full">
-        <p>Orders...</p>
+        <p className="text-xl font-bold">Customers...</p>
       </section>
     </main>
   );

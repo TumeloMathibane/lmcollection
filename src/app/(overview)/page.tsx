@@ -121,15 +121,9 @@ export default async function Home() {
   );
 }
 
-//! TODO: Implement admin page and components... [side nav bar for starters] 📌
+//! TODO: Implement admin page and components... [...] 📌
 //! TODO: Implement review feature
-//! TODO: Implement pages with dynamic routes to have dynamic metadata...
-//! TODO: For scrollable elements/components, have the movable cursor for scrolling through element/component...
 //!
 //! TODO: Implement contact page logic
-//! TODO: In page components, move all uninteractive elements to server file (page.tsx)...
 //!
 //! ==================================================
-//!
-//! NOTE: Construct a placeholder image so that it is hosted locally in the app
-//! NOTE: Implement way of storing user info as they input it, and load it in relevent inputs on page reload...

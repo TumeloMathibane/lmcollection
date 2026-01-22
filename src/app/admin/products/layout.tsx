@@ -1,15 +1,11 @@
-import Banner from "@/components/ui/admin/page-banner";
+// import Banner from "@/components/ui/admin/banner";
 
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <main className="relative p-6 space-y-4 flex flex-col h-screen">
-      <section>
-        <Banner title="products" />
-      </section>
-
-      {children}
+    <main className="flex flex-col">
+      <div className="p-4">{children}</div>
     </main>
   );
 }

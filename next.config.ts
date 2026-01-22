@@ -15,25 +15,55 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       {
-        source: "/products",
-        destination: "/collection/products/all",
+        source: "/",
+        destination: "/coming-soon",
         permanent: true,
       },
       {
-        source: "/collection/products",
-        destination: "/collection/products/all",
+        source: "/cart/:path*",
+        destination: "/coming-soon",
         permanent: true,
       },
       {
-        source: "/collection",
-        destination: "/collection/products/all",
+        source: "/collection/:path*",
+        destination: "/coming-soon",
         permanent: true,
       },
       {
-        source: "/policy",
-        destination: "/info/policies",
+        source: "/info/:path*",
+        destination: "/coming-soon",
         permanent: true,
       },
+      {
+        source: "/payment/:path*",
+        destination: "/coming-soon",
+        permanent: true,
+      },
+      {
+        source: "/admin/:path*",
+        destination: "/coming-soon",
+        permanent: true,
+      },
+      // {
+      //   source: "/products",
+      //   destination: "/collection/products/all",
+      //   permanent: true,
+      // },
+      // {
+      //   source: "/collection/products",
+      //   destination: "/collection/products/all",
+      //   permanent: true,
+      // },
+      // {
+      //   source: "/collection",
+      //   destination: "/collection/products/all",
+      //   permanent: true,
+      // },
+      // {
+      //   source: "/policy",
+      //   destination: "/info/policies",
+      //   permanent: true,
+      // },
     ];
   },
 };

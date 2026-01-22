@@ -1,0 +1,90 @@
+import Image from "next/image";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
+import { BiTrash } from "react-icons/bi";
+
+export default function ImageSelector({
+  images,
+  onImagesChange,
+}: {
+  images: File[];
+  onImagesChange: (imgs: File[]) => void;
+}) {
+  const [previews, setPreviews] = useState<
+    { id: string; file: File; preview: string }[]
+  >([]);
+  const imgRef = useRef<HTMLInputElement>(null);
+
+  const handleInputChange = (ev: ChangeEvent<HTMLInputElement>) => {
+    const files = ev.target.files;
+
+    if (files) {
+      onImagesChange([...images, ...Array.from(files)]);
+    }
+
+    imgRef.current!.value = "";
+  };
+
+  const removeImg = (img: File) => {
+    const filteredFiles = images.filter((file) => file !== img);
+    onImagesChange(filteredFiles);
+  };
+
+  useEffect(() => {
+    const next = images.map((file) => ({
+      id: `${file.name}-${file.lastModified}`,
+      file,
+      preview: URL.createObjectURL(file),
+    }));
+
+    setPreviews(next);
+
+    return () => {
+      next.forEach((p) => URL.revokeObjectURL(p.preview));
+    };
+  }, [images]);
+
+  return (
+    <div>
+      <input
+        type="file"
+        multiple
+        className="input input-md w-full"
+        hidden
+        id="img-selector"
+        ref={imgRef}
+        onChange={handleInputChange}
+      />
+
+      <div className="p-2 border border-stone-300 w-full h-full rounded items-center space-y-2">
+        <button
+          type="button"
+          className="btn"
+          onClick={() => document.getElementById("img-selector")?.click()}>
+          Add image/s
+        </button>
+
+        {previews.length > 0 && (
+          <div className="flex flex-wrap gap-2">
+            {previews.map((preview, index) => (
+              <div key={index} className="w-24 h-24 relative">
+                <BiTrash
+                  size={"1.5rem"}
+                  className="absolute top-2 right-2 text-red-700"
+                  onClick={() => removeImg(preview.file)}
+                />
+
+                <Image
+                  src={preview.preview}
+                  alt={preview?.id}
+                  className="w-full h-full object-cover rounded"
+                  width={100}
+                  height={100}
+                />
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}

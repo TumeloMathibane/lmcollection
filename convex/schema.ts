@@ -15,7 +15,13 @@ export default defineSchema({
     quantity: v.number(),
     category: v.string(),
     images: v.array(v.string()),
-    additional_options: v.record(v.string(), v.array(v.string())),
+    // additional_options: v.record(
+    //   v.string(),
+    //   v.union(v.string(), v.array(v.union(v.string(), v.number())))
+    // ),
+    additional_options: v.array(
+      v.record(v.string(), v.union(v.string(), v.array(v.string()))),
+    ),
   })
     .searchIndex("search_name", { searchField: "name" })
     .searchIndex("search_description", { searchField: "shortDescription" }),

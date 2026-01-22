@@ -8,43 +8,51 @@ import { useEffect, useState } from "react";
 import { BiX } from "react-icons/bi";
 
 export default function Footer() {
+  const date = new Date();
+
   return (
-    <footer className="bg-stone-950 w-full flex p-10 justify-evenly">
-      <Link
-        href="/"
-        className="hidden md:flex footer-logo size-30 items-center-safe">
-        <Image src={logo} alt="footer-logo" width={500} height={500} />
-      </Link>
-      <div className="flex flex-col">
-        <p className="text-white font-semibold">Quick links</p>
-        {navlinks.map(
-          ({ name, href }, key) =>
-            name !== "Policies" && (
-              <Link key={key} href={href} className="text-stone-400">
-                {name}
-              </Link>
-            )
-        )}
-      </div>
-      <div>
-        {navlinks.map(
-          ({ name, href, sublinks }, key) =>
-            name === "Policies" && (
-              <div key={key} className="flex flex-col">
-                <Link
-                  key={key}
-                  href={href}
-                  className="text-white font-semibold">
+    <footer className="bg-stone-950 w-full">
+      <div className="flex p-10 justify-evenly">
+        <Link
+          href="/"
+          className="hidden md:flex footer-logo size-30 items-center-safe">
+          <Image src={logo} alt="footer-logo" width={500} height={500} />
+        </Link>
+        <div className="flex flex-col">
+          <p className="text-white font-semibold">Quick links</p>
+          {navlinks.map(
+            ({ name, href }, key) =>
+              name !== "Policies" && (
+                <Link key={key} href={href} className="text-stone-400">
                   {name}
                 </Link>
-                {sublinks.map(({ name, href }, index) => (
-                  <Link key={index} href={href} className="text-stone-400">
+              ),
+          )}
+        </div>
+        <div>
+          {navlinks.map(
+            ({ name, href, sublinks }, key) =>
+              name === "Policies" && (
+                <div key={key} className="flex flex-col">
+                  <Link
+                    key={key}
+                    href={href}
+                    className="text-white font-semibold">
                     {name}
                   </Link>
-                ))}
-              </div>
-            )
-        )}
+                  {sublinks.map(({ name, href }, index) => (
+                    <Link key={index} href={href} className="text-stone-400">
+                      {name}
+                    </Link>
+                  ))}
+                </div>
+              ),
+          )}
+        </div>
+      </div>
+
+      <div className="items-center text-center text-stone-400 py-2 border-t border-stone-600">
+        <p>Copyright &copy; {date.getFullYear()} by LMCollection</p>
       </div>
     </footer>
   );
@@ -76,7 +84,7 @@ export function CheckoutFooter() {
                 className="text-blue-700 underline underline-offset-3 decoration-blue-700">
                 {link.name}
               </label>
-            ))
+            )),
         )}
       </div>
 

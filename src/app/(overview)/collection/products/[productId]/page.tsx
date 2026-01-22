@@ -1,5 +1,5 @@
-import ProductList from "@/app/components/product-list";
-import ProductView from "@/app/components/product-view";
+import ProductList from "@/components/product-list";
+import ProductView from "@/components/product-view";
 import { fetchQuery } from "convex/nextjs";
 import { Metadata } from "next";
 import { api } from "@/convex/_generated/api";
@@ -10,7 +10,6 @@ export const metadata: Metadata = {
   title: "Product",
 };
 
-//! TODO: generate dynamic metadata...
 export default async function Product({
   params,
 }: {
