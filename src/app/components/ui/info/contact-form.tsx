@@ -5,35 +5,31 @@ export default function ContactForm() {
         type="text"
         name="customer-name"
         id="customer-name"
-        placeholder="Full name..."
-        className="input input-sm md:input-lg xl:input-md w-full"
+        placeholder="First & last name..."
+        className="input input-sm md:input-lg xl:input-md"
       />
-      <div className="flex gap-4 w-full">
-        <input
-          type="text"
-          name="customer-name"
-          id="customer-cellphone"
-          placeholder="Cellphone..."
-          className="input input-sm md:input-lg xl:input-md w-4/8"
-        />
-        <div className="divide-y text-stone-400 text-xs md:text-[14pt] self-center">
-          or
-        </div>
-        <input
-          type="email"
-          name="customer-email"
-          id="customer-email"
-          placeholder="Email..."
-          className="input input-sm md:input-lg xl:input-md w-full"
-        />
-      </div>
+      <input
+        type="text"
+        name="customer-name"
+        id="customer-cellphone"
+        placeholder="Cellphone..."
+        className="input input-sm md:input-lg xl:input-md"
+      />
+      <div className="divider text-stone-400 w-[80%] self-center">OR</div>
+      <input
+        type="email"
+        name="customer-email"
+        id="customer-email"
+        placeholder="Email..."
+        className="input input-sm md:input-lg xl:input-md"
+      />
       <textarea
         name="customer-comment"
         id="customer-comment"
         placeholder="Comment..."
-        className="textarea textarea-md md:textarea-md w-full"
+        className="textarea textarea-md md:textarea-md"
       />
-      <button className="btn my-5">Submit</button>
+      <button className="btn">Submit</button>
     </form>
   );
 }

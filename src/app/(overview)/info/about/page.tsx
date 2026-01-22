@@ -6,8 +6,13 @@ export const metadata: Metadata = {
 
 export default function About() {
   return (
+<<<<<<< HEAD
     <main className="container place-self-center-safe flex-1 p-4 md:flex md:justify-center-safe">
       <div className="space-y-4 md:py-10 lg:max-w-[70%]">
+=======
+    <main className="min-h-[42em] md:min-h-[52em] lg:min-h-[64em] xl:min-h-[22em] space-y-3 md:space-y-5 p-2 mb-5 md:m-0 md:flex md:flex-col md:justify-center-safe md:align-middle xl:w-[70%] xl:place-self-center-safe xl:py-10 xl:px-40">
+      <div className="space-y-4">
+>>>>>>> parent of 37aaa6e (Commit all necessary edits in the store pages)
         <h1 className="text-4xl font-bold text-stone-900 text-center">
           About us - LM Collection
         </h1>

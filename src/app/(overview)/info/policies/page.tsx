@@ -111,7 +111,7 @@ export default function Policies() {
         </div>
       </section>
 
-      <section id="returns" className="space-y-5 md:py-8">
+      <section id="returns" className="space-y-3 md:py-8">
         <h2 className="text-2xl font-bold text-stone-700">Returns</h2>
         <div className="border-collapse">
           <section className="table-row">
@@ -157,8 +157,8 @@ export default function Policies() {
         </div>
 
         {/* This section must be a flex with buttons on sides to slide back and forth */}
-        <div className="flex overflow-auto space-x-2 print:flex-col print:space-y-3 xl:pr-1 min-w-full">
-          <article className="border border-stone-700 rounded-xl p-2 space-y-3 text-sm min-w-full lg:min-w-[50%]">
+        <div className="flex overflow-auto space-x-2 print:flex-col print:space-y-3 xl:pr-1">
+          <article className="border border-stone-700 rounded-xl p-2 space-y-3 text-sm min-w-full">
             <h3 className="text-left font-semibold text-stone-700 border-b border-stone-500 pb-2 ps-4">
               Non-returnable Items
             </h3>
@@ -176,7 +176,7 @@ export default function Policies() {
             </div>
           </article>
 
-          <article className="border border-stone-700 rounded-xl p-2 space-y-3 text-sm min-w-full lg:min-w-[47%]">
+          <article className="border border-stone-700 rounded-xl p-2 space-y-3 text-sm min-w-full">
             <h3 className="text-left font-semibold text-stone-700 border-b border-stone-500 pb-2 ps-4">
               Damages & Issues
             </h3>
@@ -215,7 +215,7 @@ export default function Policies() {
         </div>
       </section>
 
-      <section id="contact" className="space-y-3 md:py-8 place-items-center">
+      <section id="contact" className="space-y-3 md:py-8">
         <h2 className="text-2xl font-bold text-stone-700">Contact</h2>
         <div>
           <p className="text-center">

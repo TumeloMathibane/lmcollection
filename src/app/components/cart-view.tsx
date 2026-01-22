@@ -16,7 +16,7 @@ export default function CartView() {
 
   if (items.length === 0) {
     return (
-      <div className="flex-1 flex justify-around items-center-safe">
+      <div className="min-h-[42em] md:min-h-[52em] lg:min-h-[64em] xl:min-h-[22em] flex justify-around items-center-safe">
         <div className="space-y-3 md:space-y-5 flex flex-col items-center-safe xl:w-[80%]">
           <p className="text-2xl text-stone-900 text-center font-bold md:text-4xl">
             Your cart is empty
@@ -30,7 +30,7 @@ export default function CartView() {
   }
 
   return (
-    <main className="flex-1 xl:w-[80%] xl:place-self-center-safe">
+    <main className="min-h-[42em] md:min-h-[52em] lg:min-h-[64em] xl:min-h-[22em] xl:w-[80%] xl:place-self-center-safe">
       <p className="text-4xl text-stone-900 font-bold p-3 lg:px-5 text-center">
         Your cart
       </p>

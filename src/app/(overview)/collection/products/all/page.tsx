@@ -22,8 +22,8 @@ export default async function Collection({
   if (products?.length === 0) {
     return (
       <>
-        <main className="flex-1 flex justify-center-safe items-center-safe">
-          <p className="text-4xl font-bold text-stone-900 text-center xl:py-2">
+        <main className="container place-self-center-safe p-2 space-y-4 xl:w-[70%] min-h-[42em] md:min-h-[52em] lg:min-h-[64em] xl:min-h-[22em]">
+          <p className="text-4xl font-bold text-stone-900 text-center xl:text-6xl xl:py-2">
             No products
           </p>
         </main>
@@ -33,7 +33,7 @@ export default async function Collection({
 
   return (
     <>
-      <main className="flex-1 flex justify-center-safe items-center-safe">
+      <main className="container place-self-center-safe p-2 space-y-4 xl:w-[70%] min-h-[42em] md:min-h-[52em] lg:min-h-[64em] xl:min-h-[22em]">
         <p className="text-4xl font-bold text-stone-900 text-center xl:text-6xl xl:py-2">
           Products
         </p>

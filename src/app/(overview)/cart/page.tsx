@@ -6,6 +6,6 @@ export const metadata: Metadata = {
 };
 
 // generate dynamic metadata to cart items length...
-export default async function Cart() {
+export default function Cart() {
   return <CartView />;
 }
