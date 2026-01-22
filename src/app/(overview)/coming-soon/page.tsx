@@ -20,8 +20,11 @@ export default async function Home() {
           </h2>
 
           <p className="text-md md:text-2xl text-white max-w-2xl">
-            We are working hard to bring you an amazing experience. Stay tuned
-            for updates and be the first to know when we launch!
+            We are working hard to bring you an amazing experience.
+          </p>
+
+          <p className="text-md md:text-2xl text-white max-w-2xl">
+            Stay tuned for updates and be the first to know when we launch!
           </p>
         </div>
       </div>
