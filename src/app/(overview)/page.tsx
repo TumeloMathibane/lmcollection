@@ -18,21 +18,15 @@ export default async function Home() {
   return (
     <div className="flex-1 font-sans flex justify-center">
       <main className="space-y-10 flex flex-col place-content-center-safe">
-        <section className="bg-[url('/images/ali-pazani-3w14X-Yxffk-unsplash.jpg')] bg-cover bg-no-repeat min-h-screen relative md:min-h-[92vh] md:bg-fill lg:min-h-screen mask-alpha mask-b-from-70% md:mask-b-from-80% sm:mask-l-from-90% sm:mask-r-from-90%">
-          <div className="absolute top-0 bottom-0 left-0 right-0 backdrop-grayscale-100" />
-          <div className="h-full flex flex-col justify-center space-y-5 px-7">
-            <p className="text-6xl font-extrabold font-serif text-stone-900">
-              Like it, Love it, & Wear it.
-            </p>
-            <Link
-              href="#categories"
-              className="btn px-7 py-3 bg-stone-900/50 border border-white rounded-md w-fit h-fit text-white text-lg z-50">
-              Shop now
-            </Link>
-          </div>
+        <section className="bg-[url('/images/ali-pazani-3w14X-Yxffk-unsplash.jpg')] bg-cover bg-no-repeat h-screen md:h-[92vh] md:bg-fill lg:min-h-screen flex items-center-safe justify-around mask-alpha mask-b-from-70% md:mask-b-from-80% sm:mask-l-from-90% sm:mask-r-from-90%">
+          <Link
+            href="#categories"
+            className="btn px-6 py-3 bg-stone-900/50 border border-white rounded-md w-fit h-fit text-white text-xl z-100">
+            Shop now
+          </Link>
         </section>
 
-        <section className="md:py-5 lg:w-[70%] lg:place-self-center-safe place-items-center space-y-5">
+        <section className="flex flex-col items-center-safe space-y-5">
           <p className="section-title text-center font-bold text-4xl">
             Welcome to
           </p>
@@ -46,7 +40,7 @@ export default async function Home() {
               />
             </div>
           </div>
-          <div className="welcome-section-text px-2">
+          <div className="welcome-section-text px-2 md:max-w-[70%]">
             <p className="text-justify md:text-center">
               Lorem ipsum dolor sit amet consectetur adipisicing elit.
               Blanditiis molestias, perferendis praesentium sint culpa quos
@@ -63,9 +57,7 @@ export default async function Home() {
           </div>
         </section>
 
-        <section
-          id="categories"
-          className="space-y-8 py-4 md:px-2 md:py-8 md:place-self-center-safe lg:w-[70%] lg:flex flex-col lg:place-self-center-safe">
+        <section id="categories" className="space-y-8 py-4">
           <div>
             <p className="text-5xl text-stone-950 font-bold text-center">
               Categories
