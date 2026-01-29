@@ -35,7 +35,7 @@ export default async function Collection({
 
   return (
     <>
-      <main className="flex-1 flex flex-col p-2 space-y-2">
+      <main className="flex-1 flex justify-center-safe items-center-safe">
         <p className="text-4xl font-bold text-stone-900 text-center xl:text-6xl xl:py-2">
           Products
         </p>
