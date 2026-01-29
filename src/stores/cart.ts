@@ -13,23 +13,22 @@ export const useCartStore = create<CartStore>()(
       addItem: (
         id: string,
         name: string,
-        img: string,
         size: string,
         qty = 1,
-        price: number
+        price: number,
       ) => {
         set((state) => {
           const now = Date.now();
           const exist = state.items.find(
-            (i) => i.productId === id && i.productSize === size
+            (i) => i.productId === id && i.productSize === size,
           );
 
           if (exist) {
             return {
               items: state.items.map((i) =>
-                i.productId === id && i.productSize === size
-                  ? { ...i, productQty: i.productQty + qty }
-                  : i
+                i.productId === id && i.productSize === size ?
+                  { ...i, productQty: i.productQty + qty }
+                : i,
               ),
               createdAt: state.createdAt ?? now,
               lastModified: now,
@@ -42,7 +41,6 @@ export const useCartStore = create<CartStore>()(
               {
                 productId: id,
                 productName: name,
-                productImg: img,
                 productSize: size,
                 productQty: qty,
                 productPrice: Number(price.toFixed(2)),
@@ -55,7 +53,7 @@ export const useCartStore = create<CartStore>()(
       removeItem: (id: string, size: string) =>
         set((state) => ({
           items: state.items.filter(
-            (i) => i.productId !== id || i.productSize !== size
+            (i) => i.productId !== id || i.productSize !== size,
           ),
           createdAt: state.createdAt,
           lastModified: Date.now(),
@@ -64,9 +62,9 @@ export const useCartStore = create<CartStore>()(
       updateItemQty: (id: string, size: string, qty: number) =>
         set((state) => ({
           items: state.items.map((i) =>
-            i.productId === id && i.productSize === size
-              ? { ...i, productQty: qty }
-              : i
+            i.productId === id && i.productSize === size ?
+              { ...i, productQty: qty }
+            : i,
           ),
         })),
 
@@ -77,9 +75,9 @@ export const useCartStore = create<CartStore>()(
           get()
             .items.reduce(
               (total, item) => total + item.productQty * item.productPrice,
-              0
+              0,
             )
-            .toFixed(2)
+            .toFixed(2),
         );
       },
     }),
@@ -89,6 +87,6 @@ export const useCartStore = create<CartStore>()(
       onRehydrateStorage: () => (state) => {
         if (state) state.loading = false;
       },
-    }
-  )
+    },
+  ),
 );

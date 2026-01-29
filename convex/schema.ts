@@ -8,23 +8,22 @@ export default defineSchema({
     image: v.optional(v.string()),
   }).searchIndex("search_category", { searchField: "name" }),
   product: defineTable({
+    brand: v.string(),
     name: v.string(),
     price: v.number(),
     discount: v.number(),
     shortDescription: v.string(),
     quantity: v.number(),
     category: v.string(),
-    images: v.array(v.string()),
-    // additional_options: v.record(
-    //   v.string(),
-    //   v.union(v.string(), v.array(v.union(v.string(), v.number())))
-    // ),
+    images: v.array(v.id("_storage")),
     additional_options: v.array(
       v.record(v.string(), v.union(v.string(), v.array(v.string()))),
     ),
   })
+    .searchIndex("search_brand", { searchField: "brand" })
     .searchIndex("search_name", { searchField: "name" })
-    .searchIndex("search_description", { searchField: "shortDescription" }),
+    .searchIndex("search_description", { searchField: "shortDescription" })
+    .searchIndex("search_category", { searchField: "category" }),
   orders: defineTable({
     orderNumber: v.optional(v.string()),
     items: v.array(v.record(v.string(), v.string())),

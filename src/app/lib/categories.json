@@ -1,14 +1,9 @@
 {
   "categories": [
     {
-      "description": "Personal computer",
-      "image": "/category-img/laptops.jpg",
-      "name": "laptops"
-    },
-    {
-      "description": "Accessories",
-      "image": "",
-      "name": "accessories"
+      "description": "Mobile devices",
+      "image": "/category-img/cellphones.jpg",
+      "name": "smartphones"
     },
     {
       "description": "Latest fashion",
@@ -16,24 +11,24 @@
       "name": "clothing"
     },
     {
-      "description": "Mobile devices",
-      "image": "/category-img/cellphones.jpg",
-      "name": "cellphones"
-    },
-    {
       "description": "Hair products",
       "image": "/category-img/hair.jpg",
       "name": "hair"
     },
     {
-      "description": "General appliances",
-      "image": "/category-img/appliances.jpg",
-      "name": "appliances"
+      "description": "Personal computer",
+      "image": "/category-img/laptops.jpg",
+      "name": "laptops"
     },
     {
       "description": "Footwear",
       "image": "/category-img/shoes.jpg",
-      "name": "shoes"
+      "name": "footwear"
+    },
+    {
+      "description": "Other products...",
+      "image": "",
+      "name": "other"
     }
   ]
 }

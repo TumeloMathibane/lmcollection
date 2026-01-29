@@ -15,7 +15,9 @@ export default async function Collection({
   searchParams: Promise<{ category?: string }>;
 }) {
   const { category } = await searchParams;
-  const products = await fetchQuery(api.products.get, { category: category });
+  const products = await fetchQuery(api.products.getProducts, {
+    category: category,
+  });
 
   if (!products) return <Loading />;
 
@@ -43,7 +45,9 @@ export default async function Collection({
             `(${products?.length}) ${products?.length > 1 ? "products" : "product"}`}
         </p>
 
-        <CollectionView products={products} />
+        <div className="h-full w-full">
+          <CollectionView products={products} />
+        </div>
       </main>
     </>
   );

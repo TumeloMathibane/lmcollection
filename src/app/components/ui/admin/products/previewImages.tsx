@@ -50,6 +50,7 @@ export default function ImageSelector({
         multiple
         className="input input-md w-full"
         hidden
+        accept=".jpg, .jpeg, .png, .webp, .gif"
         id="img-selector"
         ref={imgRef}
         onChange={handleInputChange}

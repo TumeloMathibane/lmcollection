@@ -46,6 +46,12 @@ export default function Sidebar() {
         </nav>
       </div>
 
+      <div>
+        <Link href={"/"} className="w-full">
+          <button className="btn w-full">Go to shop</button>
+        </Link>
+      </div>
+
       <div className="w-full">
         <div className="w-full p-2 border-t border-gray-300">
           sidebar footer

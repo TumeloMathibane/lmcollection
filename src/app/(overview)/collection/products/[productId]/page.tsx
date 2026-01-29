@@ -5,6 +5,7 @@ import { Metadata } from "next";
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
 import Loading from "./loading";
+import type { Product } from "../types";
 
 export const metadata: Metadata = {
   title: "Product",
@@ -15,21 +16,29 @@ export default async function Product({
 }: {
   params: Promise<{ productId: Id<"product"> }>;
 }) {
-  const productId = (await params)?.productId ?? "";
-  const product =
-    (await fetchQuery(api.products.getProduct, { id: productId })) ?? undefined;
-  const products = await fetchQuery(api.products.getCategoryProducts, {
-    category: product?.category ?? "",
+  const product = await fetchQuery(api.products.getProduct, {
+    id: (await params)?.productId,
+  });
+
+  const products = await fetchQuery(api.products.getProducts, {
+    category: product?.category,
     count: 5,
   });
 
-  if (!product) return <Loading />;
+  if (!product)
+    return (
+      <div className="flex-1">
+        <Loading />
+      </div>
+    );
 
   return (
-    <main className="p-2 space-y-2 xl:w-[70%] xl:place-self-center-safe xl:py-10 min-h-[42em] md:min-h-[52em] lg:min-h-[64em] xl:min-h-[22em]">
+    <main className="flex-1 p-2 space-y-2 xl:w-[70%] xl:place-self-center-safe xl:py-10">
       <ProductView product={product} />
+
       <div className="border-t border-stone-900 w-[50%] place-self-center-safe my-4" />
-      <section>
+
+      <section className="mb-4 space-y-2">
         <p className="text-lg font-bold text-stone-900">
           Products you may like...
         </p>
