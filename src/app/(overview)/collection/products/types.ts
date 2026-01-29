@@ -7,7 +7,8 @@ export type Category = {
 };
 
 export type Product = {
-  _id: Id<"product"> | string;
+  _id: Id<"product">;
+  brand: string;
   name: string;
   price: number;
   discount: number;
@@ -15,5 +16,8 @@ export type Product = {
   quantity: number;
   category: string;
   images: string[];
-  additional_options: { [key: string]: string | string[] } | object;
+  additional_options: Record<
+    string,
+    string | string[] | { [key: string]: string }
+  >[];
 };

@@ -12,12 +12,15 @@ export default function CollectionView({
   useEffect(() => window.scrollTo(0, 0), []);
 
   return (
-    <>
-      <div className="w-full grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-2">
-        {products?.map((product, key) => {
-          return <ProductCard key={key} product={product} />;
-        })}
-      </div>
-    </>
+    <div
+      className={`grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-${products && products.length > 4 && "4"}`}>
+      {products?.map((product, key) => {
+        return (
+          <div key={key}>
+            <ProductCard product={product} />
+          </div>
+        );
+      })}
+    </div>
   );
 }

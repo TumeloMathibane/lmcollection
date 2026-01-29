@@ -13,9 +13,7 @@ export default function ImageWithFallback({
   src,
   alt,
 }: ImageWithFallbackProps) {
-  const [imgSrc, setImgSrc] = useState<string | undefined>(
-    src ?? fallbackImage
-  );
+  const [imgSrc, setImgSrc] = useState<string>(src ?? fallbackImage);
 
   return (
     <Image
@@ -27,6 +25,7 @@ export default function ImageWithFallback({
         result.currentTarget.naturalHeight === 0 && setImgSrc(fallbackImage)
       }
       onError={() => setImgSrc(fallbackImage)}
+      className="h-full w-full object-cover object-center"
     />
   );
 }

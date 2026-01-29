@@ -24,12 +24,11 @@ export default function QuantityInput({
   };
 
   return (
-    <div className="border border-stone-600 flex max-w-full rounded-lg overflow-hidden">
+    <div className="border border-stone-600 flex w-full rounded-lg overflow-hidden">
       <button
         onClick={() => onDecrement()}
         className="flex items-center-safe justify-center disabled:bg-stone-300 disabled:mask-alpha disabled:mask-r-from-80% disabled:cursor-not-allowed disabled:text-stone-500 w-1/3 p-2"
-        disabled={quantity <= 1 || quantity.toString() === ""}
-      >
+        disabled={quantity <= 1 || quantity.toString() === ""}>
         <BiMinus />
       </button>
       <input
@@ -42,8 +41,7 @@ export default function QuantityInput({
       <button
         onClick={() => onIncrement()}
         className="flex items-center-safe justify-center disabled:bg-stone-300 disabled:mask-alpha disabled:mask-l-from-80% disabled:cursor-not-allowed disabled:text-stone-500 w-1/3 p-2"
-        disabled={incrementDisable}
-      >
+        disabled={incrementDisable}>
         <BiPlus />
       </button>
     </div>

@@ -1,6 +1,6 @@
 export function ProductViewSkeleton() {
   return (
-    <main className="p-2 space-y-2 lg:content-center xl:w-[70%] xl:place-self-center-safe xl:py-10 min-h-[42em] md:min-h-[52em] lg:min-h-[64em] xl:min-h-[22em] animate-pulse">
+    <main className="p-2 space-y-2 lg:content-center xl:w-[70%] xl:place-self-center-safe xl:py-10 animate-pulse">
       <div className="w-full md:w-[70%] lg:w-full lg:h-full space-y-2 place-self-center-safe md:space-x-4 xl:space-x-6 lg:flex">
         <section className="space-y-2 w-full">
           {/* image */}

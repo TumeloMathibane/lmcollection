@@ -11,19 +11,25 @@ import { GoPackageDependencies } from "react-icons/go";
 import { SlBadge } from "react-icons/sl";
 
 export default async function Home() {
-  const products: Product[] = await fetchQuery(api.products.get, {
+  const products: Product[] = await fetchQuery(api.products.getProducts, {
     count: 5,
   });
 
   return (
     <div className="flex-1 font-sans flex justify-center">
       <main className="space-y-10 flex flex-col place-content-center-safe">
-        <section className="bg-[url('/images/ali-pazani-3w14X-Yxffk-unsplash.jpg')] bg-cover bg-no-repeat h-screen md:h-[92vh] md:bg-fill lg:min-h-screen flex items-center-safe justify-around mask-alpha mask-b-from-70% md:mask-b-from-80% sm:mask-l-from-90% sm:mask-r-from-90%">
-          <Link
-            href="#categories"
-            className="btn px-6 py-3 bg-stone-900/50 border border-white rounded-md w-fit h-fit text-white text-xl z-100">
-            Shop now
-          </Link>
+        <section className="bg-[url('/images/ali-pazani-3w14X-Yxffk-unsplash.jpg')] bg-cover bg-no-repeat min-h-screen relative md:min-h-[92vh] md:bg-fill lg:min-h-screen mask-alpha mask-b-from-70% md:mask-b-from-80% sm:mask-l-from-90% sm:mask-r-from-90%">
+          <div className="absolute top-0 bottom-0 left-0 right-0 backdrop-grayscale-100" />
+          <div className="h-full flex flex-col justify-center space-y-5 px-7">
+            <p className="text-6xl font-extrabold font-serif text-stone-900">
+              Like it, Love it, & Wear it.
+            </p>
+            <Link
+              href="#categories"
+              className="btn px-7 py-3 bg-stone-900/50 border border-white rounded-md w-fit h-fit text-white text-lg z-50">
+              Shop now
+            </Link>
+          </div>
         </section>
 
         <section className="flex flex-col items-center-safe space-y-5">
@@ -63,29 +69,23 @@ export default async function Home() {
               Categories
             </p>
           </div>
-          <div className="px-2 md:max-w-[70%] md:place-self-center-safe">
+          <div className="flex justify-center-safe px-2 md:max-w-[70%] md:place-self-center-safe">
             <Categories />
           </div>
         </section>
 
-        <section className="p-2 mb-10 space-y-5">
-          <div className="md:min-w-[70%] md:place-self-center-safe">
-            <div>
-              <p className="text-2xl font-bold text-stone-950">
-                Products of interest
-              </p>
+        <section className="w-dvw sm:w-full flex justify-center-safe space-y-2 p-2">
+          <div className="w-full sm:max-w-[650px]">
+            <p className="text-2xl font-bold text-stone-950">
+              Products of interest
+            </p>
 
-              {!products || products?.length === 0 ?
-                <p className="font-light text-xl italic">
-                  Products not available
-                </p>
-              : <ProductList products={products} />}
-            </div>
+            <ProductList products={products} />
           </div>
         </section>
 
-        <section className="bg-stone-200 border-y border-stone-300 py-4 justify-items-center-safe mt-20">
-          <div className="justify-items-center-safe space-y-5 w-sm md:w-2xl">
+        <section className="bg-stone-200 border-y border-stone-300 py-4 justify-items-center-safe mt-10">
+          <div className="justify-items-center-safe space-y-5">
             <p className="font-bold text-2xl text-stone-950">Benefits</p>
 
             <div className="w-full justify-items-center">
@@ -121,9 +121,9 @@ export default async function Home() {
   );
 }
 
-//! TODO: Implement admin page and components... [...] 📌
-//! TODO: Implement review feature
-//!
+//! TODO: Continue with checks...
+//! FIXME: Fix 'add to cart' button issue
+//! -- implement way of adding item to cart that has no additional option of size (e.g., accessories)
 //! TODO: Implement contact page logic
 //!
 //! ==================================================

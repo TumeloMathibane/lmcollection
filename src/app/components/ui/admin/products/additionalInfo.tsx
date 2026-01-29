@@ -1,6 +1,7 @@
 // import { ChangeEvent, useEffect, useState } from "react";
 import { useEffect, useState } from "react";
 import { BiSolidDownArrow } from "react-icons/bi";
+import { AdditionalInfoField } from "./add-product-form";
 
 export default function AdditionalInfo({
   info,
@@ -8,12 +9,8 @@ export default function AdditionalInfo({
   onAddField,
   disabled,
 }: {
-  info?: { label: string; type: string; value: string | string[] };
-  onFieldInfoChange?: (field: {
-    label: string;
-    type: string;
-    value: string | string[];
-  }) => void;
+  info?: AdditionalInfoField;
+  onFieldInfoChange?: (field: AdditionalInfoField) => void;
   onAddField?: () => void;
   disabled?: boolean;
 }) {

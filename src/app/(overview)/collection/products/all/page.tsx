@@ -15,7 +15,9 @@ export default async function Collection({
   searchParams: Promise<{ category?: string }>;
 }) {
   const { category } = await searchParams;
-  const products = await fetchQuery(api.products.get, { category: category });
+  const products = await fetchQuery(api.products.getProducts, {
+    category: category,
+  });
 
   if (!products) return <Loading />;
 
@@ -32,19 +34,23 @@ export default async function Collection({
   }
 
   return (
-    <>
-      <main className="flex-1 flex justify-center-safe items-center-safe">
-        <p className="text-4xl font-bold text-stone-900 text-center xl:text-6xl xl:py-2">
-          Products
-        </p>
-        <p>
-          This is the catalog page.{" "}
-          {products &&
-            `(${products?.length}) ${products?.length > 1 ? "products" : "product"}`}
-        </p>
+    <main className="flex-1 flex flex-col gap-2 p-2">
+      <p className="text-4xl font-bold text-stone-900 text-center xl:text-6xl xl:py-2">
+        Products
+      </p>
+      <div className="flex justify-center-safe">
+        <div className="w-full md:max-w-[650px] xl:max-w-[70%] space-y-2">
+          <p>
+            This is the catalog page.{" "}
+            {products &&
+              `(${products?.length}) ${products?.length > 1 ? "products" : "product"}`}
+          </p>
 
-        <CollectionView products={products} />
-      </main>
-    </>
+          <div className="h-full w-full">
+            <CollectionView products={products} />
+          </div>
+        </div>
+      </div>
+    </main>
   );
 }

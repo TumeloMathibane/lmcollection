@@ -5,14 +5,14 @@ import ImageSelector from "./previewImages";
 import AdditionalInfo from "./additionalInfo";
 import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
-// import type { ProductFormData, AdditionalField } from "@/admin/products/types";
 
-interface AdditionalInfoField {
+export interface AdditionalInfoField {
   label: string;
   type: string;
   value: string | string[];
 }
 interface ProductFormData {
+  brand: string;
   name: string;
   price: number;
   description: string;
@@ -25,6 +25,7 @@ interface ProductFormData {
 
 export default function AddProductForm() {
   const [prodFormData, setProdFormData] = useState<ProductFormData>({
+    brand: "",
     name: "",
     price: 0,
     description: "",
@@ -56,7 +57,18 @@ export default function AddProductForm() {
     });
   };
 
-  const addProductMutation = useMutation(api.products.addProduct);
+  const addProductMutation = useMutation(api.products.createProduct);
+
+  const validateImageFile = (file: File) => {
+    const validImageTypes = [
+      "image/gif",
+      "image/jpeg",
+      "image/jpg",
+      "image/png",
+      "image/webp",
+    ];
+    return validImageTypes.includes(file.type);
+  };
 
   const handleOnSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -70,17 +82,28 @@ export default function AddProductForm() {
       value: info.value,
     }));
 
+    // validate image files
+    for (const file of prodFormData.images) {
+      if (!validateImageFile(file)) {
+        alert(
+          `Invalid image file type: ${file.name}. Please upload JPEG, JPG, PNG, GIF, or WEBP images only.`,
+        );
+        return;
+      }
+    }
+
+    // Generate upload URLs for each image
     const uploadUrls = await Promise.all(
-      prodFormData.images.map(() => generateUploadURL()),
+      prodFormData.images.map(async () => await generateUploadURL()),
     );
-    console.log("Generated Upload URLs:", uploadUrls);
+    // console.log("Generated Upload URLs:", uploadUrls);
 
     const imageUploadIds = await Promise.all(
       prodFormData.images.map(async (file, index) => {
         const response = await fetch(uploadUrls[index], {
           method: "POST",
           headers: {
-            "Content-Type": file.type,
+            "Content-Type": file!.type,
           },
           body: file,
         });
@@ -93,6 +116,7 @@ export default function AddProductForm() {
 
     // Call the mutation to add the product
     const productId = await addProductMutation({
+      brand: prodFormData.brand, // Added brand field
       name: prodFormData.name,
       price: prodFormData.price,
       discount: prodFormData.discount,
@@ -108,6 +132,7 @@ export default function AddProductForm() {
 
       // Reset form after submission
       setProdFormData({
+        brand: "",
         name: "",
         price: 0,
         description: "",
@@ -173,6 +198,19 @@ export default function AddProductForm() {
           className="input input-md w-full"
           placeholder="e.g. iPhone 14 Pro"
           value={prodFormData.name}
+          onChange={handleInputChange}
+        />
+      </div>
+
+      <div>
+        <label htmlFor="brand">Product Brand:</label>
+        <input
+          type="text"
+          name="brand"
+          id="brand"
+          className="input input-md w-full"
+          placeholder="e.g. Apple"
+          value={prodFormData.brand}
           onChange={handleInputChange}
         />
       </div>
@@ -352,5 +390,3 @@ export default function AddProductForm() {
     </form>
   );
 }
-
-// TODO [16 January] - test form submission to db and list products; and follow with all analytical components for the dashboard (/admin)
