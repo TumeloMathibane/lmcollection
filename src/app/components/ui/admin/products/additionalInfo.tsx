@@ -1,7 +1,6 @@
 // import { ChangeEvent, useEffect, useState } from "react";
 import { useEffect, useState } from "react";
 import { BiSolidDownArrow } from "react-icons/bi";
-import { AdditionalInfoField } from "./add-product-form";
 
 export default function AdditionalInfo({
   info,

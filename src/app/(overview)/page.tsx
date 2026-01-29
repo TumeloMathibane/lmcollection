@@ -16,22 +16,30 @@ export default async function Home() {
   });
 
   return (
-    <div className="flex-1 font-sans flex justify-center">
+    <div className="flex-1 font-sans flex justify-center-safe">
       <main className="space-y-10 flex flex-col place-content-center-safe">
-        <section className="bg-[url('/images/ali-pazani-3w14X-Yxffk-unsplash.jpg')] bg-cover bg-no-repeat h-screen md:h-[92vh] md:bg-fill lg:min-h-screen flex items-center-safe justify-around mask-alpha mask-b-from-70% md:mask-b-from-80% sm:mask-l-from-90% sm:mask-r-from-90%">
-          <Link
-            href="#categories"
-            className="btn px-6 py-3 bg-stone-900/50 border border-white rounded-md w-fit h-fit text-white text-xl z-100">
-            Shop now
-          </Link>
+        <section className="bg-[url('/images/ali-pazani-3w14X-Yxffk-unsplash.jpg')] flex items-center-safe justify-around mask-alpha mask-b-from-70% bg-cover bg-no-repeat h-screen sm:mask-l-from-90% sm:mask-r-from-90% md:mask-b-from-80% md:h-[92vh] md:bg-fill lg:min-h-screen">
+          <div className="px-4 space-y-4">
+            <div>
+              <p className="font-serif text-7xl font-extrabold capitalize">
+                Like it, love it, &amp; wear it
+              </p>
+            </div>
+
+            <Link
+              href="#categories"
+              className="btn px-6 py-3 bg-stone-900/50 border border-white rounded-md w-fit h-fit text-white text-xl z-100">
+              Shop now
+            </Link>
+          </div>
         </section>
 
-        <section className="flex flex-col items-center-safe space-y-5">
+        <section className="flex flex-col items-center-safe space-y-5 border border-red-700">
           <p className="section-title text-center font-bold text-4xl">
             Welcome to
           </p>
           <div className="welcome-section-logo">
-            <div className="size-50 h-fit">
+            <div className="w-50 h-fit">
               <Image
                 src={welcomeBizLogo}
                 alt="welcome-image"
@@ -57,38 +65,19 @@ export default async function Home() {
           </div>
         </section>
 
-        <section id="categories" className="space-y-8 py-4">
-          <div>
-            <p className="text-5xl text-stone-950 font-bold text-center">
-              Categories
-            </p>
-          </div>
-          <div className="px-2 md:max-w-[70%] md:place-self-center-safe">
-            <Categories />
-          </div>
+        <section id="categories" className="space-y-8 border border-red-600">
+          {/* categories */}
         </section>
 
-        <section className="p-2 mb-10 space-y-5">
-          <div className="md:min-w-[70%] md:place-self-center-safe">
-            <div>
-              <p className="text-2xl font-bold text-stone-950">
-                Products of interest
-              </p>
-
-              {!products || products?.length === 0 ?
-                <p className="font-light text-xl italic">
-                  Products not available
-                </p>
-              : <ProductList products={products} />}
-            </div>
-          </div>
+        <section className="p-2 space-y-5 border border-red-700">
+          {/* product list */}
         </section>
 
-        <section className="bg-stone-200 border-y border-stone-300 py-4 justify-items-center-safe mt-20">
+        <section className="bg-stone-200 border-y border-stone-300 py-4 justify-items-center-safe">
           <div className="justify-items-center-safe space-y-5 w-sm md:w-2xl">
             <p className="font-bold text-2xl text-stone-950">Benefits</p>
 
-            <div className="w-full justify-items-center">
+            <div className="justify-items-center-safe">
               <div className="flex flex-col md:grid md:grid-cols-2 md:gap-10 lg:flex lg:flex-row lg:py-10">
                 <div className="py-2">
                   <SlBadge size={"5em"} className="place-self-center" />
@@ -122,6 +111,7 @@ export default async function Home() {
 }
 
 //! TODO: Continue with checks...
+//! FIXME: Fix index page width...
 //! TODO: Reconfigure the 'addItem' method in cart store to accept product object with relevent details
 //! TODO: Implement contact page logic
 //!

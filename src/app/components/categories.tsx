@@ -13,19 +13,19 @@ export default function Categories() {
             <Link
               href={`/collection/products/all?category=${name}`}
               key={key}
-              className="w-full md:h-auto bg-base-100 shadow-lg group hover:cursor-pointer rounded-xl overflow-hidden">
-              <figure className="overflow-hidden">
-                <div className="transition-all origin-center duration-500 ease-in-out group-hover:scale-105">
+              className="w-full bg-base-100 shadow-lg group hover:cursor-pointer rounded-xl overflow-hidden">
+              <figure className="w-full overflow-hidden">
+                <div className="w-full h-50 transition-all origin-center duration-500 ease-in-out group-hover:scale-105">
                   <Image
                     src={image || "/category-img/default.jpg"}
                     alt={description}
                     width={400}
                     height={500}
-                    className=""
+                    className="object-cover object-center w-full h-full"
                   />
                 </div>
               </figure>
-              <div className="w-full p-3 justify-center">
+              <div className="p-2 justify-center">
                 <h2 className="capitalize text-xl text-center font-bold group-hover:underline group-hover:underline-offset-3">
                   {name}
                 </h2>
