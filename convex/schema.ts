@@ -17,14 +17,7 @@ export default defineSchema({
     category: v.string(),
     images: v.array(v.id("_storage")),
     additional_options: v.array(
-      v.record(
-        v.string(),
-        v.union(
-          v.string(),
-          v.array(v.string()),
-          v.record(v.string(), v.string()),
-        ),
-      ),
+      v.record(v.string(), v.union(v.string(), v.array(v.string()))),
     ),
   })
     .searchIndex("search_brand", { searchField: "brand" })
