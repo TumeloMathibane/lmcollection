@@ -122,8 +122,7 @@ export default async function Home() {
 }
 
 //! TODO: Continue with checks...
-//! FIXME: Fix 'add to cart' button issue
-//! -- implement way of adding item to cart that has no additional option of size (e.g., accessories)
+//! TODO: Reconfigure the 'addItem' method in cart store to accept product object with relevent details
 //! TODO: Implement contact page logic
 //!
 //! ==================================================
