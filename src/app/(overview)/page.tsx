@@ -75,7 +75,7 @@ export default async function Home() {
           </div>
         </section>
 
-        <section className="space-y-5">
+        <section className="p-2 space-y-5">
           <div className="sm:px-15">
             <div className="space-y-4 md:max-w-3xl md:place-self-center-safe">
               <p className="text-2xl font-bold text-stone-950">
