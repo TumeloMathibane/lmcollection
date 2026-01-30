@@ -6,22 +6,22 @@ import Image from "next/image";
 
 export default function Categories() {
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 md:gap-3 text-black z-100">
+    <div className="grid grid-cols-2 sm:grid-cols-3 md:gap-3 gap-2 text-black z-100">
       {categories?.map(({ name, image, description }, key) => {
         if (name !== "accessories" && name !== "appliances")
           return (
             <Link
               href={`/collection/products/all?category=${name}`}
               key={key}
-              className="w-full md:h-auto bg-base-100 shadow-lg group hover:cursor-pointer rounded-xl overflow-hidden">
-              <figure className="overflow-hidden">
-                <div className="transition-all origin-center duration-500 ease-in-out group-hover:scale-105">
+              className="md:h-auto bg-base-100 shadow-lg group hover:cursor-pointer rounded-xl overflow-hidden">
+              <figure className="w-full h-50 overflow-hidden">
+                <div className="w-full h-full transition-all origin-center duration-500 ease-in-out group-hover:scale-105">
                   <Image
                     src={image || "/category-img/default.jpg"}
                     alt={description}
                     width={400}
                     height={500}
-                    className=""
+                    className="w-full h-full object-cover object-center"
                   />
                 </div>
               </figure>

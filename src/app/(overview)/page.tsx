@@ -17,13 +17,19 @@ export default async function Home() {
 
   return (
     <div className="flex-1 font-sans flex justify-center">
-      <main className="space-y-10 flex flex-col place-content-center-safe">
-        <section className="bg-[url('/images/ali-pazani-3w14X-Yxffk-unsplash.jpg')] bg-cover bg-no-repeat h-screen md:h-[92vh] md:bg-fill lg:min-h-screen flex items-center-safe justify-around mask-alpha mask-b-from-70% md:mask-b-from-80% sm:mask-l-from-90% sm:mask-r-from-90%">
-          <Link
-            href="#categories"
-            className="btn px-6 py-3 bg-stone-900/50 border border-white rounded-md w-fit h-fit text-white text-xl z-100">
-            Shop now
-          </Link>
+      <main className="w-full space-y-10 flex flex-col place-content-center-safe">
+        <section className="bg-[url('/images/ali-pazani-3w14X-Yxffk-unsplash.jpg')] bg-cover bg-no-repeat grayscale-100 h-screen flex items-center-safe justify-around mask-alpha mask-b-from-70% relative md:mask-b-from-80% md:h-[92vh] md:bg-fill lg:min-h-screen">
+          <div className="w-full h-full p-4 space-y-4 flex flex-col justify-center-safe sm:px-15 md:items-center-safe">
+            <p className="text-7xl font-serif font-extrabold text-wrap md:hidden">
+              Like it, Love it, & Wear it
+            </p>
+
+            <Link
+              href="#categories"
+              className="btn px-6 py-3 bg-stone-900/50 border border-white rounded-md w-fit h-fit text-white text-xl z-100">
+              Shop now
+            </Link>
+          </div>
         </section>
 
         <section className="flex flex-col items-center-safe space-y-5">
@@ -40,7 +46,7 @@ export default async function Home() {
               />
             </div>
           </div>
-          <div className="welcome-section-text px-2 md:max-w-[70%]">
+          <div className="welcome-section-text px-2 sm:px-15 md:max-w-4xl">
             <p className="text-justify md:text-center">
               Lorem ipsum dolor sit amet consectetur adipisicing elit.
               Blanditiis molestias, perferendis praesentium sint culpa quos
@@ -57,20 +63,21 @@ export default async function Home() {
           </div>
         </section>
 
-        <section id="categories" className="space-y-8 py-4">
+        <section id="categories" className="space-y-4 py-4">
           <div>
-            <p className="text-5xl text-stone-950 font-bold text-center">
+            <p className="text-4xl text-stone-950 font-bold text-center">
               Categories
             </p>
           </div>
-          <div className="px-2 md:max-w-[70%] md:place-self-center-safe">
+
+          <div className="px-2 sm:px-15 md:max-w-4xl md:place-self-center-safe">
             <Categories />
           </div>
         </section>
 
-        <section className="p-2 mb-10 space-y-5">
-          <div className="md:min-w-[70%] md:place-self-center-safe">
-            <div>
+        <section className="space-y-5">
+          <div className="sm:px-15">
+            <div className="space-y-4 md:max-w-3xl md:place-self-center-safe">
               <p className="text-2xl font-bold text-stone-950">
                 Products of interest
               </p>
@@ -79,13 +86,16 @@ export default async function Home() {
                 <p className="font-light text-xl italic">
                   Products not available
                 </p>
-              : <ProductList products={products} />}
+              : <div>
+                  <ProductList products={products} />
+                </div>
+              }
             </div>
           </div>
         </section>
 
-        <section className="bg-stone-200 border-y border-stone-300 py-4 justify-items-center-safe mt-20">
-          <div className="justify-items-center-safe space-y-5 w-sm md:w-2xl">
+        <section className="bg-stone-200 border-y border-stone-300 py-4 justify-items-center-safe">
+          <div className="justify-items-center-safe space-y-5">
             <p className="font-bold text-2xl text-stone-950">Benefits</p>
 
             <div className="w-full justify-items-center">
@@ -122,7 +132,7 @@ export default async function Home() {
 }
 
 //! TODO: Continue with checks...
-//! FIXME: Fix index page width...
+//! FIXME: Fix index page components' width...
 //! TODO: Reconfigure the 'addItem' method in cart store to accept product object with relevent details
 //! TODO: Implement contact page logic
 //!

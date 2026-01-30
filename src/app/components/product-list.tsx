@@ -19,13 +19,10 @@ export default function ProductList({ products }: { products: Product[] }) {
   return (
     <div className="w-full flex overflow-x-auto gap-2 md:grid md:grid-cols-3 lg:grid-cols-3 lg:gap-2">
       {products?.map(({ _id, name, price, images }) => (
-        <Link
-          key={_id}
-          href={`/collection/products/${_id}`}
-          className="w-full border">
-          <div className="w-full h-full bg-stone-100 shadow-sm rounded-xl overflow-hidden group hover:cursor-pointer relative">
-            <figure className="overflow-hidden flex items-center">
-              <div className="w-56 h-auto transition-all duration-500 group-hover:scale-105">
+        <Link key={_id} href={`/collection/products/${_id}`}>
+          <div className="w-45 bg-stone-100 shadow-sm rounded-xl overflow-hidden group hover:cursor-pointer relative md:w-full">
+            <figure className="w-full h-35 overflow-hidden flex items-center md:h-50">
+              <div className="w-full h-full transition-all duration-500 group-hover:scale-105">
                 <Image
                   src={images[0] ?? ""}
                   alt={name}
