@@ -5,6 +5,7 @@ import ImageSelector from "./previewImages";
 import AdditionalInfo from "./additionalInfo";
 import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
+import { categories } from "@/lib/categories.json";
 
 export interface AdditionalInfoField {
   label: string;
@@ -73,6 +74,17 @@ export default function AddProductForm() {
   const handleOnSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    if (
+      !(
+        prodFormData.name &&
+        prodFormData.quantity &&
+        prodFormData.price &&
+        prodFormData.category &&
+        prodFormData.images.length > 0
+      )
+    ) {
+      throw new Error("Please fill in all required fields.");
+    }
     console.log("Pre-submission form data:", prodFormData);
 
     // Prepare additional options for submission
@@ -85,7 +97,7 @@ export default function AddProductForm() {
     // validate image files
     for (const file of prodFormData.images) {
       if (!validateImageFile(file)) {
-        alert(
+        throw new Error(
           `Invalid image file type: ${file.name}. Please upload JPEG, JPG, PNG, GIF, or WEBP images only.`,
         );
         return;
@@ -274,16 +286,20 @@ export default function AddProductForm() {
       <div>
         <label htmlFor="category">Category:</label>
 
-        <select
+        <input
           name="category"
           id="category"
-          className="select select-md w-full p-2 rounded"
+          list="categories"
+          className="input input-md w-full"
+          placeholder="e.g. Smartphones"
           value={prodFormData.category}
-          onChange={handleInputChange}>
-          <option value="">Select category</option>
-          <option value="electronics">Electronics</option>
-          <option value="fashion">Fashion</option>
-        </select>
+          onChange={handleInputChange}
+        />
+        <datalist id="categories">
+          {categories?.map((category, index) => (
+            <option key={index} value={category?.name} />
+          ))}
+        </datalist>
       </div>
 
       <div>

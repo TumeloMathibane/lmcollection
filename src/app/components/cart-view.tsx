@@ -41,13 +41,16 @@ export default function CartView() {
             <div
               key={key}
               className="w-full py-5 flex border-t first:border-0 border-stone-400 space-x-3 md:space-x-5 xl:space-x-10">
-              <div className="item-img size-40 h-fit overflow-hidden rounded-md shadow-md">
-                <Link href={`collection/products/${item?.productId}`}>
+              <div className="overflow-hidden rounded-md shadow-md w-50 h-30">
+                <Link
+                  href={`collection/products/${item?.productId}`}
+                  className="w-full h-full">
                   <Image
-                    src={item.productImg}
+                    src={item.productImage}
                     alt={item.productName}
                     width={500}
                     height={500}
+                    className="object-cover object-center w-full h-full"
                   />
                 </Link>
               </div>
@@ -86,21 +89,21 @@ export default function CartView() {
                         updateItemQty(
                           item.productId,
                           item.productSize,
-                          value ?? 1
+                          value ?? 1,
                         )
                       }
                       onIncrement={() =>
                         updateItemQty(
                           item.productId,
                           item.productSize,
-                          item.productQty + 1
+                          item.productQty + 1,
                         )
                       }
                       onDecrement={() =>
                         updateItemQty(
                           item.productId,
                           item.productSize,
-                          item.productQty - 1
+                          item.productQty - 1,
                         )
                       }
                     />

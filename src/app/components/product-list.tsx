@@ -21,7 +21,7 @@ export default function ProductList({ products }: { products: Product[] }) {
       {products?.map(({ _id, name, price, images }) => (
         <Link key={_id} href={`/collection/products/${_id}`}>
           <div className="w-45 bg-stone-100 shadow-sm rounded-xl overflow-hidden group hover:cursor-pointer relative md:w-full">
-            <figure className="w-full h-35 overflow-hidden flex items-center md:h-50">
+            <figure className="w-full h-35 overflow-hidden flex items-center md:h-40">
               <div className="w-full h-full transition-all duration-500 group-hover:scale-105">
                 <Image
                   src={images[0] ?? ""}
@@ -37,15 +37,20 @@ export default function ProductList({ products }: { products: Product[] }) {
               <h2 className="capitalize text-md font-bold text-nowrap truncate lg:text-wrap md:text-xl lg:text-base">
                 {name}
               </h2>
-              <p className="before:content-['R'] before:mr-1">{price}</p>
+              <p>
+                {new Intl.NumberFormat("en-ZA", {
+                  style: "currency",
+                  currency: "ZAR",
+                }).format(price)}
+              </p>
             </div>
           </div>
         </Link>
       ))}
-      <div className="flex items-center-safe md:col-span-1 xl:justify-center-safe">
+      <div className="flex justify-center-safe items-center-safe md:col-span-1 xl:justify-center-safe">
         <Link
           href="/collection/products/all"
-          className="btn rounded-xl border border-stone-300 text-black md:w-full">
+          className="btn rounded-xl border border-stone-300 text-black md:w-1/2">
           View all
         </Link>
       </div>

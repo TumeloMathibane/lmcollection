@@ -7,7 +7,7 @@ export function ProductCard({ product }: { product: Product }) {
     <Link href={`/collection/products/${product._id}`} className="group">
       <div className="flex flex-col">
         <div className="w-full relative rounded-md overflow-hidden">
-          <figure className="h-40 transition-all duration-500 group-hover:scale-105">
+          <figure className="h-40 transition-all duration-500 group-hover:scale-105 lg:h-44">
             <ImageWithFallback
               src={product?.images[0] ?? ""}
               alt={product.name}
@@ -34,8 +34,11 @@ export function ProductCard({ product }: { product: Product }) {
           <p className="text-md md:text-xl font-bold hover:cursor-pointer">
             {product.name}
           </p>
-          <p className="md:text-md before:content-['R'] before:mr-1 hover:cursor-pointer">
-            {product.price}
+          <p className="md:text-md hover:cursor-pointer">
+            {new Intl.NumberFormat("en-ZA", {
+              style: "currency",
+              currency: "ZAR",
+            }).format(product?.price)}
           </p>
         </div>
       </div>

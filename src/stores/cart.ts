@@ -16,6 +16,7 @@ export const useCartStore = create<CartStore>()(
         size: string,
         qty = 1,
         price: number,
+        image: string,
       ) => {
         set((state) => {
           const now = Date.now();
@@ -44,6 +45,7 @@ export const useCartStore = create<CartStore>()(
                 productSize: size,
                 productQty: qty,
                 productPrice: Number(price.toFixed(2)),
+                productImage: image,
               },
             ],
           };

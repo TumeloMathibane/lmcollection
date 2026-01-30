@@ -33,8 +33,10 @@ export default async function Product({
     );
 
   return (
-    <main className="flex-1 p-2 space-y-2 xl:w-[70%] xl:place-self-center-safe xl:py-10">
-      <ProductView product={product} />
+    <main className="flex-1 p-2 space-y-2 sm:max-w-lg sm:place-self-center-safe md:max-w-4xl xl:py-10">
+      <div>
+        <ProductView product={product} />
+      </div>
 
       <div className="border-t border-stone-900 w-[50%] place-self-center-safe my-4" />
 

@@ -26,7 +26,7 @@ export default async function Home() {
 
             <Link
               href="#categories"
-              className="btn px-6 py-3 bg-stone-900/50 border border-white rounded-md w-fit h-fit text-white text-xl z-100">
+              className="px-6 py-3 bg-stone-400/50 border border-black w-fit h-fit text-black text-xl font-bold z-100 md:border-white md:text-white">
               Shop now
             </Link>
           </div>
@@ -132,7 +132,9 @@ export default async function Home() {
 }
 
 //! TODO: Continue with checks...
-//! FIXME: Fix index page components' width...
+//! TODO: Admin 'add product form' - brainstorm on how to input price of product with dynamic amounts
+//! TODO: Admin 'add product form' - if possible, implement method to select primary image from selected images
+//! TODO: Product view - if possible, implement image slider
 //! TODO: Reconfigure the 'addItem' method in cart store to accept product object with relevent details
 //! TODO: Implement contact page logic
 //!

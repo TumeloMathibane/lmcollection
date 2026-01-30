@@ -130,7 +130,8 @@ export default function ProductView({ product }: { product: Product }) {
               product?.name &&
               size &&
               quantity &&
-              product?.price
+              product?.price &&
+              product?.images[0]
             ) {
               addItem(
                 product?._id,
@@ -138,9 +139,10 @@ export default function ProductView({ product }: { product: Product }) {
                 size,
                 quantity,
                 product?.price,
+                product?.images[0],
               );
               setSize("");
-              setQuantity(0);
+              setQuantity(1);
             } else {
               console.error(`Failed to add item to cart. Missing information:
               productId: ${product?._id},

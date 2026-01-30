@@ -35,18 +35,25 @@ export default async function Collection({
 
   return (
     <>
-      <main className="flex-1 flex justify-center-safe items-center-safe">
-        <p className="text-4xl font-bold text-stone-900 text-center xl:text-6xl xl:py-2">
+      <main className="flex-1 flex flex-col py-4">
+        <p className="text-4xl font-bold text-stone-900 text-center">
           Products
         </p>
-        <p>
-          This is the catalog page.{" "}
-          {products &&
-            `(${products?.length}) ${products?.length > 1 ? "products" : "product"}`}
-        </p>
 
-        <div className="h-full w-full">
-          <CollectionView products={products} />
+        <div className="px-2 max-w-[480px] place-self-center-safe sm:max-w-2xl lg:max-w-5xl">
+          <div className="space-y-4">
+            <div className="border-b border-stone-300 pb-3">
+              <p>
+                This is the catalog page.{" "}
+                {products &&
+                  `(${products?.length}) ${products?.length > 1 ? "products" : "product"}`}
+              </p>
+            </div>
+
+            <div className="h-full w-full">
+              <CollectionView products={products} />
+            </div>
+          </div>
         </div>
       </main>
     </>

@@ -18,7 +18,7 @@ export default function Sidebar() {
   const pathName = usePathname();
 
   return (
-    <div className="flex flex-col items-center-safe w-full min-h-screen bg-gray-100 absolute top-0 left-0 p-5 gap-6 border-r border-gray-300">
+    <div className="flex flex-col items-center-safe w-full h-dvh bg-gray-100 absolute top-0 left-0 p-5 gap-6 border-r border-gray-300">
       <div className="w-full">
         <Link href={"/admin"} className="w-full">
           <Image
