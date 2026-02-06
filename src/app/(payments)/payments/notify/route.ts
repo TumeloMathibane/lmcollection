@@ -1,4 +1,4 @@
-import { verifySignature } from "@/app/utils/helper";
+import { verifySignature } from "@/utils/helper";
 
 export async function POST(req: Request) {
   try {
