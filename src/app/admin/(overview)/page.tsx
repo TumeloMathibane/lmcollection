@@ -5,8 +5,8 @@ import { fetchQuery } from "convex/nextjs";
 import Link from "next/link";
 
 export default async function Home() {
-  const products = await fetchQuery(api.products.getProducts, {});
-  const orders = await fetchQuery(api.orders.orderCount, {});
+  const products = (await fetchQuery(api.products.getProducts, {})) ?? [];
+  const orders = (await fetchQuery(api.orders.orderCount, {})) ?? 0;
   const stockValue = products.reduce(
     (total, product) => total + product.price * product.quantity,
     0,

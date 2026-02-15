@@ -3,9 +3,10 @@ import { BiPlus } from "react-icons/bi";
 import { fetchQuery } from "convex/nextjs";
 import Link from "next/link";
 import ProductTable from "@/components/ui/admin/products/product-table";
+import { Product } from "@/(overview)/collection/products/types";
 
 export default async function Home() {
-  const products = await fetchQuery(api.products.getProducts, {});
+  const products: Product[] = await fetchQuery(api.products.getProducts, {});
 
   return (
     <main className="space-y-4 flex flex-col p-4">
@@ -28,7 +29,7 @@ export default async function Home() {
         </div>
       </section>
 
-      <section className="h-[79dvh] overflow-auto">
+      <section className="h-[79dvh] overflow-y-auto">
         <ProductTable products={products} />
       </section>
     </main>

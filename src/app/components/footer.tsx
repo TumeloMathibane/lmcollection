@@ -52,7 +52,8 @@ export default function Footer() {
       </div>
 
       <div className="items-center text-center text-stone-400 py-2 border-t border-stone-600">
-        <p>Copyright &copy; {date.getFullYear()} by LMCollection</p>
+        {/* <p>Copyright &copy; {date.getFullYear()} by LMCollection</p> */}
+        <p>Copyright &copy; {date.getFullYear()} by Tumelo... lol!</p>
       </div>
     </footer>
   );
@@ -90,7 +91,7 @@ export function CheckoutFooter() {
 
       {/* Make seperate component for this */}
       <section
-        className={`fixed bottom-0 right-0 left-0 transition-all ${open ? "z-100 backdrop-blur-sm backdrop-brightness-75 h-screen sm:flex sm:flex-col sm:justify-center sm:align-middle" : "z-0 delay-100 h-0 backdrop-blur-none"}`}>
+        className={`fixed bottom-0 right-0 left-0 transition-all ${open ? "z-5 backdrop-blur-sm backdrop-brightness-75 h-screen sm:flex sm:flex-col sm:justify-center sm:align-middle" : "z-0 delay-100 h-0 backdrop-blur-none"}`}>
         <div
           className={`h-fit bg-white overflow-auto absolute bottom-0 left-0 right-0 transition-all ${open ? "delay-100 max-h-[40em] sm:max-w-[20em] sm:max-h-[35em] sm:top-0 sm:flex sm:place-self-center-safe sm:scale-100" : "max-h-0 sm:w-[20em] sm:top-0 sm:place-self-center-safe sm:scale-0"}`}>
           {/* //! START HERE... */}

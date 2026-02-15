@@ -11,22 +11,28 @@ import { GoPackageDependencies } from "react-icons/go";
 import { SlBadge } from "react-icons/sl";
 
 export default async function Home() {
-  const products: Product[] = await fetchQuery(api.products.getProducts, {
-    count: 5,
-  });
+  let products: Product[] | undefined;
+
+  try {
+    products = await fetchQuery(api.products.getProducts, {
+      count: 5,
+    });
+  } catch (err) {
+    console.error("Error fetching products for homepage:", err);
+  }
 
   return (
     <div className="flex-1 font-sans flex justify-center">
       <main className="w-full space-y-10 flex flex-col place-content-center-safe">
         <section className="bg-[url('/images/ali-pazani-3w14X-Yxffk-unsplash.jpg')] bg-cover bg-no-repeat grayscale-100 h-screen flex items-center-safe justify-around mask-alpha mask-b-from-70% relative md:mask-b-from-80% md:h-[92vh] md:bg-fill lg:min-h-screen">
           <div className="w-full h-full p-4 space-y-4 flex flex-col justify-center-safe sm:px-15 md:items-center-safe">
-            <p className="text-7xl font-serif font-extrabold text-wrap md:hidden">
+            <p className="text-5xl font-serif font-extrabold text-wrap md:hidden">
               Like it, Love it, & Wear it
             </p>
 
             <Link
               href="#categories"
-              className="px-6 py-3 bg-stone-400/50 border border-black w-fit h-fit text-black text-xl font-bold z-100 md:border-white md:text-white">
+              className="px-6 py-3 bg-stone-600/80 border w-fit h-fit text-xl font-bold border-white text-white">
               Shop now
             </Link>
           </div>
@@ -37,7 +43,7 @@ export default async function Home() {
             Welcome to
           </p>
           <div className="welcome-section-logo">
-            <div className="w-50 h-fit">
+            <div className="w-50 h-fit relative">
               <Image
                 src={welcomeBizLogo}
                 alt="welcome-image"
@@ -63,21 +69,21 @@ export default async function Home() {
           </div>
         </section>
 
-        <section id="categories" className="space-y-4 py-4">
+        <section
+          id="categories"
+          className="space-y-4 py-4 flex flex-col justify-center-safe items-center-safe">
           <div>
-            <p className="text-4xl text-stone-950 font-bold text-center">
-              Categories
-            </p>
+            <p className="text-4xl text-stone-950 font-bold">Categories</p>
           </div>
 
-          <div className="px-2 sm:px-15 md:max-w-4xl md:place-self-center-safe">
+          <div className="px-2 sm:px-15 md:max-w-4xl">
             <Categories />
           </div>
         </section>
 
-        <section className="p-2 space-y-5">
+        <section className="p-2 space-y-4">
           <div className="sm:px-15">
-            <div className="space-y-4 md:max-w-3xl md:place-self-center-safe">
+            <div className="space-y-2 mx-auto md:max-w-3xl">
               <p className="text-2xl font-bold text-stone-950">
                 Products of interest
               </p>
@@ -86,42 +92,34 @@ export default async function Home() {
                 <p className="font-light text-xl italic">
                   Products not available
                 </p>
-              : <div>
-                  <ProductList products={products} />
-                </div>
-              }
+              : <ProductList products={products} />}
             </div>
           </div>
         </section>
 
-        <section className="bg-stone-200 border-y border-stone-300 py-4 justify-items-center-safe">
-          <div className="justify-items-center-safe space-y-5">
+        <section className="bg-stone-200 border-t border-stone-300 py-4 place-items-center-safe">
+          <div className="flex flex-col place-items-center-safe space-y-5">
             <p className="font-bold text-2xl text-stone-950">Benefits</p>
 
-            <div className="w-full justify-items-center">
-              <div className="flex flex-col md:grid md:grid-cols-2 md:gap-10 lg:flex lg:flex-row lg:py-10">
-                <div className="py-2">
-                  <SlBadge size={"5em"} className="place-self-center" />
-                  <p className="text-center">Quality products</p>
-                </div>
+            <div className="flex flex-col md:grid md:grid-cols-2 md:gap-10 lg:flex lg:flex-row lg:py-10">
+              <div className="py-2 w-full flex flex-col items-center-safe">
+                <SlBadge size={"5em"} />
+                <p className="text-center">Quality products</p>
+              </div>
 
-                <div className="py-2">
-                  <BsTruck size={"5em"} className="place-self-center" />
-                  <p className="text-center">In-time delivery</p>
-                </div>
+              <div className="py-2 w-full flex flex-col items-center-safe">
+                <BsTruck size={"5em"} />
+                <p className="text-center">In-time delivery</p>
+              </div>
 
-                <div className="py-2">
-                  <BsTelephone size={"5em"} className="place-self-center" />
-                  <p className="text-center">Great customer service</p>
-                </div>
+              <div className="py-2 w-full flex flex-col items-center-safe">
+                <BsTelephone size={"5em"} />
+                <p className="text-center">Great customer service</p>
+              </div>
 
-                <div className="py-2">
-                  <GoPackageDependencies
-                    size={"5em"}
-                    className="place-self-center"
-                  />
-                  <p className="text-center">Easy returns</p>
-                </div>
+              <div className="py-2 w-full flex flex-col items-center-safe">
+                <GoPackageDependencies size={"5em"} />
+                <p className="text-center">Easy returns</p>
               </div>
             </div>
           </div>
@@ -131,11 +129,12 @@ export default async function Home() {
   );
 }
 
-//! TODO: Continue with checks...
-//! TODO: Admin 'add product form' - brainstorm on how to input price of product with dynamic amounts
-//! TODO: Admin 'add product form' - if possible, implement method to select primary image from selected images
-//! TODO: Product view - if possible, implement image slider
-//! TODO: Reconfigure the 'addItem' method in cart store to accept product object with relevent details
-//! TODO: Implement contact page logic
+//! TODO  [*]: Continue with checks...
+//! TODO  [?]: Fix size of some loading components to have 'flex-1' height
+//! TODO  [?]: Delete admin dir. from main and create 'admin' branch for implementing admin features
+//! TODO  [ ]: Implement product filtering and sorting functionality on the collection page to allow customers to easily find products based on their preferences (e.g. filter by price, category, popularity, etc.)...
+//! TODO  [ ]: Implement contact page logic
+//! TODO  [ ]: Admin 'add product form' - if possible, implement method to select primary image from selected images
+//! FIXME [ ]: Sort app components; components that manipulate data are to stay in components folder, and those that are only used for displaying the data must move to the subdir. of 'ui'
 //!
 //! ==================================================

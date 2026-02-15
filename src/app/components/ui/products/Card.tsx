@@ -1,47 +1,70 @@
 import type { Product } from "@/(overview)/collection/products/types";
 import Link from "next/link";
 import ImageWithFallback from "../../image-with-fallback";
+import { BsSuitHeart, BsSuitHeartFill } from "react-icons/bs";
+import useFavoritesStore from "../../../../stores/favorites";
 
 export function ProductCard({ product }: { product: Product }) {
+  const { toggleFavorite, isFavorite } = useFavoritesStore();
+
   return (
-    <Link href={`/collection/products/${product._id}`} className="group">
-      <div className="flex flex-col">
-        <div className="w-full relative rounded-md overflow-hidden">
-          <figure className="h-40 transition-all duration-500 group-hover:scale-105 lg:h-44">
-            <ImageWithFallback
-              src={product?.images[0] ?? ""}
-              alt={product.name}
+    <div className="group hover:cursor-pointer">
+      <div className="flex flex-col relative">
+        <div className="absolute top-2 right-2 z-2">
+          {!isFavorite(product._id) ?
+            <BsSuitHeart
+              size={"1.4rem"}
+              className="text-gray-400"
+              onClick={() => toggleFavorite(product._id)}
             />
-          </figure>
+          : <BsSuitHeartFill
+              size={"1.4rem"}
+              className="text-red-600"
+              onClick={() => toggleFavorite(product._id)}
+            />
+          }
+        </div>
 
-          <div className="add-to-cart absolute top-0 left-0 right-0 w-full h-full">
-            {product.quantity < 20 ?
-              <span className="badge badge-error m-2 font-semibold">
-                {product.quantity}{" "}
-                {product.quantity === 1 ? "item left" : "items left"}
-              </span>
-            : <span className="badge badge-success m-2 font-semibold text-black">
-                In stock
-              </span>
-            }
+        <Link href={`/collection/products/${product._id}`}>
+          <div className="w-full relative rounded-md overflow-hidden">
+            <figure className="h-52 transition-all duration-500 group-hover:scale-105 lg:h-44">
+              <ImageWithFallback
+                src={product?.images[0] ?? ""}
+                alt={product.name}
+              />
+            </figure>
+
+            <div className="add-to-cart absolute top-0 left-0 right-0 w-full h-full">
+              {product.quantity < 20 ?
+                <span className="badge badge-error m-2 font-semibold">
+                  {product.quantity}{" "}
+                  {product.quantity === 1 ? "item left" : "items left"}
+                </span>
+              : <span className="badge badge-success m-2 font-semibold text-black">
+                  In stock
+                </span>
+              }
+            </div>
           </div>
-        </div>
 
-        <div className="h-full pt-1">
-          <p className="text-sm md:text-md font-light md:font-extralight hover:cursor-pointer">
-            {product.brand}
-          </p>
-          <p className="text-md md:text-xl font-bold hover:cursor-pointer">
-            {product.name}
-          </p>
-          <p className="md:text-md hover:cursor-pointer">
-            {new Intl.NumberFormat("en-ZA", {
-              style: "currency",
-              currency: "ZAR",
-            }).format(product?.price)}
-          </p>
-        </div>
+          <div className="h-full pt-1">
+            <p className="text-sm md:text-md font-light md:font-extralight hover:cursor-pointer">
+              {product.brand}
+            </p>
+
+            <p className="text-md md:text-md font-bold hover:cursor-pointer">
+              {product.name}
+            </p>
+
+            <p className="md:text-md hover:cursor-pointer">
+              {new Intl.NumberFormat("en-ZA", {
+                style: "currency",
+                currency: "ZAR",
+              }).format(product?.price)}
+            </p>
+          </div>
+        </Link>
       </div>
-    </Link>
+    </div>
   );
 }

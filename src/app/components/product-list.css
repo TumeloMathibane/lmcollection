@@ -1,0 +1,62 @@
+.prod-list {
+  position: relative;
+  scroll-behavior: smooth;
+}
+
+/* hide native scrollbar but keep scroll functionality */
+.prod-list::-webkit-scrollbar {
+  display: none;
+}
+.prod-list {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.scroll-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(4px);
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.12);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  cursor: pointer;
+}
+
+.scroll-btn svg {
+  pointer-events: none;
+}
+
+.scroll-btn.left {
+  left: 0.5rem;
+}
+.scroll-btn.right {
+  right: 0.5rem;
+}
+
+/* smaller on mobile to avoid covering content */
+@media (max-width: 640px) {
+  .scroll-btn {
+    width: 2rem;
+    height: 2rem;
+  }
+  .scroll-btn.left {
+    left: 0.25rem;
+  }
+  .scroll-btn.right {
+    right: 0.25rem;
+  }
+}
+
+/* hide buttons when content doesn't overflow horizontally */
+.prod-list[data-overflow="false"] + .scroll-btn,
+.prod-list[data-overflow="false"] ~ .scroll-btn {
+  display: none;
+}

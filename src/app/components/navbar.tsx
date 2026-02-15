@@ -8,7 +8,7 @@ export default function Navbar() {
   const pathname = usePathname();
 
   return (
-    <nav className="hidden md:flex sticky top-0 z-50 bg-white w-full py-1 justify-center-safe space-x-5">
+    <nav className="hidden md:flex sticky top-0 z-3 bg-white w-full py-1 justify-center-safe space-x-5">
       {/* desktop nav */}
       {navlinks.map(({ name, href }, key) => (
         <Link

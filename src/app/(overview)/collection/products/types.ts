@@ -8,16 +8,16 @@ export type Category = {
 
 export type Product = {
   _id: Id<"product">;
-  brand: string;
+  brand?: string;
   name: string;
   price: number;
-  discount: number;
-  shortDescription: string;
+  discount?: number;
+  shortDescription?: string;
   quantity: number;
   category: string;
   images: string[];
-  additional_options: Record<
-    string,
-    string | string[] | { [key: string]: string }
-  >[];
+  additional_options: Record<string, string>[];
+  dynamic_pricing: boolean;
+  pricing_by: string;
+  sale?: string;
 };

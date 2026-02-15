@@ -21,7 +21,7 @@ export default function CartView() {
           <p className="text-2xl text-stone-900 text-center font-bold md:text-4xl">
             Your cart is empty
           </p>
-          <Link href="/products" className="btn btn-lg rounded-md">
+          <Link href="/collection/products/all" className="btn font-bold">
             Continue shopping
           </Link>
         </div>
@@ -30,13 +30,13 @@ export default function CartView() {
   }
 
   return (
-    <main className="flex-1 xl:w-[80%] xl:place-self-center-safe">
+    <main className="flex-1 flex flex-col xl:w-[80%] xl:place-self-center-safe">
       <p className="text-4xl text-stone-900 font-bold p-3 lg:px-5 text-center">
         Your cart
       </p>
 
-      <div className="lg:flex lg:w-full">
-        <div className="p-3 lg:p-5 lg:w-2/3">
+      <div className="flex-1 flex flex-col lg:flex-row lg:w-full">
+        <div className="flex-1 p-3 lg:p-5 lg:w-2/3">
           {items.map((item, key) => (
             <div
               key={key}
@@ -54,70 +54,73 @@ export default function CartView() {
                   />
                 </Link>
               </div>
-              <div className="item-info w-full relative">
-                <div className="flex items-center-safe justify-between">
+
+              <div className="item-info w-full space-y-1.5 flex flex-col">
+                <div className="w-full flex items-center-safe justify-between">
                   <Link
                     href={`collection/products/${item?.productId}`}
-                    className="text-xl font-bold text-stone-950">
+                    className="w-full text-xl font-bold text-stone-950">
                     {item.productName}
                   </Link>
+
                   <BiX
                     size={"1.5em"}
                     className="hover:cursor-pointer"
-                    onClick={() => removeItem(item.productId, item.productSize)}
+                    onClick={() => removeItem(item)}
                   />
                 </div>
-                <div className="flex justify-between text-stone-600 font-light lg:text-md">
+
+                <div className="w-full flex-1 flex justify-between text-stone-600 font-light lg:text-md">
                   <p>
-                    <span className="before:content-['R'] before:mr-2">
-                      {item.productPrice}{" "}
-                      <span className="text-xs font-light italic">
-                        per unit
-                      </span>
-                    </span>
+                    {new Intl.NumberFormat("en-ZA", {
+                      style: "currency",
+                      currency: "ZAR",
+                    }).format(item.productPrice)}{" "}
+                    <span className="text-xs font-light italic">per unit</span>
                   </p>
-                  <p>
-                    Size:{" "}
-                    <span className="font-semibold">{item.productSize}</span>
-                  </p>
+
+                  {Object.values(item.options).length > 0 && (
+                    <p>
+                      {Object.keys(item.options)[0]}:{" "}
+                      {Object.values(item.options)[0].includes("=") ?
+                        Object.values(item.options)[0].split("=")[0]
+                      : Object.values(item.options)[0]}
+                    </p>
+                  )}
                 </div>
-                <div className="absolute bottom-0 md:flex justify-between md:w-full">
+
+                <div className="md:flex justify-between md:w-full">
                   <div className="w-30">
                     <QuantityInput
                       quantity={item.productQty}
                       onChange={(value: number) =>
-                        updateItemQty(
-                          item.productId,
-                          item.productSize,
-                          value ?? 1,
-                        )
+                        updateItemQty(item, value ?? 1)
                       }
                       onIncrement={() =>
-                        updateItemQty(
-                          item.productId,
-                          item.productSize,
-                          item.productQty + 1,
-                        )
+                        updateItemQty(item, item.productQty + 1)
                       }
                       onDecrement={() =>
-                        updateItemQty(
-                          item.productId,
-                          item.productSize,
-                          item.productQty - 1,
-                        )
+                        updateItemQty(item, item.productQty - 1)
                       }
+                      incrementDisable={item.productQty >= 99}
+                      decrementDisable={item.productQty <= 1}
                     />
                   </div>
-                  <p className="hidden md:block md:self-center-safe before:content-['R'] before:mr-2 text-2xl font-semibold">
-                    {(item.productPrice * item.productQty).toFixed(2)}
+
+                  <p className="hidden md:block md:self-center-safe text-2xl font-semibold">
+                    {new Intl.NumberFormat("en-ZA", {
+                      style: "currency",
+                      currency: "ZAR",
+                    }).format(item.productPrice * item.productQty)}
                   </p>
                 </div>
               </div>
             </div>
           ))}
         </div>
+
         <div className="hidden lg:block lg:border-l border-stone-400 mx-5 my-3" />
-        <div className="w-full lg:w-1/3 p-3 lg:h-full sticky bottom-0 lg:top-6 bg-white border-0">
+        <div className="w-full px-2 pb-3 sticky bottom-0 lg:h-full bg-white lg:w-1/3 lg:top-6 border-0">
           <div className="flex flex-col space-y-3 rounded-lg border lg:border-0 border-stone-400 p-3">
             <CartSummary items={items} />
 

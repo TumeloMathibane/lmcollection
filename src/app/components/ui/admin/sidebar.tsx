@@ -47,7 +47,11 @@ export default function Sidebar() {
       </div>
 
       <div>
-        <Link href={"/"} className="w-full">
+        <Link
+          href={"/"}
+          className="w-full"
+          target="_blank"
+          rel="noopener noreferrer">
           <button className="btn w-full">Go to shop</button>
         </Link>
       </div>

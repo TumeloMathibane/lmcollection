@@ -3,7 +3,7 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import ItemCard from "./ui/checkout/item-card";
 import { BiChevronDown } from "react-icons/bi";
-import type { CartItem } from "@/stores/types";
+import type { CartItem } from "../../stores/types";
 
 export default function OrderSummaryWidget({
   shippingPrice,
@@ -29,10 +29,10 @@ export default function OrderSummaryWidget({
       setSubTotal(
         items.reduce(
           (total, item) => total + item.productPrice * item.productQty,
-          0
-        )
+          0,
+        ),
       ),
-    [items]
+    [items],
   );
 
   useEffect(() => {
@@ -43,24 +43,25 @@ export default function OrderSummaryWidget({
     <main className="bg-stone-100 w-full xl:hidden">
       <button
         className="w-full border-b border-stone-300 place-items-center-safe"
-        onClick={() => setOpen(!open)}
-      >
+        onClick={() => setOpen(!open)}>
         <div className="flex w-full justify-between p-3 md:max-w-[750px]">
           <p className="flex self-center-safe text-blue-800/80">
             Order summary{" "}
             <BiChevronDown
-              className={`ml-2 self-center-safe origin-center transition-all duration-500 ${open ? "rotate-180" : "-rotate-0"}`}
+              className={`ml-2 self-center-safe origin-center transition-all duration-500 ${open ? "rotate-180" : "rotate-0"}`}
             />
           </p>
-          <span className="text-xl font-semibold before:content-['R'] before:mr-1 self-center-safe">
-            {cTotal?.toFixed(2)}
+          <span className="text-xl font-semibold self-center-safe">
+            {new Intl.NumberFormat("en-ZA", {
+              style: "currency",
+              currency: "ZAR",
+            }).format(cTotal)}
           </span>
         </div>
       </button>
 
       <div
-        className={`transition-all duration-500 ${open ? "pb-3 max-h-[100em] z-0 border-b border-stone-300" : "border-0 border-stone-300 max-h-0 -z-10"}`}
-      >
+        className={`transition-all duration-500 ${open ? "pb-3 max-h-[100em] z-0 border-b border-stone-300" : "border-0 border-stone-300 max-h-0 -z-10"}`}>
         <div className="space-y-4 p-3 md:w-[750px] md:place-self-center">
           {items?.map((item, key) => (
             <div key={key}>
@@ -83,35 +84,42 @@ export default function OrderSummaryWidget({
             <button
               type="button"
               className="rounded-sm btn btn-md btn-primary"
-              disabled={coupon === ""}
-            >
+              disabled={coupon === ""}>
               Apply
             </button>
           </div>
           <div className="w-full space-x-5 flex justify-between px-3">
             <p>Subtotal</p>
-            <p className="before:content-['R'] before:mr-1">
-              {subTotal?.toFixed(2)}
+            <p>
+              {new Intl.NumberFormat("en-ZA", {
+                style: "currency",
+                currency: "ZAR",
+              }).format(subTotal)}
             </p>
           </div>
         </div>
         <div className="w-full flex justify-between px-3 md:w-[750px] md:place-self-center">
           <p>Shipping</p>
           <p className="text-stone-600 italic">
-            {shippingPrice === 0 ? (
+            {shippingPrice === 0 ?
               "Select shipping option"
-            ) : (
-              <span className="before:content-['R'] before:mr-1 text-black not-italic">
-                {shippingPrice?.toFixed(2)}
+            : <span className="text-black not-italic">
+                {new Intl.NumberFormat("en-ZA", {
+                  style: "currency",
+                  currency: "ZAR",
+                }).format(shippingPrice)}
               </span>
-            )}
+            }
           </p>
         </div>
 
         <div className="w-full px-3 flex justify-between text-xl font-semibold md:w-[750px] md:place-self-center">
           <p>Total</p>
-          <p className="before:content-['R'] before:mr-1">
-            {cTotal?.toFixed(2)}
+          <p>
+            {new Intl.NumberFormat("en-ZA", {
+              style: "currency",
+              currency: "ZAR",
+            }).format(cTotal)}
           </p>
         </div>
       </div>
@@ -142,10 +150,10 @@ export function OrderSummary({
       setSubTotal(
         items.reduce(
           (total, item) => total + item.productPrice * item.productQty,
-          0
-        )
+          0,
+        ),
       ),
-    [items]
+    [items],
   );
 
   useEffect(() => {
@@ -181,35 +189,42 @@ export function OrderSummary({
             <button
               type="button"
               className="rounded-sm btn btn-md btn-primary"
-              disabled={coupon === ""}
-            >
+              disabled={coupon === ""}>
               Apply
             </button>
           </div>
           <div className="w-full flex justify-between">
             <p>Subtotal</p>
-            <p className="before:content-['R'] before:mr-1">
-              {subTotal?.toFixed(2)}
+            <p>
+              {new Intl.NumberFormat("en-ZA", {
+                style: "currency",
+                currency: "ZAR",
+              }).format(subTotal)}
             </p>
           </div>
         </div>
         <div className="w-full flex justify-between">
           <p>Shipping</p>
           <p className="text-stone-600 italic">
-            {shippingPrice === 0 ? (
+            {shippingPrice === 0 ?
               "Select shipping option"
-            ) : (
-              <span className="before:content-['R'] before:mr-1 text-black not-italic">
-                {shippingPrice?.toFixed(2)}
+            : <span className="text-black not-italic">
+                {new Intl.NumberFormat("en-ZA", {
+                  style: "currency",
+                  currency: "ZAR",
+                }).format(shippingPrice)}
               </span>
-            )}
+            }
           </p>
         </div>
 
         <div className="w-full flex justify-between text-xl font-semibold">
           <p>Total</p>
-          <p className="before:content-['R'] before:mr-1">
-            {cTotal?.toFixed(2)}
+          <p>
+            {new Intl.NumberFormat("en-ZA", {
+              style: "currency",
+              currency: "ZAR",
+            }).format(cTotal)}
           </p>
         </div>
       </div>

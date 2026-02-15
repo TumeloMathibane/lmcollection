@@ -24,6 +24,7 @@ export default function Header() {
   useEffect(() => {
     if (navOpen || searchWidgetOpen) {
       document.body.classList.add("overflow-y-hidden");
+      window.scrollTo({ top: 0 });
     } else if (
       (!navOpen || !searchWidgetOpen) &&
       document.body.classList.contains("overflow-y-hidden")
@@ -39,7 +40,7 @@ export default function Header() {
     <div className="bg-stone-950">
       {searchWidgetOpen && (
         <section
-          className="hidden md:block w-full h-screen fixed top-0 left-0 right-0 z-100"
+          className="hidden md:block w-full h-screen fixed top-0 left-0 right-0 z-10"
           onKeyDown={(e) => {
             if (e.key === "Escape") setSearchWidgetOpen(false);
           }}>
@@ -50,8 +51,8 @@ export default function Header() {
         </section>
       )}
 
-      <section className="place-items-center-safe">
-        <div className="flex items-center justify-between w-[95%] md:w-[80%]">
+      <section className="flex justify-center-safe items-center-safe">
+        <div className="flex justify-between items-center-safe px-5 w-full md:w-[80%]">
           <i className="hidden md:block">
             <BiSearch
               size={"2em"}
@@ -61,6 +62,7 @@ export default function Header() {
               className="hover:cursor-pointer"
             />
           </i>
+
           <i className="md:hidden">
             {navOpen ?
               <BiX
@@ -79,7 +81,8 @@ export default function Header() {
               />
             }
           </i>
-          <Link href={"/"}>
+
+          <Link href={"/"} className="relative">
             <Image
               src={logo}
               alt="lmcollection-logo"
@@ -89,6 +92,7 @@ export default function Header() {
               priority={false}
             />
           </Link>
+
           <Link href="/cart" className="relative">
             <BiShoppingBag
               size={"2em"}
@@ -107,7 +111,7 @@ export default function Header() {
 
       {/* Mobile nav */}
       <section
-        className={`flex fixed z-10 w-full h-screen ${navOpen ? "translate-0" : "transition-all delay-100 -translate-x-full"}`}>
+        className={`flex fixed z-10 w-full h-full ${navOpen ? "translate-0" : "transition-all delay-100 -translate-x-full"}`}>
         <div
           className={`backdrop-blur-sm w-full h-full fixed z-4 ${navOpen ? "translate-0" : "transition-all delay-75 duration-25 -translate-x-full"}`}
           onClick={() => setNavOpen(!navOpen)}
