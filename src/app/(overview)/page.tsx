@@ -130,7 +130,6 @@ export default async function Home() {
 }
 
 //! TODO  [*]: Continue with checks...
-//! TODO  [?]: Fix size of some loading components to have 'flex-1' height
 //! TODO  [?]: Delete admin dir. from main and create 'admin' branch for implementing admin features
 //! TODO  [ ]: Implement product filtering and sorting functionality on the collection page to allow customers to easily find products based on their preferences (e.g. filter by price, category, popularity, etc.)...
 //! TODO  [ ]: Implement contact page logic
