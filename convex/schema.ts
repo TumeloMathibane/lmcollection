@@ -38,4 +38,11 @@ export default defineSchema({
     secondary_contact: v.string(),
     address: v.string(),
   }),
+  users: defineTable({
+    name: v.string(),
+    email: v.string(),
+    hashedPassword: v.string(),
+    role: v.string(), // "user" or "admin"
+    createdAt: v.number(),
+  }).index("by_email", ["email"]),
 });

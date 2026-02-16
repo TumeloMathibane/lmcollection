@@ -2,24 +2,33 @@
 
 import { BsCheckCircle } from "react-icons/bs";
 import { useCartStore } from "../../../stores/cart";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
-export default function ReturnView({
-  paymentStatus,
-}: {
-  paymentStatus: string;
-}) {
+export default function ReturnView() {
   const { items, clearCart } = useCartStore();
 
+  const [status, setStatus] = useState<string>("");
+
   useEffect(() => {
-    if (paymentStatus === "PASS" && items.length > 0) {
-      clearCart();
-    }
-  }, [paymentStatus, clearCart, items.length]);
+    const checkPaymentStatus = async () => {
+      const response = await axios.get(
+        "https://d1r891fk-3000.eun1.devtunnels.ms/notify",
+      );
+      const status = await response.data.message;
+
+      setStatus(status);
+      if (status === "PASS" && items.length > 0) {
+        clearCart();
+      }
+    };
+
+    checkPaymentStatus();
+  }, [clearCart, items.length]);
 
   return (
     <>
-      {paymentStatus === "PASS" ?
+      {status === "PASS" ?
         <span className="flex items-center-safe gap-3">
           <BsCheckCircle size={"10rem"} className="text-green-600" />
           <p>Payment successful. Thank you for your purchase!</p>

@@ -57,10 +57,6 @@ export async function POST(req: Request) {
       Number(pfObject["amount_gross"]),
       process.env.PAYGATE_SALT_PASSPHRASE,
     );
-    // console.log(
-    //   `(${pfObject["amount_gross"]}) Generated paymentId: `,
-    //   newPaymentId,
-    // );
     const check_amount = newPaymentId === pfObject["m_payment_id"];
 
     //* check no. 4: verify information received from gateway and confirming the order with the server before confirming the order with the client...
