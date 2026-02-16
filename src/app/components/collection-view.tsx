@@ -29,14 +29,6 @@ export default function CollectionView({ category }: { category: string }) {
   }
 
   return (
-<<<<<<< HEAD
-    <div
-      className={`grid grid-cols-2 gap-2 sm:grid-cols-3 ${products.length >= 4 ? " lg:grid-cols-4" : `lg:grid-cols-${products.length}`}`}>
-      {products.map((product, key) => {
-        return (
-          <div key={key}>
-            <ProductCard product={product} />
-=======
     <div className="flex flex-col space-y-2 py-4 px-2 items-center-safe">
       <p className="text-4xl font-bold text-stone-900">Products</p>
 
@@ -48,7 +40,6 @@ export default function CollectionView({ category }: { category: string }) {
               {products &&
                 `(${products?.length}) ${products?.length > 1 ? "products" : "product"}`}
             </p>
->>>>>>> pre-prod-mod
           </div>
 
           <div
