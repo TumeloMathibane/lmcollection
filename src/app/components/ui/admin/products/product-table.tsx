@@ -3,8 +3,8 @@ import Link from "next/link";
 
 export default function ProductTable({ products }: { products: Product[] }) {
   return (
-    <table className="min-w-full divide-y divide-stone-200">
-      <thead className="bg-stone-50 sticky top-0">
+    <table className="divide-y divide-stone-200 w-full table-fixed">
+      <thead className="bg-stone-50">
         <tr>
           <th
             scope="col"

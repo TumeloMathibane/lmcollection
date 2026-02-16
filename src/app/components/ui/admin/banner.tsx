@@ -17,13 +17,12 @@ export default function Banner({ navOpen }: { navOpen: () => void }) {
   }, [pathname]);
 
   return (
-    <div className="flex items-center-safe justify-between p-4">
-      <BiMenu size={"1.5em"} onClick={navOpen} />
+    <div className="flex items-center-safe justify-between p-4 bg-white lg:px-6 lg:sticky lg:top-0">
+      <BiMenu size={"1.5em"} onClick={navOpen} className="lg:hidden" />
 
       <h1 className="text-3xl font-bold capitalize">{bannerTitle}</h1>
 
       <div>
-        {/* search functionality; additional component will be added... */}
         <BiSearch size={"1.5em"} />
       </div>
     </div>
