@@ -13,14 +13,15 @@ export const createProduct = mutation({
     brand: v.string(),
     name: v.string(),
     price: v.number(),
-    discount: v.number(),
+    discount: v.optional(v.number()),
     shortDescription: v.string(),
     quantity: v.number(),
     category: v.string(),
     images: v.array(v.id("_storage")),
-    additional_options: v.array(
-      v.record(v.string(), v.union(v.string(), v.array(v.string()))),
-    ),
+    additional_options: v.array(v.record(v.string(), v.string())),
+    dynamic_pricing: v.boolean(),
+    pricing_by: v.string(),
+    sale: v.optional(v.string()),
   },
   handler: async (ctx, args) => {
     return await ctx.db.insert("product", {
@@ -33,6 +34,9 @@ export const createProduct = mutation({
       category: args.category,
       images: args.images,
       additional_options: args.additional_options,
+      dynamic_pricing: args.dynamic_pricing,
+      pricing_by: args.pricing_by,
+      sale: args.sale,
     });
   },
 });
@@ -40,8 +44,6 @@ export const createProduct = mutation({
 export const getProduct = query({
   args: { id: v.id("product") },
   handler: async (ctx, args) => {
-    // return await ctx.db.get("product", args.id);
-
     const product = await ctx.db.get("product", args.id);
 
     if (!product) {
@@ -82,7 +84,7 @@ export const getProducts = query({
     if (args.category) {
       const products = await ctx.db
         .query("product")
-        .filter((p) => p.eq("category", args.category))
+        .filter((p) => p.eq(p.field("category"), args?.category))
         .collect();
 
       return await Promise.all(
@@ -113,5 +115,80 @@ export const getProducts = query({
         return { ...product, images: imgUrls };
       }),
     );
+  },
+});
+
+export const deleteProduct = mutation({
+  args: { id: v.id("product") },
+  handler: async (ctx, args) => {
+    await ctx.db.delete("product", args.id);
+  },
+});
+
+export const searchProducts = query({
+  args: { searchTerm: v.string(), limit: v.optional(v.number()) },
+  handler: async (ctx, args) => {
+    const term = (args.searchTerm ?? "").trim().toLowerCase();
+    if (!term) return [];
+
+    const products = await ctx.db.query("product").collect();
+
+    const matched = products.filter((p) => {
+      const name = (p.name ?? "").toString().toLowerCase();
+      const brand = (p.brand ?? "").toString().toLowerCase();
+      const category = (p.category ?? "").toString().toLowerCase();
+      const shortDescription = (p.shortDescription ?? "")
+        .toString()
+        .toLowerCase();
+      return (
+        name.includes(term) ||
+        brand.includes(term) ||
+        category.includes(term) ||
+        shortDescription.includes(term)
+      );
+    });
+
+    const limited =
+      typeof args.limit === "number" ? matched.slice(0, args.limit) : matched;
+
+    return await Promise.all(
+      limited.map(async (product) => {
+        const img =
+          product.images && product.images.length > 0 ?
+            product.images[0]
+          : null;
+        const image =
+          img ? await ctx.storage.getUrl(img as Id<"_storage">) : null;
+
+        return {
+          _id: product._id,
+          name: product.name,
+          price: product.price,
+          image: image as string | null,
+          category: product.category,
+        };
+      }),
+    );
+  },
+});
+
+export const getSearchSuggestion = query({
+  args: { searchTerm: v.string(), limit: v.optional(v.number()) },
+  handler: async (ctx, args) => {
+    const term = (args.searchTerm ?? "").trim().toLowerCase();
+    if (!term) return [];
+
+    const products = await ctx.db.query("product").collect();
+
+    const names: string[] = [];
+    for (const p of products) {
+      const name = (p.name ?? "").toString();
+      if (name.toLowerCase().includes(term) && !names.includes(name)) {
+        names.push(name);
+        if (typeof args.limit === "number" && names.length >= args.limit) break;
+      }
+    }
+
+    return names.map((n) => ({ name: n }));
   },
 });

@@ -1,25 +1,27 @@
 export type CartItem = {
+  // [key: string]: string | number;
   productId: string;
-  productName: string;
-  productSize: string;
-  productQty: number;
   productPrice: number;
+  productName: string;
+  productCategory: string;
+  productQty: number;
   productImage: string;
+  options: { [key: string]: string };
 };
 
 export type CartStore = {
   items: CartItem[];
   loading: boolean;
-  addItem: (
-    id: string,
-    name: string,
-    size: string,
+  addItem: (item: CartItem) => {
+    success: boolean;
+    action: "added" | "updated";
+    newQty?: number;
+  };
+  updateItemQty: (
+    cartItem: CartItem,
     qty: number,
-    price: number,
-    img: string,
-  ) => void;
-  removeItem: (id: string, size: string) => void;
-  updateItemQty: (id: string, size: string, qty: number) => void;
+  ) => { success: boolean; newQty: number };
+  removeItem: (cartItem: CartItem) => void;
   clearCart: () => void;
   getTotalPrice: () => number;
   createdAt: number | null;

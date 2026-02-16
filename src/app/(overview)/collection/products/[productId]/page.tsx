@@ -4,7 +4,6 @@ import { fetchQuery } from "convex/nextjs";
 import { Metadata } from "next";
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
-import Loading from "./loading";
 import type { Product } from "../types";
 
 export const metadata: Metadata = {
@@ -16,29 +15,22 @@ export default async function Product({
 }: {
   params: Promise<{ productId: Id<"product"> }>;
 }) {
-  const product = await fetchQuery(api.products.getProduct, {
-    id: (await params)?.productId,
-  });
+  const prodId = await params;
+
+  const { category } = (await fetchQuery(api.products.getProduct, {
+    id: prodId.productId,
+  })) as Product;
 
   const products = await fetchQuery(api.products.getProducts, {
-    category: product?.category,
+    category: category,
     count: 5,
   });
 
-  if (!product)
-    return (
-      <div className="flex-1">
-        <Loading />
-      </div>
-    );
-
   return (
     <main className="flex-1 p-2 space-y-2 sm:max-w-lg sm:place-self-center-safe md:max-w-4xl xl:py-10">
-      <div>
-        <ProductView product={product} />
-      </div>
+      <ProductView productId={prodId.productId} />
 
-      <div className="border-t border-stone-900 w-[50%] place-self-center-safe my-4" />
+      <div className="border-t border-stone-900 w-[50%] mx-auto my-4" />
 
       <section className="mb-4 space-y-2">
         <p className="text-lg font-bold text-stone-900">

@@ -12,7 +12,7 @@ import { states } from "../lib/sa_provinces.json";
 import { api } from "@/convex/_generated/api";
 import DeliverySelector from "./checkout/delivery-selector";
 import Image from "next/image";
-import Loading from "../(payments)/payment/checkout/loading";
+import Loading from "../(payments)/payments/checkout/loading";
 
 type MerchantProp = {
   m_key: string;
@@ -64,6 +64,8 @@ export default function CheckoutMain({
   const [paymentData, setPaymentData] = useState({
     merchant_id: m_id,
     merchant_key: m_key,
+    return_url: gatewayURL?.return,
+    // cancel_url: gatewayURL?.cancel,
     notify_url: gatewayURL?.notify,
     name_first: "",
     name_last: "",
@@ -81,7 +83,7 @@ export default function CheckoutMain({
   >("");
 
   const handleInputChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
     const { name, value } = e.currentTarget;
     setData((prevVal) => ({
@@ -176,7 +178,7 @@ export default function CheckoutMain({
 
     if (elmts.length === 0) {
       setStatus("validated");
-      setTimeout(() => setStatus(""), 5000);
+      setTimeout(() => setStatus(""), 10000);
       e.currentTarget.form?.submit();
     }
   };
@@ -185,22 +187,13 @@ export default function CheckoutMain({
 
   // add item_name field
   useEffect(() => {
-    if (items.length === 1) {
-      setPaymentData((prevVal) => ({
-        ...prevVal,
-        item_name: encodeURIComponent(
-          items.map((item) => item.productName)[0].trim()
-        ).replace(/%20/g, "+") as string,
-      }));
-    } else {
-      const c_orders = ordersCount + 1;
-      setOrderId("LMCOrder#" + c_orders.toString().padStart(6, "0"));
+    const c_orders = ordersCount + 1;
+    setOrderId("LMCOrder#" + c_orders.toString().padStart(6, "0"));
 
-      setPaymentData((prevVal) => ({
-        ...prevVal,
-        item_name: orderId,
-      }));
-    }
+    setPaymentData((prevVal) => ({
+      ...prevVal,
+      item_name: orderId,
+    }));
   }, [items, ordersCount, orderId]);
 
   // update payment data when cartTotal changes
@@ -220,9 +213,13 @@ export default function CheckoutMain({
   useEffect(() => {
     setPaymentData((prevVal) => ({
       ...prevVal,
-      m_payment_id: generatePaymentId(orderId, passphrase) as string,
+      m_payment_id: generatePaymentId(
+        prevVal.item_name,
+        cartTotal,
+        passphrase,
+      ) as string,
     }));
-  }, [ordersCount, passphrase, orderId]);
+  }, [ordersCount, passphrase, orderId, cartTotal]);
 
   // look for changes in data; specifically, in save_info; when changes are made, save info according to permission
   useEffect(() => {
@@ -233,23 +230,10 @@ export default function CheckoutMain({
     }
   }, [data]);
 
-  // write a useffect for logging if items are present or not after 10 seconds
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      if (items?.length > 0) {
-        console.log("Items are present in the cart.");
-      } else {
-        console.log("No items in the cart.");
-      }
-    }, 10000);
-
-    return () => clearTimeout(timer);
-  }, [items]);
-
   if (!items || cartTotal === 0 || getTotalPrice() === 0) return <Loading />;
 
   return (
-    <main className="bg-white flex-1 flex flex-col">
+    <main className="bg-transparent flex-1 flex flex-col">
       <div className="lg:hidden">
         <OrderSummaryWidget
           shippingPrice={shippingData?.price}
@@ -260,7 +244,7 @@ export default function CheckoutMain({
         />
       </div>
 
-      <section className="bg-white z-10 flex place-content-center-safe md:max-w-[750px] md:place-self-center-safe lg:min-w-full">
+      <section className="bg-white z-5 flex place-content-center-safe md:max-w-[750px] md:place-self-center-safe lg:min-w-full">
         <div className="w-full p-3 lg:px-10 lg:w-1/2">
           <div className="space-y-4 xl:max-w-[470px] xl:float-right">
             <div className="space-y-4">
@@ -478,7 +462,9 @@ export default function CheckoutMain({
             </div>
 
             <div className="py-4">
-              <form action={formAction} id="payment-form">
+              <form
+                action={`https://${formAction}/eng/process`}
+                id="payment-form">
                 {Object.entries(paymentData).map(([name, value], index) => (
                   <input type="hidden" key={index} name={name} value={value} />
                 ))}
@@ -494,9 +480,6 @@ export default function CheckoutMain({
                 className="btn btn-primary btn-md w-full rounded-lg"
                 onClick={(e: MouseEvent<HTMLButtonElement>) => {
                   validateInput(e);
-
-                  // e.preventDefault();
-                  // console.log("Shipping data: ", shippingData);
                 }}
                 disabled={
                   shippingData.method === "" || status === "submitting"

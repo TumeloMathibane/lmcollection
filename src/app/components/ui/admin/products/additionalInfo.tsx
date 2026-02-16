@@ -1,33 +1,35 @@
 // import { ChangeEvent, useEffect, useState } from "react";
 import { useEffect, useState } from "react";
 import { BiSolidDownArrow } from "react-icons/bi";
+import { AdditionalInfoField } from "./add-product-form";
 
 export default function AdditionalInfo({
   info,
   onFieldInfoChange,
   onAddField,
+  disableSelectables,
   disabled,
 }: {
-  info?: AdditionalInfoField;
+  info: AdditionalInfoField;
   onFieldInfoChange?: (field: AdditionalInfoField) => void;
   onAddField?: () => void;
+  disableSelectables?: boolean;
   disabled?: boolean;
 }) {
   const [aiDivOpen, setAiDivOpen] = useState<boolean>(false);
 
-  const afTypes = ["bulletpoints", "colors", "options", "text"];
+  const afTypes = ["bulletpoints", "colors", "options", "sizes", "text"];
+  const afUnits = ["mm", "cm", "inch", "ft", "g", "kg", "lb"];
 
-  const handleFieldInfoChange = (field: {
-    label: string;
-    type: string;
-    value: string | string[];
-  }) => {
+  const handleFieldInfoChange = (field: AdditionalInfoField) => {
     if (onFieldInfoChange) {
       onFieldInfoChange(field);
     }
   };
 
   const handleAddField = () => {
+    console.log("Adding field...", info);
+
     if (onAddField) {
       onAddField();
     }
@@ -56,24 +58,55 @@ export default function AdditionalInfo({
       <div
         className={`rounded bg-stone-100 overflow-hidden border border-stone-300 transition-all ${aiDivOpen ? "max-h-full" : "max-h-0 border-0"}`}>
         <div className="m-2 space-y-2">
-          <div>
-            <label htmlFor="aflabel">Field label</label>
+          <div className="flex flex-col gap-2">
+            <div>
+              <label htmlFor="aflabel">Field label</label>
 
-            <input
-              type="text"
-              className="input input-md w-full"
-              placeholder="e.g. Color"
-              name="aflabel"
-              id="aflabel"
-              value={info!.label}
-              onChange={(e) =>
-                handleFieldInfoChange({
-                  label: e.target.value,
-                  type: info!.type,
-                  value: info!.value,
-                })
-              }
-            />
+              <input
+                type="text"
+                className="input input-md w-full"
+                placeholder="e.g. Color"
+                name="aflabel"
+                id="aflabel"
+                value={info.label}
+                onChange={(e) =>
+                  handleFieldInfoChange({
+                    label: e.target.value,
+                    type: info.type,
+                    value: (info.value as string) || "",
+                    unit: info.unit,
+                  })
+                }
+              />
+            </div>
+
+            <div>
+              <label htmlFor="afUnit" className="italic text-stone-500">
+                unit of measurement {"(optional)"}
+              </label>
+
+              <select
+                name="afUnit"
+                id="afUnit"
+                className="select select-md w-full ps-2"
+                value={info.unit}
+                onChange={(e) =>
+                  e.target.value &&
+                  handleFieldInfoChange({
+                    label: info.label,
+                    type: info.type,
+                    value: info.value as string,
+                    unit: e.target.value,
+                  })
+                }>
+                <option value="">Select unit</option>
+                {afUnits.map((unit) => (
+                  <option key={unit} value={unit}>
+                    {unit} {"(" + unit + ")"}
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
 
           <div>
@@ -83,24 +116,40 @@ export default function AdditionalInfo({
               name="afType"
               id="afType"
               className="select select-md w-full p-2 pe-10 rounded capitalize"
-              value={info!.type}
+              value={info.type}
               onChange={(e) =>
                 handleFieldInfoChange({
-                  label: info!.label,
-                  type: e.target.value,
-                  value: info!.value,
+                  label: info.label,
+                  type: e.target.value as
+                    | ""
+                    | "bulletpoints"
+                    | "colors"
+                    | "options"
+                    | "sizes"
+                    | "text",
+                  value: info.value as string,
+                  unit: info.unit,
                 })
               }>
               <option value="">Select type</option>
               {afTypes.map((type) => (
-                <option key={type} value={type}>
+                <option
+                  key={type}
+                  value={type}
+                  className={``}
+                  disabled={
+                    disableSelectables &&
+                    (type === "options" ||
+                      type === "colors" ||
+                      type === "sizes")
+                  }>
                   {type}
                 </option>
               ))}
             </select>
           </div>
 
-          {info!.type === "colors" && (
+          {info.type === "colors" && !disableSelectables && (
             <div className="min-w-fit">
               <label htmlFor="color-selector">Select color</label>
               <div className="flex gap-2">
@@ -113,42 +162,45 @@ export default function AdditionalInfo({
             </div>
           )}
 
-          {info!.label && info!.type !== "" && (
+          {info.label && info.type !== "" && (
             <div>
               <label htmlFor="afValue">Field value(s)</label>
 
-              {info!.type === "text" && (
+              {info.type === "text" && (
                 <input
                   type="text"
                   className="input input-md w-full"
-                  placeholder={`Enter ${info!.label.toLowerCase()}...`}
+                  placeholder={`Enter ${info.label.toLowerCase()}...`}
                   name="afValue"
                   id="afValue"
-                  value={info!.value}
+                  value={info.value as string}
                   onChange={(e) =>
                     handleFieldInfoChange({
-                      label: info!.label,
-                      type: info!.type,
+                      label: info.label,
+                      type: info.type,
                       value: e.target.value,
+                      unit: info.unit,
                     })
                   }
                 />
               )}
 
-              {(info!.type === "bulletpoints" ||
-                info!.type === "options" ||
-                info!.type === "colors") && (
+              {(info.type === "bulletpoints" ||
+                info.type === "options" ||
+                info.type === "colors" ||
+                info.type === "sizes") && (
                 <textarea
                   className="textarea textarea-md w-full"
-                  placeholder={`Enter ${info!.label.toLowerCase()}s separated by commas...`}
+                  placeholder={`Enter ${info.label.toLowerCase()}s separated by commas...`}
                   name="afValue"
                   id="afValue"
-                  value={info!.value}
+                  value={info.value as string}
                   onChange={(e) =>
                     handleFieldInfoChange({
-                      label: info!.label,
-                      type: info!.type,
+                      label: info.label,
+                      type: info.type,
                       value: e.target.value,
+                      unit: info.unit,
                     })
                   }
                 />

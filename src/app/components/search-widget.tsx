@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
-import { BsOpencollective, BsX } from "react-icons/bs";
+import { BsX } from "react-icons/bs";
 import { useDebounce } from "../hooks/useDebouce";
 import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
@@ -21,17 +21,26 @@ export default function SearchWidget({
   const searchRef = useRef<HTMLDivElement>(null);
 
   const debouncedSearchTerm = useDebounce(searchTerm, 500) ?? "";
-  const searchResults = useQuery(
+  const searchResults:
+    | {
+        _id: string;
+        name: string;
+        price: number;
+        image: string | null;
+        category: string;
+      }[]
+    | undefined = useQuery(
     api.products.searchProducts,
-    debouncedSearchTerm?.trim() !== ""
-      ? { searchTerm: debouncedSearchTerm, limit: 5 }
-      : "skip"
+    debouncedSearchTerm?.trim() !== "" ?
+      { searchTerm: debouncedSearchTerm, limit: 5 }
+    : "skip",
   );
-  const suggestions = useQuery(
+
+  const suggestions: { name: string }[] | undefined = useQuery(
     api.products.getSearchSuggestion,
-    debouncedSearchTerm?.trim() !== ""
-      ? { searchTerm: debouncedSearchTerm, limit: 5 }
-      : "skip"
+    debouncedSearchTerm?.trim() !== "" ?
+      { searchTerm: debouncedSearchTerm, limit: 5 }
+    : "skip",
   );
 
   useEffect(() => {
@@ -39,7 +48,8 @@ export default function SearchWidget({
   }, [isOpen]);
 
   useEffect(() => {
-    if (debouncedSearchTerm !== searchTerm) setIsLoading(true);
+    if (debouncedSearchTerm !== searchTerm || !searchResults)
+      setIsLoading(true);
     else setIsLoading(false);
   }, [searchTerm, debouncedSearchTerm, searchResults]);
 
@@ -66,13 +76,12 @@ export default function SearchWidget({
     <>
       <div
         ref={searchRef}
-        className="bg-stone-950 flex flex-col items-center justify-center-safe space-x-3 h-30 xl:h-25"
-      >
-        <div className="z-10 relative w-full px-10">
-          <div className="flex relative mt-3 w-full place-self-center-safe md:max-w-[850px]">
+        className="bg-stone-950 flex justify-center h-30 max-h-full py-8 md:px-10 lg:px-0">
+        <div className="z-10 w-full md:max-w-[600px] flex flex-col justify-center-safe">
+          <div className="w-full flex relative">
             <input
               ref={inputRef}
-              className="w-full py-4 ps-2 pe-[3em] text-white border-b border-stone-200 focus:outline-1 focus:outline-stone-200 placeholder-stone-400"
+              className="w-full py-4 ps-4 pe-[3em] text-white border-b border-stone-200 focus:outline-1 focus:outline-stone-200 placeholder-stone-400"
               placeholder="Search products..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target?.value)}
@@ -89,19 +98,18 @@ export default function SearchWidget({
             )}
           </div>
 
-          {/* <div className="w-full h-full flex flex-col items-center-safe z-10"> */}
           {searchTerm && (
-            <div className="relative">
-              <div className="bg-white w-full absolute flex place-self-center-safe py-2 px-4 shadow-sm shadow-stone-900 max-w-[850px]">
+            <div className="relative w-full">
+              <div className="bg-white flex py-2 px-4 shadow-sm shadow-stone-900">
                 <div className="flex flex-col w-full space-y-2">
                   <div className="flex space-x-4">
-                    {isLoading ? (
-                      <BsOpencollective
-                        className="flex my-5 mx-auto animate-spin"
-                        size={"3em"}
-                      />
-                    ) : (
-                      <>
+                    {isLoading ?
+                      // <BsOpencollective
+                      //   className="flex my-5 mx-auto animate-spin"
+                      //   size={"3em"}
+                      // />
+                      <span className="loading loading-bars loading-xl flex my-5 mx-auto" />
+                    : <>
                         <div className="w-2/5">
                           <div className="font-semibold text-stone-700">
                             <p>Suggestions:</p>
@@ -109,15 +117,24 @@ export default function SearchWidget({
                           </div>
 
                           <div>
-                            {suggestions && suggestions?.length > 0 ? (
+                            {suggestions && suggestions?.length > 0 ?
                               suggestions?.map((item, index) => (
-                                <p key={index} className="py-1">
+                                <p
+                                  key={index}
+                                  style={{
+                                    cursor:
+                                      item?.name !== searchTerm ?
+                                        "pointer"
+                                      : "default",
+                                  }}
+                                  className="py-1"
+                                  onClick={() =>
+                                    setSearchTerm(String(item?.name).trim())
+                                  }>
                                   {item?.name}
                                 </p>
                               ))
-                            ) : (
-                              <p>No suggestions</p>
-                            )}
+                            : <p>No suggestions</p>}
                           </div>
                         </div>
 
@@ -126,31 +143,34 @@ export default function SearchWidget({
                             <p>Products</p>
                             <div className="w-full border-b border-stone-300" />
                           </div>
-                          {searchResults?.map((item, index) => (
-                            <Link
-                              href={`/collection/products/${item?._id}`}
-                              key={index}
-                              className="p-2 hover:cursor-pointer hover:bg-stone-800/5"
-                              onClick={() => handleProductClick()}
-                            >
-                              <div className="flex space-x-2">
-                                <div className="h-auto size-15">
-                                  <ImageWithFallback
-                                    src={item?.image}
-                                    alt={item?.name}
-                                  />
+
+                          {searchResults && searchResults.length > 0 ?
+                            searchResults?.map((item, index) => (
+                              <Link
+                                href={`/collection/products/${item?._id}`}
+                                key={index}
+                                className="p-2 hover:cursor-pointer hover:bg-stone-800/5"
+                                onClick={() => handleProductClick()}>
+                                <div className="flex space-x-2">
+                                  <div className="h-auto size-15">
+                                    <ImageWithFallback
+                                      src={item?.image ?? ""}
+                                      alt={item?.name}
+                                    />
+                                  </div>
+                                  <p className="self-center-safe">
+                                    {item?.name}
+                                  </p>
                                 </div>
-                                <p className="self-center-safe">{item?.name}</p>
-                              </div>
-                            </Link>
-                          ))}
+                              </Link>
+                            ))
+                          : <p className="px-2">No products found</p>}
                         </div>
                       </>
-                    )}
+                    }
                   </div>
                   <p
-                    className={`${searchResults && searchResults?.length > 0 && "border-t border-stone-400 py-2 "} w-full`}
-                  >
+                    className={`${searchResults && searchResults?.length > 0 && "border-t border-stone-400 py-2 "} w-full`}>
                     Search results for: {searchTerm}
                   </p>
                 </div>
@@ -158,7 +178,6 @@ export default function SearchWidget({
             </div>
           )}
         </div>
-        {/* </div> */}
       </div>
 
       <div className="h-full backdrop-blur-xl" />

@@ -31,7 +31,7 @@ export default function AdminSidebar({
       <Banner navOpen={() => setNavOpen(true)} />
 
       <div
-        className={`fixed top-0 left-0 w-full h-full z-50 transition-transform duration-300 ${
+        className={`fixed top-0 left-0 w-full h-full z-10 transition-transform duration-300 ${
           navOpen ? "translate-x-0" : "-translate-x-full"
         }`}>
         <div

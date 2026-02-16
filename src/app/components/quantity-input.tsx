@@ -24,7 +24,7 @@ export default function QuantityInput({
   };
 
   return (
-    <div className="border border-stone-600 flex w-full rounded-lg overflow-hidden">
+    <div className="product-quantity border border-stone-400 flex w-full overflow-hidden">
       <button
         onClick={() => onDecrement()}
         className="flex items-center-safe justify-center disabled:bg-stone-300 disabled:mask-alpha disabled:mask-r-from-80% disabled:cursor-not-allowed disabled:text-stone-500 w-1/3 p-2"
@@ -36,6 +36,9 @@ export default function QuantityInput({
         name="quantity-input"
         value={quantity}
         onChange={handleOnChange}
+        onBlur={(e) => {
+          if (e.target.value === "" || e.target.valueAsNumber < 1) onChange(1);
+        }}
         className="quantity-input text-center w-1/3 p-2"
       />
       <button

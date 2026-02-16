@@ -131,8 +131,11 @@ export default function Policies() {
             <div className="table-cell border border-stone-600 p-1 px-2 xl:p-3">
               <ol className="list-decimal list-inside">
                 <li>
-                  Contact us at (business email to be inserted) to request a
-                  return.
+                  Contact us at{" "}
+                  <p className="inline text-stone-700 before:content-['*'] before:text-red-500 after:content-['*'] after:text-red-500">
+                    (business email to be inserted)
+                  </p>{" "}
+                  to request a return.
                 </li>
                 <li>
                   If approved, we will provide instructions on how and where to
@@ -220,7 +223,11 @@ export default function Policies() {
         <div>
           <p className="text-center">
             For any return, refund, or exchange inquiries, please reach out to
-            us at (business email to be inserted).
+            us at{" "}
+            <span className="inline text-stone-700 before:content-['*'] before:text-red-500 after:content-['*'] after:text-red-500">
+              (business email to be inserted)
+            </span>
+            .
           </p>
         </div>
       </section>

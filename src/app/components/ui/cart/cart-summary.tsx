@@ -1,4 +1,4 @@
-import type { CartItem } from "@/stores/types";
+import type { CartItem } from "../../../../stores/types";
 import Link from "next/link";
 
 interface CartSummaryProps {
@@ -8,7 +8,7 @@ interface CartSummaryProps {
 export default function CartSummary({ items }: CartSummaryProps) {
   const total = items.reduce(
     (total, item) => total + item.productPrice * item.productQty,
-    0
+    0,
   );
 
   return (
@@ -17,15 +17,15 @@ export default function CartSummary({ items }: CartSummaryProps) {
       <div>
         <p className="flex justify-between">
           Estimated total:{" "}
-          <span className="before:content-['R'] before:mr-2">
-            {total.toFixed(2)}
-          </span>
+          {new Intl.NumberFormat("en-ZA", {
+            style: "currency",
+            currency: "ZAR",
+          }).format(total)}
         </p>
       </div>
       <Link
-        href="/payment/checkout"
-        className="btn self-center-safe w-full md:text-lg"
-      >
+        href="/payments/checkout"
+        className="btn self-center-safe w-full md:text-lg">
         Proceed to checkout
       </Link>
     </>

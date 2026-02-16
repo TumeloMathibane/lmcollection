@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import type { CartStore } from "./types";
+import type { CartItem, CartStore } from "./types";
 
 export const useCartStore = create<CartStore>()(
   persist(
@@ -10,64 +10,84 @@ export const useCartStore = create<CartStore>()(
       createdAt: null,
       lastModified: null,
 
-      addItem: (
-        id: string,
-        name: string,
-        size: string,
-        qty = 1,
-        price: number,
-        image: string,
-      ) => {
-        set((state) => {
-          const now = Date.now();
-          const exist = state.items.find(
-            (i) => i.productId === id && i.productSize === size,
-          );
+      addItem: (cartItem: CartItem) => {
+        const now = Date.now();
+        const state = get();
+        const exist = state.items.find(
+          (i) =>
+            i.productId === cartItem.productId &&
+            JSON.stringify(i.options) === JSON.stringify(cartItem.options),
+        );
 
-          if (exist) {
-            return {
-              items: state.items.map((i) =>
-                i.productId === id && i.productSize === size ?
-                  { ...i, productQty: i.productQty + qty }
-                : i,
-              ),
-              createdAt: state.createdAt ?? now,
-              lastModified: now,
-            };
-          }
+        if (exist) {
+          // console.log("Item already exists in cart, updating quantity...");
+          set((s) => ({
+            items: s.items.map((i) =>
+              (
+                i.productId === cartItem.productId &&
+                JSON.stringify(i.options) === JSON.stringify(cartItem.options)
+              ) ?
+                { ...i, productQty: i.productQty + cartItem.productQty }
+              : i,
+            ),
+            createdAt: s.createdAt ?? now,
+            lastModified: now,
+          }));
 
           return {
-            items: [
-              ...state.items,
-              {
-                productId: id,
-                productName: name,
-                productSize: size,
-                productQty: qty,
-                productPrice: Number(price.toFixed(2)),
-                productImage: image,
-              },
-            ],
+            success: true,
+            action: "updated",
+            newQty: exist.productQty + cartItem.productQty,
           };
-        });
+        }
+
+        // console.log("Adding new item to cart...");
+        set((s) => ({
+          items: [
+            ...s.items,
+            {
+              productId: cartItem.productId,
+              productName: cartItem.productName,
+              productCategory: cartItem.productCategory,
+              productQty: cartItem.productQty,
+              productPrice: Number(cartItem.productPrice.toFixed(2)),
+              productImage: cartItem.productImage,
+              options: cartItem.options,
+            },
+          ],
+          createdAt: s.createdAt ?? now,
+          lastModified: now,
+        }));
+
+        return { success: true, action: "added", newQty: cartItem.productQty };
       },
 
-      removeItem: (id: string, size: string) =>
-        set((state) => ({
-          items: state.items.filter(
-            (i) => i.productId !== id || i.productSize !== size,
-          ),
-          createdAt: state.createdAt,
-          lastModified: Date.now(),
-        })),
-
-      updateItemQty: (id: string, size: string, qty: number) =>
+      updateItemQty: (cartItem: CartItem, qty: number) => {
         set((state) => ({
           items: state.items.map((i) =>
-            i.productId === id && i.productSize === size ?
+            (
+              i.productId === cartItem.productId &&
+              JSON.stringify(i.options) === JSON.stringify(cartItem.options)
+            ) ?
               { ...i, productQty: qty }
             : i,
           ),
+          createdAt: state.createdAt,
+          lastModified: Date.now(),
+        }));
+
+        return { success: true, newQty: qty };
+      },
+
+      removeItem: (cartItem: CartItem) =>
+        set((state) => ({
+          items: state.items.filter(
+            (i) =>
+              i.productId !== cartItem.productId ||
+              JSON.stringify(i.options) !== JSON.stringify(cartItem.options),
+          ),
+          createdAt: state.createdAt,
+          lastModified: Date.now(),
         })),
 
       clearCart: () => set({ items: [] }),

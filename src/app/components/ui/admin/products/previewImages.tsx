@@ -56,9 +56,10 @@ export default function ImageSelector({
         onChange={handleInputChange}
       />
 
-      <div className="p-2 border border-stone-300 w-full h-full rounded items-center space-y-2">
+      <div className="p-2 w-full h-full border border-stone-200 rounded items-center space-y-2">
         <button
           type="button"
+          id="images"
           className="btn"
           onClick={() => document.getElementById("img-selector")?.click()}>
           Add image/s
