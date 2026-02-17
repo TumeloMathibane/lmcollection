@@ -1,8 +1,9 @@
 import AdminSidebar from "@/components/ui/admin/sidebar-client";
-import { ConvexClientProvider } from "../ConvexClientProvider";
+import { ConvexClientProvider } from "../../ConvexClientProvider";
 import { Geist, Geist_Mono } from "next/font/google";
 import type { Metadata } from "next";
-import "../(overview)/globals.css";
+import "../../(overview)/globals.css";
+import AuthProvider from "@/providers/SessionProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,9 +32,11 @@ export default function RootLayout({
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}>
-        <ConvexClientProvider>
-          <AdminSidebar>{children}</AdminSidebar>
-        </ConvexClientProvider>
+        <AuthProvider>
+          <ConvexClientProvider>
+            <AdminSidebar>{children}</AdminSidebar>
+          </ConvexClientProvider>
+        </AuthProvider>
       </body>
     </html>
   );

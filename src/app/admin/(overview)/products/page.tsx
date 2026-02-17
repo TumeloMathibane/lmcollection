@@ -1,13 +1,14 @@
-import { api } from "@/convex/_generated/api";
 import { BiPlus } from "react-icons/bi";
-import { fetchQuery } from "convex/nextjs";
 import Link from "next/link";
 import ProductTable from "@/components/ui/admin/products/product-table";
-import { Product } from "@/(overview)/collection/products/types";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Products",
+  description: "Manage your product listings",
+};
 
 export default async function Home() {
-  const products: Product[] = await fetchQuery(api.products.getProducts, {});
-
   return (
     <main className="space-y-4 flex flex-col p-4">
       <section className="flex flex-col">
@@ -30,7 +31,8 @@ export default async function Home() {
       </section>
 
       <section className="h-[79dvh] overflow-y-auto">
-        <ProductTable products={products} />
+        {/* Change this component to have products queried inside it */}
+        <ProductTable />
       </section>
     </main>
   );

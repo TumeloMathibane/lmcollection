@@ -14,7 +14,7 @@ export default async function Home() {
   // {/* \u2248 for approximately, & \u00b1 for plus/minus */}
 
   return (
-    <main className="w-full flex-1 p-2 lg:p-6">
+    <main className="w-full p-2 lg:p-6">
       <h1 className="text-xl font-bold mb-4 w-fit">Admin Overview</h1>
 
       <section className="w-full space-y-4">
@@ -47,8 +47,8 @@ export default async function Home() {
             <Link href="/admin/products">Products</Link>
           </h1>
 
-          <div className="w-full max-h-[80dvh] overflow-auto z-1">
-            <ProductTable products={products} />
+          <div className="w-full max-h-[80dvh] overflow-auto z-1 border-b border-stone-200">
+            <ProductTable />
           </div>
         </div>
       </section>
