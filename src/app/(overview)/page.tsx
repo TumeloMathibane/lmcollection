@@ -26,7 +26,7 @@ export default async function Home() {
       <main className="w-full space-y-10 flex flex-col place-content-center-safe">
         <section className="bg-[url('/images/ali-pazani-3w14X-Yxffk-unsplash.jpg')] bg-cover bg-no-repeat grayscale-100 h-screen flex items-center-safe justify-around mask-alpha mask-b-from-70% relative md:mask-b-from-80% md:h-[92vh] md:bg-fill lg:min-h-screen">
           <div className="w-full h-full p-4 space-y-4 flex flex-col justify-center-safe sm:px-15 md:items-center-safe">
-            <p className="text-5xl font-serif font-extrabold text-wrap md:hidden">
+            <p className="text-5xl font-serif font-extrabold text-wrap max-w-sm md:hidden">
               Like it, Love it, & Wear it
             </p>
 
@@ -130,10 +130,11 @@ export default async function Home() {
 }
 
 //! TODO  [*]: Continue with checks...
-//! TODO  [?]: Delete admin dir. from main and create 'admin' branch for implementing admin features
 //! TODO  [ ]: Implement product filtering and sorting functionality on the collection page to allow customers to easily find products based on their preferences (e.g. filter by price, category, popularity, etc.)...
+//! TODO  [ ]: Store 'collection/all' - add some elements from the collection view file to the server component (page.tsx) to reduce the amount of client components used in the collection page, and to improve performance by reducing the amount of client-side rendering required for the collection page...
 //! TODO  [ ]: Implement contact page logic
 //! TODO  [ ]: Admin 'add product form' - if possible, implement method to select primary image from selected images
+//! TODO  [ ]: Admin 'sidebar' - add store name to the bottom of sidebar to make logged in user info visible
 //! FIXME [ ]: Sort app components; components that manipulate data are to stay in components folder, and those that are only used for displaying the data must move to the subdir. of 'ui'
 //!
 //! ==================================================

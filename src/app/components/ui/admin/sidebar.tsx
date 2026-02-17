@@ -4,6 +4,7 @@ import Image from "next/image";
 import blackLogo from "../../../../../public/logos/Liphiwe_business_logo_black.svg";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useSession, signOut } from "next-auth/react";
 
 const adminLinks = [
   { name: "Dashboard", href: "/admin" },
@@ -16,6 +17,7 @@ const adminLinks = [
 
 export default function Sidebar() {
   const pathName = usePathname();
+  const { data: session, status } = useSession();
 
   return (
     <div className="flex flex-col items-center-safe w-full h-full bg-gray-100 relative top-0 left-0 p-5 gap-6 border-r border-gray-300">
@@ -58,7 +60,23 @@ export default function Sidebar() {
 
       <div className="w-full">
         <div className="w-full p-2 border-t border-gray-300">
-          sidebar footer
+          {/* sidebar footer */}
+          {status === "authenticated" ?
+            <div className="flex items-center justify-between">
+              <span className="text-sm text-gray-600">
+                {session.user?.email}
+              </span>
+
+              <button
+                onClick={() => signOut({ callbackUrl: "/admin/signin" })}
+                className="text-sm text-blue-500 hover:underline">
+                Sign out
+              </button>
+            </div>
+          : status === "loading" && (
+              <div className="text-sm text-gray-600">Loading...</div>
+            )
+          }
         </div>
       </div>
     </div>

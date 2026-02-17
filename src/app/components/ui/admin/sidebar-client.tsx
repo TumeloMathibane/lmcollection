@@ -26,9 +26,9 @@ export default function AdminSidebar({
   }, [navOpen]);
 
   return (
-    <main className="flex h-full w-screen relative">
+    <main className="flex h-screen w-screen relative">
       <aside
-        className={`min-h-dvh w-full absolute top-0 bottom-0 left-0 flex transition-all ${navOpen ? "translate-0" : "-translate-x-full"} lg:relative lg:translate-0 lg:w-fit lg:h-screen`}>
+        className={`min-h-dvh w-full absolute top-0 bottom-0 left-0 flex z-50 transition-all ${navOpen ? "translate-0" : "-translate-x-full"} lg:relative lg:translate-0 lg:w-fit lg:h-screen`}>
         <div className="h-full w-72 z-50">
           <Sidebar />
         </div>
@@ -39,7 +39,7 @@ export default function AdminSidebar({
         />
       </aside>
 
-      <section className="w-full flex-1 lg:h-dvh lg:overflow-auto">
+      <section className="flex-1 w-full h-screen overflow-y-auto lg:h-dvh lg:overflow-auto">
         <Banner navOpen={() => setNavOpen(!navOpen)} />
         {children}
       </section>

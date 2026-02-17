@@ -1,10 +1,19 @@
-import type { Product } from "@/(overview)/collection/products/types";
-import Link from "next/link";
+"use client";
 
-export default function ProductTable({ products }: { products: Product[] }) {
+import type { Product } from "@/(overview)/collection/products/types";
+import { api } from "@/convex/_generated/api";
+import Link from "next/link";
+import { useQuery } from "convex/react";
+
+export default function ProductTable() {
+  const products: Product[] | undefined = useQuery(
+    api.products.getProducts,
+    {},
+  );
+
   return (
-    <table className="divide-y divide-stone-200 w-full table-fixed">
-      <thead className="bg-stone-50">
+    <table className="divide-y divide-stone-200 w-full">
+      <thead className="bg-stone-50 sticky top-0">
         <tr>
           <th
             scope="col"
@@ -24,7 +33,7 @@ export default function ProductTable({ products }: { products: Product[] }) {
         </tr>
       </thead>
       <tbody className="bg-white divide-y divide-stone-200">
-        {products.map((product) => (
+        {products?.map((product) => (
           <tr key={product._id} className="hover:bg-stone-50 cursor-pointer">
             <td className="px-6 py-4 text-sm text-stone-900">
               <Link href={`/admin/products/${product._id}`}>

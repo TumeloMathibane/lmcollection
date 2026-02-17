@@ -193,25 +193,6 @@ export default function AddProductForm() {
       }
     }
 
-    // Generate upload URLs for each image
-    const uploadUrls = await Promise.all(
-      prodFormData.images.map(async () => await generateUploadURL()),
-    );
-
-    const imageUploadIds = await Promise.all(
-      prodFormData.images.map(async (file, index) => {
-        const response = await fetch(uploadUrls[index], {
-          method: "POST",
-          headers: {
-            "Content-Type": file!.type,
-          },
-          body: file,
-        });
-
-        return (await response.json()).storageId;
-      }),
-    );
-
     // Prepare additional options for submission
     const additional_options = prodFormData.additional_options.map((info) => ({
       label: info.label,
@@ -222,6 +203,25 @@ export default function AddProductForm() {
 
     // Call the mutation to add the product
     try {
+      // Generate upload URLs for each image
+      const uploadUrls = await Promise.all(
+        prodFormData.images.map(async () => await generateUploadURL()),
+      );
+
+      const imageUploadIds = await Promise.all(
+        prodFormData.images.map(async (file, index) => {
+          const response = await fetch(uploadUrls[index], {
+            method: "POST",
+            headers: {
+              "Content-Type": file!.type,
+            },
+            body: file,
+          });
+
+          return (await response.json()).storageId;
+        }),
+      );
+
       const productId = await addProductMutation({
         brand: prodFormData.brand, // Added brand field
         name: prodFormData.product_name,
