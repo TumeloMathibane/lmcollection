@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default async function Home() {
   return (
-    <main className="space-y-4 flex flex-col p-4">
+    <main className="w-full space-y-4 flex flex-col p-4">
       <section className="flex flex-col">
         <div className="flex items-center-safe justify-between">
           <div>
@@ -30,9 +30,8 @@ export default async function Home() {
         </div>
       </section>
 
-      <section className="h-[79dvh] overflow-y-auto">
-        {/* Change this component to have products queried inside it */}
-        <ProductTable />
+      <section className="h-[80dvh] overflow-y-auto border-b border-stone-200">
+        <ProductTable viewing={false} />
       </section>
     </main>
   );

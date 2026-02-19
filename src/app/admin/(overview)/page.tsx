@@ -1,14 +1,26 @@
 import { Card } from "@/components/ui/admin/cards";
 import ProductTable from "@/components/ui/admin/products/product-table";
 import { api } from "@/convex/_generated/api";
+import { dynamicPricedItem } from "@/utils/helper";
 import { fetchQuery } from "convex/nextjs";
 import Link from "next/link";
+import type { Product } from "@/(overview)/collection/products/types";
 
 export default async function Home() {
-  const products = (await fetchQuery(api.products.getProducts, {})) ?? [];
+  let products: Product[] | undefined;
+  try {
+    products = await fetchQuery(api.products.getProducts, {});
+  } catch (error) {
+    console.error("Error fetching products for admin overview:", error);
+    products = undefined;
+  }
   const orders = (await fetchQuery(api.orders.orderCount, {})) ?? 0;
-  const stockValue = products.reduce(
-    (total, product) => total + product.price * product.quantity,
+  const stockValue = products?.reduce(
+    (total, product) =>
+      total +
+      (product.dynamic_pricing ?
+        (dynamicPricedItem(product)?.totalValue ?? 0)
+      : product.price * product.quantity),
     0,
   );
   // {/* \u2248 for approximately, & \u00b1 for plus/minus */}
@@ -18,13 +30,13 @@ export default async function Home() {
       <h1 className="text-xl font-bold mb-4 w-fit">Admin Overview</h1>
 
       <section className="w-full space-y-4">
-        {/* <CardList /> */}
+        {/* CardList */}
         <div className="flex gap-2 w-full overflow-x-auto border-b border-stone-200 pb-4">
           <div className="flex w-full space-x-2">
             <Card
               className="border border-stone-200 rounded-md min-w-1/2 h-fit space-y-2 my-2 px-4"
               heading={"Stock value"}
-              content={`${new Intl.NumberFormat("en-ZA", { style: "currency", currency: "ZAR" }).format(stockValue)}`}
+              content={`${new Intl.NumberFormat("en-ZA", { style: "currency", currency: "ZAR" }).format(stockValue ?? 0)}`}
             />
 
             <Card
@@ -47,8 +59,8 @@ export default async function Home() {
             <Link href="/admin/products">Products</Link>
           </h1>
 
-          <div className="w-full max-h-[80dvh] overflow-auto z-1 border-b border-stone-200">
-            <ProductTable />
+          <div className="w-full max-h-[65dvh] overflow-y-auto z-1 border-b border-stone-300">
+            <ProductTable viewing={true} />
           </div>
         </div>
       </section>

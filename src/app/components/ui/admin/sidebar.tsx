@@ -68,7 +68,7 @@ export default function Sidebar() {
               </span>
 
               <button
-                onClick={() => signOut({ callbackUrl: "/admin/signin" })}
+                onClick={() => signOut({ callbackUrl: "/admin/auth/signin" })}
                 className="text-sm text-blue-500 hover:underline">
                 Sign out
               </button>

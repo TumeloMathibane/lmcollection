@@ -1,3 +1,4 @@
+import type { Product } from "@/(overview)/collection/products/types";
 import md5 from "md5";
 
 export function generateSignature(data: object, passphrase?: string): string {
@@ -44,4 +45,23 @@ export function generatePaymentId(
   }
 
   return paymentId;
+}
+
+export function dynamicPricedItem(
+  item: Product,
+): { prices: number[] | undefined; totalValue: number } | undefined {
+  if (!item.dynamic_pricing) {
+    return undefined;
+  }
+
+  const prices = item.additional_options
+    .find((i) => i.label === item.pricing_by)
+    ?.value.split(",")
+    .map((i) => Number(i.split("=")[1].trim()));
+
+  const totalVal = Number(
+    prices?.reduce((total, price) => total + Number(price), 0),
+  );
+
+  return { prices: prices, totalValue: totalVal };
 }

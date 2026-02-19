@@ -8,6 +8,13 @@ export const generateUploadURL = mutation({
   },
 });
 
+export const deleteFile = mutation({
+  args: { id: v.id("_storage") },
+  handler: async (ctx, args) => {
+    await ctx.storage.delete(args.id);
+  },
+});
+
 export const createProduct = mutation({
   args: {
     brand: v.string(),
