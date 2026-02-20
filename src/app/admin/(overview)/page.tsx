@@ -1,10 +1,10 @@
-import { Card } from "@/components/ui/admin/cards";
 import ProductTable from "@/components/ui/admin/products/product-table";
-import { api } from "@/convex/_generated/api";
 import { dynamicPricedItem } from "@/utils/helper";
-import { fetchQuery } from "convex/nextjs";
-import Link from "next/link";
 import type { Product } from "@/(overview)/collection/products/types";
+import { fetchQuery } from "convex/nextjs";
+import { Card } from "@/components/ui/admin/cards";
+import { api } from "@/convex/_generated/api";
+import Link from "next/link";
 
 export default async function Home() {
   let products: Product[] | undefined;

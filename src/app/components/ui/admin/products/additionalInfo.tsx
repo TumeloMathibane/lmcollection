@@ -45,7 +45,7 @@ export default function AdditionalInfo({
     <div className="space-y-2">
       <button
         type="button"
-        className="btn"
+        className="btn disabled:bg-stone-300 disabled:text-stone-500"
         disabled={disabled}
         onClick={() => setAiDivOpen(!aiDivOpen)}>
         Add Additional Info
@@ -64,7 +64,7 @@ export default function AdditionalInfo({
 
               <input
                 type="text"
-                className="input input-md w-full"
+                className="border border-stone-300 focus:focus-within:ring focus:focus-within:ring-blue-500 focus:focus-within:outline-0 focus:focus-wthin:rounded-none p-1.5 w-full"
                 placeholder="e.g. Color"
                 name="aflabel"
                 id="aflabel"
@@ -88,7 +88,7 @@ export default function AdditionalInfo({
               <select
                 name="afUnit"
                 id="afUnit"
-                className="select select-md w-full ps-2"
+                className="border border-stone-300 w-full p-2 pe-2 focus:focus-within:ring focus:focus-within:ring-blue-500 focus:focus-within:outline-0 focus:focus-wthin:rounded-none"
                 value={info.unit}
                 onChange={(e) =>
                   e.target.value &&
@@ -115,7 +115,7 @@ export default function AdditionalInfo({
             <select
               name="afType"
               id="afType"
-              className="select select-md w-full p-2 pe-10 rounded capitalize"
+              className="border border-stone-300 w-full p-2 pe-2 focus:focus-within:ring focus:focus-within:ring-blue-500 focus:focus-within:outline-0 focus:focus-wthin:rounded-none capitalize"
               value={info.type}
               onChange={(e) =>
                 handleFieldInfoChange({
@@ -156,7 +156,7 @@ export default function AdditionalInfo({
                 <input
                   type="color"
                   id="color-selector"
-                  className="input input-md rounded"
+                  className="bg-transparent border border-stone-300 w-full h-10 px-2 rounded"
                 />
               </div>
             </div>
@@ -169,7 +169,7 @@ export default function AdditionalInfo({
               {info.type === "text" && (
                 <input
                   type="text"
-                  className="input input-md w-full"
+                  className="border border-stone-300 focus:focus-within:ring focus:focus-within:ring-blue-500 focus:focus-within:outline-0 focus:focus-wthin:rounded-none p-1.5 w-full"
                   placeholder={`Enter ${info.label.toLowerCase()}...`}
                   name="afValue"
                   id="afValue"
@@ -190,7 +190,7 @@ export default function AdditionalInfo({
                 info.type === "colors" ||
                 info.type === "sizes") && (
                 <textarea
-                  className="textarea textarea-md w-full"
+                  className="border border-stone-300 focus:focus-within:ring focus:focus-within:ring-blue-500 focus:focus-within:outline-0 focus:focus-wthin:rounded-none p-1.5 w-full"
                   placeholder={`Enter ${info.label.toLowerCase()}s separated by commas...`}
                   name="afValue"
                   id="afValue"

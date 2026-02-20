@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
-import { BiTrash } from "react-icons/bi";
+import { BiStar, BiTrash } from "react-icons/bi";
 
 export default function ImageSelector({
   images,
@@ -22,6 +22,12 @@ export default function ImageSelector({
     }
 
     imgRef.current!.value = "";
+  };
+
+  const handlePrimaryImageSelect = (img: File) => {
+    // console.log("Selected primary image:", img.name);
+    const filteredFiles = images.filter((file) => file !== img);
+    onImagesChange([img, ...filteredFiles]);
   };
 
   const removeImg = (img: File) => {
@@ -73,6 +79,12 @@ export default function ImageSelector({
                   size={"1.5rem"}
                   className="absolute top-2 right-2 text-red-700"
                   onClick={() => removeImg(preview.file)}
+                />
+
+                <BiStar
+                  size={"1.5rem"}
+                  className={`absolute top-2 left-2 ${index === 0 ? "text-amber-400" : "text-stone-400"}`}
+                  onClick={() => handlePrimaryImageSelect(preview.file)}
                 />
 
                 <Image

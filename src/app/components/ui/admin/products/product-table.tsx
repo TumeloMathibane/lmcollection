@@ -34,6 +34,10 @@ export default function ProductTable({ viewing }: { viewing?: boolean }) {
     }
   };
 
+  const handleUpdatedProduct = async () => {
+    console.log("Updating product: ", product);
+  };
+
   useEffect(() => {
     const viewId = searchParams.get(viewing ? "view" : "edit");
 
@@ -55,7 +59,7 @@ export default function ProductTable({ viewing }: { viewing?: boolean }) {
       <aside
         className={`fixed top-0 right-0 bottom-0 left-0 w-full min-h-dvh flex items-end-safe transition-all ${widgetOpen ? "z-50 backdrop-blur-sm" : "-z-1 backdrop-blur-none"} lg:items-center-safe lg:justify-center-safe`}>
         <div
-          className={`w-full max-h-[95%] flex flex-col p-4 pb-6 rounded-t-2xl bg-stone-200 border-t border-stone-300 space-y-2 transition ${widgetOpen ? "z-48 translate-0" : "translate-y-full"} lg:max-w-[700px] lg:rounded-2xl lg:border`}>
+          className={`w-full max-h-[95%] flex flex-col p-4 pb-6 rounded-t-2xl bg-stone-200 border-t border-stone-300 space-y-2 transition ${widgetOpen ? "z-48 translate-0" : "translate-y-full"} lg:max-w-[900px] lg:rounded-2xl lg:border 2xl:max-w-[700px]`}>
           <div className="flex items-center-safe justify-between border-b border-stone-400 pb-2">
             <p className="text-xl font-extrabold text-shadow-stone-700">
               {viewing ? "Viewing Product Details" : "Editing Product Details"}
@@ -90,6 +94,15 @@ export default function ProductTable({ viewing }: { viewing?: boolean }) {
                       className={`border-b border-stone-300 bg-transparent focus:focus-within:outline-0 focus:focus-within:ring-0 w-full p-1 ${viewing ? "bg-stone-300 text-stone-700 capitalize" : "focus:focus-within:bg-white"}`}
                       defaultValue={product?.category}
                       disabled={viewing}
+                      onChange={(e) =>
+                        setProduct(
+                          (prev) =>
+                            prev && {
+                              ...prev,
+                              category: e.target.value,
+                            },
+                        )
+                      }
                     />
                   </div>
 
@@ -100,6 +113,15 @@ export default function ProductTable({ viewing }: { viewing?: boolean }) {
                       className={`border-b border-stone-300 bg-transparent focus:focus-within:outline-0 focus:focus-within:ring-0 w-full p-1 ${viewing ? "bg-stone-300 text-stone-700 capitalize" : "focus:focus-within:bg-white"}`}
                       defaultValue={product?.name}
                       disabled={viewing}
+                      onChange={(e) =>
+                        setProduct(
+                          (prev) =>
+                            prev && {
+                              ...prev,
+                              name: e.target.value,
+                            },
+                        )
+                      }
                     />
                   </div>
 
@@ -110,6 +132,15 @@ export default function ProductTable({ viewing }: { viewing?: boolean }) {
                       className={`border-b border-stone-300 bg-transparent focus:focus-within:outline-0 focus:focus-within:ring-0 w-full p-1 ${viewing ? "bg-stone-300 text-stone-700 capitalize" : "focus:focus-within:bg-white"}`}
                       defaultValue={product?.brand}
                       disabled={viewing}
+                      onChange={(e) =>
+                        setProduct(
+                          (prev) =>
+                            prev && {
+                              ...prev,
+                              brand: e.target.value,
+                            },
+                        )
+                      }
                     />
                   </div>
 
@@ -118,13 +149,29 @@ export default function ProductTable({ viewing }: { viewing?: boolean }) {
                       <div>
                         <p className="font-bold">Price</p>
                         <input
-                          type="text"
-                          className={`border-b border-stone-300 bg-transparent focus:focus-within:outline-0 focus:focus-within:ring-0 w-full p-1 ${viewing ? "bg-stone-300 text-stone-700" : "focus:focus-within:bg-white"}`}
-                          defaultValue={new Intl.NumberFormat("en-ZA", {
-                            style: "currency",
-                            currency: "ZAR",
-                          }).format(product?.price ?? 0)}
+                          type={viewing ? "text" : "number"}
+                          className={`quantity-input border-b border-stone-300 bg-transparent focus:focus-within:outline-0 focus:focus-within:ring-0 w-full p-1 ${viewing ? "bg-stone-300 text-stone-700" : "focus:focus-within:bg-white"}`}
+                          defaultValue={
+                            viewing ?
+                              new Intl.NumberFormat("en-ZA", {
+                                style: "currency",
+                                currency: "ZAR",
+                              }).format(product?.price ?? 0)
+                            : Number(product?.price)
+                          }
                           disabled={viewing}
+                          onChange={(e) =>
+                            setProduct(
+                              (prev) =>
+                                prev && {
+                                  ...prev,
+                                  price:
+                                    Number.isNaN(e.target.valueAsNumber) ?
+                                      Number(prev.price)
+                                    : e.target.valueAsNumber,
+                                },
+                            )
+                          }
                         />
                       </div>
                     )}
@@ -144,6 +191,18 @@ export default function ProductTable({ viewing }: { viewing?: boolean }) {
                           : 0
                         }
                         disabled={viewing}
+                        onChange={(e) =>
+                          setProduct(
+                            (prev) =>
+                              prev && {
+                                ...prev,
+                                discount:
+                                  Number.isNaN(e.target.valueAsNumber) ?
+                                    prev.discount
+                                  : Number(e.target.valueAsNumber),
+                              },
+                          )
+                        }
                       />
                     </div>
 
@@ -154,6 +213,21 @@ export default function ProductTable({ viewing }: { viewing?: boolean }) {
                         className={`quantity-input border-b border-stone-300 bg-transparent focus:focus-within:outline-0 focus:focus-within:ring-0 w-full p-1 ${viewing ? "bg-stone-300 text-stone-700" : "focus:focus-within:bg-white"}`}
                         defaultValue={product?.quantity}
                         disabled={viewing}
+                        onChange={(e) =>
+                          setProduct(
+                            (prev) =>
+                              prev && {
+                                ...prev,
+                                quantity:
+                                  (
+                                    e.target.valueAsNumber === undefined ||
+                                    Number.isNaN(e.target.value)
+                                  ) ?
+                                    0
+                                  : e.target.valueAsNumber,
+                              },
+                          )
+                        }
                       />
                     </div>
                   </div>
@@ -165,6 +239,15 @@ export default function ProductTable({ viewing }: { viewing?: boolean }) {
                         className={`border border-stone-300 bg-white focus:focus-within:outline-0 focus:focus-within:ring-0 w-full p-1 ${viewing ? "bg-stone-300 text-stone-700" : "focus:focus-within:bg-white"}`}
                         defaultValue={product.shortDescription}
                         disabled={viewing}
+                        onChange={(e) =>
+                          setProduct(
+                            (prev) =>
+                              prev && {
+                                ...prev,
+                                shortDescription: e.target.value,
+                              },
+                          )
+                        }
                       />
                     </div>
                   )}
@@ -183,6 +266,26 @@ export default function ProductTable({ viewing }: { viewing?: boolean }) {
                               className={`border-b border-stone-300 bg-transparent focus:focus-within:outline-0 focus:focus-within:ring-0 w-1/2 text-wrap pb-1 ${viewing ? "bg-stone-300 text-stone-700 capitalize" : "focus:focus-within:bg-white"}`}
                               defaultValue={option.label}
                               disabled={viewing}
+                              onChange={(e) => {
+                                const newLabel = e.target.value;
+
+                                setProduct((prev) => {
+                                  if (!prev) return prev;
+
+                                  const updatedOptions = [
+                                    ...prev.additional_options,
+                                  ];
+                                  updatedOptions[index] = {
+                                    ...updatedOptions[index],
+                                    label: newLabel,
+                                  };
+
+                                  return {
+                                    ...prev,
+                                    additional_options: updatedOptions,
+                                  };
+                                });
+                              }}
                             />
 
                             {viewing ?
@@ -190,13 +293,31 @@ export default function ProductTable({ viewing }: { viewing?: boolean }) {
                                 <p>{option.value.split(",").join(", ")}</p>
                               </div>
                             : <textarea
-                                className={`border border-stone-300 bg-white focus:focus-within:outline-0 focus:focus-within:ring-0 w-1/2 h-fit p-1 ${viewing ? "bg-stone-300 text-stone-700" : "focus:focus-within:bg-white"}`}
-                                defaultValue={
-                                  product?.pricing_by === option?.label ?
-                                    option.value.split(",").join(", \n")
-                                  : option.value.split(",").join(", ")
-                                }
+                                className={`border border-stone-300 bg-white focus:focus-within:outline-0 focus:focus-within:ring-0 w-1/2 h-fit p-1 text-stone-700`}
+                                defaultValue={option.value
+                                  .split(",")
+                                  .join(", ")}
                                 disabled={viewing}
+                                onChange={(e) => {
+                                  const newValue = e.target.value;
+
+                                  setProduct((prev) => {
+                                    if (!prev) return prev;
+
+                                    const updatedOptions = [
+                                      ...prev.additional_options,
+                                    ];
+                                    updatedOptions[index] = {
+                                      ...updatedOptions[index],
+                                      value: newValue,
+                                    };
+
+                                    return {
+                                      ...prev,
+                                      additional_options: updatedOptions,
+                                    };
+                                  });
+                                }}
                               />
                             }
                           </div>
@@ -211,7 +332,10 @@ export default function ProductTable({ viewing }: { viewing?: boolean }) {
 
           <div className="flex border-t border-stone-400 pt-4 justify-end-safe gap-4">
             {!viewing && (
-              <button type="button" className="btn btn-success w-min">
+              <button
+                type="button"
+                className="btn btn-success w-min"
+                onClick={() => handleUpdatedProduct()}>
                 Submit
               </button>
             )}
@@ -311,21 +435,21 @@ export default function ProductTable({ viewing }: { viewing?: boolean }) {
             ))}
 
             {/* {Array.from({ length: 10 }).map((_, index) => (
-          <tr key={index} className="hover:bg-stone-50 cursor-pointer">
-            <td className="px-6 py-4 text-sm text-stone-900">
-              <p>Product no. {index + 1} name</p>
-            </td>
-            <td className="px-6 py-4 whitespace-nowrap text-sm text-stone-500">
-              {new Intl.NumberFormat("en-ZA", {
-                style: "currency",
-                currency: "ZAR",
-              }).format(Math.floor(Math.random() * 1000) + 100)}
-            </td>
-            <td className="px-6 py-4 whitespace-nowrap text-sm text-stone-500">
-              {Math.floor(Math.random() * 100)}
-            </td>
-          </tr>
-        ))} */}
+              <tr key={index} className="hover:bg-stone-50 cursor-pointer">
+                <td className="px-6 py-4 text-sm text-stone-900">
+                  <p>Product no. {index + 1} name</p>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-stone-500">
+                  {new Intl.NumberFormat("en-ZA", {
+                    style: "currency",
+                    currency: "ZAR",
+                  }).format(Math.floor(Math.random() * 1000) + 100)}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-stone-500">
+                  {Math.floor(Math.random() * 100)}
+                </td>
+              </tr>
+            ))} */}
           </tbody>
         }
       </table>
