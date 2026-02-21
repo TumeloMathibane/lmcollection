@@ -80,7 +80,9 @@ export async function POST(req: Request) {
   }
 }
 
-export async function GET() {
+export async function GET(req: Request) {
+  console.log("Getting the GET request from ", req.url);
+
   return Response.json({
     status: 200,
     message: paymentValidation,
