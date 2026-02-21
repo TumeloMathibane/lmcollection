@@ -3,7 +3,7 @@ import axios from "axios";
 import md5 from "md5";
 import dns from "node:dns/promises";
 
-let paymentValidation: "PASS" | "FAIL";
+let paymentValidation: string;
 
 export async function POST(req: Request) {
   try {
@@ -69,9 +69,7 @@ export async function POST(req: Request) {
     if (check_signature && check_host && check_amount && check_info) {
       paymentValidation = "PASS";
     } else {
-      paymentValidation =
-        "FAIL" +
-        ` (signature: ${check_signature}, host: ${check_host}, amount: ${check_amount}, info: ${check_info})`;
+      paymentValidation = `FAIL (signature: ${check_signature}, host: ${check_host}, amount: ${check_amount}, info: ${check_info})`;
     }
 
     return Response.json({
