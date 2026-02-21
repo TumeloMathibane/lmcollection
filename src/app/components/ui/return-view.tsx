@@ -13,7 +13,7 @@ export default function ReturnView() {
   useEffect(() => {
     const checkPaymentStatus = async () => {
       const response = await axios.get(
-        `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}/notify`,
+        `https://liphiwe-site.vercel.app/notify`,
       );
       const status = await response.data.message;
 
