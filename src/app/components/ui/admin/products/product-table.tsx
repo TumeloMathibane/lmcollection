@@ -21,6 +21,7 @@ export default function ProductTable({ viewing }: { viewing?: boolean }) {
   const router = useRouter();
   const [product, setProduct] = useState<Product | undefined>(undefined);
   const [widgetOpen, setWidgetOpen] = useState(false);
+  const updateProd = useMutation(api.products.updateProduct);
   const deleteProd = useMutation(api.products.deleteProduct);
 
   const handleProductDelete = async (id: string) => {
@@ -34,8 +35,29 @@ export default function ProductTable({ viewing }: { viewing?: boolean }) {
     }
   };
 
-  const handleUpdatedProduct = async () => {
-    console.log("Updating product: ", product);
+  const handleUpdatedProduct = async (id: Id<"product">) => {
+    try {
+      await updateProd({
+        _id: id,
+        brand: product?.brand,
+        name: product?.name,
+        price: product?.price,
+        discount: product?.discount,
+        shortDescription: product?.shortDescription,
+        quantity: product?.quantity,
+        category: product?.category,
+        additional_options: product?.additional_options,
+        dynamic_pricing: product?.dynamic_pricing,
+        pricing_by: product?.pricing_by,
+        sale: product?.sale,
+      });
+
+      setProduct(undefined);
+      setWidgetOpen(false);
+      router.push(pathname);
+    } catch (err) {
+      console.error("Server error: " + err);
+    }
   };
 
   useEffect(() => {
@@ -165,10 +187,7 @@ export default function ProductTable({ viewing }: { viewing?: boolean }) {
                               (prev) =>
                                 prev && {
                                   ...prev,
-                                  price:
-                                    Number.isNaN(e.target.valueAsNumber) ?
-                                      Number(prev.price)
-                                    : e.target.valueAsNumber,
+                                  price: e.target.valueAsNumber,
                                 },
                             )
                           }
@@ -196,10 +215,7 @@ export default function ProductTable({ viewing }: { viewing?: boolean }) {
                             (prev) =>
                               prev && {
                                 ...prev,
-                                discount:
-                                  Number.isNaN(e.target.valueAsNumber) ?
-                                    prev.discount
-                                  : Number(e.target.valueAsNumber),
+                                discount: e.target.valueAsNumber,
                               },
                           )
                         }
@@ -218,13 +234,7 @@ export default function ProductTable({ viewing }: { viewing?: boolean }) {
                             (prev) =>
                               prev && {
                                 ...prev,
-                                quantity:
-                                  (
-                                    e.target.valueAsNumber === undefined ||
-                                    Number.isNaN(e.target.value)
-                                  ) ?
-                                    0
-                                  : e.target.valueAsNumber,
+                                quantity: e.target.valueAsNumber,
                               },
                           )
                         }
@@ -275,6 +285,23 @@ export default function ProductTable({ viewing }: { viewing?: boolean }) {
                                   const updatedOptions = [
                                     ...prev.additional_options,
                                   ];
+
+                                  if (
+                                    product?.pricing_by ===
+                                    updatedOptions[index].label
+                                  ) {
+                                    updatedOptions[index] = {
+                                      ...updatedOptions[index],
+                                      label: newLabel,
+                                    };
+
+                                    return {
+                                      ...prev,
+                                      additional_options: updatedOptions,
+                                      pricing_by: newLabel,
+                                    };
+                                  }
+
                                   updatedOptions[index] = {
                                     ...updatedOptions[index],
                                     label: newLabel,
@@ -299,7 +326,7 @@ export default function ProductTable({ viewing }: { viewing?: boolean }) {
                                   .join(", ")}
                                 disabled={viewing}
                                 onChange={(e) => {
-                                  const newValue = e.target.value;
+                                  const newValue = e.target.value.split(",");
 
                                   setProduct((prev) => {
                                     if (!prev) return prev;
@@ -309,7 +336,9 @@ export default function ProductTable({ viewing }: { viewing?: boolean }) {
                                     ];
                                     updatedOptions[index] = {
                                       ...updatedOptions[index],
-                                      value: newValue,
+                                      value: newValue
+                                        .map((i) => (i as string).trim())
+                                        .join(","),
                                     };
 
                                     return {
@@ -335,7 +364,9 @@ export default function ProductTable({ viewing }: { viewing?: boolean }) {
               <button
                 type="button"
                 className="btn btn-success w-min"
-                onClick={() => handleUpdatedProduct()}>
+                onClick={() =>
+                  handleUpdatedProduct(product?._id as Id<"product">)
+                }>
                 Submit
               </button>
             )}
@@ -402,9 +433,7 @@ export default function ProductTable({ viewing }: { viewing?: boolean }) {
                           currency: "ZAR",
                         }).format(
                           Math.min(
-                            ...(dynamicPricedItem(product)?.prices?.map((p) =>
-                              Number(p),
-                            ) ?? []),
+                            ...(dynamicPricedItem(product)?.prices ?? []),
                           ),
                         )}
                       </p>
@@ -415,9 +444,7 @@ export default function ProductTable({ viewing }: { viewing?: boolean }) {
                           currency: "ZAR",
                         }).format(
                           Math.max(
-                            ...(dynamicPricedItem(product)?.prices?.map((p) =>
-                              Number(p),
-                            ) ?? []),
+                            ...(dynamicPricedItem(product)?.prices ?? []),
                           ),
                         )}
                       </p>
@@ -433,23 +460,6 @@ export default function ProductTable({ viewing }: { viewing?: boolean }) {
                 </td>
               </tr>
             ))}
-
-            {/* {Array.from({ length: 10 }).map((_, index) => (
-              <tr key={index} className="hover:bg-stone-50 cursor-pointer">
-                <td className="px-6 py-4 text-sm text-stone-900">
-                  <p>Product no. {index + 1} name</p>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-stone-500">
-                  {new Intl.NumberFormat("en-ZA", {
-                    style: "currency",
-                    currency: "ZAR",
-                  }).format(Math.floor(Math.random() * 1000) + 100)}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-stone-500">
-                  {Math.floor(Math.random() * 100)}
-                </td>
-              </tr>
-            ))} */}
           </tbody>
         }
       </table>

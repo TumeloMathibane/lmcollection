@@ -70,7 +70,7 @@ export const getProduct = query({
 
 export const updateProduct = mutation({
   args: {
-    id: v.id("product"),
+    _id: v.id("product"),
     brand: v.optional(v.string()),
     name: v.optional(v.string()),
     price: v.optional(v.number()),
@@ -85,7 +85,7 @@ export const updateProduct = mutation({
     sale: v.optional(v.string()),
   },
   handler: async (ctx, args) => {
-    const existing = await ctx.db.get("product", args.id);
+    const existing = await ctx.db.get("product", args._id);
     if (!existing) {
       throw new Error("Product not found");
     }
@@ -107,7 +107,7 @@ export const updateProduct = mutation({
     };
 
     try {
-      await ctx.db.patch("product", args.id, updated);
+      await ctx.db.patch("product", args._id, updated);
     } catch (err) {
       console.error("Error updating product:", err);
       throw err;
