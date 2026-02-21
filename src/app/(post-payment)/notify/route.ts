@@ -69,7 +69,9 @@ export async function POST(req: Request) {
     if (check_signature && check_host && check_amount && check_info) {
       paymentValidation = "PASS";
     } else {
-      paymentValidation = "FAIL";
+      paymentValidation =
+        "FAIL" +
+        ` (signature: ${check_signature}, host: ${check_host}, amount: ${check_amount}, info: ${check_info})`;
     }
 
     return Response.json({

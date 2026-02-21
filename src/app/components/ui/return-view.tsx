@@ -35,7 +35,7 @@ export default function ReturnView() {
           <BsCheckCircle size={"10rem"} className="text-green-600" />
           <p>Payment successful. Thank you for your purchase!</p>
         </span>
-      : <p>Payment failed. Please try again.</p>}
+      : <p>Payment failed. Please try again. Status: {status}</p>}
     </>
   );
 }
