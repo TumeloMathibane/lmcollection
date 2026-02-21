@@ -14,7 +14,7 @@ export default function ReturnView() {
     const checkPaymentStatus = async () => {
       const response = await axios.get(
         process.env.VERCEL_ENV === "production" ?
-          `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}/notify`
+          `https://${process.env.VERCEL_URL}/notify`
         : "https://d1r891fk-3000.eun1.devtunnels.ms/notify",
       );
       const status = await response.data.message;

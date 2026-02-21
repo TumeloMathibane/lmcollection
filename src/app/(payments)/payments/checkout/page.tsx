@@ -14,15 +14,15 @@ export default function Checkout() {
   const gatewayURL = {
     return:
       process.env.VERCEL_ENV === "production" ?
-        `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}/return`
+        `https://${process.env.VERCEL_URL}/return`
       : "https://d1r891fk-3000.eun1.devtunnels.ms/return",
     notify:
       process.env.VERCEL_ENV === "production" ?
-        `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}/notify`
+        `https://${process.env.VERCEL_URL}/notify`
       : "https://d1r891fk-3000.eun1.devtunnels.ms/notify",
     cancel:
       process.env.VERCEL_ENV === "production" ?
-        `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}/cancel`
+        `https://${process.env.VERCEL_URL}/cancel`
       : "https://d1r891fk-3000.eun1.devtunnels.ms/cancel",
   };
 
