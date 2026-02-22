@@ -12,7 +12,7 @@ export default function ReturnView() {
 
   useEffect(() => {
     try {
-      fetch(`https://${process.env.VERCEL_URL}/notify`, {
+      fetch(`https://liphiwe-site.vercel.app/notify`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
