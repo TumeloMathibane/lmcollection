@@ -13,14 +13,12 @@ export default function ReturnView() {
   useEffect(() => {
     const checkPaymentStatus = async () => {
       const response = await axios.get(
-        process.env.VERCEL_ENV === "production" ?
-          `https://${process.env.VERCEL_URL}/notify`
-        : "https://liphiwe-site.vercel.app/notify",
+        "https://liphiwe-site.vercel.app/notify",
       );
-      const status = await response.data.message;
+      const paymentStatus = await response.data.message;
 
-      setStatus(status);
-      if (status === "PASS" && items.length > 0) {
+      setStatus(paymentStatus);
+      if (paymentStatus === "PASS" && items.length > 0) {
         clearCart();
       }
     };
