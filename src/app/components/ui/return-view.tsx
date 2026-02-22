@@ -3,7 +3,6 @@
 import { BsCheckCircle } from "react-icons/bs";
 import { useCartStore } from "../../../stores/cart";
 import { useEffect, useState } from "react";
-import axios from "axios";
 
 export default function ReturnView() {
   const { clearCart } = useCartStore();
@@ -12,25 +11,33 @@ export default function ReturnView() {
   );
 
   useEffect(() => {
-    const fetchPaymentStatus = async () => {
-      try {
-        const res = await axios.get(
-          process.env.VERCEL_ENV === "production" ?
-            `https://${process.env.VERCEL_URL}/notify`
-          : "https://d1r891fk-3000.eun1.devtunnels.ms/notify",
-        );
+    try {
+      fetch(
+        process.env.VERCEL_ENV === "production" ?
+          `https://${process.env.VERCEL_URL}/notify`
+        : "https://d1r891fk-3000.eun1.devtunnels.ms/notify",
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        },
+      )
+        .then((res) => {
+          return res.json();
+        })
+        .then((data) => {
+          console.log("Payment status response:", data);
+          setPaymentStatus(data.message);
 
-        if (res.data.message === "PASS") {
-          clearCart();
-          setPaymentStatus(res.data.message);
-        }
-      } catch (error) {
-        console.error("Error fetching payment status:", error);
-        setPaymentStatus("FAIL");
-      }
-    };
-
-    fetchPaymentStatus();
+          if (data.message === "PASS") {
+            clearCart();
+          }
+        });
+    } catch (error) {
+      console.error("Error fetching payment status:", error);
+      setPaymentStatus("FAIL");
+    }
   }, [clearCart]);
 
   if (!paymentStatus) {
