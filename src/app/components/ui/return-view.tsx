@@ -11,32 +11,33 @@ export default function ReturnView() {
   );
 
   useEffect(() => {
-    const fetchPaymentStatus = async () => {
-      try {
-        const res = await fetch(
-          process.env.VERCEL_ENV === "production" ?
-            `https://${process.env.VERCEL_URL}/notify`
-          : "https://d1r891fk-3000.eun1.devtunnels.ms/notify",
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-            },
+    try {
+      fetch(
+        process.env.VERCEL_ENV === "production" ?
+          `https://${process.env.VERCEL_URL}/notify`
+        : "https://d1r891fk-3000.eun1.devtunnels.ms/notify",
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
           },
-        );
-
-        const data = await res.json();
-        if (res.ok) {
-          clearCart();
+        },
+      )
+        .then((res) => {
+          return res.json();
+        })
+        .then((data) => {
+          console.log("Payment status response:", data);
           setPaymentStatus(data.message);
-        }
-      } catch (error) {
-        console.error("Error fetching payment status:", error);
-        setPaymentStatus("FAIL");
-      }
-    };
 
-    fetchPaymentStatus();
+          if (data.message === "PASS") {
+            clearCart();
+          }
+        });
+    } catch (error) {
+      console.error("Error fetching payment status:", error);
+      setPaymentStatus("FAIL");
+    }
   }, [clearCart]);
 
   if (!paymentStatus) {
