@@ -2,42 +2,33 @@
 
 import { BsCheckCircle } from "react-icons/bs";
 import { useCartStore } from "../../../stores/cart";
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { useEffect } from "react";
 
-export default function ReturnView() {
+export default function ReturnView({
+  paymentStatus,
+}: {
+  paymentStatus?: string;
+}) {
   const { items, clearCart } = useCartStore();
 
-  const [status, setStatus] = useState<string | undefined>(undefined);
-
   useEffect(() => {
-    const checkPaymentStatus = async () => {
-      const response = await axios.get(
-        "https://liphiwe-site.vercel.app/notify",
-      );
-      const paymentStatus = await response.data.message;
+    if (paymentStatus === "PASS" && items.length > 0) {
+      clearCart();
+    }
+  }, [paymentStatus, clearCart, items.length]);
 
-      setStatus(paymentStatus);
-      if (paymentStatus === "PASS" && items.length > 0) {
-        clearCart();
-      }
-    };
-
-    checkPaymentStatus();
-  }, [clearCart, items.length]);
-
-  if (!status) {
+  if (!paymentStatus) {
     return <p>Checking payment status...</p>;
   }
 
   return (
     <>
-      {status === "PASS" ?
+      {paymentStatus === "PASS" ?
         <span className="flex items-center-safe gap-3">
           <BsCheckCircle size={"10rem"} className="text-green-600" />
           <p>Payment successful. Thank you for your purchase!</p>
         </span>
-      : <p>Payment failed. Please try again. Status: {status}</p>}
+      : <p>Payment failed. Please try again. Status: {paymentStatus}</p>}
     </>
   );
 }
