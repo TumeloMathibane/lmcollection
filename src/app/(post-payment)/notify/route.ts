@@ -81,10 +81,15 @@ export async function POST(req: Request) {
 }
 
 export async function GET(req: Request) {
-  console.log("Getting the GET request from ", req.url);
+  if (req.headers.get("referer")?.endsWith("/return")) {
+    return Response.json({
+      status: 200,
+      message: paymentValidation,
+    });
+  }
 
-  return Response.json({
-    status: 200,
-    message: paymentValidation,
-  });
+  // return Response.json({
+  //   status: 200,
+  //   message: paymentValidation,
+  // });
 }

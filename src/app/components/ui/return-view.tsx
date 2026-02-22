@@ -8,7 +8,7 @@ import axios from "axios";
 export default function ReturnView() {
   const { items, clearCart } = useCartStore();
 
-  const [status, setStatus] = useState<string>("");
+  const [status, setStatus] = useState<string | undefined>(undefined);
 
   useEffect(() => {
     const checkPaymentStatus = async () => {
@@ -25,6 +25,10 @@ export default function ReturnView() {
 
     checkPaymentStatus();
   }, [clearCart, items.length]);
+
+  if (!status) {
+    return <p>Checking payment status...</p>;
+  }
 
   return (
     <>
