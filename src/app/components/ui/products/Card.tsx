@@ -8,7 +8,7 @@ export function ProductCard({ product }: { product: Product }) {
   const { toggleFavorite, isFavorite } = useFavoritesStore();
 
   return (
-    <div className="group hover:cursor-pointer">
+    <div className="col-span-1 group hover:cursor-pointer">
       <div className="flex flex-col relative">
         <div className="absolute top-2 right-2 z-2">
           {!isFavorite(product._id) ?
