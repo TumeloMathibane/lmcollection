@@ -86,7 +86,12 @@ export async function POST(req: Request) {
   }
 }
 
-export async function GET() {
+export async function GET(req: Request) {
+  console.log(
+    "Received GET request for payment status check: ",
+    req.headers.get("referer"),
+  );
+
   return Response.json({
     status: 200,
     message: paymentValidation,
