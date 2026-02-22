@@ -3,9 +3,11 @@ import axios from "axios";
 
 export default async function Page() {
   const validation = await axios.get(
-    "https://d1r891fk-3000.eun1.devtunnels.ms/notify",
+    process.env.VERCEL_ENV === "production" ?
+      `https://${process.env.VERCEL_URL}/notify`
+    : "https://d1r891fk-3000.eun1.devtunnels.ms/notify",
   );
-  const data = validation.data;
+  const data = await validation.data;
 
   return (
     <div className="flex-1 flex flex-col min-h-[75dvh]">
