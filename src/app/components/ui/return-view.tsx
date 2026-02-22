@@ -2,23 +2,39 @@
 
 import { BsCheckCircle } from "react-icons/bs";
 import { useCartStore } from "../../../stores/cart";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
-export default function ReturnView({
-  paymentStatus,
-}: {
-  paymentStatus?: string;
-}) {
-  const { items, clearCart } = useCartStore();
+export default function ReturnView() {
+  const { clearCart } = useCartStore();
+  const [paymentStatus, setPaymentStatus] = useState<string | undefined>(
+    undefined,
+  );
 
   useEffect(() => {
-    if (paymentStatus === "PASS" && items.length > 0) {
-      clearCart();
-    }
-  }, [paymentStatus, clearCart, items.length]);
+    const fetchPaymentStatus = async () => {
+      try {
+        const res = await axios.get(
+          process.env.VERCEL_ENV === "production" ?
+            `https://${process.env.VERCEL_URL}/notify`
+          : "https://d1r891fk-3000.eun1.devtunnels.ms/notify",
+        );
+
+        if (res.data.message === "PASS") {
+          clearCart();
+          setPaymentStatus(res.data.message);
+        }
+      } catch (error) {
+        console.error("Error fetching payment status:", error);
+        setPaymentStatus("FAIL");
+      }
+    };
+
+    fetchPaymentStatus();
+  }, [clearCart]);
 
   if (!paymentStatus) {
-    return <p>Checking payment status...</p>;
+    return <p>Loading payment status...</p>;
   }
 
   return (
