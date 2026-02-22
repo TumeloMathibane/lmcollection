@@ -17,6 +17,12 @@ export default function ReturnView() {
           process.env.VERCEL_ENV === "production" ?
             `https://${process.env.VERCEL_URL}/notify`
           : "https://d1r891fk-3000.eun1.devtunnels.ms/notify",
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          },
         );
 
         const data = await res.json();
