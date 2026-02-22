@@ -130,7 +130,6 @@ export default async function Home() {
 }
 
 //! TODO  [*]: Continue with checks...
-//! TODO  [?]: Delete admin dir. from main and create 'admin' branch for implementing admin features
 //! TODO  [ ]: Implement product filtering and sorting functionality on the collection page to allow customers to easily find products based on their preferences (e.g. filter by price, category, popularity, etc.)...
 //! TODO  [ ]: Implement contact page logic
 //! TODO  [ ]: Admin 'add product form' - if possible, implement method to select primary image from selected images
