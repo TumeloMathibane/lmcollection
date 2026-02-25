@@ -16,18 +16,6 @@ export default function CollectionView({ category }: { category: string }) {
 
   if (!products) return <Loading />;
 
-  // if (products?.length === 0) {
-  //   return (
-  //     <>
-  //       <main className="flex-1 flex justify-center-safe items-center-safe">
-  //         <p className="text-4xl font-bold text-stone-900 text-center xl:py-2">
-  //           No products
-  //         </p>
-  //       </main>
-  //     </>
-  //   );
-  // }
-
   return (
     <div className="flex flex-col space-y-2 py-4 px-2 items-center-safe">
       <p className="text-4xl font-bold text-stone-900">Products</p>
