@@ -3,30 +3,28 @@
 import { useQuery } from "convex/react";
 import type { Product } from "../(overview)/collection/products/types";
 import { ProductCard } from "./ui/products/Card";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { api } from "@/convex/_generated/api";
 import Loading from "@/(overview)/collection/products/all/loading";
+import ProductFilter from "./ui/products/product-filter";
+
+//! TODO: implement filter component
+//! TODO: implement sorting component
 
 export default function CollectionView({ category }: { category: string }) {
   const products: Product[] | undefined = useQuery(api.products.getProducts, {
     category: category === "" ? undefined : category,
   });
 
+  //! NOTE: from the filter, rating is not yet usable since the rating functionality is not yet complete
+  const [filter, setFilter] = useState<
+    { [key: string]: string | undefined } | undefined
+  >(undefined);
+  // const [filterOpen, setFilterOpen] = useState(false);
+
   useEffect(() => window.scrollTo(0, 0), []);
 
   if (!products) return <Loading />;
-
-  // if (products?.length === 0) {
-  //   return (
-  //     <>
-  //       <main className="flex-1 flex justify-center-safe items-center-safe">
-  //         <p className="text-4xl font-bold text-stone-900 text-center xl:py-2">
-  //           No products
-  //         </p>
-  //       </main>
-  //     </>
-  //   );
-  // }
 
   return (
     <div className="flex flex-col space-y-2 py-4 px-2 items-center-safe">
@@ -35,11 +33,16 @@ export default function CollectionView({ category }: { category: string }) {
       <div className="w-full sm:max-w-2xl lg:max-w-5xl">
         <div className="space-y-4">
           <div className="border-b border-stone-300 pb-3">
-            <p>
+            {/* <p>
               This is the catalog page.{" "}
               {products &&
                 `(${products?.length}) ${products?.length > 1 || products?.length === 0 ? "products" : "product"}`}
-            </p>
+            </p> */}
+
+            <ProductFilter
+              filter={filter}
+              onFilterChange={(filter) => setFilter(filter)}
+            />
           </div>
 
           <div
