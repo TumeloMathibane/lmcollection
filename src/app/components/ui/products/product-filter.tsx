@@ -2,37 +2,33 @@ import { useDebounce } from "@/hooks/useDebouce";
 import { useEffect, useState } from "react";
 import { BsX } from "react-icons/bs";
 import { FaFilter } from "react-icons/fa";
+import { useRouter } from "next/navigation";
 
 export interface Filter {
   availability: string;
   minPrice: number;
   maxPrice: number;
   rating: string;
-  soring: string;
+  sorting: string;
 }
 
 interface FilterProps {
   heading?: string;
-  filter?: Filter;
-  onFilterChange?: (filter: Filter | undefined) => void;
 }
 
-export default function ProductFilter({
-  heading,
-  filter,
-  onFilterChange,
-}: FilterProps) {
-  // possible filters: availability, price range, rating,
-
+export default function ProductFilter({ heading }: FilterProps) {
   const [filterOpen, setFilterOpen] = useState(false);
 
   const [selectedFilters, setSelectedFilters] = useState<Filter | undefined>(
-    filter,
+    undefined,
   );
   const [min, setMin] = useState<number | undefined>(undefined);
   const [max, setMax] = useState<number | undefined>(undefined);
   const minPriceVal = useDebounce(min, 500);
   const maxPriceVal = useDebounce(max, 500);
+
+  const router = useRouter();
+
   useEffect(() => {
     if (minPriceVal !== undefined || maxPriceVal !== undefined) {
       setSelectedFilters(
@@ -43,12 +39,15 @@ export default function ProductFilter({
   }, [minPriceVal, maxPriceVal]);
 
   useEffect(() => {
-    if (onFilterChange) {
-      onFilterChange(selectedFilters);
-    }
-  }, [selectedFilters, onFilterChange]);
+    let sParams = "";
 
-  // sorting options: name - ascending & descending, price - ascending & descending, rating - ascending & descending
+    Object.entries(selectedFilters ?? {}).forEach(
+      ([key, value]) =>
+        value !== "" && !Number.isNaN(value) && (sParams += `${key}=${value}&`),
+    );
+    router.replace(`?${sParams}`);
+  }, [selectedFilters, router]);
+
   const sortOpts = [
     "Name - asc.",
     "Name - desc.",
@@ -66,7 +65,7 @@ export default function ProductFilter({
       </div>
 
       <div
-        className={`fixed top-0 right-0 bottom-0 left-0 flex justify-end transition-all ${filterOpen ? "z-10 backdrop-brightness-50 backdrop-blur-sm" : "delay-200 backdrop-brightness-100 backdrop-none -z-1"} lg:hidden`}>
+        className={`fixed top-0 right-0 bottom-0 left-0 flex justify-end transition-all ${filterOpen ? "z-10 backdrop-blur-sm" : "delay-200 backdrop-none -z-1"} lg:hidden`}>
         <div
           className={`w-74 min-h-dvh bg-stone-300 flex flex-col transition-all ${filterOpen ? "translate-0" : "translate-x-full"}`}>
           <p className="border-b border-stone-400 p-4 mx-2">{heading}</p>
