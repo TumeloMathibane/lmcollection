@@ -60,19 +60,18 @@ export default function ProductFilter({ heading, noOfProducts }: FilterProps) {
 
   return (
     <div className="w-full md:flex md:flex-col md:relative md:mb-3 md:space-y-2">
-      <div className="flex items-center">
-        <div className="w-full flex items-center-safe gap-2 md:w-full md:h-fit md:space-x-2">
-          <p>Filter </p>
-          <FaFilter
-            size={"1rem"}
-            className="md:hidden"
-            onClick={() => setFilterOpen(true)}
-          />
+      <div className="flex items-center justify-between">
+        <div
+          className="group w-fit flex items-center-safe gap-2 md:h-fit md:space-x-2"
+          onClick={() => setFilterOpen(!filterOpen)}>
+          <p className="md:text-stone-500 md:group-hover:text-black md:group-hover:cursor-pointer">
+            Filter & sort
+          </p>
+          <FaFilter size={"1rem"} className="md:hidden" />
 
           <BsChevronDown
             size={"1rem"}
-            className={`hidden md:block stroke-1 hover:cursor-pointer transition-transform ${filterOpen ? "rotate-180" : "rotate-0"}`}
-            onClick={() => setFilterOpen(!filterOpen)}
+            className={`hidden md:block stroke-1 group-hover:cursor-pointer transition-transform ${filterOpen ? "rotate-180" : "rotate-0"}`}
           />
         </div>
 
@@ -86,9 +85,9 @@ export default function ProductFilter({ heading, noOfProducts }: FilterProps) {
       </div>
 
       <div
-        className={`fixed top-0 right-0 bottom-0 left-0 flex justify-end transition-all ${filterOpen ? "z-10 backdrop-blur-sm" : "delay-100 backdrop-none -z-1"} md:backdrop-blur-none md:w-full md:relative md:flex`}>
+        className={`fixed top-0 right-0 bottom-0 left-0 flex justify-end transition-all ${filterOpen ? "z-10 backdrop-blur-sm" : "delay-100 backdrop-none -z-1 md:delay-0"} md:backdrop-blur-none md:w-full md:relative md:flex`}>
         <div
-          className={`w-74 min-h-dvh bg-stone-300 flex flex-col transition-all ${filterOpen ? "translate-0" : "translate-x-full"} md:translate-0 md:min-h-0 md:w-full md:flex-row md:bg-white md:px-4 md:border-t md:border-stone-200 md:overflow-hidden ${filterOpen ? "md:max-h-[90vh] md:py-2" : "md:py-0 md:max-h-0"}`}>
+          className={`w-74 min-h-dvh bg-stone-300 flex flex-col transition-all ${filterOpen ? "translate-0" : "translate-x-full"} md:translate-0 md:min-h-0 md:w-full md:flex-row md:bg-white md:border-t md:border-stone-200 md:overflow-hidden ${filterOpen ? "md:max-h-[90vh]" : "md:max-h-0"}`}>
           <div className="w-full bg-stone-950 text-white font-bold md:hidden">
             <p className="p-4 mx-2">{heading}</p>
             <BsX
@@ -98,12 +97,13 @@ export default function ProductFilter({ heading, noOfProducts }: FilterProps) {
             />
           </div>
 
-          <div className="py-4 px-6 space-y-3 md:w-full md:flex md:justify-between md:p-0 md:space-y-0">
+          <div className="py-4 px-6 space-y-5 md:w-full md:flex md:justify-between md:p-0 md:space-y-0 md:mx-4 md:my-2">
             {/* avaliability */}
-            <div className="md:h-fit md:space-y-2">
+            {/*//! TODO 1: change implementation to allowing for simultaneously viewing of all available and not available items */}
+            <div className="md:h-fit md:space-y-2 md:pb-2">
               <p className="font-bold md:font-normal">Availability</p>
 
-              <div className="md:py-2 md:bg-white md:w-fit">
+              <div className="space-y-1 md:space-y-0 md:bg-white md:w-fit">
                 {Array.from(["In stock", "Out of Stock"]).map((opt, idx) => (
                   <div key={idx} className="flex gap-2 items-center">
                     <input
@@ -130,7 +130,7 @@ export default function ProductFilter({ heading, noOfProducts }: FilterProps) {
             </div>
 
             {/* min & max price range */}
-            <div className="md:max-w-50 md:h-fit md:px-1 md:space-y-2">
+            <div className="space-y-1 md:max-w-50 md:h-fit md:px-1 md:space-y-2">
               <p className="font-bold md:font-normal">Price range</p>
 
               <div>
@@ -138,10 +138,11 @@ export default function ProductFilter({ heading, noOfProducts }: FilterProps) {
                   <input
                     type="number"
                     name="minPrice"
-                    className="w-full p-1 rounded-none bg-transparent border border-stone-400 focus:bg-white focus:focus-within:outline-0 focus:focus-within:ring focus:focus-within:ring-blue-600"
+                    className="w-full p-1 rounded-none bg-transparent border border-stone-200 focus:bg-white focus:focus-within:outline-0 focus:focus-within:ring focus:focus-within:ring-blue-600"
                     onChange={(e) => {
                       setMin(e.target.valueAsNumber);
                     }}
+                    placeholder="From"
                   />
 
                   <p>{"-"}</p>
@@ -149,20 +150,21 @@ export default function ProductFilter({ heading, noOfProducts }: FilterProps) {
                   <input
                     type="number"
                     name="maxPrice"
-                    className="w-full p-1 rounded-none bg-transparent border border-stone-400 focus:bg-white focus:focus-within:outline-0 focus:focus-within:ring focus:focus-within:ring-blue-600"
+                    className="w-full p-1 rounded-none bg-transparent border border-stone-200 focus:bg-white focus:focus-within:outline-0 focus:focus-within:ring focus:focus-within:ring-blue-600"
                     onChange={(e) => {
                       setMax(e.target.valueAsNumber);
                     }}
+                    placeholder="To"
                   />
                 </div>
               </div>
             </div>
 
             {/* rating */}
-            <div className="md:hidden">
+            <div className="space-y-1 md:hidden">
               <p className="font-bold md:font-normal">Rating</p>
 
-              <div>
+              <div className="space-y-2">
                 {Array.from({ length: 5 }).map((_, idx) => (
                   <div key={idx} className="flex gap-2">
                     <input
@@ -190,7 +192,7 @@ export default function ProductFilter({ heading, noOfProducts }: FilterProps) {
             </div>
 
             {/* sorting */}
-            <div className="md:max-w-80 md:h-fit md:px-1 md:space-y-2">
+            <div className="space-y-1 md:max-w-80 md:h-fit md:px-1 md:space-y-2">
               <p className="font-bold md:font-normal">Sort by</p>
 
               <select
