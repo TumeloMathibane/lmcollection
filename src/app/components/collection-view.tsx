@@ -91,12 +91,11 @@ export default function CollectionView({ category }: { category: string }) {
     <div className="flex flex-col space-y-2 py-4 px-2 items-center-safe">
       <p className="text-4xl font-bold text-stone-900">Products</p>
 
-      <div className="w-full sm:max-w-2xl lg:max-w-5xl">
-        <div className="flex justify-between p-1 items-center-safe">
-          <ProductFilter
-            heading={`Filter (${displayProducts?.length ?? 0} products)`}
-          />
-        </div>
+      <div className="w-full space-y-2 sm:max-w-2xl lg:max-w-5xl">
+        <ProductFilter
+          heading={`Filter (${displayProducts?.length ?? 0} products)`}
+          noOfProducts={displayProducts?.length}
+        />
 
         <div className="space-y-4">
           <div
