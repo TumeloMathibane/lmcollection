@@ -75,6 +75,12 @@ export default function ProductFilter({ heading, noOfProducts }: FilterProps) {
     setSelectedFilters((prev) => ({ ...prev, sorting: undefined }));
   };
 
+  const resetAll = () => {
+    resetAvailability();
+    resetPriceRange();
+    resetSorting();
+  };
+
   useEffect(() => {
     if (minPriceVal !== undefined || maxPriceVal !== undefined) {
       setSelectedFilters(
@@ -130,7 +136,7 @@ export default function ProductFilter({ heading, noOfProducts }: FilterProps) {
       <div
         className={`fixed top-0 right-0 bottom-0 left-0 flex justify-end transition-all ${filterOpen ? "z-10 backdrop-blur-sm" : "delay-100 backdrop-none -z-1"} md:backdrop-blur-none md:w-full md:relative md:flex`}>
         <div
-          className={`w-74 min-h-dvh bg-stone-300 flex flex-col transition-all ${filterOpen ? "translate-0" : "translate-x-full"} md:translate-0 md:min-h-0 md:w-full md:flex-row md:bg-white md:px-4 md:border-t md:border-stone-200 md:overflow-hidden ${filterOpen ? "md:max-h-[90vh] md:py-2" : "md:py-0 md:max-h-0"}`}>
+          className={`w-74 min-h-dvh bg-stone-300 flex flex-col transition-all ${filterOpen ? "translate-0" : "translate-x-full"} md:translate-0 md:min-h-0 md:w-full md:bg-white md:px-4 md:border-t md:border-stone-200 md:overflow-hidden ${filterOpen ? "md:max-h-[90vh] md:py-2" : "md:py-0 md:max-h-0"}`}>
           <div className="w-full bg-stone-950 text-white font-bold md:hidden">
             <p className="p-4 mx-2">{heading}</p>
             <BsX
@@ -188,6 +194,7 @@ export default function ProductFilter({ heading, noOfProducts }: FilterProps) {
                     onChange={(e) => {
                       setMin(e.target.valueAsNumber);
                     }}
+                    placeholder="From"
                   />
 
                   <p>{"-"}</p>
@@ -199,6 +206,7 @@ export default function ProductFilter({ heading, noOfProducts }: FilterProps) {
                     onChange={(e) => {
                       setMax(e.target.valueAsNumber);
                     }}
+                    placeholder="To"
                   />
                 </div>
               </div>
@@ -264,14 +272,16 @@ export default function ProductFilter({ heading, noOfProducts }: FilterProps) {
 
             <p
               className="cursor-pointer text-red-600 underline underline-offset-2 w-fit md:hidden"
-              onClick={() => {
-                resetAvailability();
-                resetPriceRange();
-                resetSorting();
-              }}>
+              onClick={() => resetAll()}>
               Clear filter
             </p>
           </div>
+
+          <p
+            className="hidden w-fit underline underline-offset-2 text-stone-500 hover:text-red-600 hover:font-semibold transition-all ease-in-out hover:cursor-pointer md:flex"
+            onClick={() => resetAll()}>
+            Reset
+          </p>
         </div>
       </div>
     </div>
