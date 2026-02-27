@@ -5,11 +5,11 @@ import { FaFilter } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 
 export interface Filter {
-  availability: string;
-  minPrice: number;
-  maxPrice: number;
-  rating: string;
-  sorting: string;
+  availability?: string;
+  minPrice?: number;
+  maxPrice?: number;
+  rating?: string;
+  sorting?: string;
 }
 
 interface FilterProps {
@@ -39,11 +39,51 @@ export default function ProductFilter({ heading, noOfProducts }: FilterProps) {
     "Rating - desc.",
   ];
 
+  const resetAvailability = () => {
+    const radioButtons = document.getElementsByName(
+      "availability",
+    ) as NodeListOf<HTMLInputElement>;
+    radioButtons.forEach((radio) => (radio.checked = false));
+    setSelectedFilters(
+      (prev) => ({ ...prev, availability: undefined }) as Filter,
+    );
+  };
+
+  const resetPriceRange = () => {
+    const minInput = document.querySelector(
+      'input[name="minPrice"]',
+    ) as HTMLInputElement;
+    const maxInput = document.querySelector(
+      'input[name="maxPrice"]',
+    ) as HTMLInputElement;
+    if (minInput) minInput.value = "";
+    if (maxInput) maxInput.value = "";
+    setSelectedFilters(
+      (prev) =>
+        ({ ...prev, minPrice: undefined, maxPrice: undefined }) as Filter,
+    );
+  };
+
+  //! TODO: ...to be implemented
+  // const resetRating = () => {}
+
+  const resetSorting = () => {
+    const selectElement = document.querySelector(
+      'select[name="sorting"]',
+    ) as HTMLSelectElement;
+    selectElement.value = "";
+    setSelectedFilters((prev) => ({ ...prev, sorting: undefined }));
+  };
+
   useEffect(() => {
     if (minPriceVal !== undefined || maxPriceVal !== undefined) {
       setSelectedFilters(
         (prev) =>
-          ({ ...prev, minPrice: minPriceVal, maxPrice: maxPriceVal }) as Filter,
+          ({
+            ...prev,
+            minPrice: minPriceVal,
+            maxPrice: maxPriceVal,
+          }) as Filter,
       );
     }
   }, [minPriceVal, maxPriceVal]);
@@ -53,7 +93,9 @@ export default function ProductFilter({ heading, noOfProducts }: FilterProps) {
 
     Object.entries(selectedFilters ?? {}).forEach(
       ([key, value]) =>
-        value !== "" && !Number.isNaN(value) && (sParams += `${key}=${value}&`),
+        value !== undefined &&
+        !Number.isNaN(value) &&
+        (sParams += `${key}=${value}&`),
     );
     router.replace(`?${sParams}`);
   }, [selectedFilters, router]);
@@ -101,7 +143,9 @@ export default function ProductFilter({ heading, noOfProducts }: FilterProps) {
           <div className="py-4 px-6 space-y-3 md:w-full md:flex md:justify-between md:p-0 md:space-y-0">
             {/* avaliability */}
             <div className="md:h-fit md:space-y-2">
-              <p className="font-bold md:font-normal">Availability</p>
+              <div>
+                <p className="font-bold md:font-normal">Availability</p>
+              </div>
 
               <div className="md:py-2 md:bg-white md:w-fit">
                 {Array.from(["In stock", "Out of Stock"]).map((opt, idx) => (
@@ -131,7 +175,9 @@ export default function ProductFilter({ heading, noOfProducts }: FilterProps) {
 
             {/* min & max price range */}
             <div className="md:max-w-50 md:h-fit md:px-1 md:space-y-2">
-              <p className="font-bold md:font-normal">Price range</p>
+              <div>
+                <p className="font-bold md:font-normal">Price range</p>
+              </div>
 
               <div>
                 <div className="w-full flex gap-2 items-center">
@@ -159,7 +205,7 @@ export default function ProductFilter({ heading, noOfProducts }: FilterProps) {
             </div>
 
             {/* rating */}
-            <div className="md:hidden">
+            {/* <div className="md:hidden">
               <p className="font-bold md:font-normal">Rating</p>
 
               <div>
@@ -187,11 +233,13 @@ export default function ProductFilter({ heading, noOfProducts }: FilterProps) {
                   </div>
                 ))}
               </div>
-            </div>
+            </div> */}
 
             {/* sorting */}
             <div className="md:max-w-80 md:h-fit md:px-1 md:space-y-2">
-              <p className="font-bold md:font-normal">Sort by</p>
+              <div>
+                <p className="font-bold md:font-normal">Sort by</p>
+              </div>
 
               <select
                 name="sorting"
@@ -216,7 +264,11 @@ export default function ProductFilter({ heading, noOfProducts }: FilterProps) {
 
             <p
               className="cursor-pointer text-red-600 underline underline-offset-2 w-fit md:hidden"
-              onClick={() => console.log("Button not functional")}>
+              onClick={() => {
+                resetAvailability();
+                resetPriceRange();
+                resetSorting();
+              }}>
               Clear filter
             </p>
           </div>
