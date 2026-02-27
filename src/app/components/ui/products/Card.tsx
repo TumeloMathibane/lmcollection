@@ -27,7 +27,7 @@ export function ProductCard({ product }: { product: Product }) {
 
         <Link href={`/collection/products/${product._id}`}>
           <div className="w-full relative rounded-md overflow-hidden">
-            <figure className="h-52 transition-all duration-500 group-hover:scale-105 lg:h-44">
+            <figure className="h-52 transition-all ease-in-out duration-500 group-hover:scale-105">
               <ImageWithFallback
                 src={product?.images[0] ?? ""}
                 alt={product.name}
