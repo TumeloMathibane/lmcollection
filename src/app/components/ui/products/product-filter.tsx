@@ -56,8 +56,8 @@ export default function ProductFilter({ heading, noOfProducts }: FilterProps) {
     const maxInput = document.querySelector(
       'input[name="maxPrice"]',
     ) as HTMLInputElement;
-    if (minInput) minInput.value = "";
-    if (maxInput) maxInput.value = "";
+    if (minInput) minInput.valueAsNumber = NaN;
+    if (maxInput) maxInput.valueAsNumber = NaN;
     setSelectedFilters(
       (prev) =>
         ({ ...prev, minPrice: undefined, maxPrice: undefined }) as Filter,
@@ -130,6 +130,39 @@ export default function ProductFilter({ heading, noOfProducts }: FilterProps) {
             : noOfProducts === 1 && `${noOfProducts} product`}
           </p>
         </div>
+      </div>
+
+      <div className="flex gap-1 flex-wrap">
+        {selectedFilters &&
+          Object.entries(selectedFilters).map(
+            ([key, value]) =>
+              value !== undefined &&
+              !Number.isNaN(value) && (
+                <div
+                  key={key}
+                  className="inline-flex items-center gap-1 bg-stone-200 text-stone-700 px-2 py-1 rounded">
+                  <p className="text-sm">{`${
+                    String(key).toLowerCase() === "availability" ?
+                      "Availability"
+                    : String(key) === "sorting" ? "Sorting"
+                    : String(key) === "minPrice" ? "Min. Price"
+                    : String(key) === "maxPrice" ? "Max. Price"
+                    : key
+                  }: ${key === "minPrice" || key === "maxPrice" ? `${new Intl.NumberFormat("en-ZA", { style: "currency", currency: "ZAR", minimumFractionDigits: 0, maximumFractionDigits: 2 }).format(Number(value))}` : value}`}</p>
+                  <BsX
+                    size={"0.75rem"}
+                    className="cursor-pointer"
+                    onClick={() => {
+                      if (key === "availability") resetAvailability();
+                      else if (key === "minPrice" || key === "maxPrice")
+                        resetPriceRange();
+                      // else if (key === "rating") resetRating();
+                      else if (key === "sorting") resetSorting();
+                    }}
+                  />
+                </div>
+              ),
+          )}
       </div>
 
       <div
@@ -268,16 +301,10 @@ export default function ProductFilter({ heading, noOfProducts }: FilterProps) {
                 ))}
               </select>
             </div>
-
-            <p
-              className="cursor-pointer text-red-600 underline underline-offset-2 w-fit md:hidden"
-              onClick={() => resetAll()}>
-              Clear filter
-            </p>
           </div>
 
           <p
-            className="hidden w-fit underline underline-offset-2 text-stone-500 hover:text-red-600 hover:font-semibold transition-all ease-in-out hover:cursor-pointer md:flex"
+            className="mx-6 w-fit underline underline-offset-2 text-stone-500 hover:text-red-600 hover:font-semibold transition-all ease-in-out hover:cursor-pointer md:mx-4"
             onClick={() => resetAll()}>
             Reset
           </p>
