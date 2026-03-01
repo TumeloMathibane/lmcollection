@@ -27,15 +27,29 @@ export default defineSchema({
     .searchIndex("search_category", { searchField: "category" })
     .searchIndex("search_sale", { searchField: "sale" }),
   orders: defineTable({
-    orderNumber: v.optional(v.string()),
-    items: v.array(v.record(v.string(), v.string())),
+    orderId: v.string(),
+    m_payment_id: v.string(),
+    items: v.array(
+      v.record(
+        v.string(),
+        v.union(v.string(), v.number(), v.record(v.string(), v.string())),
+      ),
+    ),
     totalPrice: v.number(),
+    customer_details: v.record(v.string(), v.string()),
+    shipping_details: v.record(v.string(), v.union(v.string(), v.number())),
+    status: v.union(
+      v.literal("received"),
+      v.literal("pending"),
+      v.literal("delivered"),
+      v.literal("cancelled"),
+    ),
   }),
   customers: defineTable({
-    contact: v.string(),
     name_first: v.string(),
     name_last: v.string(),
+    contact: v.string(),
     secondary_contact: v.string(),
-    address: v.string(),
+    address: v.record(v.string(), v.string()),
   }),
 });
