@@ -13,6 +13,7 @@ import { api } from "@/convex/_generated/api";
 import DeliverySelector from "./checkout/delivery-selector";
 import Image from "next/image";
 import Loading from "../(payments)/payments/checkout/loading";
+import { MdErrorOutline } from "react-icons/md";
 
 type MerchantProp = {
   m_key: string;
@@ -79,8 +80,9 @@ export default function CheckoutMain({
   const [coupon, setCoupon] = useState<string>("");
 
   const [status, setStatus] = useState<
-    "" | "submitting" | "validated" | "error"
+    "" | "validating" | "validated" | "error"
   >("");
+  // const [error, setError] = useState<string | null>(null);
 
   const handleInputChange = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
@@ -112,11 +114,11 @@ export default function CheckoutMain({
   };
 
   const validateInput = (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    setStatus("validating");
     const elmts: HTMLElement[] = [];
 
-    setStatus("submitting");
-    e.preventDefault();
-    Object.entries(data).map(([key, value]) => {
+    Object.entries(data).map(async ([key, value]) => {
       const elmt = document.getElementById(`${key}`);
 
       // validating first name and last name...
@@ -131,8 +133,9 @@ export default function CheckoutMain({
 
         elmt?.classList.add("border", "border-red-600");
       } else {
-        if (elmt?.classList.contains("border-red-600"))
+        if (elmt?.classList.contains("border-red-600")) {
           elmt?.classList.remove("border", "border-red-600");
+        }
       }
 
       // validating optional fields; email & cell number...
@@ -172,14 +175,29 @@ export default function CheckoutMain({
     });
 
     if (elmts.length > 0) {
-      setStatus("");
+      setStatus("error");
+      setTimeout(() => {
+        setStatus("");
+      }, 7000);
       elmts[0].focus();
-    }
-
-    if (elmts.length === 0) {
-      setStatus("validated");
-      setTimeout(() => setStatus(""), 10000);
+    } else if (elmts.length === 0) {
+      const orderData = {
+        orderId: paymentData?.item_name,
+        m_payment_id: paymentData?.m_payment_id,
+        totalPrice: paymentData?.amount,
+        status: "received",
+        customer_details: {
+          fName: data?.name_first,
+          lName: data?.name_last,
+          contact:
+            data?.cell_number !== "" ? data?.cell_number : data?.email_address,
+        },
+        shipping_details: shippingData,
+        items: items,
+      };
+      localStorage.setItem("orderData", JSON.stringify(orderData));
       e.currentTarget.form?.submit();
+      setStatus("validated");
     }
   };
 
@@ -281,17 +299,19 @@ export default function CheckoutMain({
                   value={data.email_address}
                   onChange={handleInputChange}
                 />
-                <div className="divider text-xs text-stone-400 my-2 uppercase sm:lowercase sm:my-auto">
+                <div className="divider text-xs text-stone-400 my-2 upper sm:lowercase sm:my-auto">
                   or
                 </div>
                 <input
-                  type="tel"
+                  type="text"
                   name="cell_number"
                   id="cell_number"
                   className="input input-md w-full focus:outline-offset-0 focus:outline-0 focus:border-2 focus:border-blue-600 sm:w-36"
                   placeholder="Cellphone number"
                   value={data.cell_number}
                   onChange={handleInputChange}
+                  pattern="^\+[0-9]{1,3}[0-9]{9}$"
+                  title="Please enter a valid cellphone number with country code. E.g., +27123456789 or 0123456789"
                 />
               </div>
               <div className="space-y-4 sm:flex sm:space-x-4 sm:space-y-0">
@@ -368,7 +388,9 @@ export default function CheckoutMain({
                   <option value="za">South Africa</option>
                 </select>
               </div>
-              <div className="flex space-x-2">
+
+              {/* //! TODO: finish up and test */}
+              {/* <div className="flex space-x-2">
                 <input
                   type="checkbox"
                   name="save_info"
@@ -382,7 +404,7 @@ export default function CheckoutMain({
                     Save information for next time...
                   </label>
                 </span>
-              </div>
+              </div> */}
 
               <div className="space-y-2">
                 <p className="text-xl font-semibold text-shadow-stone-900">
@@ -477,27 +499,34 @@ export default function CheckoutMain({
               </form>
               <button
                 form="payment-form"
-                className="btn btn-primary btn-md w-full rounded-lg"
+                className={`w-full btn btn-md rounded-lg ${
+                  status === "error" ? "btn-error text-red-800"
+                  : status === "validated" ?
+                    "btn-success cursor-not-allowed text-white"
+                  : "btn-primary"
+                }`}
                 onClick={(e: MouseEvent<HTMLButtonElement>) => {
                   validateInput(e);
                 }}
                 disabled={
-                  shippingData.method === "" || status === "submitting"
+                  shippingData.method === "" || status === "validating"
                 }>
-                {status === "" ?
-                  "Pay now"
-                : status === "submitting" ?
+                {status === "error" ?
+                  <>
+                    <MdErrorOutline className="size-8" />
+                    {"Error"}
+                  </>
+                : status === "validating" ?
                   <>
                     <BiLoaderAlt className="size-8 animate-spin" />
                     {"Processing..."}
                   </>
-                : status === "validated" && (
-                    <>
-                      <BiCheck className="size-8" />
-                      {"Processed!"}
-                    </>
-                  )
-                }
+                : status === "validated" ?
+                  <>
+                    <BiCheck className="size-8" />
+                    {"Processed!"}
+                  </>
+                : "Pay now"}
               </button>
             </div>
 

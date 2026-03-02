@@ -3,12 +3,15 @@
 import { BsCheckCircle } from "react-icons/bs";
 import { useCartStore } from "../../../stores/cart";
 import { useEffect, useState } from "react";
+import { api } from "@/convex/_generated/api";
+import { useMutation } from "convex/react";
 
 export default function ReturnView() {
   const { clearCart } = useCartStore();
   const [paymentStatus, setPaymentStatus] = useState<string | undefined>(
     undefined,
   );
+  const createOrder = useMutation(api.orders.createOrder);
 
   useEffect(() => {
     try {
@@ -31,14 +34,20 @@ export default function ReturnView() {
           setPaymentStatus(data.message);
 
           if (data.message === "PASS") {
+            const orderData = localStorage.getItem("orderData");
+            if (orderData) {
+              const parsedOrderData = JSON.parse(orderData);
+              createOrder(parsedOrderData);
+              localStorage.removeItem("orderData");
+            }
             clearCart();
           }
         });
     } catch (error) {
-      console.error("Error fetching payment status:", error);
+      console.error("Error:", error);
       setPaymentStatus("FAIL");
     }
-  }, [clearCart]);
+  }, [clearCart, createOrder]);
 
   if (!paymentStatus) {
     return <p>Loading payment status...</p>;
