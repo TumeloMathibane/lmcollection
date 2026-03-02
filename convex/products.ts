@@ -61,6 +61,73 @@ export const getProduct = query({
   },
 });
 
+export const purchaseProduct = mutation({
+  args: { id: v.id("product"), quantity: v.number() },
+  handler: async (ctx, args) => {
+    const product = await ctx.db.get("product", args.id);
+    if (!product) {
+      throw new Error("Product not found");
+    }
+    if (product.quantity <= 0 || product.quantity < args.quantity) {
+      throw new Error("Insufficient stock");
+    }
+
+    await ctx.db.patch("product", args.id, {
+      quantity: product.quantity - args.quantity,
+    });
+  },
+});
+
+export const updateProduct = mutation({
+  args: {
+    id: v.id("product"),
+    brand: v.optional(v.string()),
+    name: v.optional(v.string()),
+    price: v.optional(v.number()),
+    discount: v.optional(v.number()),
+    shortDescription: v.optional(v.string()),
+    quantity: v.optional(v.number()),
+    category: v.optional(v.string()),
+    images: v.optional(v.array(v.id("_storage"))),
+    additional_options: v.optional(v.array(v.record(v.string(), v.string()))),
+    dynamic_pricing: v.optional(v.boolean()),
+    pricing_by: v.optional(v.string()),
+    sale: v.optional(v.string()),
+  },
+  handler: async (ctx, args) => {
+    const existing = await ctx.db.get("product", args.id);
+    if (!existing) {
+      throw new Error("Product not found");
+    }
+
+    await ctx.db.patch("product", args.id, {
+      brand: args.brand ?? existing.brand,
+      name: args.name ?? existing.name,
+      price: args.price ?? existing.price,
+      discount: args.discount ?? existing.discount,
+      shortDescription: args.shortDescription ?? existing.shortDescription,
+      quantity: args.quantity ?? existing.quantity,
+      category: args.category ?? existing.category,
+      images: args.images ?? existing.images,
+      additional_options:
+        args.additional_options ?? existing.additional_options,
+      dynamic_pricing:
+        typeof args.dynamic_pricing === "boolean" ?
+          args.dynamic_pricing
+        : existing.dynamic_pricing,
+      pricing_by: args.pricing_by ?? existing.pricing_by,
+      sale: args.sale ?? existing.sale,
+    });
+  },
+});
+
+export const deleteProduct = mutation({
+  args: { id: v.id("product") },
+  handler: async (ctx, args) => {
+    await ctx.db.delete("product", args.id);
+  },
+});
+
 export const getProducts = query({
   args: { count: v.optional(v.number()), category: v.optional(v.string()) },
   handler: async (ctx, args) => {
@@ -115,13 +182,6 @@ export const getProducts = query({
         return { ...product, images: imgUrls };
       }),
     );
-  },
-});
-
-export const deleteProduct = mutation({
-  args: { id: v.id("product") },
-  handler: async (ctx, args) => {
-    await ctx.db.delete("product", args.id);
   },
 });
 
