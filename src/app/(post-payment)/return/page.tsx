@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { BsCheckCircle } from "react-icons/bs";
+import { Id } from "@/convex/_generated/dataModel";
 
 export default function Page() {
   const { clearCart } = useCartStore();
@@ -12,6 +13,7 @@ export default function Page() {
     undefined,
   );
   const createOrder = useMutation(api.orders.createOrder);
+  const purchaseProduct = useMutation(api.products.purchaseProduct);
 
   useState(() => {
     const fetchPaymentStatus = async () => {
@@ -39,10 +41,20 @@ export default function Page() {
             createOrder(parsedOrderData);
             localStorage.removeItem("orderData");
           }
+
+          // update products' quantities in the database
+          const { items } = orderData ? JSON.parse(orderData) : { items: [] };
+          console.log("Order items to clear from cart:", items);
+          for (const item of items) {
+            purchaseProduct({
+              id: item.productId as Id<"product">,
+              quantity: item.productQty,
+            });
+          }
           clearCart();
         }
       } catch (error) {
-        console.error("Error fetching payment status:", error);
+        console.error("Store Error:", error);
         setPaymentStatus("FAIL");
       }
     };
@@ -60,7 +72,14 @@ export default function Page() {
             <BsCheckCircle size={"10rem"} className="text-green-600" />
             <p>Payment successful. Thank you for your purchase!</p>
           </span>
-        : <p>Payment failed. Please try again. Status: {paymentStatus}</p>}
+        : <>
+            <p>
+              Payment failed. Please try again or contact support for
+              assistance.
+            </p>
+            <p>Status: {paymentStatus}</p>
+          </>
+        }
       </div>
     </div>
   );
