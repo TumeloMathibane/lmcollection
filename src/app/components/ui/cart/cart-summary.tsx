@@ -7,7 +7,10 @@ interface CartSummaryProps {
 
 export default function CartSummary({ items }: CartSummaryProps) {
   const total = items.reduce(
-    (total, item) => total + item.productPrice * item.productQty,
+    (total, item) =>
+      Number.isNaN(item.productPrice * item.productQty) ? total : (
+        total + item.productPrice * item.productQty
+      ),
     0,
   );
 
