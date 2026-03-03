@@ -136,7 +136,7 @@ export default function ProductView({
         </section>
 
         <section className="space-y-4 md:flex md:flex-col md:w-1/2 md:space-y-2">
-          <div className="md:flex-1 md:space-y-2">
+          <div className="space-y-4 md:flex-1">
             <div>
               <p className="text-2xl text-stone-900 font-bold md:text-3xl">
                 {product?.name}
@@ -431,28 +431,28 @@ export default function ProductView({
             </div>
           </div>
 
-          <div className="flex items-center-safe space-x-3 md:w-full md:place-self-end-safe pe-1">
-            {product && product?.quantity > 0 && (
+          {product && product?.quantity > 0 && (
+            <div className="flex items-center-safe space-x-3 md:w-full md:place-self-end-safe pe-1">
               <button
                 className={`py-2 bg-stone-900 text-stone-200 rounded-full w-full hover:cursor-pointer relative overflow-hidden`}
                 onClick={() => handleAddToCart()}>
                 Add to cart
               </button>
-            )}
 
-            {isFavorite(productId) ?
-              <BsSuitHeartFill
-                size={"2rem"}
-                className="text-red-600"
-                onClick={() => toggleFavorite(productId)}
-              />
-            : <BsSuitHeart
-                size={"2rem"}
-                className="text-gray-400"
-                onClick={() => toggleFavorite(productId)}
-              />
-            }
-          </div>
+              {isFavorite(productId) ?
+                <BsSuitHeartFill
+                  size={"2rem"}
+                  className="text-red-600"
+                  onClick={() => toggleFavorite(productId)}
+                />
+              : <BsSuitHeart
+                  size={"2rem"}
+                  className="text-gray-400"
+                  onClick={() => toggleFavorite(productId)}
+                />
+              }
+            </div>
+          )}
         </section>
       </div>
 
