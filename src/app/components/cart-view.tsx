@@ -11,6 +11,8 @@ import { api } from "@/convex/_generated/api";
 import { useQuery } from "convex/react";
 import { Id } from "@/convex/_generated/dataModel";
 import type { Product } from "@/(overview)/collection/products/types";
+import { useEffect, useState } from "react";
+import type { CartItem } from "../../stores/types";
 
 export default function CartView() {
   const { loading, items, updateItemQty, removeItem, clearCart } =
@@ -20,10 +22,19 @@ export default function CartView() {
     (useQuery(api.products.getProductsByIds, {
       ids: items.map((item) => item.productId as Id<"product">),
     }) as Product[]) ?? undefined;
+  const [cartItems, setCartItems] = useState<CartItem[] | undefined>(items);
+
+  useEffect(() => {
+    setCartItems(
+      items.filter(
+        (item) => cItems?.find((c) => c._id === item.productId)?.quantity !== 0,
+      ),
+    );
+  }, [cItems, items]);
 
   if (loading) return <Loading />;
 
-  if (items.length === 0) {
+  if (cartItems?.length === 0) {
     return (
       <div className="flex-1 flex justify-around items-center-safe">
         <div className="space-y-3 md:space-y-5 flex flex-col items-center-safe xl:w-[80%]">
@@ -104,48 +115,55 @@ export default function CartView() {
                       <div className="absolute inset-0 bg-white/30 backdrop-blur-[2px] z-2 animate-pulse" />
                     )}
 
-                    <QuantityInput
-                      quantity={
-                        (
-                          cItems?.find((prod) => prod._id === item.productId)
-                            ?.quantity === 0
-                        ) ?
-                          0
-                        : item.productQty
-                      }
-                      onChange={(value: number) =>
-                        updateItemQty(
-                          item,
+                    {(
+                      cItems?.find((i) => i._id === item.productId)
+                        ?.quantity === 0
+                    ) ?
+                      <p className="text-red-500 font-semibold">Out of Stock</p>
+                    : <QuantityInput
+                        quantity={
                           (
                             cItems?.find((prod) => prod._id === item.productId)
                               ?.quantity === 0
                           ) ?
                             0
-                          : value === 0 ? 1
-                          : value,
-                        )
-                      }
-                      onIncrement={() =>
-                        updateItemQty(item, item.productQty + 1)
-                      }
-                      onDecrement={() =>
-                        updateItemQty(item, item.productQty - 1)
-                      }
-                      incrementDisable={
-                        item.productQty >=
-                        ((cItems &&
-                          cItems.find((prod) => prod._id === item.productId)
-                            ?.quantity) ??
-                          1)
-                      }
-                      decrementDisable={
-                        item.productQty <=
-                        ((cItems &&
-                          cItems.find((prod) => prod._id === item.productId)
-                            ?.quantity) ||
-                          1)
-                      }
-                    />
+                          : item.productQty
+                        }
+                        onChange={(value: number) =>
+                          updateItemQty(
+                            item,
+                            (
+                              cItems?.find(
+                                (prod) => prod._id === item.productId,
+                              )?.quantity === 0
+                            ) ?
+                              0
+                            : value === 0 ? 1
+                            : value,
+                          )
+                        }
+                        onIncrement={() =>
+                          updateItemQty(item, item.productQty + 1)
+                        }
+                        onDecrement={() =>
+                          updateItemQty(item, item.productQty - 1)
+                        }
+                        incrementDisable={
+                          item.productQty >=
+                          ((cItems &&
+                            cItems.find((prod) => prod._id === item.productId)
+                              ?.quantity) ??
+                            1)
+                        }
+                        decrementDisable={
+                          item.productQty <=
+                          ((cItems &&
+                            cItems.find((prod) => prod._id === item.productId)
+                              ?.quantity) ||
+                            1)
+                        }
+                      />
+                    }
                   </div>
 
                   <p className="hidden md:block md:self-center-safe text-2xl font-semibold">
@@ -153,9 +171,13 @@ export default function CartView() {
                       style: "currency",
                       currency: "ZAR",
                     }).format(
-                      Number.isNaN(item.productPrice * item.productQty) ? 0 : (
-                        item.productPrice * item.productQty
-                      ),
+                      Number.isNaN(item.productPrice * item.productQty) ? 0
+                      : (
+                        cItems?.find((i) => i._id === item.productId)
+                          ?.quantity === 0
+                      ) ?
+                        0
+                      : item.productPrice * item.productQty,
                     )}
                   </p>
                 </div>
@@ -167,8 +189,9 @@ export default function CartView() {
         <div className="hidden lg:block lg:border-l border-stone-400 mx-5 my-3" />
         <div className="w-full px-2 pb-3 sticky bottom-0 lg:h-full bg-white lg:w-1/3 lg:top-6 border-0">
           <div className="flex flex-col space-y-3 rounded-lg border lg:border-0 border-stone-400 p-3">
-            <CartSummary items={items} />
+            <CartSummary items={cartItems ?? []} />
 
+            {/* //! TODO: move this component to the cart-summary component */}
             <p
               className="text-red-500 font-semibold hover:cursor-pointer flex flex-col w-fit group"
               onClick={() => clearCart()}>
