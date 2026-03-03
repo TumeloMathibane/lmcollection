@@ -20,7 +20,6 @@ export default function CartSummary({ items, onCartClear }: CartSummaryProps) {
       <div className="flex items-center-safe justify-between">
         <p className="text-2xl font-bold text-stone-900">Cart summary</p>
 
-        {/* //! TODO: move this component to the cart-summary component */}
         <p
           className="text-sm text-red-500 font-semibold hover:cursor-pointer flex flex-col w-fit group"
           onClick={() => onCartClear && onCartClear()}>

@@ -41,7 +41,7 @@ export default function ProductView({
     options: {},
   });
 
-  //* TODO: implement a component for notifying customer that item is added successfully
+  //! TODO: implement a component for notifying customer that item is added successfully
   const [cartRes, setCartRes] = useState<{
     success: boolean;
     action: "added" | "updated";
