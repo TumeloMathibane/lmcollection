@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import { ChangeEvent } from "react";
 import { BiMinus, BiPlus } from "react-icons/bi";
 
 interface QuantityInputProps {
@@ -19,8 +19,10 @@ export default function QuantityInput({
   onDecrement,
   incrementDisable,
 }: QuantityInputProps) {
-  const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
+    // if (!Number.isNaN(e.target.valueAsNumber)) {
     onChange(e.target.valueAsNumber);
+    // }
   };
 
   return (
@@ -37,7 +39,9 @@ export default function QuantityInput({
         value={quantity}
         onChange={handleOnChange}
         onBlur={(e) => {
-          if (e.target.value === "" || e.target.valueAsNumber < 1) onChange(1);
+          if (Number.isNaN(e.target.valueAsNumber)) {
+            onChange(1);
+          }
         }}
         className="quantity-input text-center w-1/3 p-2"
       />
