@@ -152,7 +152,11 @@ export default function CartView() {
                     {new Intl.NumberFormat("en-ZA", {
                       style: "currency",
                       currency: "ZAR",
-                    }).format(item.productPrice * item.productQty)}
+                    }).format(
+                      Number.isNaN(item.productPrice * item.productQty) ? 0 : (
+                        item.productPrice * item.productQty
+                      ),
+                    )}
                   </p>
                 </div>
               </div>
@@ -169,7 +173,7 @@ export default function CartView() {
               className="text-red-500 font-semibold hover:cursor-pointer flex flex-col w-fit group"
               onClick={() => clearCart()}>
               Clear cart{" "}
-              {`(${items?.reduce((acc, item) => item?.productQty + acc, 0)})`}{" "}
+              {`(${items?.reduce((acc, item) => (Number.isNaN(item?.productQty + acc) ? acc : item?.productQty + acc), 0)})`}{" "}
               <span className="border-b w-0 transition-all duration-500 group-hover:w-full" />
             </p>
           </div>
