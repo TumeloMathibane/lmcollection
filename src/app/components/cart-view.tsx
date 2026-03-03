@@ -34,7 +34,7 @@ export default function CartView() {
 
   if (loading) return <Loading />;
 
-  if (cartItems?.length === 0) {
+  if (items?.length === 0) {
     return (
       <div className="flex-1 flex justify-around items-center-safe">
         <div className="space-y-3 md:space-y-5 flex flex-col items-center-safe xl:w-[80%]">
@@ -188,17 +188,11 @@ export default function CartView() {
 
         <div className="hidden lg:block lg:border-l border-stone-400 mx-5 my-3" />
         <div className="w-full px-2 pb-3 sticky bottom-0 lg:h-full bg-white lg:w-1/3 lg:top-6 border-0">
-          <div className="flex flex-col space-y-3 rounded-lg border lg:border-0 border-stone-400 p-3">
-            <CartSummary items={cartItems ?? []} />
-
-            {/* //! TODO: move this component to the cart-summary component */}
-            <p
-              className="text-red-500 font-semibold hover:cursor-pointer flex flex-col w-fit group"
-              onClick={() => clearCart()}>
-              Clear cart{" "}
-              {`(${items?.reduce((acc, item) => (Number.isNaN(item?.productQty + acc) ? acc : item?.productQty + acc), 0)})`}{" "}
-              <span className="border-b w-0 transition-all duration-500 group-hover:w-full" />
-            </p>
+          <div className="flex flex-col space-y-2 rounded-lg border lg:border-0 border-stone-400 p-3">
+            <CartSummary
+              items={cartItems ?? []}
+              onCartClear={() => clearCart()}
+            />
           </div>
         </div>
       </div>
