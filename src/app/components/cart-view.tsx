@@ -7,10 +7,19 @@ import Image from "next/image";
 import QuantityInput from "./quantity-input";
 import CartSummary from "./ui/cart/cart-summary";
 import Loading from "../(overview)/cart/loading";
+import { api } from "@/convex/_generated/api";
+import { useQuery } from "convex/react";
+import { Id } from "@/convex/_generated/dataModel";
+import type { Product } from "@/(overview)/collection/products/types";
 
 export default function CartView() {
   const { loading, items, updateItemQty, removeItem, clearCart } =
     useCartStore();
+
+  const cItems: Product[] | undefined =
+    (useQuery(api.products.getProductsByIds, {
+      ids: items.map((item) => item.productId as Id<"product">),
+    }) as Product[]) ?? undefined;
 
   if (loading) return <Loading />;
 
@@ -90,11 +99,31 @@ export default function CartView() {
                 </div>
 
                 <div className="md:flex justify-between md:w-full">
-                  <div className="w-30">
+                  <div className="w-30 relative">
+                    {!cItems && (
+                      <div className="absolute inset-0 bg-white/30 backdrop-blur-[2px] z-2 animate-pulse" />
+                    )}
+
                     <QuantityInput
-                      quantity={item.productQty}
+                      quantity={
+                        (
+                          cItems?.find((prod) => prod._id === item.productId)
+                            ?.quantity === 0
+                        ) ?
+                          0
+                        : item.productQty
+                      }
                       onChange={(value: number) =>
-                        updateItemQty(item, value ?? 1)
+                        updateItemQty(
+                          item,
+                          (
+                            cItems?.find((prod) => prod._id === item.productId)
+                              ?.quantity === 0
+                          ) ?
+                            0
+                          : value === 0 ? 1
+                          : value,
+                        )
                       }
                       onIncrement={() =>
                         updateItemQty(item, item.productQty + 1)
@@ -102,8 +131,20 @@ export default function CartView() {
                       onDecrement={() =>
                         updateItemQty(item, item.productQty - 1)
                       }
-                      incrementDisable={item.productQty >= 99}
-                      decrementDisable={item.productQty <= 1}
+                      incrementDisable={
+                        item.productQty >=
+                        ((cItems &&
+                          cItems.find((prod) => prod._id === item.productId)
+                            ?.quantity) ??
+                          1)
+                      }
+                      decrementDisable={
+                        item.productQty <=
+                        ((cItems &&
+                          cItems.find((prod) => prod._id === item.productId)
+                            ?.quantity) ||
+                          1)
+                      }
                     />
                   </div>
 
