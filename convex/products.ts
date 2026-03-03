@@ -185,6 +185,30 @@ export const getProducts = query({
   },
 });
 
+export const getProductsByIds = query({
+  args: { ids: v.array(v.id("product")) },
+  handler: async (ctx, args) => {
+    const products = await Promise.all(
+      args.ids.map((id) => ctx.db.get("product", id)),
+    );
+
+    return await Promise.all(
+      products.map(async (product) => {
+        if (!product) return null;
+
+        const imgUrls = await Promise.all(
+          product.images.map(async (imgId) => {
+            const url = await ctx.storage.getUrl(imgId as Id<"_storage">);
+            return url as string;
+          }),
+        );
+
+        return { ...product, images: imgUrls };
+      }),
+    );
+  },
+});
+
 export const searchProducts = query({
   args: { searchTerm: v.string(), limit: v.optional(v.number()) },
   handler: async (ctx, args) => {
