@@ -11,8 +11,6 @@ import { api } from "@/convex/_generated/api";
 import { useQuery } from "convex/react";
 import { Id } from "@/convex/_generated/dataModel";
 import type { Product } from "@/(overview)/collection/products/types";
-import { useEffect, useState } from "react";
-import type { CartItem } from "../../stores/types";
 
 export default function CartView() {
   const { loading, items, updateItemQty, removeItem, clearCart } =
@@ -22,15 +20,6 @@ export default function CartView() {
     (useQuery(api.products.getProductsByIds, {
       ids: items.map((item) => item.productId as Id<"product">),
     }) as Product[]) ?? undefined;
-  const [cartItems, setCartItems] = useState<CartItem[] | undefined>(items);
-
-  useEffect(() => {
-    setCartItems(
-      items.filter(
-        (item) => cItems?.find((c) => c._id === item.productId)?.quantity !== 0,
-      ),
-    );
-  }, [cItems, items]);
 
   if (loading) return <Loading />;
 
@@ -138,7 +127,6 @@ export default function CartView() {
                               )?.quantity === 0
                             ) ?
                               0
-                            : value === 0 ? 1
                             : value,
                           )
                         }
@@ -190,7 +178,10 @@ export default function CartView() {
         <div className="w-full px-2 pb-3 sticky bottom-0 lg:h-full bg-white lg:w-1/3 lg:top-6 border-0">
           <div className="flex flex-col space-y-2 rounded-lg border lg:border-0 border-stone-400 p-3">
             <CartSummary
-              items={cartItems ?? []}
+              items={items.filter(
+                (item) =>
+                  cItems?.find((i) => i._id === item.productId)?.quantity !== 0,
+              )}
               onCartClear={() => clearCart()}
             />
           </div>
