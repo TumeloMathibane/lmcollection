@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useMemo } from "react";
 import { useCartStore } from "../../stores/cart";
 import Link from "next/link";
 import { BiX } from "react-icons/bi";
@@ -7,21 +8,38 @@ import Image from "next/image";
 import QuantityInput from "./quantity-input";
 import CartSummary from "./ui/cart/cart-summary";
 import Loading from "../(overview)/cart/loading";
-import { api } from "@/convex/_generated/api";
 import { useQuery } from "convex/react";
+import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
-import type { Product } from "@/(overview)/collection/products/types";
 
 export default function CartView() {
   const { loading, items, updateItemQty, removeItem, clearCart } =
     useCartStore();
 
-  const cItems: Product[] | undefined =
-    (useQuery(api.products.getProductsByIds, {
-      ids: items.map((item) => item.productId as Id<"product">),
-    }) as Product[]) ?? undefined;
+  const products = useQuery(api.products.getProductsByIds, {
+    ids: items.map((i) => i.productId as Id<"product">),
+  });
 
-  if (loading) return <Loading />;
+  const productsById = useMemo(
+    () =>
+      new Map(
+        (products ?? [])
+          .filter((product) => product !== null)
+          .map((product) => [product._id, product]),
+      ),
+    [products],
+  );
+
+  useEffect(() => {
+    items.forEach((item) => {
+      const dbQty = productsById.get(item.productId as Id<"product">)?.quantity;
+      if (dbQty === 0 && item.productQty !== 1) {
+        updateItemQty(item, 1);
+      }
+    });
+  }, [items, productsById, updateItemQty]);
+
+  if (loading || (items.length > 0 && !products)) return <Loading />;
 
   if (items?.length === 0) {
     return (
@@ -46,7 +64,7 @@ export default function CartView() {
 
       <div className="flex-1 flex flex-col lg:flex-row lg:w-full">
         <div className="flex-1 p-3 lg:p-5 lg:w-2/3">
-          {items.map((item, key) => (
+          {items?.map((item, key) => (
             <div
               key={key}
               className="w-full py-5 flex border-t first:border-0 border-stone-400 space-x-3 md:space-x-5 xl:space-x-10">
@@ -98,76 +116,37 @@ export default function CartView() {
                   )}
                 </div>
 
-                <div className="md:flex justify-between md:w-full">
-                  <div className="w-30 relative">
-                    {!cItems && (
-                      <div className="absolute inset-0 bg-white/30 backdrop-blur-[2px] z-2 animate-pulse" />
-                    )}
+                <div className="flex justify-between items-center-safe md:w-full">
+                  {(
+                    (productsById.get(item.productId as Id<"product">)
+                      ?.quantity ?? 0) > 0
+                  ) ?
+                    <>
+                      <div className="w-30 relative">
+                        <QuantityInput
+                          quantity={item.productQty}
+                          onChange={(value: number) =>
+                            updateItemQty(item, value)
+                          }
+                          onIncrement={() =>
+                            updateItemQty(item, item.productQty + 1)
+                          }
+                          onDecrement={() =>
+                            updateItemQty(item, item.productQty - 1)
+                          }
+                          incrementDisable={item.productQty >= 99}
+                          decrementDisable={item.productQty <= 1}
+                        />
+                      </div>
 
-                    {(
-                      cItems?.find((i) => i._id === item.productId)
-                        ?.quantity === 0
-                    ) ?
-                      <p className="text-red-500 font-semibold">Out of Stock</p>
-                    : <QuantityInput
-                        quantity={
-                          (
-                            cItems?.find((prod) => prod._id === item.productId)
-                              ?.quantity === 0
-                          ) ?
-                            0
-                          : item.productQty
-                        }
-                        onChange={(value: number) =>
-                          updateItemQty(
-                            item,
-                            (
-                              cItems?.find(
-                                (prod) => prod._id === item.productId,
-                              )?.quantity === 0
-                            ) ?
-                              0
-                            : value,
-                          )
-                        }
-                        onIncrement={() =>
-                          updateItemQty(item, item.productQty + 1)
-                        }
-                        onDecrement={() =>
-                          updateItemQty(item, item.productQty - 1)
-                        }
-                        incrementDisable={
-                          item.productQty >=
-                          ((cItems &&
-                            cItems.find((prod) => prod._id === item.productId)
-                              ?.quantity) ??
-                            1)
-                        }
-                        decrementDisable={
-                          item.productQty <=
-                          ((cItems &&
-                            cItems.find((prod) => prod._id === item.productId)
-                              ?.quantity) ||
-                            1)
-                        }
-                      />
-                    }
-                  </div>
-
-                  <p className="hidden md:block md:self-center-safe text-2xl font-semibold">
-                    {new Intl.NumberFormat("en-ZA", {
-                      style: "currency",
-                      currency: "ZAR",
-                    }).format(
-                      Number.isNaN(item.productPrice * item.productQty) ? 0
-                      : (
-                        cItems?.find((i) => i._id === item.productId)
-                          ?.quantity === 0
-                      ) ?
-                        0
-                      : item.productPrice * item.productQty,
-                    )}
-                  </p>
+                      <p>
+                        {new Intl.NumberFormat("en-ZA", {
+                          style: "currency",
+                          currency: "ZAR",
+                        }).format(item.productPrice * item.productQty)}
+                      </p>
+                    </>
+                  : <p className="text-red-600 font-semibold">Out of stock</p>}
                 </div>
               </div>
             </div>
@@ -179,8 +158,9 @@ export default function CartView() {
           <div className="flex flex-col space-y-2 rounded-lg border lg:border-0 border-stone-400 p-3">
             <CartSummary
               items={items.filter(
-                (item) =>
-                  cItems?.find((i) => i._id === item.productId)?.quantity !== 0,
+                (i) =>
+                  (productsById.get(i.productId as Id<"product">)?.quantity ??
+                    0) > 0,
               )}
               onCartClear={() => clearCart()}
             />

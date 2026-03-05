@@ -1,21 +1,22 @@
 "use client";
 
-import React, { ChangeEvent, MouseEvent, useEffect, useState } from "react";
+import { ChangeEvent, MouseEvent, useEffect, useMemo, useState } from "react";
 import { generatePaymentId, generateSignature } from "../utils/helper";
-import OrderSummaryWidget, { OrderSummary } from "./order-summary";
 import { BiCheck, BiLoaderAlt } from "react-icons/bi";
 import { DeliveryPackage } from "./delivery-option";
 import { CheckoutFooter } from "./footer";
+import { MdErrorOutline } from "react-icons/md";
 import { useCartStore } from "../../stores/cart";
 import { useQuery } from "convex/react";
 import { states } from "../lib/sa_provinces.json";
 import { api } from "@/convex/_generated/api";
+import { Id } from "@/convex/_generated/dataModel";
+import OrderSummaryWidget, { OrderSummary } from "./order-summary";
 import DeliverySelector from "./checkout/delivery-selector";
-import Image from "next/image";
 import Loading from "../(payments)/payments/checkout/loading";
-import { MdErrorOutline } from "react-icons/md";
+import Image from "next/image";
 
-type MerchantProp = {
+export type MerchantProp = {
   m_key: string;
   m_id: string;
   passphrase?: string;
@@ -30,7 +31,41 @@ export default function CheckoutMain({
   formAction,
   gatewayURL,
 }: MerchantProp) {
-  const { items, getTotalPrice } = useCartStore();
+  const { items } = useCartStore();
+
+  const cItems = useQuery(api.products.getProductsByIds, {
+    ids: items.map((i) => i.productId as Id<"product">),
+  });
+
+  const cItemsById = useMemo(
+    () =>
+      new Map(
+        (cItems ?? [])
+          .filter((item) => item !== null)
+          .map((item) => [item._id, item]),
+      ),
+    [cItems],
+  );
+
+  const availableItems = useMemo(
+    () =>
+      items.filter(
+        (item) =>
+          (cItemsById.get(item.productId as Id<"product">)?.quantity ?? 0) > 0,
+      ),
+    [items, cItemsById],
+  );
+
+  const outOfStockCount = items.length - availableItems.length;
+
+  const availableSubtotal = useMemo(
+    () =>
+      availableItems.reduce(
+        (total, item) => total + item.productPrice * item.productQty,
+        0,
+      ),
+    [availableItems],
+  );
 
   const [cartTotal, setCartTotal] = useState<number>(0);
 
@@ -193,7 +228,7 @@ export default function CheckoutMain({
             data?.cell_number !== "" ? data?.cell_number : data?.email_address,
         },
         shipping_details: shippingData,
-        items: items,
+        items: availableItems,
       };
       localStorage.setItem("orderData", JSON.stringify(orderData));
       e.currentTarget.form?.submit();
@@ -201,7 +236,9 @@ export default function CheckoutMain({
     }
   };
 
-  useEffect(() => setCartTotal(getTotalPrice), [getTotalPrice]);
+  useEffect(() => {
+    setCartTotal(availableSubtotal + shippingData.price);
+  }, [availableSubtotal, shippingData.price]);
 
   // add item_name field
   useEffect(() => {
@@ -221,11 +258,6 @@ export default function CheckoutMain({
       amount: Number(cartTotal.toFixed(2)),
     }));
   }, [cartTotal]);
-
-  // update total amount to be paid by customer when shipping method changes
-  useEffect(() => {
-    setCartTotal(getTotalPrice() + shippingData.price);
-  }, [shippingData, getTotalPrice]);
 
   // generate payment id and add to payment data object
   useEffect(() => {
@@ -248,7 +280,7 @@ export default function CheckoutMain({
     }
   }, [data]);
 
-  if (!items || cartTotal === 0 || getTotalPrice() === 0) return <Loading />;
+  if (!items || !cItems) return <Loading />;
 
   return (
     <main className="bg-transparent flex-1 flex flex-col">
@@ -256,7 +288,7 @@ export default function CheckoutMain({
         <OrderSummaryWidget
           shippingPrice={shippingData?.price}
           cartTotal={cartTotal}
-          items={items}
+          items={availableItems}
           coupon={coupon}
           onCouponChange={(e) => setCoupon(e.target?.value)}
         />
@@ -289,7 +321,7 @@ export default function CheckoutMain({
                   onChange={handleInputChange}
                 />
               </div>
-              <div className="border-y border-stone-300 py-2 sm:border-0 sm:py-0 sm:flex lg:space-x-2 lg:space-y-0">
+              <div className="border-y border-stone-300 py-2 sm:border-0 sm:py-0 sm:flex lg:space-y-0">
                 <input
                   type="email"
                   name="email_address"
@@ -306,7 +338,7 @@ export default function CheckoutMain({
                   type="text"
                   name="cell_number"
                   id="cell_number"
-                  className="input input-md w-full focus:outline-offset-0 focus:outline-0 focus:border-2 focus:border-blue-600 sm:w-36"
+                  className="input input-md w-full focus:outline-offset-0 focus:outline-0 focus:border-2 focus:border-blue-600 sm:w-38"
                   placeholder="Cellphone number"
                   value={data.cell_number}
                   onChange={handleInputChange}
@@ -348,7 +380,7 @@ export default function CheckoutMain({
                   type="text"
                   name="postal_code"
                   id="postal_code"
-                  className="input input-md w-full focus:outline-offset-0 focus:outline-0 focus:border-2 focus:border-blue-600 sm:w-25"
+                  className="input input-md w-full focus:outline-offset-0 focus:outline-0 focus:border-2 focus:border-blue-600 sm:w-27"
                   placeholder="Postal Code"
                   value={data.postal_code}
                   onChange={handleInputChange}
@@ -472,9 +504,15 @@ export default function CheckoutMain({
 
             <div className="lg:hidden space-y-4">
               <p className="text-2xl font-bold text-stone-900">Order summary</p>
+              {outOfStockCount > 0 && (
+                <p className="text-sm font-semibold text-red-600">
+                  {outOfStockCount} item{outOfStockCount > 1 ? "s are" : " is"}{" "}
+                  out of stock and excluded from checkout.
+                </p>
+              )}
               <div>
                 <OrderSummary
-                  items={items}
+                  items={availableItems}
                   cartTotal={cartTotal}
                   shippingPrice={shippingData.price}
                   coupon={coupon}
@@ -509,7 +547,9 @@ export default function CheckoutMain({
                   validateInput(e);
                 }}
                 disabled={
-                  shippingData.method === "" || status === "validating"
+                  shippingData.method === "" ||
+                  status === "validating" ||
+                  availableItems.length === 0
                 }>
                 {status === "error" ?
                   <>
@@ -539,8 +579,14 @@ export default function CheckoutMain({
         {/* !! THIS WILL BE DISPLAYED ON LARGE DISPLAY !! */}
         <div className="hidden lg:block lg:w-1/2 h-screen sticky top-0 bg-stone-100 lg:border-l border-stone-300">
           <div className="space-y-4 p-10 max-w-[550px]">
+            {outOfStockCount > 0 && (
+              <p className="text-sm font-semibold text-red-600">
+                {outOfStockCount} item{outOfStockCount > 1 ? "s are" : " is"}{" "}
+                out of stock and excluded from checkout.
+              </p>
+            )}
             <OrderSummary
-              items={items}
+              items={availableItems}
               cartTotal={cartTotal}
               shippingPrice={shippingData.price}
               coupon={coupon}
