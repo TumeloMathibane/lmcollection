@@ -15,6 +15,7 @@ import OrderSummaryWidget, { OrderSummary } from "./order-summary";
 import DeliverySelector from "./checkout/delivery-selector";
 import Loading from "../(payments)/payments/checkout/loading";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 export type MerchantProp = {
   m_key: string;
@@ -118,6 +119,9 @@ export default function CheckoutMain({
     "" | "validating" | "validated" | "error"
   >("");
   // const [error, setError] = useState<string | null>(null);
+
+  const router = useRouter();
+  const previousURL = document.referrer;
 
   const handleInputChange = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
@@ -280,7 +284,23 @@ export default function CheckoutMain({
     }
   }, [data]);
 
-  if (!items || !cItems) return <Loading />;
+  if (
+    previousURL === "" ||
+    !previousURL.includes("/cart") ||
+    items.length === 0
+  ) {
+    router.push("/cart");
+
+    return (
+      <div className="flex-1 flex justify-center-safe items-center-safe">
+        <p>Redirecting to cart...</p>
+      </div>
+    );
+  }
+
+  if (!items || !cItems) {
+    return <Loading />;
+  }
 
   return (
     <main className="bg-transparent flex-1 flex flex-col">
