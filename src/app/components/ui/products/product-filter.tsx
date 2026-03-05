@@ -1,8 +1,8 @@
-import { useDebounce } from "@/hooks/useDebouce";
 import { useEffect, useState } from "react";
 import { BsChevronDown, BsX } from "react-icons/bs";
-import { FaFilter } from "react-icons/fa";
+import { useDebounce } from "@/hooks/useDebouce";
 import { useRouter } from "next/navigation";
+import { FaFilter } from "react-icons/fa";
 
 export interface Filter {
   availability?: string;
@@ -100,6 +100,8 @@ export default function ProductFilter({ heading, noOfProducts }: FilterProps) {
     Object.entries(selectedFilters ?? {}).forEach(
       ([key, value]) =>
         value !== undefined &&
+        value !== null &&
+        value !== "" &&
         !Number.isNaN(value) &&
         (sParams += `${key}=${value}&`),
     );
@@ -137,6 +139,8 @@ export default function ProductFilter({ heading, noOfProducts }: FilterProps) {
           Object.entries(selectedFilters).map(
             ([key, value]) =>
               value !== undefined &&
+              value !== null &&
+              value !== "" &&
               !Number.isNaN(value) && (
                 <div
                   key={key}
