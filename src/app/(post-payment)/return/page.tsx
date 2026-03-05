@@ -1,10 +1,11 @@
 "use client";
 
-import { useCartStore } from "../../../stores/cart";
-import { useState } from "react";
-import { useMutation } from "convex/react";
-import { api } from "@/convex/_generated/api";
+import { useEffect, useState } from "react";
 import { BsCheckCircle } from "react-icons/bs";
+import { useCartStore } from "../../../stores/cart";
+import { useMutation } from "convex/react";
+import { useRouter } from "next/navigation";
+import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
 
 export default function Page() {
@@ -15,7 +16,10 @@ export default function Page() {
   const createOrder = useMutation(api.orders.createOrder);
   const purchaseProduct = useMutation(api.products.purchaseProduct);
 
-  useState(() => {
+  // const previousPageUrl = document.referrer;
+  // console.log(`Previously visited page URL: ${previousPageUrl}`);
+
+  useEffect(() => {
     const fetchPaymentStatus = async () => {
       try {
         const response = await fetch(
@@ -31,7 +35,7 @@ export default function Page() {
         );
 
         const data = await response.json();
-        console.log("Payment status response:", data);
+        // console.log("Payment status response:", data);
         setPaymentStatus(data.message);
 
         if (data.message === "PASS") {
@@ -44,7 +48,7 @@ export default function Page() {
 
           // update products' quantities in the database
           const { items } = orderData ? JSON.parse(orderData) : { items: [] };
-          console.log("Order items to clear from cart:", items);
+          // console.log("Order items to clear from cart:", items);
           for (const item of items) {
             purchaseProduct({
               id: item.productId as Id<"product">,
@@ -60,7 +64,18 @@ export default function Page() {
     };
 
     fetchPaymentStatus();
-  });
+  }, [clearCart, createOrder, purchaseProduct]);
+
+  const router = useRouter();
+  const previousPageUrl = document.referrer;
+  if (!previousPageUrl.includes("payfast.co.za")) {
+    router.push("/");
+    return (
+      <div className="flex-1 flex items-center-safe justify-center-safe">
+        <p className="text-stone-900">Redirecting to home...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="flex-1 flex flex-col min-h-[75dvh]">
