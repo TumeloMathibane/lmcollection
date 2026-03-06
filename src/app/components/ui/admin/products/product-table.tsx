@@ -38,7 +38,7 @@ export default function ProductTable({ viewing }: { viewing?: boolean }) {
   const handleUpdatedProduct = async (id: Id<"product">) => {
     try {
       await updateProd({
-        _id: id,
+        id: id,
         brand: product?.brand,
         name: product?.name,
         price: product?.price,
