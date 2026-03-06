@@ -295,11 +295,9 @@ export default function CheckoutMain({
     (typeof window !== "undefined" && previousURL === "") ||
     !previousURL.includes("/cart")
   ) {
-    // router.push(items.length === 0 ? "/" : "/cart");
-
     return (
       <div className="flex-1 flex justify-center-safe items-center-safe">
-        <p>Redirecting to cart...</p>
+        <p>Redirecting to {items.length === 0 ? "home" : "cart"}...</p>
       </div>
     );
   }
