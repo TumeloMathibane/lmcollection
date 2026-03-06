@@ -63,8 +63,8 @@ export default function OrderSummaryWidget({
       <div
         className={`transition-all duration-500 ${open ? "pb-3 max-h-[100em] z-0 border-b border-stone-300" : "border-0 border-stone-300 max-h-0 -z-10"}`}>
         <div className="space-y-4 p-3 md:w-[750px] md:place-self-center">
-          {items?.map((item, key) => (
-            <div key={key}>
+          {items?.map((item) => (
+            <div key={item?.productId}>
               <ItemCard item={item} />
             </div>
           ))}
@@ -167,8 +167,8 @@ export function OrderSummary({
   return (
     <>
       <div className="space-y-4">
-        {items?.map((item, key) => (
-          <div key={key}>
+        {items?.map((item) => (
+          <div key={item?.productId}>
             <ItemCard item={item} />
           </div>
         ))}

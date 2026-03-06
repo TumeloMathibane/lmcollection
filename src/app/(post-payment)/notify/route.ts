@@ -1,5 +1,4 @@
 import { generatePaymentId } from "@/utils/helper";
-import axios from "axios";
 import md5 from "md5";
 import dns from "node:dns/promises";
 
@@ -57,18 +56,22 @@ export async function POST(req: Request) {
       Number(pfObject["amount_gross"]),
       process.env.PAYGATE_SALT_PASSPHRASE,
     );
-    // console.log(
-    //   `(${pfObject["amount_gross"]}) Generated paymentId: `,
-    //   newPaymentId,
-    // );
+
     const check_amount = newPaymentId === pfObject["m_payment_id"];
 
     //* check no. 4: verify information received from gateway and confirming the order with the server before confirming the order with the client...
-    const verifyRes = await axios.post(
+    const verifyRes = await fetch(
       "https://sandbox.payfast.co.za/eng/query/validate",
-      pfString,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: pfString,
+      },
     );
-    const check_info = verifyRes.data === "VALID";
+    const verifyResText = await verifyRes.text();
+    const check_info = verifyResText === "VALID";
 
     if (check_signature && check_host && check_amount && check_info) {
       paymentValidation = "PASS";
