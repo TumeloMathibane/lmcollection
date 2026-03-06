@@ -16,8 +16,9 @@ export default function Page() {
   const createOrder = useMutation(api.orders.createOrder);
   const purchaseProduct = useMutation(api.products.purchaseProduct);
 
-  // const previousPageUrl = document.referrer;
-  // console.log(`Previously visited page URL: ${previousPageUrl}`);
+  const router = useRouter();
+  const previousPageUrl =
+    typeof window !== "undefined" ? document.referrer : "";
 
   useEffect(() => {
     const fetchPaymentStatus = async () => {
@@ -66,13 +67,16 @@ export default function Page() {
     fetchPaymentStatus();
   }, [clearCart, createOrder, purchaseProduct]);
 
-  const router = useRouter();
-  const previousPageUrl = document.referrer;
+  useEffect(() => {
+    if (!previousPageUrl.includes("payfast.co.za")) {
+      router.push("/cart");
+    }
+  }, [router, previousPageUrl]);
+
   if (!previousPageUrl.includes("payfast.co.za")) {
-    router.push("/");
     return (
       <div className="flex-1 flex items-center-safe justify-center-safe">
-        <p className="text-stone-900">Redirecting to home...</p>
+        <p className="text-stone-900">Redirecting to cart...</p>
       </div>
     );
   }
