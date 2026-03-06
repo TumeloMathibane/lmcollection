@@ -11,6 +11,7 @@ export default function Checkout() {
   const passphrase = process.env.PAYGATE_SALT_PASSPHRASE;
   const formActionURL = process.env.PAYGATE_TEST_URL ?? "";
 
+  // https://d1r891fk-4000.eun1.devtunnels.ms/ url changes based on developers devtunnel config
   const gatewayURL = {
     return:
       process.env.VERCEL_ENV === "production" ?
