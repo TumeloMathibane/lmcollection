@@ -287,9 +287,9 @@ export default function CheckoutMain({
 
   useEffect(() => {
     if (typeof window !== "undefined" && !previousURL.includes("/cart")) {
-      router.push(items.length === 0 ? "/" : "/cart");
+      router.push("/cart");
     }
-  }, [items, router, previousURL]);
+  }, [router, previousURL]);
 
   if (!items || !cItems) {
     return <Loading />;
@@ -301,11 +301,7 @@ export default function CheckoutMain({
   ) {
     return (
       <div className="flex-1 flex justify-center-safe items-center-safe">
-        <p>
-          Redirecting to{" "}
-          {items.length !== 0 ? "cart" : items.length === 0 && "home"}
-          ...
-        </p>
+        <p>Redirecting to cart...</p>
       </div>
     );
   }

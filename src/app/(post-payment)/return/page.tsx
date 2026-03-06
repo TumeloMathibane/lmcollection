@@ -74,7 +74,10 @@ export default function Page() {
     }
   }, [router, previousPageUrl]);
 
-  if (!previousPageUrl.includes("payfast.co.za")) {
+  if (
+    typeof window !== "undefined" &&
+    !previousPageUrl.includes("payfast.co.za")
+  ) {
     return (
       <div className="flex-1 flex items-center-safe justify-center-safe">
         <p className="text-stone-900">Redirecting to cart...</p>
