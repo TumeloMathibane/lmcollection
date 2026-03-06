@@ -286,24 +286,28 @@ export default function CheckoutMain({
   }, [data]);
 
   useEffect(() => {
-    if (!previousURL.includes("/cart")) {
+    if (typeof window !== "undefined" && !previousURL.includes("/cart")) {
       router.push(items.length === 0 ? "/" : "/cart");
     }
   }, [items, router, previousURL]);
 
+  if (!items || !cItems) {
+    return <Loading />;
+  }
+
   if (
-    (typeof window !== "undefined" && previousURL === "") ||
-    !previousURL.includes("/cart")
+    typeof window !== "undefined" &&
+    (previousURL === "" || !previousURL.includes("/cart"))
   ) {
     return (
       <div className="flex-1 flex justify-center-safe items-center-safe">
-        <p>Redirecting to {items.length === 0 ? "home" : "cart"}...</p>
+        <p>
+          Redirecting to{" "}
+          {items.length !== 0 ? "cart" : items.length === 0 && "home"}
+          ...
+        </p>
       </div>
     );
-  }
-
-  if (!items || !cItems) {
-    return <Loading />;
   }
 
   return (
