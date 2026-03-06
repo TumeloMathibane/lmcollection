@@ -20,6 +20,7 @@ export default function Page() {
   const previousPageUrl =
     typeof window !== "undefined" ? document.referrer : "";
 
+  // https://d1r891fk-4000.eun1.devtunnels.ms/ url changes based on developers devtunnel config
   useEffect(() => {
     const fetchPaymentStatus = async () => {
       try {
