@@ -121,7 +121,8 @@ export default function CheckoutMain({
   // const [error, setError] = useState<string | null>(null);
 
   const router = useRouter();
-  const previousURL = document.referrer;
+  const previousURL =
+    typeof window !== "undefined" ? window.document.referrer : "";
 
   const handleInputChange = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
@@ -284,12 +285,17 @@ export default function CheckoutMain({
     }
   }, [data]);
 
+  useEffect(() => {
+    if (!previousURL.includes("/cart")) {
+      router.push(items.length === 0 ? "/" : "/cart");
+    }
+  }, [items, router, previousURL]);
+
   if (
-    previousURL === "" ||
-    !previousURL.includes("/cart") ||
-    items.length === 0
+    (typeof window !== "undefined" && previousURL === "") ||
+    !previousURL.includes("/cart")
   ) {
-    router.push("/cart");
+    // router.push(items.length === 0 ? "/" : "/cart");
 
     return (
       <div className="flex-1 flex justify-center-safe items-center-safe">
