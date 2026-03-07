@@ -28,8 +28,6 @@ export default function AdditionalInfo({
   };
 
   const handleAddField = () => {
-    console.log("Adding field...", info);
-
     if (onAddField) {
       onAddField();
     }

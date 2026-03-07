@@ -309,11 +309,6 @@ export default function AddProductForm() {
       ],
     }));
 
-    console.log(
-      "...prodFormData after adding additional_options: ",
-      prodFormData,
-    );
-
     setField({
       label: "",
       type: "",
