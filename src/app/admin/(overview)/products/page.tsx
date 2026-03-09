@@ -8,7 +8,13 @@ export const metadata: Metadata = {
   description: "Manage your product listings",
 };
 
-export default async function Home() {
+export default async function Home({
+  searchParams,
+}: {
+  searchParams: Promise<{ edit?: string; view?: string }>;
+}) {
+  const { view, edit } = await searchParams;
+
   return (
     <main className="w-full space-y-4 flex flex-col p-4">
       <section className="flex flex-col">
@@ -31,7 +37,10 @@ export default async function Home() {
       </section>
 
       <section className="h-[80dvh] overflow-y-auto border-b border-stone-200">
-        <ProductTable viewing={false} />
+        <ProductTable
+          searchParams={{ view: view, edit: edit }}
+          viewing={false}
+        />
       </section>
     </main>
   );

@@ -6,7 +6,13 @@ import { Card } from "@/components/ui/admin/cards";
 import { api } from "@/convex/_generated/api";
 import Link from "next/link";
 
-export default async function Home() {
+export default async function Home({
+  searchParams,
+}: {
+  searchParams: Promise<{ view?: string; edit?: string }>;
+}) {
+  const { view, edit } = await searchParams;
+
   let products: Product[] | undefined;
   try {
     products = await fetchQuery(api.products.getProducts, {});
@@ -60,7 +66,7 @@ export default async function Home() {
           </h1>
 
           <div className="w-full max-h-[65dvh] overflow-y-auto z-1 border-b border-stone-300">
-            <ProductTable viewing={true} />
+            <ProductTable searchParams={{ view, edit }} viewing={true} />
           </div>
         </div>
       </section>

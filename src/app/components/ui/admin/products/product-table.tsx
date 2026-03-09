@@ -4,19 +4,24 @@ import type { Product } from "@/(overview)/collection/products/types";
 import { api } from "@/convex/_generated/api";
 import { useMutation, useQuery } from "convex/react";
 import { dynamicPricedItem } from "@/utils/helper";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { BiX } from "react-icons/bi";
 import ImageWithFallback from "@/components/image-with-fallback";
 import { Id } from "@/convex/_generated/dataModel";
 
-export default function ProductTable({ viewing }: { viewing?: boolean }) {
+export default function ProductTable({
+  searchParams,
+  viewing,
+}: {
+  searchParams?: { view?: string; edit?: string };
+  viewing?: boolean;
+}) {
   const products: Product[] | undefined = useQuery(
     api.products.getProducts,
     {},
   );
 
-  const searchParams = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();
   const [product, setProduct] = useState<Product | undefined>(undefined);
@@ -60,11 +65,13 @@ export default function ProductTable({ viewing }: { viewing?: boolean }) {
     }
   };
 
+  //! FIXME: possible change from effect to if condition
   useEffect(() => {
-    const viewId = searchParams.get(viewing ? "view" : "edit");
+    const viewId = searchParams?.edit ?? searchParams?.view;
 
     if (viewId) {
       const foundProduct = products?.find((p) => p._id === viewId);
+      // console.log("Found product:", foundProduct);
 
       if (foundProduct) {
         setProduct(foundProduct);
