@@ -419,14 +419,35 @@ export default function ProductView({
               </div>
             </div> */}
 
-            <div className="flex flex-col justify-between space-y-4 w-full">
+            <div className="flex flex-col justify-between space-y-5 w-full pb-5">
               {product?.shortDescription && (
-                <div className="space-y-2 md:w-fit pb-5">
+                <div className="space-y-2 md:w-fit">
                   <p className="border-b border-stone-900 pb-2 text-lg font-bold">
                     Description
                   </p>
                   <p className="text-justify">{product?.shortDescription}</p>
                 </div>
+              )}
+
+              {/* ...followed by text/bulletpoints form of additional option/info */}
+              {additional_options?.map((opt, idx) =>
+                opt?.type === "text" ?
+                  <div key={idx} className="space-y-2 md:w-fit">
+                    <p className="border-b border-stone-900 pb-2 text-lg font-bold">
+                      {opt?.label}
+                    </p>
+
+                    <div>{opt?.value}</div>
+                  </div>
+                : opt?.type === "bulletpoints" ?
+                  <div key={idx} className="space-y-2 md:w-fit">
+                    <p className="border-b border-stone-900 pb-2 text-lg font-bold">
+                      {opt?.label}
+                    </p>
+
+                    <div>{opt?.value}</div>
+                  </div>
+                : null,
               )}
             </div>
           </div>
