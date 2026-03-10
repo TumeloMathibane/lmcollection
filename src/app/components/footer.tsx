@@ -52,8 +52,8 @@ export default function Footer() {
       </div>
 
       <div className="items-center text-center text-stone-400 py-2 border-t border-stone-600">
-        {/* <p>Copyright &copy; {date.getFullYear()} by LMCollection</p> */}
-        <p>Copyright &copy; {date.getFullYear()} by Tumelo... lol!</p>
+        <p>Copyright &copy; {date.getFullYear()} by LMCollection</p>
+        {/* <p>Copyright &copy; {date.getFullYear()} by Tumelo... lol!</p> */}
       </div>
     </footer>
   );

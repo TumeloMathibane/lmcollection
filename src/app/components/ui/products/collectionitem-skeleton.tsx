@@ -5,11 +5,9 @@ export function CollectionSkeleton() {
 
       <div className="w-full max-w-[480px] sm:max-w-2xl lg:max-w-5xl">
         <div className="space-y-4">
-          <div className="border-b border-stone-300 pb-3">
-            <p>This is the catalog page. ... products</p>
-          </div>
+          <div className="border-b border-stone-300 pb-3" />
 
-          <div className="w-full grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-5">
+          <div className="w-full grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-5">
             {Array.from({ length: 4 }).map((_, index) => {
               return <ItemSkeleton key={index} />;
             })}

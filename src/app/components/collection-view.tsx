@@ -1,13 +1,13 @@
 "use client";
 
-import { useQuery } from "convex/react";
-import type { Product } from "../(overview)/collection/products/types";
+import { useSearchParams } from "next/navigation";
 import { ProductCard } from "./ui/products/Card";
 import { useEffect } from "react";
+import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
+import type { Product } from "../(overview)/collection/products/types";
 import Loading from "@/(overview)/collection/products/all/loading";
 import ProductFilter from "./ui/products/product-filter";
-import { useSearchParams } from "next/navigation";
 
 //! TODO: implement filter component
 //! TODO: implement sorting component

@@ -37,7 +37,7 @@ export default function AddProductForm() {
     product_desc: "",
     category: "",
     discount: 0,
-    quantity: 0,
+    quantity: 1,
     images: [],
     additional_options: [],
     dynamic_pricing: false,
@@ -193,25 +193,6 @@ export default function AddProductForm() {
       }
     }
 
-    // Generate upload URLs for each image
-    const uploadUrls = await Promise.all(
-      prodFormData.images.map(async () => await generateUploadURL()),
-    );
-
-    const imageUploadIds = await Promise.all(
-      prodFormData.images.map(async (file, index) => {
-        const response = await fetch(uploadUrls[index], {
-          method: "POST",
-          headers: {
-            "Content-Type": file!.type,
-          },
-          body: file,
-        });
-
-        return (await response.json()).storageId;
-      }),
-    );
-
     // Prepare additional options for submission
     const additional_options = prodFormData.additional_options.map((info) => ({
       label: info.label,
@@ -222,8 +203,27 @@ export default function AddProductForm() {
 
     // Call the mutation to add the product
     try {
+      // Generate upload URLs for each image
+      const uploadUrls = await Promise.all(
+        prodFormData.images.map(async () => await generateUploadURL()),
+      );
+
+      const imageUploadIds = await Promise.all(
+        prodFormData.images.map(async (file, index) => {
+          const response = await fetch(uploadUrls[index], {
+            method: "POST",
+            headers: {
+              "Content-Type": file!.type,
+            },
+            body: file,
+          });
+
+          return (await response.json()).storageId;
+        }),
+      );
+
       const productId = await addProductMutation({
-        brand: prodFormData.brand, // Added brand field
+        brand: prodFormData.brand,
         name: prodFormData.product_name,
         price:
           prodFormData.dynamic_pricing ?
@@ -309,11 +309,6 @@ export default function AddProductForm() {
       ],
     }));
 
-    console.log(
-      "...prodFormData after adding additional_options: ",
-      prodFormData,
-    );
-
     setField({
       label: "",
       type: "",
@@ -326,7 +321,7 @@ export default function AddProductForm() {
     setProdFormData((prev) => ({
       ...prev,
       additional_options: prev.additional_options.filter(
-        (info) => info.label !== field.label && info.type !== field.type,
+        (info) => info.label !== field.label || info.type !== field.type,
       ),
     }));
   };
@@ -353,7 +348,7 @@ export default function AddProductForm() {
   return (
     <form onSubmit={handleOnSubmit} className="space-y-4">
       {error && (
-        <div className="fixed top-0 left-0 right-0 m-0 z-5">
+        <div className="fixed top-0 left-0 right-0 z-5">
           <div className="ring ring-red-300 text-red-500 bg-red-100 rounded m-5 p-2 relative">
             <BiX
               size={"1.5rem"}
@@ -384,7 +379,7 @@ export default function AddProductForm() {
           type="text"
           name="product_name"
           id="product_name"
-          className="input input-md w-full"
+          className="border border-stone-300 focus:focus-within:ring focus:focus-within:ring-blue-500 focus:focus-within:outline-0 focus:focus-wthin:rounded-none p-1.5 w-full"
           placeholder="e.g. iPhone 14 Pro"
           value={prodFormData.product_name}
           onChange={handleInputChange}
@@ -397,7 +392,7 @@ export default function AddProductForm() {
           type="text"
           name="brand"
           id="brand"
-          className="input input-md w-full"
+          className="border border-stone-300 focus:focus-within:ring focus:focus-within:ring-blue-500 focus:focus-within:outline-0 focus:focus-wthin:rounded-none p-1.5 w-full"
           placeholder="e.g. Apple"
           value={prodFormData.brand}
           onChange={handleInputChange}
@@ -412,7 +407,7 @@ export default function AddProductForm() {
           min={1}
           name="quantity"
           id="quantity"
-          className="input input-md w-full"
+          className="border border-stone-300 focus:focus-within:ring focus:focus-within:ring-blue-500 focus:focus-within:outline-0 focus:focus-wthin:rounded-none p-1.5 w-full"
           placeholder="e.g. 100"
           value={prodFormData.quantity}
           onChange={handleInputChange}
@@ -424,7 +419,7 @@ export default function AddProductForm() {
         <textarea
           name="product_desc"
           id="product_desc"
-          className="textarea textarea-md w-full"
+          className="border border-stone-300 focus:focus-within:ring focus:focus-within:ring-blue-500 focus:focus-within:outline-0 focus:focus-wthin:rounded-none p-1.5 w-full"
           placeholder="Enter product description"
           value={prodFormData.product_desc}
           onChange={handleInputChange}
@@ -438,7 +433,7 @@ export default function AddProductForm() {
           name="category"
           id="category"
           list="categories"
-          className="input input-md w-full"
+          className="border border-stone-300 focus:focus-within:ring focus:focus-within:ring-blue-500 focus:focus-within:outline-0 focus:focus-wthin:rounded-none p-1.5 w-full"
           placeholder="e.g. Smartphones"
           value={prodFormData.category}
           onChange={handleInputChange}
@@ -550,12 +545,12 @@ export default function AddProductForm() {
       />
 
       <div className="space-y-2">
-        <div className="flex gap-3">
+        <div className="flex gap-3 group">
           <input
             type="checkbox"
             id="dynamicPricing"
             name="dynamic_pricing"
-            className="checkbox checkbox-md"
+            className="checkbox checkbox-md checkbox-neutral peer"
             checked={prodFormData.dynamic_pricing}
             onChange={handleInputChange}
             disabled={
@@ -574,7 +569,7 @@ export default function AddProductForm() {
 
           <label
             htmlFor="dynamicPricing"
-            className="hover:underline underline-offset-3">
+            className="hover:underline underline-offset-3 peer-disabled:cursor-not-allowed peer-disabled:opacity-50">
             Variable Price
           </label>
         </div>
@@ -584,7 +579,7 @@ export default function AddProductForm() {
             <p className="w-fit text-nowrap">Price varied by: </p>
 
             <select
-              className="select select-md ps-3 w-full focus:outline-0 focus-within:outline-0"
+              className="select select-md ps-3 w-full focus:outline-0 focus-within:outline-0 border border-stone-300"
               onChange={handleInputChange}
               value={prodFormData.pricing_by}
               name="pricing_by"
@@ -609,7 +604,7 @@ export default function AddProductForm() {
               title="Enter a valid price with up to 2 decimal places (e.g., 123 or 123.45)"
               name="price"
               id="price"
-              className="input input-md w-full"
+              className="border border-stone-300 focus:focus-within:ring focus:focus-within:ring-blue-500 focus:focus-within:outline-0 focus:focus-wthin:rounded-none p-1.5 w-full"
               placeholder="e.g. 123 or 123.45"
               value={prodFormData.price}
               onChange={handleInputChange}
@@ -625,7 +620,7 @@ export default function AddProductForm() {
               title="Enter a number or decimal with up to 2 decimal places (e.g., 10 or 12.34)"
               name="discount"
               id="discount"
-              className="input input-md w-full"
+              className="border border-stone-300 focus:focus-within:ring focus:focus-within:ring-blue-500 focus:focus-within:outline-0 focus:focus-wthin:rounded-none p-1.5 w-full"
               placeholder="e.g. 10 or 12.34"
               value={prodFormData.discount}
               onChange={handleInputChange}
@@ -634,9 +629,39 @@ export default function AddProductForm() {
         </div>
       )}
 
-      <button type="submit" className="btn btn-primary mt-4">
-        Add Product
-      </button>
+      <div className="flex gap-3 items-center">
+        <button type="submit" className="btn btn-success">
+          Add Product
+        </button>
+
+        <button
+          type="button"
+          className="w-fit p-3 text-red-700 font-semibold"
+          onClick={() => {
+            setProdFormData({
+              brand: "",
+              product_name: "",
+              price: 0,
+              product_desc: "",
+              category: "",
+              discount: 0,
+              quantity: 1,
+              images: [],
+              additional_options: [],
+              dynamic_pricing: false,
+              pricing_by: "",
+            });
+
+            setField({
+              label: "",
+              type: "",
+              value: "",
+              unit: "",
+            });
+          }}>
+          Clear form
+        </button>
+      </div>
     </form>
   );
 }

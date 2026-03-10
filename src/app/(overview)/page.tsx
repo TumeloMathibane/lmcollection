@@ -21,12 +21,13 @@ export default async function Home() {
     console.error("Error fetching products for homepage:", err);
   }
 
+  //! TODO: run npm install to reinstall all packages...
   return (
     <div className="flex-1 font-sans flex justify-center">
       <main className="w-full space-y-10 flex flex-col place-content-center-safe">
         <section className="bg-[url('/images/ali-pazani-3w14X-Yxffk-unsplash.jpg')] bg-cover bg-no-repeat grayscale-100 h-screen flex items-center-safe justify-around mask-alpha mask-b-from-70% relative md:mask-b-from-80% md:h-[92vh] md:bg-fill lg:min-h-screen">
           <div className="w-full h-full p-4 space-y-4 flex flex-col justify-center-safe sm:px-15 md:items-center-safe">
-            <p className="text-5xl font-serif font-extrabold text-wrap md:hidden">
+            <p className="text-5xl font-serif font-extrabold text-wrap max-w-sm md:hidden">
               Like it, Love it, & Wear it
             </p>
 
@@ -53,7 +54,7 @@ export default async function Home() {
             </div>
           </div>
           <div className="welcome-section-text px-2 sm:px-15 md:max-w-4xl">
-            <p className="text-justify md:text-center">
+            {/* <p className="text-justify md:text-center">
               Lorem ipsum dolor sit amet consectetur adipisicing elit.
               Blanditiis molestias, perferendis praesentium sint culpa quos
               dolor, natus consequatur sed eaque qui facilis repellendus
@@ -65,6 +66,21 @@ export default async function Home() {
               optio vitae repellat nulla, impedit inventore! Numquam odit
               explicabo optio ullam qui facilis, hic est ratione cupiditate,
               voluptatem, harum unde architecto. Voluptas?
+            </p> */}
+
+            <p className="text-justify md:text-center">
+              At LM COLLECTION, we specialize in luxury and everyday essentials
+              — from stunning hair extensions, stylish branded and non-branded
+              clothing, trendy sneakers, to iPhones (both brand new and
+              pre-owned) that are carefully checked to ensure excellent
+              condition. What sets us apart? Every product we sell is handpicked
+              for quality, reliability, and value. Whether you&apos;re upgrading
+              your phone, stepping out in style, or looking for top-tier hair,
+              we make sure you get premium products without overpaying. We
+              believe everyone deserves to look and feel good, and we&apos;ve
+              built LM COLLECTION around making that possible — one order at a
+              time. Thank you for supporting our small business. Your trust
+              keeps us growing, and we can&apos;t wait to serve you again!
             </p>
           </div>
         </section>
@@ -73,6 +89,7 @@ export default async function Home() {
           id="categories"
           className="space-y-4 py-4 flex flex-col justify-center-safe items-center-safe">
           <div>
+            {/* //* NOTE: thinking of changing this heading to 'Collections' instead... */}
             <p className="text-4xl text-stone-950 font-bold">Categories</p>
           </div>
 
@@ -128,11 +145,3 @@ export default async function Home() {
     </div>
   );
 }
-
-//! TODO  [*]: Continue with checks...
-//! TODO  [ ]: Implement product filtering and sorting functionality on the collection page to allow customers to easily find products based on their preferences (e.g. filter by price, category, popularity, etc.)...
-//! TODO  [ ]: Implement contact page logic
-//! TODO  [ ]: Admin 'add product form' - if possible, implement method to select primary image from selected images
-//! FIXME [ ]: Sort app components; components that manipulate data are to stay in components folder, and those that are only used for displaying the data must move to the subdir. of 'ui'
-//!
-//! ==================================================

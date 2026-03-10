@@ -2,7 +2,6 @@
 
 import Banner from "@/components/ui/admin/banner";
 import { usePathname } from "next/navigation";
-// import { BiRightArrow } from "react-icons/bi";
 import { useEffect, useState } from "react";
 import Sidebar from "./sidebar";
 
@@ -27,30 +26,23 @@ export default function AdminSidebar({
   }, [navOpen]);
 
   return (
-    <>
-      <Banner navOpen={() => setNavOpen(true)} />
-
-      <div
-        className={`fixed top-0 left-0 w-full h-full z-10 transition-transform duration-300 ${
-          navOpen ? "translate-x-0" : "-translate-x-full"
-        }`}>
-        <div
-          className="w-full h-full absolute top-0 left-0 right-0 bottom-0 backdrop-blur-md"
-          onClick={() => setNavOpen(false)}
-        />
-
-        <div className="relative w-2/3">
+    <main className="flex h-screen w-screen relative">
+      <aside
+        className={`min-h-dvh w-full absolute top-0 bottom-0 left-0 flex z-50 transition-all ${navOpen ? "translate-0" : "-translate-x-full"} lg:relative lg:translate-0 lg:w-fit lg:h-screen`}>
+        <div className="h-full w-72 z-50">
           <Sidebar />
         </div>
 
-        <span
-          className="absolute top-[50%] right-5 text-gray-300 rotate-90"
-          onClick={() => setNavOpen(false)}>
-          Press to close
-        </span>
-      </div>
+        <div
+          className={`absolute top-0 right-0 bottom-0 left-0 h-full z-49 transition-all ${navOpen ? "backdrop-blur-md backdrop-brightness-80" : "backdrop-blur-none"} lg:hidden`}
+          onClick={() => setNavOpen(false)}
+        />
+      </aside>
 
-      <main>{children}</main>
-    </>
+      <section className="flex-1 w-full h-screen overflow-y-auto lg:h-dvh lg:overflow-auto">
+        <Banner navOpen={() => setNavOpen(!navOpen)} />
+        {children}
+      </section>
+    </main>
   );
 }
