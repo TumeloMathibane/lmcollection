@@ -1,9 +1,9 @@
 import AdminSidebar from "@/components/ui/admin/sidebar-client";
-import { ConvexClientProvider } from "../../ConvexClientProvider";
 import { Geist, Geist_Mono } from "next/font/google";
 import type { Metadata } from "next";
-import "../../(overview)/globals.css";
+import "@/(overview)/globals.css";
 import AuthProvider from "@/providers/SessionProvider";
+import { ConvexClientProvider } from "@/ConvexClientProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
