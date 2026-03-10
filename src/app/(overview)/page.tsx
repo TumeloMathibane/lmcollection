@@ -21,6 +21,7 @@ export default async function Home() {
     console.error("Error fetching products for homepage:", err);
   }
 
+  //! TODO: run npm install to reinstall all packages...
   return (
     <div className="flex-1 font-sans flex justify-center">
       <main className="w-full space-y-10 flex flex-col place-content-center-safe">
