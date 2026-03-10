@@ -114,7 +114,7 @@ export default function ProductView({
           <div className="space-y-4 md:sticky md:top-10">
             <div className="w-full h-90 overflow-hidden rounded-2xl flex justify-items-center-safe relative md:shadow-lg">
               <span
-                className={`absolute top-2 left-2 text-sm flex items-center-safe rounded-full border px-4 z-5 ${product?.quantity && product?.quantity > 0 ? "border-green-700 bg-green-100/50 text-green-900" : "border-red-700 bg-red-100 text-red-800"}`}>
+                className={`absolute top-2 left-2 text-sm flex items-center-safe rounded-full border px-4 z-5 ${product?.quantity && product?.quantity > 0 ? "border-green-700 bg-green-300/50 text-green-900" : "border-red-700 bg-red-300/50 text-red-800"}`}>
                 {product?.quantity && product?.quantity > 0 ?
                   "In Stock"
                 : "Out of Stock"}
