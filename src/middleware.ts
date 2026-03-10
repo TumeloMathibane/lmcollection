@@ -7,6 +7,11 @@ export async function middleware(request: NextRequest) {
   const token = await getToken({ req: request });
   const isAuth = !!token;
   const isAuthPage = request.nextUrl.pathname.startsWith("/admin/auth");
+  const isOpen = Date.now() >= new Date("2026-04-01 12:00").getTime();
+
+  if (!isOpen) {
+    return NextResponse.redirect(new URL("/coming-soon", request.url));
+  }
 
   // Redirect authenticated users away from auth pages
   if (isAuthPage && isAuth) {
@@ -33,6 +38,5 @@ export async function middleware(request: NextRequest) {
 
 // Specify which routes to protect
 export const config = {
-  // matcher: ["/profile/:path*", "/checkout/:path*", "/auth/:path*"],
-  matcher: ["/admin/:path*"],
+  matcher: ["/"],
 };
