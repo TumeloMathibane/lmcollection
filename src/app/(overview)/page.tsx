@@ -54,7 +54,7 @@ export default async function Home() {
             </div>
           </div>
           <div className="welcome-section-text px-2 sm:px-15 md:max-w-4xl">
-            <p className="text-justify md:text-center">
+            {/* <p className="text-justify md:text-center">
               Lorem ipsum dolor sit amet consectetur adipisicing elit.
               Blanditiis molestias, perferendis praesentium sint culpa quos
               dolor, natus consequatur sed eaque qui facilis repellendus
@@ -66,6 +66,21 @@ export default async function Home() {
               optio vitae repellat nulla, impedit inventore! Numquam odit
               explicabo optio ullam qui facilis, hic est ratione cupiditate,
               voluptatem, harum unde architecto. Voluptas?
+            </p> */}
+
+            <p className="text-justify md:text-center">
+              At LM COLLECTION, we specialize in luxury and everyday essentials
+              — from stunning hair extensions, stylish branded and non-branded
+              clothing, trendy sneakers, to iPhones (both brand new and
+              pre-owned) that are carefully checked to ensure excellent
+              condition. What sets us apart? Every product we sell is handpicked
+              for quality, reliability, and value. Whether you&apos;re upgrading
+              your phone, stepping out in style, or looking for top-tier hair,
+              we make sure you get premium products without overpaying. We
+              believe everyone deserves to look and feel good, and we&apos;ve
+              built LM COLLECTION around making that possible — one order at a
+              time. Thank you for supporting our small business. Your trust
+              keeps us growing, and we can&apos;t wait to serve you again!
             </p>
           </div>
         </section>
@@ -74,6 +89,7 @@ export default async function Home() {
           id="categories"
           className="space-y-4 py-4 flex flex-col justify-center-safe items-center-safe">
           <div>
+            {/* //* NOTE: thinking of changing this heading to 'Collections' instead... */}
             <p className="text-4xl text-stone-950 font-bold">Categories</p>
           </div>
 
@@ -129,9 +145,3 @@ export default async function Home() {
     </div>
   );
 }
-
-//! TODO  [*]: Continue with checks...
-//! TODO  [ ]: Implement contact page logic
-//! FIXME [ ]: Sort app components; components that manipulate data are to stay in components folder, and those that are only used for displaying the data must move to the subdir. of 'ui'
-//!
-//! ==================================================
