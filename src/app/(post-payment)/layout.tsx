@@ -2,11 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "../(overview)/globals.css";
 import Header from "../components/header";
-<<<<<<< HEAD
 import Construction from "@/components/ui/under-construction";
-=======
-import { ConvexClientProvider } from "@/ConvexClientProvider";
->>>>>>> pre-prod-mod
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
