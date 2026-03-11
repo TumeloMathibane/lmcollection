@@ -6,7 +6,7 @@ export default function Home() {
   return (
     <div className="flex-1 flex flex-col bg-[url('/images/ali-pazani-3w14X-Yxffk-unsplash.jpg')] bg-cover bg-no-repeat grayscale-100 h-screen">
       <header className="z-5">
-        <div className="flex justify-center items-center-safe px-5 w-full p-2 md:pt-5">
+        <div className="flex justify-center items-center-safe px-5 w-full pt-5">
           <Image
             src={whiteLogo}
             alt="lmcollection-logo"
