@@ -33,6 +33,13 @@ export async function middleware(request: NextRequest) {
 
 // Specify which routes to protect
 export const config = {
-  // matcher: ["/profile/:path*", "/checkout/:path*", "/auth/:path*"],
-  matcher: ["/admin/:path*"],
+  matcher: [
+    "/",
+    "/collection",
+    "/cart",
+    "/info",
+    "/payments",
+    "/admin",
+    "/api",
+  ],
 };
