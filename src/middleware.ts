@@ -4,40 +4,36 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 export async function middleware(request: NextRequest) {
+  const { pathname } = request.nextUrl;
   const token = await getToken({ req: request });
   const isAuth = !!token;
-  const isAuthPage = request.nextUrl.pathname.startsWith("/admin/auth");
-  const isOpen = Date.now() >= new Date("2026-04-01 12:00").getTime();
+  const isAdminAuthRoute = pathname.startsWith("/admin/auth");
 
-  if (!isOpen) {
-    return NextResponse.redirect(new URL("/coming-soon", request.url));
+  const isOpen = Date.now() < new Date("2026-03-12 14:21").getTime();
+
+  // -------------------------
+  // 1. Launch mode
+  // -------------------------
+  if (isOpen && pathname !== "/coming-soon") {
+    const url = request.nextUrl.clone();
+    url.pathname = "/coming-soon";
+    return NextResponse.redirect(url);
   }
 
-  // Redirect authenticated users away from auth pages
-  if (isAuthPage && isAuth) {
-    return NextResponse.redirect(new URL("/admin", request.url));
-  }
-
-  // Redirect unauthenticated users to signin
-  if (!isAuth && !isAuthPage) {
-    let from = request.nextUrl.pathname;
-    if (request.nextUrl.search) {
-      from += request.nextUrl.search;
+  // -------------------------
+  // 2. Admin authentication
+  // -------------------------
+  if (pathname.startsWith("/admin") && !isAdminAuthRoute) {
+    if (!isAuth) {
+      const url = request.nextUrl.clone();
+      url.pathname = "/admin/auth/signin";
+      return NextResponse.redirect(url);
     }
-
-    return NextResponse.redirect(
-      new URL(
-        `/admin/auth/signin?from=${encodeURIComponent(from)}`,
-        request.url,
-      ),
-    );
   }
 
   return NextResponse.next();
 }
 
-// Specify which routes to protect
-// Specify which routes to protect
 export const config = {
-  matcher: ["/"],
+  matcher: ["/((?!_next/static|_next/image|favicon.ico|.*\\..*).*)"],
 };
