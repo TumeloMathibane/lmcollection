@@ -6,7 +6,6 @@ import { ConvexClientProvider } from "../ConvexClientProvider";
 import Header from "../components/header";
 import Navbar from "../components/navbar";
 import Footer from "../components/footer";
-import Construction from "@/components/ui/under-construction";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -38,7 +37,6 @@ export default function RootLayout({
         <ConvexClientProvider>
           <Header />
           <Navbar />
-          <Construction />
           {children}
           <Footer />
         </ConvexClientProvider>
