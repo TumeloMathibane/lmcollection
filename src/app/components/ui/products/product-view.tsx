@@ -114,10 +114,8 @@ export default function ProductView({
           <div className="space-y-4 md:sticky md:top-10">
             <div className="w-full h-90 overflow-hidden rounded-2xl flex justify-items-center-safe relative md:shadow-lg">
               <span
-                className={`absolute top-2 left-2 text-sm flex items-center-safe rounded-full border px-4 z-5 ${product?.quantity && product?.quantity > 0 ? "border-green-700 bg-green-300/50 text-green-900" : "border-red-700 bg-red-300/50 text-red-800"}`}>
-                {product?.quantity && product?.quantity > 0 ?
-                  "In Stock"
-                : "Out of Stock"}
+                className={`absolute top-2 left-2 text-sm flex items-center-safe rounded-full border px-4 z-5 ${product?.availability ? "border-green-700 bg-green-300/50 text-green-900" : "border-red-700 bg-red-300/50 text-red-800"}`}>
+                {product?.availability ? "In Stock" : "Out of Stock"}
               </span>
 
               <div className="w-full h-full">
@@ -386,39 +384,6 @@ export default function ProductView({
                   </div>
                 ))}
 
-            {/* ...then, quantity selection comes last as an option */}
-            {/* <div className="w-full">
-              <div className="w-4/9">
-                <p className="font-bold text-lg">Quantity</p>
-
-                <QuantityInput
-                  quantity={cartItem?.productQty}
-                  onChange={(value) =>
-                    setCartItem((prev) => ({
-                      ...prev,
-                      productQty:
-                        product?.quantity && Number(value) > product?.quantity ?
-                          1
-                        : Number(value),
-                    }))
-                  }
-                  onIncrement={() =>
-                    setCartItem((prev) => ({
-                      ...prev,
-                      productQty: prev.productQty + 1,
-                    }))
-                  }
-                  onDecrement={() =>
-                    setCartItem((prev) => ({
-                      ...prev,
-                      productQty: prev.productQty - 1,
-                    }))
-                  }
-                  incrementDisable={cartItem.productQty === product?.quantity}
-                />
-              </div>
-            </div> */}
-
             <div className="flex flex-col justify-between space-y-5 w-full pb-5">
               {product?.shortDescription && (
                 <div className="space-y-2 md:w-fit">
@@ -452,7 +417,7 @@ export default function ProductView({
             </div>
           </div>
 
-          {product && product?.quantity > 0 && (
+          {product && product?.availability && (
             <div className="flex items-center-safe space-x-3 md:w-full md:place-self-end-safe pe-1">
               <button
                 className={`py-2 bg-stone-900 text-stone-200 rounded-full w-full hover:cursor-pointer relative overflow-hidden`}

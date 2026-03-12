@@ -46,12 +46,20 @@ export function ProductCard({ product }: { product: Product }) {
               }
             </div> */}
 
-            <div className="add-to-cart absolute top-0 left-0 right-0 w-full h-full">
+            {/* <div className="add-to-cart absolute top-0 left-0 right-0 w-full h-full">
               {product.quantity <= 5 && (
                 <span className="badge badge-error m-2 font-semibold">
                   {product.quantity}{" "}
                   {product.quantity === 1 ? "item left" : "items left"}
                 </span>
+              )}
+            </div> */}
+
+            <div className="absolute top-0 left-0 right-0 w-full h-full">
+              {!product.availability && (
+                <div className="border border-red-600 rounded-md w-fit m-1 px-1 py-0.5 bg-red-300/50">
+                  <p className="text-red-600 font-semibold">Out of stock</p>
+                </div>
               )}
             </div>
           </div>
