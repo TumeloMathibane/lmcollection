@@ -1,5 +1,5 @@
 import ProductList from "@/components/product-list";
-import ProductView from "@/components/product-view";
+import ProductView from "@/components/ui/products/product-view";
 import { fetchQuery } from "convex/nextjs";
 import { Metadata } from "next";
 import { api } from "@/convex/_generated/api";

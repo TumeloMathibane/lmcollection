@@ -21,7 +21,6 @@ export default async function Home() {
     console.error("Error fetching products for homepage:", err);
   }
 
-  //! TODO: run npm install to reinstall all packages...
   return (
     <div className="flex-1 font-sans flex justify-center">
       <main className="w-full space-y-10 flex flex-col place-content-center-safe">
@@ -39,12 +38,13 @@ export default async function Home() {
           </div>
         </section>
 
-        <section className="flex flex-col items-center-safe space-y-5">
+        {/*//* NOTE: possible special effects to be implemented; animate-on-scroll */}
+        <section className="flex flex-col justify-center-safe items-center-safe h-[50dvh] space-y-5 lg:h-[70dvh]">
           <p className="section-title text-center font-bold text-4xl">
             Welcome to
           </p>
           <div className="welcome-section-logo">
-            <div className="w-50 h-fit relative">
+            <div className="w-70 h-fit relative">
               <Image
                 src={welcomeBizLogo}
                 alt="welcome-image"
@@ -53,34 +53,13 @@ export default async function Home() {
               />
             </div>
           </div>
-          <div className="welcome-section-text px-2 sm:px-15 md:max-w-4xl">
-            {/* <p className="text-justify md:text-center">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Blanditiis molestias, perferendis praesentium sint culpa quos
-              dolor, natus consequatur sed eaque qui facilis repellendus
-              architecto libero a provident in! Saepe, eligendi. Error obcaecati
-              laborum omnis, reiciendis velit est illum, vero voluptates soluta
-              sit minima fuga sapiente rem accusantium quas repellat ab adipisci
-              culpa et dolor quidem? Distinctio totam odio labore corrupti!
-              Esse, vel labore rerum architecto voluptates dicta asperiores
-              optio vitae repellat nulla, impedit inventore! Numquam odit
-              explicabo optio ullam qui facilis, hic est ratione cupiditate,
-              voluptatem, harum unde architecto. Voluptas?
-            </p> */}
-
+          <div className="welcome-section-text px-2 sm:px-15 md:max-w-4xl lg:mt-5">
             <p className="text-justify md:text-center">
-              At LM COLLECTION, we specialize in luxury and everyday essentials
-              — from stunning hair extensions, stylish branded and non-branded
-              clothing, trendy sneakers, to iPhones (both brand new and
-              pre-owned) that are carefully checked to ensure excellent
-              condition. What sets us apart? Every product we sell is handpicked
-              for quality, reliability, and value. Whether you&apos;re upgrading
-              your phone, stepping out in style, or looking for top-tier hair,
-              we make sure you get premium products without overpaying. We
-              believe everyone deserves to look and feel good, and we&apos;ve
-              built LM COLLECTION around making that possible — one order at a
-              time. Thank you for supporting our small business. Your trust
-              keeps us growing, and we can&apos;t wait to serve you again!
+              Whether you&apos;re upgrading your phone, stepping out in style,
+              or looking for top-tier hair, we make sure you get premium
+              products without overpaying. We believe everyone deserves to look
+              and feel good, and we&apos;ve built LM COLLECTION around making
+              that possible — one order at a time.
             </p>
           </div>
         </section>

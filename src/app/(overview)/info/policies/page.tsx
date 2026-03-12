@@ -7,12 +7,12 @@ export const metadata: Metadata = {
 // generate dynamic metadata to get page position...
 export default function Policies() {
   return (
-    <main className="min-h-[42em] md:min-h-[52em] lg:min-h-[64em] xl:min-h-[22em] space-y-3 py-5 px-2 md:px-10 xl:w-[70%] xl:px-0 xl:place-self-center-safe">
+    <main className="flex-1 space-y-3 py-5 px-2 md:px-10 xl:w-[70%] xl:px-0 xl:place-self-center-safe">
       <h1 className="text-4xl font-bold text-stone-900 text-center">
         Policy - LM Collection
       </h1>
       <div className="text-justify space-y-3">
-        <p>
+        <p className="text-justify flex place-self-center mx-auto max-w-4xl sm:text-center">
           At LM Collection, we want you to be completely satisfied with your
           purchase. Much appreciation for shopping at LM COLLECTION. We are
           committed to providing you with fast and reliable shipping.
@@ -72,8 +72,9 @@ export default function Policies() {
                 </li>
                 <li>
                   You can use the tracking number to monitor the status of your
-                  order on PEP PAXI COURIER Website{" "}
-                  <span className="before:content-['*'] before:text-red-500">
+                  order on PEP PAXI COURIER Website.
+                  <br />
+                  <span className="before:content-['*'] before:text-red-500 before:mr-0.5">
                     Once your order has arrived you will get an sms for
                     collection at your nearest PEP STORE.
                   </span>
@@ -132,9 +133,14 @@ export default function Policies() {
               <ol className="list-decimal list-inside">
                 <li>
                   Contact us at{" "}
-                  <p className="inline text-stone-700 before:content-['*'] before:text-red-500 after:content-['*'] after:text-red-500">
+                  <a href="mailto:lmcollection4412@gmail.com">
+                    <em className="font-semibold text-stone-800 underline underline-offset-2">
+                      lmcollection4412@gmail.com
+                    </em>
+                  </a>{" "}
+                  {/* <p className="inline text-stone-700 before:content-['*'] before:text-red-500 after:content-['*'] after:text-red-500">
                     (business email to be inserted)
-                  </p>{" "}
+                  </p>{" "} */}
                   to request a return.
                 </li>
                 <li>
@@ -224,9 +230,14 @@ export default function Policies() {
           <p className="text-center">
             For any return, refund, or exchange inquiries, please reach out to
             us at{" "}
-            <span className="inline text-stone-700 before:content-['*'] before:text-red-500 after:content-['*'] after:text-red-500">
+            <a href="mailto:lmcollection4412@gmail.com">
+              <em className="font-semibold text-stone-800 underline underline-offset-2">
+                lmcollection4412@gmail.com
+              </em>
+            </a>
+            {/* <span className="inline text-stone-700 before:content-['*'] before:text-red-500 after:content-['*'] after:text-red-500">
               (business email to be inserted)
-            </span>
+            </span> */}
             .
           </p>
         </div>

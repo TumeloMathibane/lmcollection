@@ -1,18 +1,18 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useCartStore } from "../../stores/cart";
-import type { Product } from "../(overview)/collection/products/types";
-import SizeInput from "./ui/products/size-input";
-import type { CartItem } from "../../stores/types";
-import OptionInput from "./ui/products/option-input";
+import { useCartStore } from "../../../../stores/cart";
+import type { Product } from "../../../(overview)/collection/products/types";
+import SizeInput from "./size-input";
+import type { CartItem } from "../../../../stores/types";
+import OptionInput from "./option-input";
 import { Id } from "@/convex/_generated/dataModel";
 import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import Loading from "@/(overview)/collection/products/[productId]/loading";
-import useFavoritesStore from "../../stores/favorites";
+import useFavoritesStore from "../../../../stores/favorites";
 import { BsSuitHeart, BsSuitHeartFill } from "react-icons/bs";
-import ImageCarousel from "./image-carousel";
+import ImageCarousel from "../../image-carousel";
 
 export default function ProductView({
   productId,
@@ -114,7 +114,7 @@ export default function ProductView({
           <div className="space-y-4 md:sticky md:top-10">
             <div className="w-full h-90 overflow-hidden rounded-2xl flex justify-items-center-safe relative md:shadow-lg">
               <span
-                className={`absolute top-2 left-2 text-sm flex items-center-safe rounded-full border px-4 z-5 ${product?.quantity && product?.quantity > 0 ? "border-green-700 bg-green-100/50 text-green-900" : "border-red-700 bg-red-100 text-red-800"}`}>
+                className={`absolute top-2 left-2 text-sm flex items-center-safe rounded-full border px-4 z-5 ${product?.quantity && product?.quantity > 0 ? "border-green-700 bg-green-300/50 text-green-900" : "border-red-700 bg-red-300/50 text-red-800"}`}>
                 {product?.quantity && product?.quantity > 0 ?
                   "In Stock"
                 : "Out of Stock"}
@@ -419,14 +419,35 @@ export default function ProductView({
               </div>
             </div> */}
 
-            <div className="flex flex-col justify-between space-y-4 w-full">
+            <div className="flex flex-col justify-between space-y-5 w-full pb-5">
               {product?.shortDescription && (
-                <div className="space-y-2 md:w-fit pb-5">
+                <div className="space-y-2 md:w-fit">
                   <p className="border-b border-stone-900 pb-2 text-lg font-bold">
                     Description
                   </p>
                   <p className="text-justify">{product?.shortDescription}</p>
                 </div>
+              )}
+
+              {/* ...followed by text/bulletpoints form of additional option/info */}
+              {additional_options?.map((opt, idx) =>
+                opt?.type === "text" ?
+                  <div key={idx} className="space-y-2 md:w-fit">
+                    <p className="border-b border-stone-900 pb-2 text-lg font-bold">
+                      {opt?.label}
+                    </p>
+
+                    <div>{opt?.value}</div>
+                  </div>
+                : opt?.type === "bulletpoints" ?
+                  <div key={idx} className="space-y-2 md:w-fit">
+                    <p className="border-b border-stone-900 pb-2 text-lg font-bold">
+                      {opt?.label}
+                    </p>
+
+                    <div>{opt?.value}</div>
+                  </div>
+                : null,
               )}
             </div>
           </div>
