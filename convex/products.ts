@@ -22,7 +22,7 @@ export const createProduct = mutation({
     price: v.number(),
     discount: v.optional(v.number()),
     shortDescription: v.string(),
-    quantity: v.number(),
+    availability: v.union(v.literal("in-stock"), v.literal("out-of-stock")),
     category: v.string(),
     images: v.array(v.id("_storage")),
     additional_options: v.array(v.record(v.string(), v.string())),
@@ -37,7 +37,7 @@ export const createProduct = mutation({
       price: args.price,
       discount: args.discount,
       shortDescription: args.shortDescription,
-      quantity: args.quantity,
+      availability: args.availability,
       category: args.category,
       images: args.images,
       additional_options: args.additional_options,
@@ -68,23 +68,6 @@ export const getProduct = query({
   },
 });
 
-export const purchaseProduct = mutation({
-  args: { id: v.id("product"), quantity: v.number() },
-  handler: async (ctx, args) => {
-    const product = await ctx.db.get("product", args.id);
-    if (!product) {
-      throw new Error("Product not found");
-    }
-    if (product.quantity <= 0 || product.quantity < args.quantity) {
-      throw new Error("Insufficient stock");
-    }
-
-    await ctx.db.patch("product", args.id, {
-      quantity: product.quantity - args.quantity,
-    });
-  },
-});
-
 export const updateProduct = mutation({
   args: {
     id: v.id("product"),
@@ -93,7 +76,9 @@ export const updateProduct = mutation({
     price: v.optional(v.number()),
     discount: v.optional(v.number()),
     shortDescription: v.optional(v.string()),
-    quantity: v.optional(v.number()),
+    availability: v.optional(
+      v.union(v.literal("in-stock"), v.literal("out-of-stock")),
+    ),
     category: v.optional(v.string()),
     images: v.optional(v.array(v.id("_storage"))),
     additional_options: v.optional(v.array(v.record(v.string(), v.string()))),
@@ -113,7 +98,7 @@ export const updateProduct = mutation({
       price: args.price ?? existing.price,
       discount: args.discount ?? existing.discount,
       shortDescription: args.shortDescription ?? existing.shortDescription,
-      quantity: args.quantity ?? existing.quantity,
+      availability: args.availability,
       category: args.category ?? existing.category,
       images: args.images ?? existing.images,
       additional_options:
