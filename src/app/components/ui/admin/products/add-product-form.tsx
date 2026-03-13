@@ -22,7 +22,7 @@ interface ProductFormData {
   product_desc: string;
   category: string;
   discount?: number;
-  quantity: number;
+  availability?: "in-stock" | "out-of-stock";
   images: File[];
   additional_options: AdditionalInfoField[];
   dynamic_pricing: boolean;
@@ -37,7 +37,7 @@ export default function AddProductForm() {
     product_desc: "",
     category: "",
     discount: 0,
-    quantity: 1,
+    availability: undefined,
     images: [],
     additional_options: [],
     dynamic_pricing: false,
@@ -236,7 +236,7 @@ export default function AddProductForm() {
           : Number(prodFormData.price ?? 0),
         discount: Number(prodFormData.discount),
         shortDescription: prodFormData.product_desc,
-        quantity: Number(prodFormData.quantity) ?? 1,
+        availability: "in-stock",
         category: prodFormData.category,
         images: imageUploadIds,
         additional_options: additional_options,
@@ -253,7 +253,7 @@ export default function AddProductForm() {
           product_desc: "",
           category: "",
           discount: 0,
-          quantity: 1,
+          availability: undefined,
           images: [],
           additional_options: [],
           dynamic_pricing: false,
@@ -399,19 +399,22 @@ export default function AddProductForm() {
         />
       </div>
 
-      <div>
-        <label htmlFor="quantity">Quantity:</label>
+      <div className="flex flex-col">
+        <label htmlFor="availability">Availability:</label>
 
-        <input
-          type="number"
-          min={1}
-          name="quantity"
-          id="quantity"
-          className="border border-stone-300 focus:focus-within:ring focus:focus-within:ring-blue-500 focus:focus-within:outline-0 focus:focus-wthin:rounded-none p-1.5 w-full"
-          placeholder="e.g. 100"
-          value={prodFormData.quantity}
-          onChange={handleInputChange}
-        />
+        <select
+          className="border border-stone-200 focus:focus-within:ring focus:focus-within:ring-blue-500 focus:focus-within:outline-0 focus:focus-wthin:rounded-none p-1.5 w-full capitalize"
+          name="availability"
+          id="availability"
+          onChange={handleInputChange}>
+          <option value={undefined}>Select availability</option>
+
+          {Array.from(["in-stock", "out-of-stock"]).map((opt, idx) => (
+            <option key={idx} value={opt}>
+              {opt}
+            </option>
+          ))}
+        </select>
       </div>
 
       <div>
@@ -645,7 +648,7 @@ export default function AddProductForm() {
               product_desc: "",
               category: "",
               discount: 0,
-              quantity: 1,
+              availability: undefined,
               images: [],
               additional_options: [],
               dynamic_pricing: false,
