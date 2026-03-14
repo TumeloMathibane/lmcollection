@@ -26,11 +26,11 @@ export default function CollectionView({ category }: { category: string }) {
   ) {
     if (searchParams.get("availability") === "In stock") {
       displayProducts = displayProducts?.filter(
-        (product) => product?.quantity > 0,
+        (product) => product?.availability === "in-stock",
       );
     } else {
       displayProducts = displayProducts?.filter(
-        (product) => product?.quantity === 0,
+        (product) => product?.availability === "out-of-stock",
       );
     }
   }

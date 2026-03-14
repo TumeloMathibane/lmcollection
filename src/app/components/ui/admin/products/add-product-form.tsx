@@ -22,7 +22,7 @@ interface ProductFormData {
   product_desc: string;
   category: string;
   discount?: number;
-  quantity: number;
+  availability?: "in-stock" | "out-of-stock";
   images: File[];
   additional_options: AdditionalInfoField[];
   dynamic_pricing: boolean;
@@ -37,7 +37,7 @@ export default function AddProductForm() {
     product_desc: "",
     category: "",
     discount: 0,
-    quantity: 1,
+    availability: undefined,
     images: [],
     additional_options: [],
     dynamic_pricing: false,
@@ -236,7 +236,7 @@ export default function AddProductForm() {
           : Number(prodFormData.price ?? 0),
         discount: Number(prodFormData.discount),
         shortDescription: prodFormData.product_desc,
-        quantity: Number(prodFormData.quantity) ?? 1,
+        availability: "in-stock",
         category: prodFormData.category,
         images: imageUploadIds,
         additional_options: additional_options,
@@ -253,7 +253,7 @@ export default function AddProductForm() {
           product_desc: "",
           category: "",
           discount: 0,
-          quantity: 1,
+          availability: undefined,
           images: [],
           additional_options: [],
           dynamic_pricing: false,
@@ -399,19 +399,22 @@ export default function AddProductForm() {
         />
       </div>
 
-      <div>
-        <label htmlFor="quantity">Quantity:</label>
+      <div className="flex flex-col">
+        <label htmlFor="availability">Availability:</label>
 
-        <input
-          type="number"
-          min={1}
-          name="quantity"
-          id="quantity"
-          className="border border-stone-300 focus:focus-within:ring focus:focus-within:ring-blue-500 focus:focus-within:outline-0 focus:focus-wthin:rounded-none p-1.5 w-full"
-          placeholder="e.g. 100"
-          value={prodFormData.quantity}
-          onChange={handleInputChange}
-        />
+        <select
+          className="border border-stone-200 focus:focus-within:ring focus:focus-within:ring-blue-500 focus:focus-within:outline-0 focus:focus-wthin:rounded-none p-1.5 w-full capitalize"
+          name="availability"
+          id="availability"
+          onChange={handleInputChange}>
+          <option value={undefined}>Select availability</option>
+
+          {Array.from(["in-stock", "out-of-stock"]).map((opt, idx) => (
+            <option key={idx} value={opt}>
+              {opt}
+            </option>
+          ))}
+        </select>
       </div>
 
       <div>
@@ -573,13 +576,31 @@ export default function AddProductForm() {
             Variable Price
           </label>
         </div>
+      </div>
 
-        {prodFormData.dynamic_pricing && (
-          <div className="flex gap-3 items-center-safe">
-            <p className="w-fit text-nowrap">Price varied by: </p>
+      <div className="flex gap-2 w-full">
+        {!prodFormData.dynamic_pricing ?
+          <div>
+            <label htmlFor="price">Price:</label>
+
+            <input
+              type="number"
+              title="Enter a valid price with up to 2 decimal places (e.g., 123 or 123.45)"
+              name="price"
+              id="price"
+              className="border border-stone-300 focus:focus-within:ring focus:focus-within:ring-blue-500 focus:focus-within:outline-0 focus:focus-wthin:rounded-none p-2 w-full"
+              placeholder="e.g. 123 or 123.45"
+              value={prodFormData.price}
+              onChange={handleInputChange}
+            />
+          </div>
+        : <div className="flex flex-col w-full">
+            <label htmlFor="pricing_by" className="text-nowrap">
+              Price varied by:{" "}
+            </label>
 
             <select
-              className="select select-md ps-3 w-full focus:outline-0 focus-within:outline-0 border border-stone-300"
+              className="p-2.5 focus:outline-0 focus-within:outline-0 border border-stone-300 w-full"
               onChange={handleInputChange}
               value={prodFormData.pricing_by}
               name="pricing_by"
@@ -592,44 +613,26 @@ export default function AddProductForm() {
               ))}
             </select>
           </div>
-        )}
+        }
+
+        <div className="w-1/2">
+          <label htmlFor="discount" className="truncate">
+            Discount (%):
+          </label>
+          <input
+            type="number"
+            title="Enter a number or decimal with up to 2 decimal places (e.g., 10 or 12.34)"
+            name="discount"
+            id="discount"
+            className="border border-stone-300 focus:focus-within:ring focus:focus-within:ring-blue-500 focus:focus-within:outline-0 focus:focus-wthin:rounded-none p-2 w-full"
+            placeholder="e.g. 10 or 12.34"
+            value={prodFormData.discount}
+            onChange={handleInputChange}
+          />
+        </div>
       </div>
 
-      {!prodFormData.dynamic_pricing && (
-        <div className="flex gap-3">
-          <div className="w-full">
-            <label htmlFor="price">Price:</label>
-            <input
-              type="number"
-              title="Enter a valid price with up to 2 decimal places (e.g., 123 or 123.45)"
-              name="price"
-              id="price"
-              className="border border-stone-300 focus:focus-within:ring focus:focus-within:ring-blue-500 focus:focus-within:outline-0 focus:focus-wthin:rounded-none p-1.5 w-full"
-              placeholder="e.g. 123 or 123.45"
-              value={prodFormData.price}
-              onChange={handleInputChange}
-            />
-          </div>
-
-          <div className="w-full">
-            <label htmlFor="discount" className="truncate">
-              Discount (%):
-            </label>
-            <input
-              type="number"
-              title="Enter a number or decimal with up to 2 decimal places (e.g., 10 or 12.34)"
-              name="discount"
-              id="discount"
-              className="border border-stone-300 focus:focus-within:ring focus:focus-within:ring-blue-500 focus:focus-within:outline-0 focus:focus-wthin:rounded-none p-1.5 w-full"
-              placeholder="e.g. 10 or 12.34"
-              value={prodFormData.discount}
-              onChange={handleInputChange}
-            />
-          </div>
-        </div>
-      )}
-
-      <div className="flex gap-3 items-center">
+      <div className="flex items-center">
         <button type="submit" className="btn btn-success">
           Add Product
         </button>
@@ -645,7 +648,7 @@ export default function AddProductForm() {
               product_desc: "",
               category: "",
               discount: 0,
-              quantity: 1,
+              availability: undefined,
               images: [],
               additional_options: [],
               dynamic_pricing: false,

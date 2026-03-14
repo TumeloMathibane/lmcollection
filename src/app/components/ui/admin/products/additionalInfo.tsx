@@ -1,4 +1,3 @@
-// import { ChangeEvent, useEffect, useState } from "react";
 import { useEffect, useState } from "react";
 import { BiSolidDownArrow } from "react-icons/bi";
 import { AdditionalInfoField } from "./add-product-form";
@@ -19,7 +18,15 @@ export default function AdditionalInfo({
   const [aiDivOpen, setAiDivOpen] = useState<boolean>(false);
 
   const afTypes = ["bulletpoints", "colors", "options", "sizes", "text"];
-  const afUnits = ["mm", "cm", "inch", "ft", "g", "kg", "lb"];
+  const afUnits = [
+    { abbr: "mm", name: "millimeter" },
+    { abbr: "cm", name: "centimeter" },
+    { abbr: "inch", name: "inch" },
+    { abbr: "ft", name: "foot" },
+    { abbr: "g", name: "gram" },
+    { abbr: "kg", name: "kilogram" },
+    { abbr: "lb", name: "pounds" },
+  ];
 
   const handleFieldInfoChange = (field: AdditionalInfoField) => {
     if (onFieldInfoChange) {
@@ -99,8 +106,8 @@ export default function AdditionalInfo({
                 }>
                 <option value="">Select unit</option>
                 {afUnits.map((unit) => (
-                  <option key={unit} value={unit}>
-                    {unit} {"(" + unit + ")"}
+                  <option key={unit.abbr} value={unit.name}>
+                    {unit.name} {"(" + unit.abbr + ")"}
                   </option>
                 ))}
               </select>

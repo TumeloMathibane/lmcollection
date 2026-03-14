@@ -13,7 +13,7 @@ export type Product = {
   price: number;
   discount?: number;
   shortDescription?: string;
-  quantity: number;
+  availability: "in-stock" | "out-of-stock";
   category: string;
   images: string[];
   additional_options: Record<string, string>[];

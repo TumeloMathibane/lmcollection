@@ -52,7 +52,8 @@ export default function CheckoutMain({
     () =>
       items.filter(
         (item) =>
-          (cItemsById.get(item.productId as Id<"product">)?.quantity ?? 0) > 0,
+          cItemsById.get(item.productId as Id<"product">)?.availability ===
+          "in-stock",
       ),
     [items, cItemsById],
   );

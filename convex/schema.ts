@@ -13,7 +13,7 @@ export default defineSchema({
     price: v.number(),
     discount: v.optional(v.number()),
     shortDescription: v.string(),
-    quantity: v.number(),
+    availability: v.union(v.literal("in-stock"), v.literal("out-of-stock")),
     category: v.string(),
     images: v.array(v.id("_storage")),
     additional_options: v.array(v.record(v.string(), v.string())),

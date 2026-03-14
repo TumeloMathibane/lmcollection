@@ -46,10 +46,13 @@ export default function ProductTable({
         id: id,
         brand: product?.brand,
         name: product?.name,
-        price: product?.price,
+        price:
+          product?.dynamic_pricing ?
+            dynamicPricedItem(product)?.prices?.[0]
+          : product?.price,
         discount: product?.discount,
         shortDescription: product?.shortDescription,
-        quantity: product?.quantity,
+        availability: product?.availability,
         category: product?.category,
         additional_options: product?.additional_options,
         dynamic_pricing: product?.dynamic_pricing,
@@ -65,13 +68,11 @@ export default function ProductTable({
     }
   };
 
-  //! FIXME: possible change from effect to if condition
   useEffect(() => {
     const viewId = searchParams?.edit ?? searchParams?.view;
 
     if (viewId) {
       const foundProduct = products?.find((p) => p._id === viewId);
-      // console.log("Found product:", foundProduct);
 
       if (foundProduct) {
         setProduct(foundProduct);
@@ -107,7 +108,7 @@ export default function ProductTable({
           {product === undefined ?
             <span className="loading loading-bars w-20 h-20 flex place-self-center-safe" />
           : <div className="flex-1 max-h-[70vh] overflow-y-auto space-y-2 mx-auto sm:flex sm:space-x-4 sm:space-y-0 md:max-w-3xl lg:max-w-4xl">
-              <div className="w-full max-w-100 h-80 object-cover object-center place-self-center xl:h-60 xl:w-100 lg:place-self-auto">
+              <div className="w-full max-w-100 h-80 object-cover object-center place-self-center lg:place-self-auto lg:sticky lg:top-0 xl:h-60 xl:w-100">
                 <ImageWithFallback
                   src={product?.images[0] ?? ""}
                   alt={product?.name ?? ""}
@@ -174,33 +175,29 @@ export default function ProductTable({
                   </div>
 
                   <div className="space-x-4 flex">
-                    {!product?.dynamic_pricing && (
-                      <div>
-                        <p className="font-bold">Price</p>
-                        <input
-                          type={viewing ? "text" : "number"}
-                          className={`quantity-input border-b border-stone-300 bg-transparent focus:focus-within:outline-0 focus:focus-within:ring-0 w-full p-1 ${viewing ? "bg-stone-300 text-stone-700" : "focus:focus-within:bg-white"}`}
-                          defaultValue={
-                            viewing ?
-                              new Intl.NumberFormat("en-ZA", {
-                                style: "currency",
-                                currency: "ZAR",
-                              }).format(product?.price ?? 0)
-                            : Number(product?.price)
-                          }
-                          disabled={viewing}
-                          onChange={(e) =>
-                            setProduct(
-                              (prev) =>
-                                prev && {
-                                  ...prev,
-                                  price: e.target.valueAsNumber,
-                                },
-                            )
-                          }
-                        />
-                      </div>
-                    )}
+                    <div className="w-full">
+                      <p className="font-bold">Price</p>
+
+                      <input
+                        type="text"
+                        className={`border-b border-stone-300 bg-transparent focus:focus-within:outline-0 focus:focus-within:ring-0 w-full p-1 ${viewing ? "bg-stone-300 text-stone-700 capitalize" : "focus:focus-within:bg-white"}`}
+                        defaultValue={
+                          product?.dynamic_pricing ?
+                            `R ${Math.min(dynamicPricedItem(product)?.prices?.at(0) ?? 0)} - ${Math.max(dynamicPricedItem(product)?.prices?.at(-1) ?? 0)}`
+                          : product?.price
+                        }
+                        disabled={viewing || product?.dynamic_pricing}
+                        onChange={(e) =>
+                          setProduct(
+                            (prev) =>
+                              prev && {
+                                ...prev,
+                                price: e.target.valueAsNumber,
+                              },
+                          )
+                        }
+                      />
+                    </div>
 
                     <div>
                       <p className="font-bold">Discount</p>
@@ -229,23 +226,29 @@ export default function ProductTable({
                       />
                     </div>
 
-                    <div>
-                      <p className="font-bold">Quantity</p>
-                      <input
-                        type={viewing ? "text" : "number"}
-                        className={`quantity-input border-b border-stone-300 bg-transparent focus:focus-within:outline-0 focus:focus-within:ring-0 w-full p-1 ${viewing ? "bg-stone-300 text-stone-700" : "focus:focus-within:bg-white"}`}
-                        defaultValue={product?.quantity}
+                    {/* //! FIXME: fix y-axis alignment of the select element */}
+                    <div className="w-full">
+                      <p className="font-bold">Availability</p>
+
+                      <select
+                        defaultValue={product?.availability}
                         disabled={viewing}
                         onChange={(e) =>
                           setProduct(
                             (prev) =>
                               prev && {
                                 ...prev,
-                                quantity: e.target.valueAsNumber,
+                                availability: e.target.value as
+                                  | "in-stock"
+                                  | "out-of-stock",
                               },
                           )
                         }
-                      />
+                        className="quantity-input border-b border-stone-300 bg-transparent focus:focus-within:outline-0 focus:focus-within:ring-0 w-full p-1">
+                        <option value="">Select option</option>
+                        <option value="in-stock">In Stock</option>
+                        <option value="out-of-stock">Out of Stock</option>
+                      </select>
                     </div>
                   </div>
 
@@ -406,7 +409,7 @@ export default function ProductTable({
             <th
               scope="col"
               className="px-6 py-3 text-left text-xs font-medium text-stone-500 uppercase tracking-wider">
-              Stock
+              Availability
             </th>
           </tr>
         </thead>
@@ -431,6 +434,7 @@ export default function ProductTable({
                 <td className="px-6 py-4 text-sm text-stone-900">
                   {product.name}
                 </td>
+
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-stone-500">
                   {product.dynamic_pricing ?
                     <>
@@ -462,8 +466,8 @@ export default function ProductTable({
                     }).format(product.price)
                   }
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-stone-500">
-                  {product.quantity}
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-stone-500 capitalize">
+                  {product.availability}
                 </td>
               </tr>
             ))}
