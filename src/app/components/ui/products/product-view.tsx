@@ -113,10 +113,11 @@ export default function ProductView({
         <section className="w-full space-y-2 md:w-1/2">
           <div className="space-y-4 md:sticky md:top-10">
             <div className="w-full h-90 overflow-hidden rounded-2xl flex justify-items-center-safe relative md:shadow-lg">
-              <span
-                className={`absolute top-2 left-2 text-sm flex items-center-safe rounded-full border px-4 z-5 ${product?.availability ? "border-green-700 bg-green-300/50 text-green-900" : "border-red-700 bg-red-300/50 text-red-800"}`}>
-                {product?.availability ? "In Stock" : "Out of Stock"}
-              </span>
+              {product?.availability === "out-of-stock" && (
+                <span className="absolute top-2 left-2 text-sm flex items-center-safe rounded-full border px-4 z-5 border-red-700 bg-red-300/50 text-red-800">
+                  Out of stock
+                </span>
+              )}
 
               <div className="w-full h-full">
                 {/* Image carousel component */}
@@ -417,7 +418,7 @@ export default function ProductView({
             </div>
           </div>
 
-          {product && product?.availability && (
+          {product?.availability?.toLowerCase() !== "out-of-stock" && (
             <div className="flex items-center-safe space-x-3 md:w-full md:place-self-end-safe pe-1">
               <button
                 className={`py-2 bg-stone-900 text-stone-200 rounded-full w-full hover:cursor-pointer relative overflow-hidden`}
