@@ -9,37 +9,38 @@ export default function Home() {
   const [timeLeft, setTimeLeft] = useState("");
 
   useEffect(() => {
-    const launchDate = new Date(`${process.env.NEXT_PUBLIC_LAUNCH_DATE}`);
-    const timer = setInterval(() => {
-      const now = new Date();
-      const difference = launchDate.getTime() - now.getTime();
+    // const launchDate = new Date(`${process.env.NEXT_PUBLIC_LAUNCH_DATE}`);
+    // const timer = setInterval(() => {
+    //   const now = new Date();
+    //   const difference = launchDate.getTime() - now.getTime();
 
-      if (difference > 0) {
-        const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-        const hours = Math.floor(
-          (difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
-        );
-        const minutes = Math.floor(
-          (difference % (1000 * 60 * 60)) / (1000 * 60),
-        );
-        const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+    //   if (difference > 0) {
+    //     const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+    //     const hours = Math.floor(
+    //       (difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
+    //     );
+    //     const minutes = Math.floor(
+    //       (difference % (1000 * 60 * 60)) / (1000 * 60),
+    //     );
+    //     const seconds = Math.floor((difference % (1000 * 60)) / 1000);
 
-        // Format the countdown string so that if the value is 0 remove the suffix; remove hour suffix if hours is 0 and days is 0, etc.
+    //     // Format the countdown string so that if the value is 0 remove the suffix; remove hour suffix if hours is 0 and days is 0, etc.
+    //     const formattedDays = days > 0 ? `${days}d ` : "";
+    //     const formattedHours = hours > 0 ? `${hours}h ` : "";
+    //     const formattedMinutes = minutes > 0 ? `${minutes}m ` : "";
 
-        const formattedDays = days > 0 ? `${days}d ` : "";
-        const formattedHours = hours > 0 ? `${hours}h ` : "";
-        const formattedMinutes = minutes > 0 ? `${minutes}m ` : "";
+    //     setTimeLeft(
+    //       `${formattedDays}${formattedHours}${formattedMinutes}${seconds}s`,
+    //     );
+    //   } else {
+    //     setTimeLeft("Launched!");
+    //     clearInterval(timer);
+    //   }
+    // }, 1000);
 
-        setTimeLeft(
-          `${formattedDays}${formattedHours}${formattedMinutes}${seconds}s`,
-        );
-      } else {
-        setTimeLeft("Launched!");
-        clearInterval(timer);
-      }
-    }, 1000);
+    // return () => clearInterval(timer);
 
-    return () => clearInterval(timer);
+    setTimeLeft("");
   }, []);
 
   return (
