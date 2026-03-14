@@ -28,7 +28,6 @@ export default function ProductTable({
   const [widgetOpen, setWidgetOpen] = useState(false);
   const updateProd = useMutation(api.products.updateProduct);
   const deleteProd = useMutation(api.products.deleteProduct);
-  const [dataStatus, setDataStatus] = useState<undefined | "not loaded">(undefined);
 
   const handleProductDelete = async (id: string) => {
     try {
@@ -69,13 +68,11 @@ export default function ProductTable({
     }
   };
 
-  //! FIXME: possible change from effect to if condition
   useEffect(() => {
     const viewId = searchParams?.edit ?? searchParams?.view;
 
     if (viewId) {
       const foundProduct = products?.find((p) => p._id === viewId);
-      // console.log("Found product:", foundProduct);
 
       if (foundProduct) {
         setProduct(foundProduct);
@@ -86,11 +83,6 @@ export default function ProductTable({
       }
     }
   }, [searchParams, products, router, pathname, viewing]);
-
-  //! TODO 1: create a timed function to check after 30 seconds if data is fetched or not
-  useEffect(() => {
-    //
-  }, [])
 
   return (
     <>
@@ -116,7 +108,7 @@ export default function ProductTable({
           {product === undefined ?
             <span className="loading loading-bars w-20 h-20 flex place-self-center-safe" />
           : <div className="flex-1 max-h-[70vh] overflow-y-auto space-y-2 mx-auto sm:flex sm:space-x-4 sm:space-y-0 md:max-w-3xl lg:max-w-4xl">
-              <div className="w-full max-w-100 h-80 object-cover object-center place-self-center xl:h-60 xl:w-100 lg:place-self-auto">
+              <div className="w-full max-w-100 h-80 object-cover object-center place-self-center lg:place-self-auto lg:sticky lg:top-0 xl:h-60 xl:w-100">
                 <ImageWithFallback
                   src={product?.images[0] ?? ""}
                   alt={product?.name ?? ""}
@@ -183,38 +175,28 @@ export default function ProductTable({
                   </div>
 
                   <div className="space-x-4 flex">
-                    <div>
+                    <div className="w-full">
                       <p className="font-bold">Price</p>
 
-                      {product.dynamic_pricing ?
-                        <div className="flex gap-2 py-1 border-b border-stone-300">
-                          <p>
-                            {new Intl.NumberFormat("en-ZA", {
-                              style: "currency",
-                              currency: "ZAR",
-                            }).format(
-                              Math.min(
-                                ...(dynamicPricedItem(product)?.prices ?? []),
-                              ),
-                            )}
-                          </p>
-                          {" - "}
-                          <p>
-                            {new Intl.NumberFormat("en-ZA", {
-                              style: "currency",
-                              currency: "ZAR",
-                            }).format(
-                              Math.max(
-                                ...(dynamicPricedItem(product)?.prices ?? []),
-                              ),
-                            )}
-                          </p>
-                        </div>
-                      : new Intl.NumberFormat("en-ZA", {
-                          style: "currency",
-                          currency: "ZAR",
-                        }).format(product.price)
-                      }
+                      <input
+                        type="text"
+                        className={`border-b border-stone-300 bg-transparent focus:focus-within:outline-0 focus:focus-within:ring-0 w-full p-1 ${viewing ? "bg-stone-300 text-stone-700 capitalize" : "focus:focus-within:bg-white"}`}
+                        defaultValue={
+                          product?.dynamic_pricing ?
+                            `R ${Math.min(dynamicPricedItem(product)?.prices?.at(0) ?? 0)} - ${Math.max(dynamicPricedItem(product)?.prices?.at(-1) ?? 0)}`
+                          : product?.price
+                        }
+                        disabled={viewing || product?.dynamic_pricing}
+                        onChange={(e) =>
+                          setProduct(
+                            (prev) =>
+                              prev && {
+                                ...prev,
+                                price: e.target.valueAsNumber,
+                              },
+                          )
+                        }
+                      />
                     </div>
 
                     <div>
@@ -244,12 +226,11 @@ export default function ProductTable({
                       />
                     </div>
 
-                    <div>
+                    {/* //! FIXME: fix y-axis alignment of the select element */}
+                    <div className="w-full">
                       <p className="font-bold">Availability</p>
 
-                      <input
-                        type="text"
-                        className={`quantity-input border-b border-stone-300 bg-transparent focus:focus-within:outline-0 focus:focus-within:ring-0 w-full p-1 ${viewing ? "bg-stone-300 text-stone-700" : "focus:focus-within:bg-white"} capitalize`}
+                      <select
                         defaultValue={product?.availability}
                         disabled={viewing}
                         onChange={(e) =>
@@ -258,12 +239,16 @@ export default function ProductTable({
                               prev && {
                                 ...prev,
                                 availability: e.target.value as
-                                  | "out-of-stock"
-                                  | "in-stock",
+                                  | "in-stock"
+                                  | "out-of-stock",
                               },
                           )
                         }
-                      />
+                        className="quantity-input border-b border-stone-300 bg-transparent focus:focus-within:outline-0 focus:focus-within:ring-0 w-full p-1">
+                        <option value="">Select option</option>
+                        <option value="in-stock">In Stock</option>
+                        <option value="out-of-stock">Out of Stock</option>
+                      </select>
                     </div>
                   </div>
 
