@@ -6,7 +6,6 @@ import { useCartStore } from "../../../stores/cart";
 import { useMutation } from "convex/react";
 import { useRouter } from "next/navigation";
 import { api } from "@/convex/_generated/api";
-import { Id } from "@/convex/_generated/dataModel";
 
 export default function Page() {
   const { clearCart } = useCartStore();
@@ -14,7 +13,6 @@ export default function Page() {
     undefined,
   );
   const createOrder = useMutation(api.orders.createOrder);
-  const purchaseProduct = useMutation(api.products.purchaseProduct);
 
   const router = useRouter();
   const previousPageUrl =
@@ -47,16 +45,6 @@ export default function Page() {
             createOrder(parsedOrderData);
             localStorage.removeItem("orderData");
           }
-
-          // update products' quantities in the database
-          const { items } = orderData ? JSON.parse(orderData) : { items: [] };
-          // console.log("Order items to clear from cart:", items);
-          for (const item of items) {
-            purchaseProduct({
-              id: item.productId as Id<"product">,
-              quantity: item.productQty,
-            });
-          }
           clearCart();
         }
       } catch (error) {
@@ -66,7 +54,7 @@ export default function Page() {
     };
 
     fetchPaymentStatus();
-  }, [clearCart, createOrder, purchaseProduct]);
+  }, [clearCart, createOrder]);
 
   useEffect(() => {
     if (!previousPageUrl.includes("payfast.co.za")) {
