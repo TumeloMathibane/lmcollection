@@ -9,7 +9,8 @@ export async function middleware(request: NextRequest) {
   const isAuth = !!token;
   const isAdminAuthRoute = pathname.startsWith("/admin/auth");
 
-  const isOpen = Date.now() < new Date("2026-03-12 14:21").getTime();
+  const isOpen =
+    Date.now() < new Date(`${process.env.NEXT_PUBLIC_LAUNCH_DATE}`).getTime();
 
   // -------------------------
   // 1. Launch mode

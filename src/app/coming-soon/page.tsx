@@ -1,8 +1,47 @@
+"use client";
+
 import Image from "next/image";
 import whiteLogo from "../../../public/logos/Liphiwe_business_logo_white.png";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 export default function Home() {
+  const [timeLeft, setTimeLeft] = useState("");
+
+  useEffect(() => {
+    const launchDate = new Date(`${process.env.NEXT_PUBLIC_LAUNCH_DATE}`);
+    const timer = setInterval(() => {
+      const now = new Date();
+      const difference = launchDate.getTime() - now.getTime();
+
+      if (difference > 0) {
+        const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+        const hours = Math.floor(
+          (difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
+        );
+        const minutes = Math.floor(
+          (difference % (1000 * 60 * 60)) / (1000 * 60),
+        );
+        const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+        // Format the countdown string so that if the value is 0 remove the suffix; remove hour suffix if hours is 0 and days is 0, etc.
+
+        const formattedDays = days > 0 ? `${days}d ` : "";
+        const formattedHours = hours > 0 ? `${hours}h ` : "";
+        const formattedMinutes = minutes > 0 ? `${minutes}m ` : "";
+
+        setTimeLeft(
+          `${formattedDays}${formattedHours}${formattedMinutes}${seconds}s`,
+        );
+      } else {
+        setTimeLeft("Launched!");
+        clearInterval(timer);
+      }
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
+
   return (
     <div className="flex-1 flex flex-col bg-[url('/images/ali-pazani-3w14X-Yxffk-unsplash.jpg')] bg-cover bg-no-repeat grayscale-100 h-screen">
       <header className="z-5">
@@ -34,6 +73,10 @@ export default function Home() {
               stay tuned
             </p>
             <div className="border-b border-white w-full" />
+          </div>
+
+          <div className="absolute bottom-0 left-0 right-0 p-5">
+            <p className="text-stone-200 text-center">{timeLeft}</p>
           </div>
         </div>
       </main>
