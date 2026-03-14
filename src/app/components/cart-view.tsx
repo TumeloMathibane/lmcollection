@@ -32,8 +32,12 @@ export default function CartView() {
 
   useEffect(() => {
     items.forEach((item) => {
-      const dbQty = productsById.get(item.productId as Id<"product">)?.quantity;
-      if (dbQty === 0 && item.productQty !== 1) {
+      // const dbQty = productsById.get(item.productId as Id<"product">)?.quantity;
+      if (
+        productsById.get(item.productId as Id<"product">)?.availability ===
+          "out-of-stock" &&
+        item.productQty !== 1
+      ) {
         updateItemQty(item, 1);
       }
     });
@@ -118,8 +122,8 @@ export default function CartView() {
 
                 <div className="flex justify-between items-center-safe md:w-full">
                   {(
-                    (productsById.get(item.productId as Id<"product">)
-                      ?.quantity ?? 0) > 0
+                    productsById.get(item.productId as Id<"product">)
+                      ?.availability !== "out-of-stock"
                   ) ?
                     <>
                       <div className="w-30 relative">
@@ -159,8 +163,8 @@ export default function CartView() {
             <CartSummary
               items={items.filter(
                 (i) =>
-                  (productsById.get(i.productId as Id<"product">)?.quantity ??
-                    0) > 0,
+                  productsById.get(i.productId as Id<"product">)
+                    ?.availability !== "out-of-stock",
               )}
               onCartClear={() => clearCart()}
             />
