@@ -28,6 +28,7 @@ export default function ProductTable({
   const [widgetOpen, setWidgetOpen] = useState(false);
   const updateProd = useMutation(api.products.updateProduct);
   const deleteProd = useMutation(api.products.deleteProduct);
+  const [dataStatus, setDataStatus] = useState<undefined | "not loaded">(undefined);
 
   const handleProductDelete = async (id: string) => {
     try {
@@ -46,10 +47,13 @@ export default function ProductTable({
         id: id,
         brand: product?.brand,
         name: product?.name,
-        price: product?.price,
+        price:
+          product?.dynamic_pricing ?
+            dynamicPricedItem(product)?.prices?.[0]
+          : product?.price,
         discount: product?.discount,
         shortDescription: product?.shortDescription,
-        quantity: product?.quantity,
+        availability: product?.availability,
         category: product?.category,
         additional_options: product?.additional_options,
         dynamic_pricing: product?.dynamic_pricing,
@@ -82,6 +86,11 @@ export default function ProductTable({
       }
     }
   }, [searchParams, products, router, pathname, viewing]);
+
+  //! TODO 1: create a timed function to check after 30 seconds if data is fetched or not
+  useEffect(() => {
+    //
+  }, [])
 
   return (
     <>
@@ -174,33 +183,39 @@ export default function ProductTable({
                   </div>
 
                   <div className="space-x-4 flex">
-                    {!product?.dynamic_pricing && (
-                      <div>
-                        <p className="font-bold">Price</p>
-                        <input
-                          type={viewing ? "text" : "number"}
-                          className={`quantity-input border-b border-stone-300 bg-transparent focus:focus-within:outline-0 focus:focus-within:ring-0 w-full p-1 ${viewing ? "bg-stone-300 text-stone-700" : "focus:focus-within:bg-white"}`}
-                          defaultValue={
-                            viewing ?
-                              new Intl.NumberFormat("en-ZA", {
-                                style: "currency",
-                                currency: "ZAR",
-                              }).format(product?.price ?? 0)
-                            : Number(product?.price)
-                          }
-                          disabled={viewing}
-                          onChange={(e) =>
-                            setProduct(
-                              (prev) =>
-                                prev && {
-                                  ...prev,
-                                  price: e.target.valueAsNumber,
-                                },
-                            )
-                          }
-                        />
-                      </div>
-                    )}
+                    <div>
+                      <p className="font-bold">Price</p>
+
+                      {product.dynamic_pricing ?
+                        <div className="flex gap-2 py-1 border-b border-stone-300">
+                          <p>
+                            {new Intl.NumberFormat("en-ZA", {
+                              style: "currency",
+                              currency: "ZAR",
+                            }).format(
+                              Math.min(
+                                ...(dynamicPricedItem(product)?.prices ?? []),
+                              ),
+                            )}
+                          </p>
+                          {" - "}
+                          <p>
+                            {new Intl.NumberFormat("en-ZA", {
+                              style: "currency",
+                              currency: "ZAR",
+                            }).format(
+                              Math.max(
+                                ...(dynamicPricedItem(product)?.prices ?? []),
+                              ),
+                            )}
+                          </p>
+                        </div>
+                      : new Intl.NumberFormat("en-ZA", {
+                          style: "currency",
+                          currency: "ZAR",
+                        }).format(product.price)
+                      }
+                    </div>
 
                     <div>
                       <p className="font-bold">Discount</p>
@@ -230,18 +245,21 @@ export default function ProductTable({
                     </div>
 
                     <div>
-                      <p className="font-bold">Quantity</p>
+                      <p className="font-bold">Availability</p>
+
                       <input
-                        type={viewing ? "text" : "number"}
-                        className={`quantity-input border-b border-stone-300 bg-transparent focus:focus-within:outline-0 focus:focus-within:ring-0 w-full p-1 ${viewing ? "bg-stone-300 text-stone-700" : "focus:focus-within:bg-white"}`}
-                        defaultValue={product?.quantity}
+                        type="text"
+                        className={`quantity-input border-b border-stone-300 bg-transparent focus:focus-within:outline-0 focus:focus-within:ring-0 w-full p-1 ${viewing ? "bg-stone-300 text-stone-700" : "focus:focus-within:bg-white"} capitalize`}
+                        defaultValue={product?.availability}
                         disabled={viewing}
                         onChange={(e) =>
                           setProduct(
                             (prev) =>
                               prev && {
                                 ...prev,
-                                quantity: e.target.valueAsNumber,
+                                availability: e.target.value as
+                                  | "out-of-stock"
+                                  | "in-stock",
                               },
                           )
                         }
@@ -406,7 +424,7 @@ export default function ProductTable({
             <th
               scope="col"
               className="px-6 py-3 text-left text-xs font-medium text-stone-500 uppercase tracking-wider">
-              Stock
+              Availability
             </th>
           </tr>
         </thead>
@@ -431,6 +449,7 @@ export default function ProductTable({
                 <td className="px-6 py-4 text-sm text-stone-900">
                   {product.name}
                 </td>
+
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-stone-500">
                   {product.dynamic_pricing ?
                     <>
@@ -462,8 +481,8 @@ export default function ProductTable({
                     }).format(product.price)
                   }
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-stone-500">
-                  {product.quantity}
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-stone-500 capitalize">
+                  {product.availability}
                 </td>
               </tr>
             ))}

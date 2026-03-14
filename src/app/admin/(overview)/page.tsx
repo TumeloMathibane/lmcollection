@@ -18,15 +18,15 @@ export default async function Home({
     products = await fetchQuery(api.products.getProducts, {});
   } catch (error) {
     console.error("Error fetching products for admin overview:", error);
-    products = undefined;
   }
+
   const orders = (await fetchQuery(api.orders.orderCount, {})) ?? 0;
   const stockValue = products?.reduce(
     (total, product) =>
       total +
       (product.dynamic_pricing ?
         (dynamicPricedItem(product)?.totalValue ?? 0)
-      : product.price * product.quantity),
+      : product?.price),
     0,
   );
   // {/* \u2248 for approximately, & \u00b1 for plus/minus */}
