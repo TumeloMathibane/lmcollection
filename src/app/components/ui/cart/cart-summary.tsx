@@ -37,11 +37,13 @@ export default function CartSummary({ items, onCartClear }: CartSummaryProps) {
           }).format(total)}
         </p>
       </div>
-      <Link
-        href="/payments/checkout"
-        className="btn self-center-safe w-full md:text-lg">
-        Proceed to checkout
-      </Link>
+      {items.length > 0 && (
+        <Link
+          href="/payments/checkout"
+          className="btn self-center-safe w-full md:text-lg">
+          Proceed to checkout
+        </Link>
+      )}
     </>
   );
 }
