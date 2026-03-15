@@ -122,6 +122,7 @@ export default function CartView() {
 
                 <div className="flex justify-between items-center-safe md:w-full">
                   {(
+                    productsById.get(item.productId as Id<"product">) &&
                     productsById.get(item.productId as Id<"product">)
                       ?.availability !== "out-of-stock"
                   ) ?
@@ -163,6 +164,7 @@ export default function CartView() {
             <CartSummary
               items={items.filter(
                 (i) =>
+                  productsById.get(i.productId as Id<"product">) &&
                   productsById.get(i.productId as Id<"product">)
                     ?.availability !== "out-of-stock",
               )}
