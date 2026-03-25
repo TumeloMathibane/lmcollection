@@ -17,9 +17,18 @@ export default async function Product({
 }) {
   const prodId = await params;
 
-  const { category } = (await fetchQuery(api.products.getProduct, {
-    id: prodId.productId,
-  })) as Product;
+  const { category } =
+    ((await fetchQuery(api.products.getProduct, {
+      id: prodId.productId,
+    })) as Product) ?? "";
+
+  if (!category) {
+    return (
+      <main className="flex-1 flex items-center p-2 space-y-2 sm:max-w-lg sm:place-self-center-safe md:max-w-4xl xl:py-10">
+        <p className="text-2xl font-bold text-stone-900">Product not found</p>
+      </main>
+    );
+  }
 
   const products = await fetchQuery(api.products.getProducts, {
     category: category,
