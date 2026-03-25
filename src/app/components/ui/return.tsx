@@ -8,7 +8,15 @@ import { useRouter } from "next/navigation";
 import { api } from "@/convex/_generated/api";
 import md5 from "md5";
 
-export default function Return({ passphrase }: { passphrase: string }) {
+export default function Return({
+  passphrase,
+  serverData,
+  checkStatus,
+}: {
+  passphrase: string;
+  serverData?: { [key: string]: string };
+  checkStatus?: boolean;
+}) {
   const { clearCart } = useCartStore();
   const [paymentStatus, setPaymentStatus] = useState<
     undefined | "PASS" | "FAIL"
@@ -23,64 +31,55 @@ export default function Return({ passphrase }: { passphrase: string }) {
     const fetchPaymentStatus = async () => {
       const orderData = JSON.parse(localStorage.getItem("orderData") || "{}");
 
+      // create a new object, 'newObject', that is all the poperties of 'serverData' but excluding 'signature' property
+      const newObject = Object.fromEntries(
+        Object.entries(serverData || {}).filter(([key]) => key !== "signature"),
+      );
+      const newSignature = md5(
+        Object.entries(newObject)
+          .map(
+            ([key, val]) =>
+              `${key}=${encodeURIComponent(String(val).trim()).replace(/%20/g, "+")}`,
+          )
+          .join("&") +
+          (passphrase ?
+            `&passphrase=${encodeURIComponent(String(passphrase).trim()).replace(/%20/g, "+")}`
+          : ""),
+      );
+
+      // * CHECK 3: gross amount check
+      // * CHECK 1: signature check
+      // ? NOTE: the above checks are implemented on the client component
+      if (serverData?.signature !== newSignature) {
+        throw new Error(
+          "Signature mismatch - possible data tampering detected",
+        );
+      }
+
+      if (Number(orderData?.totalPrice) !== Number(serverData?.amount_gross)) {
+        throw new Error("Total price mismatch between client and server data");
+      }
+
+      if (!checkStatus) {
+        throw new Error("Payment status check failed");
+      }
+
       try {
-        const response = await fetch(
-          process.env.VERCEL_ENV === "production" ?
-            `https://${process.env.VERCEL_URL}/notify`
-          : "https://d1r891fk-4000.eun1.devtunnels.ms/notify",
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-            },
-          },
-        );
-        if (!response.ok) {
-          throw new Error(
-            `Error fetching payment status: ${response.statusText}`,
-          );
-        }
-        const data = await response.json();
-
-        // * CHECK 1: check signature of data received if is correct
-        let pfString: string = "";
-        Object.entries(data.message).map(
-          ([key, val]) =>
-            key !== "signature" &&
-            (pfString += `${key}=${encodeURIComponent(String(val).trim()).replace(/%20/g, "+")}&`),
-        );
-        if (pfString.endsWith("&")) {
-          pfString = pfString.slice(0, -1);
-        }
-        if (passphrase) {
-          pfString += `&passphrase=${encodeURIComponent(String(passphrase).trim()).replace(/%20/g, "+")}`;
+        const orderId = await createOrder(orderData);
+        if (!orderId) {
+          throw new Error("Failed to create order");
         }
 
-        const check1 = md5(pfString) === data.message.signature; // checking of signature...
-        if (!check1) {
-          throw new Error("Data error: Possible tempering detected");
-        }
-
-        // ? NOTE: this check has been completed in notify route...
-        // * CHECK 2: check if notification comes from valid payfast host
-        // * CHECK 3: check gross amounts match
-        // * check 4: verify information received from gateway and confirming the order with the server before confirming the order with the client...
-
-        if (check1) {
-          setPaymentStatus("PASS");
-          const orderID = await createOrder(orderData);
-          if (orderID) {
-            clearCart();
-          }
-        }
+        clearCart();
+        setPaymentStatus("PASS");
       } catch (error) {
+        console.error("Store error - ", error);
         setPaymentStatus("FAIL");
-        console.error("Store Error - ", error);
       }
     };
 
     fetchPaymentStatus();
-  }, [clearCart, createOrder, passphrase]);
+  }, [checkStatus, serverData, clearCart, createOrder, passphrase]);
 
   useEffect(() => {
     if (!previousPageUrl.includes("payfast.co.za")) {
@@ -101,7 +100,7 @@ export default function Return({ passphrase }: { passphrase: string }) {
 
   return (
     <>
-      {paymentStatus === undefined ?
+      {!serverData || paymentStatus === undefined ?
         <p>Loading payment status...</p>
       : paymentStatus === "PASS" ?
         <span className="flex items-center-safe gap-3">

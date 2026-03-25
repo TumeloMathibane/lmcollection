@@ -25,6 +25,7 @@ export async function POST(req: Request) {
       }
     }
 
+    // * CHECK 2: check if domain of sender is from expected payfast host
     if (!check_host) {
       throw new Error("Error: Request not from PayFast");
     }
