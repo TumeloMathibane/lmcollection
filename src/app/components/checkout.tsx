@@ -71,8 +71,6 @@ export default function CheckoutMain({
 
   const [cartTotal, setCartTotal] = useState<number>(0);
 
-  const [orderId, setOrderId] = useState<string>("");
-
   const [data, setData] = useState({
     name_first: "",
     name_last: "",
@@ -109,7 +107,7 @@ export default function CheckoutMain({
     name_last: "",
     m_payment_id: "",
     amount: cartTotal,
-    item_name: orderId,
+    item_name: "",
   });
 
   const ordersCount = useQuery(api.orders.orderCount) ?? 0;
@@ -246,16 +244,28 @@ export default function CheckoutMain({
     setCartTotal(availableSubtotal + shippingData.price);
   }, [availableSubtotal, shippingData.price]);
 
-  // add item_name field
+  // add item_name field and payment ID
   useEffect(() => {
-    const c_orders = ordersCount + 1;
-    setOrderId("LMCOrder#" + c_orders.toString().padStart(6, "0"));
+    const completePaymentData = () => {
+      const currentDate = new Date().getTime();
+      const c_orders = ordersCount + 1;
+      const orderId = generatePaymentId(
+        currentDate,
+        cartTotal,
+        passphrase,
+      ) as string;
 
-    setPaymentData((prevVal) => ({
-      ...prevVal,
-      item_name: orderId,
-    }));
-  }, [items, ordersCount, orderId]);
+      console.log("item name: ", `LMCOrder#${orderId}${c_orders.toString()}`);
+
+      setPaymentData((prevVal) => ({
+        ...prevVal,
+        item_name: `LMCOrder#${orderId}${c_orders.toString()}`,
+        m_payment_id: orderId,
+      }));
+    };
+
+    completePaymentData();
+  }, [ordersCount, cartTotal, passphrase]);
 
   // update payment data when cartTotal changes
   useEffect(() => {
@@ -264,18 +274,6 @@ export default function CheckoutMain({
       amount: Number(cartTotal.toFixed(2)),
     }));
   }, [cartTotal]);
-
-  // generate payment id and add to payment data object
-  useEffect(() => {
-    setPaymentData((prevVal) => ({
-      ...prevVal,
-      m_payment_id: generatePaymentId(
-        prevVal.item_name,
-        cartTotal,
-        passphrase,
-      ) as string,
-    }));
-  }, [ordersCount, passphrase, orderId, cartTotal]);
 
   // look for changes in data; specifically, in save_info; when changes are made, save info according to permission
   useEffect(() => {

@@ -32,11 +32,11 @@ export function objectToString(data: object): string {
 }
 
 export function generatePaymentId(
-  orderId: string,
+  currentDate: number,
   cartTotal: number,
-  passphrase?: string,
+  passphrase: string = "",
 ): string | void {
-  const encryptString = md5(orderId + cartTotal + passphrase);
+  const encryptString = md5(String(currentDate) + cartTotal + passphrase);
   let paymentId: string = "";
   for (let i = 0; i < encryptString.length; i++) {
     if (i % 2 !== 0) {
