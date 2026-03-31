@@ -1,4 +1,3 @@
-// middleware.ts (in root of project, same level as app folder)
 import { getToken } from "next-auth/jwt";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
