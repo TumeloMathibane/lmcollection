@@ -56,10 +56,10 @@ export default function Return({
       }
 
       // * CHECK 3: gross amount check
-      console.log("Order data & server data: ", {
-        orderData: orderData,
-        serverData: serverData,
-      });
+      // console.log("Order data & server data: ", {
+      //   orderData: orderData,
+      //   serverData: serverData,
+      // });
       if (Number(orderData?.totalPrice) !== Number(serverData?.amount_gross)) {
         throw new Error("Total price mismatch between client and server data");
       }
@@ -83,6 +83,7 @@ export default function Return({
     };
 
     fetchPaymentStatus();
+    localStorage.removeItem("orderData");
   }, [checkStatus, serverData, clearCart, createOrder, passphrase]);
 
   useEffect(() => {
