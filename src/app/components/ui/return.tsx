@@ -32,6 +32,8 @@ export default function Return({
       const orderData = JSON.parse(localStorage.getItem("orderData") || "{}");
 
       // create a new object, 'newObject', that is all the poperties of 'serverData' but excluding 'signature' property
+
+      // * CHECK 1: signature check
       const newObject = Object.fromEntries(
         Object.entries(serverData || {}).filter(([key]) => key !== "signature"),
       );
@@ -47,15 +49,17 @@ export default function Return({
           : ""),
       );
 
-      // * CHECK 3: gross amount check
-      // * CHECK 1: signature check
-      // ? NOTE: the above checks are implemented on the client component
       if (serverData?.signature !== newSignature) {
         throw new Error(
           "Signature mismatch - possible data tampering detected",
         );
       }
 
+      // * CHECK 3: gross amount check
+      console.log("Order data & server data: ", {
+        orderData: orderData,
+        serverData: serverData,
+      });
       if (Number(orderData?.totalPrice) !== Number(serverData?.amount_gross)) {
         throw new Error("Total price mismatch between client and server data");
       }

@@ -9,17 +9,17 @@ export async function middleware(request: NextRequest) {
   const isAuth = !!token;
   const isAdminAuthRoute = pathname.startsWith("/admin/auth");
 
-  const isOpen =
-    Date.now() < new Date(`${process.env.NEXT_PUBLIC_LAUNCH_DATE}`).getTime();
+  // const isOpen =
+  //   Date.now() < new Date(`${process.env.NEXT_PUBLIC_LAUNCH_DATE}`).getTime();
 
   // -------------------------
   // 1. Launch mode
   // -------------------------
-  if (isOpen && pathname !== "/coming-soon") {
-    const url = request.nextUrl.clone();
-    url.pathname = "/coming-soon";
-    return NextResponse.redirect(url);
-  }
+  // if (isOpen && pathname !== "/coming-soon") {
+  //   const url = request.nextUrl.clone();
+  //   url.pathname = "/coming-soon";
+  //   return NextResponse.redirect(url);
+  // }
 
   // -------------------------
   // 2. Admin authentication
