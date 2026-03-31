@@ -255,8 +255,6 @@ export default function CheckoutMain({
         passphrase,
       ) as string;
 
-      console.log("item name: ", `LMCOrder#${orderId}${c_orders.toString()}`);
-
       setPaymentData((prevVal) => ({
         ...prevVal,
         item_name: `LMCOrder#${orderId}${c_orders.toString()}`,
