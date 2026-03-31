@@ -83,6 +83,7 @@ export default function Return({
     };
 
     fetchPaymentStatus();
+    localStorage.removeItem("orderData");
   }, [checkStatus, serverData, clearCart, createOrder, passphrase]);
 
   useEffect(() => {
