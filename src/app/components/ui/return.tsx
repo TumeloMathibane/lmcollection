@@ -50,22 +50,29 @@ export default function Return({
       );
 
       if (serverData?.signature !== newSignature) {
-        throw new Error(
-          "Signature mismatch - possible data tampering detected",
+        console.error(
+          "Store error - Signature mismatch - possible data tampering detected",
         );
+
+        setPaymentStatus("FAIL");
+        return;
       }
 
       // * CHECK 3: gross amount check
-      // console.log("Order data & server data: ", {
-      //   orderData: orderData,
-      //   serverData: serverData,
-      // });
       if (Number(orderData?.totalPrice) !== Number(serverData?.amount_gross)) {
-        throw new Error("Total price mismatch between client and server data");
+        console.error(
+          "Store error - Total price mismatch between client and server data",
+        );
+
+        setPaymentStatus("FAIL");
+        return;
       }
 
       if (!checkStatus) {
-        throw new Error("Payment status check failed");
+        console.error("Store error - Payment status check failed");
+
+        setPaymentStatus("FAIL");
+        return;
       }
 
       try {
