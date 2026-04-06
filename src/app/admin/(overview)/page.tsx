@@ -29,14 +29,12 @@ export default async function Home({
       : product?.price),
     0,
   );
-  // {/* \u2248 for approximately, & \u00b1 for plus/minus */}
 
   return (
     <main className="w-full p-2 lg:p-6">
       <h1 className="text-xl font-bold mb-4 w-fit">Admin Overview</h1>
 
       <section className="w-full space-y-4">
-        {/* CardList */}
         <div className="flex gap-2 w-full overflow-x-auto border-b border-stone-200 pb-4">
           <div className="flex w-full space-x-2">
             <Card
@@ -59,7 +57,6 @@ export default async function Home({
           </div>
         </div>
 
-        {/* table component */}
         <div className="w-full space-y-2">
           <h1 className="text-xl font-bold text-stone-900">
             <Link href="/admin/products">Products</Link>
