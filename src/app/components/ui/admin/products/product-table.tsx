@@ -7,8 +7,9 @@ import { dynamicPricedItem } from "@/utils/helper";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { BiX } from "react-icons/bi";
-import ImageWithFallback from "@/components/image-with-fallback";
 import { Id } from "@/convex/_generated/dataModel";
+import ImageCarousel from "@/components/image-carousel";
+import "@/components/product-list.css";
 
 export default function ProductTable({
   searchParams,
@@ -89,7 +90,7 @@ export default function ProductTable({
       <aside
         className={`fixed top-0 right-0 bottom-0 left-0 w-full min-h-dvh flex items-end-safe transition-all ${widgetOpen ? "z-50 backdrop-blur-sm" : "-z-1 backdrop-blur-none"} lg:items-center-safe lg:justify-center-safe`}>
         <div
-          className={`w-full max-h-[95%] flex flex-col p-4 pb-6 rounded-t-2xl bg-stone-200 border-t border-stone-300 space-y-2 transition ${widgetOpen ? "z-48 translate-0" : "translate-y-full"} lg:max-w-[900px] lg:rounded-2xl lg:border 2xl:max-w-[700px]`}>
+          className={`w-full max-h-[95%] flex flex-col p-4 pb-6 rounded-t-2xl bg-stone-200 border-t border-stone-300 space-y-2 transition ${widgetOpen ? "z-48 translate-0" : "translate-y-full"} lg:max-w-[80%] lg:rounded-2xl lg:border xl:max-w-[60%]`}>
           <div className="flex items-center-safe justify-between border-b border-stone-400 pb-2">
             <p className="text-xl font-extrabold text-shadow-stone-700">
               {viewing ? "Viewing Product Details" : "Editing Product Details"}
@@ -107,15 +108,14 @@ export default function ProductTable({
 
           {product === undefined ?
             <span className="loading loading-bars w-20 h-20 flex place-self-center-safe" />
-          : <div className="flex-1 max-h-[70vh] overflow-y-auto space-y-2 mx-auto sm:flex sm:space-x-4 sm:space-y-0 md:max-w-3xl lg:max-w-4xl">
-              <div className="w-full max-w-100 h-80 object-cover object-center place-self-center lg:place-self-auto lg:sticky lg:top-0 xl:h-60 xl:w-100">
-                <ImageWithFallback
-                  src={product?.images[0] ?? ""}
-                  alt={product?.name ?? ""}
-                />
+          : <div className="flex-1 max-h-[70vh] overflow-y-auto space-y-2 flex flex-col md:flex-row md:space-x-4">
+              <div className="w-full h-80 object-cover object-center md:max-w-80 md:max-h-70 lg:sticky lg:top-0">
+                <div className="w-full h-full">
+                  <ImageCarousel images={product?.images} alt={product?.name} />
+                </div>
               </div>
 
-              <div className="flex flex-col space-y-4">
+              <div className="flex flex-col space-y-4 w-full">
                 <div className="space-y-2 flex-1">
                   <div>
                     <p className="font-bold">Category</p>
@@ -187,15 +187,19 @@ export default function ProductTable({
                           : product?.price
                         }
                         disabled={viewing || product?.dynamic_pricing}
-                        onChange={(e) =>
+                        onChange={(e) => {
+                          if (Number.isNaN(e.target.value)) {
+                            throw new Error("Price must be a number");
+                          }
+
                           setProduct(
                             (prev) =>
                               prev && {
                                 ...prev,
-                                price: e.target.valueAsNumber,
+                                price: Number(e.target.value),
                               },
-                          )
-                        }
+                          );
+                        }}
                       />
                     </div>
 
@@ -226,8 +230,7 @@ export default function ProductTable({
                       />
                     </div>
 
-                    {/* //! FIXME: fix y-axis alignment of the select element */}
-                    <div className="w-full">
+                    <div className="w-1/3">
                       <p className="font-bold">Availability</p>
 
                       <select
