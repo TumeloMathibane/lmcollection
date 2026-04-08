@@ -20,18 +20,15 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 2.5rem;
-  height: 2.5rem;
+  width: 2rem;
+  height: 2rem;
   border-radius: 9999px;
   background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(4px);
   box-shadow: 0 6px 18px rgba(15, 23, 42, 0.12);
   border: 1px solid rgba(0, 0, 0, 0.06);
   cursor: pointer;
-}
-
-.scroll-btn svg {
-  pointer-events: none;
+  visibility: hidden; /* hide by default, show on larger screens */
 }
 
 .scroll-btn.left {
@@ -41,17 +38,9 @@
   right: 0.5rem;
 }
 
-/* smaller on mobile to avoid covering content */
-@media (max-width: 640px) {
+@media (min-width: 825px) {
   .scroll-btn {
-    width: 2rem;
-    height: 2rem;
-  }
-  .scroll-btn.left {
-    left: 0.25rem;
-  }
-  .scroll-btn.right {
-    right: 0.25rem;
+    visibility: visible;
   }
 }
 
