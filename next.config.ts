@@ -12,6 +12,10 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "content.payfast.io" },
       { protocol: "http", hostname: "127.0.0.1" },
       { protocol: "https", hostname: "clean-ant-257.convex.cloud" },
+      {
+        protocol: "https",
+        hostname: "brave-cheetah-312.convex.cloud/",
+      },
     ],
   },
 
