@@ -35,7 +35,10 @@ export default function RootLayout({
         <CheckoutHeader />
 
         <ConvexClientProvider>
-          <Construction />
+          {Date.now() ===
+            new Date(String(process.env.NEXT_PUBLIC_LAUNCH_DATE)).getDate() && (
+            <Construction />
+          )}
           {children}
         </ConvexClientProvider>
       </body>
