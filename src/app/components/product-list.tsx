@@ -125,6 +125,7 @@ export default function ProductList({ products }: { products: Product[] }) {
                           width={500}
                           height={500}
                           className="object-cover object-center w-full h-full"
+                          unoptimized={true}
                         />
                       </div>
                     </figure>
