@@ -9,7 +9,8 @@ export async function middleware(request: NextRequest) {
   const isAdminAuthRoute = pathname.startsWith("/admin/auth");
 
   const isOpen =
-    Date.now() < new Date(`${process.env.NEXT_PUBLIC_LAUNCH_DATE}`).getTime();
+    Date.now() < new Date(`${process.env.NEXT_PUBLIC_LAUNCH_DATE}`).getTime() &&
+    process.env.VERVEL_ENV === "production";
 
   // -------------------------
   // 1. Launch mode
