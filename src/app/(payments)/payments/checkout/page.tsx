@@ -9,7 +9,7 @@ export default function Checkout() {
   const merchant_key = process.env.PAYFAST_MERCHANT_KEY ?? "";
   const merchant_id = process.env.PAYFAST_MERCHANT_ID ?? "";
   const passphrase = process.env.PAYFAST_SALT_PASSPHRASE ?? "";
-  const formActionURL = process.env.NEXT_PUBLIC_PAYFAST_TEST_URL ?? "";
+  const formActionURL = process.env.NEXT_PUBLIC_PAYFAST_URL ?? "";
 
   // https://d1r891fk-4000.eun1.devtunnels.ms/ url changes based on developers devtunnel config
   const gatewayURL = {
