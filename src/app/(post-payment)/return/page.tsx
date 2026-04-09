@@ -9,7 +9,7 @@ export default async function Page() {
     const response = await fetch(
       process.env.VERCEL_ENV === "production" ?
         `https://${process.env.VERCEL_URL}/notify`
-      : "https://d1r891fk-4000.eun1.devtunnels.ms/notify",
+      : "http://localhost:3000/notify",
       {
         method: "GET",
         headers: {
@@ -37,7 +37,9 @@ export default async function Page() {
 
     // * CHECK 4: validate data through POST request to payfast server (server to server comms.)
     const paymentStatus = await fetch(
-      "https://sandbox.payfast.co.za/eng/query/validate",
+      process.env.VERCEL_ENV === "production" ?
+        "https://www.payfast.co.za/eng/query/validate"
+      : "https://sandbox.payfast.co.za/eng/query/validate",
       {
         method: "POST",
         headers: {
