@@ -9,9 +9,6 @@ import type { Product } from "../(overview)/collection/products/types";
 import Loading from "@/(overview)/collection/products/all/loading";
 import ProductFilter from "./ui/products/product-filter";
 
-//! TODO: implement filter component
-//! TODO: implement sorting component
-
 export default function CollectionView({ category }: { category: string }) {
   const products: Product[] | undefined = useQuery(api.products.getProducts, {
     category: category === "" ? undefined : category,
