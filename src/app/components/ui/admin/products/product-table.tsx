@@ -210,12 +210,25 @@ export default function ProductTable({
                         className={`quantity-input border-b border-stone-300 bg-transparent focus:focus-within:outline-0 focus:focus-within:ring-0 w-full p-1 ${viewing ? "bg-stone-300 text-stone-700" : "focus:focus-within:bg-white"}`}
                         defaultValue={
                           viewing ?
-                            new Intl.NumberFormat("en-ZA", {
-                              style: "percent",
-                              minimumFractionDigits: 0,
+                            product?.discount === 0 ?
+                              0
+                            : `${Number(product?.discount).toLocaleString(
+                                "en-GB",
+                                {
+                                  style: "decimal",
+                                  minimumFractionDigits: 2,
+                                  maximumFractionDigits: 2,
+                                },
+                              )}%`
+
+                          : product?.discount === 0 ?
+                            0
+                          : Number(product?.discount).toLocaleString("en-GB", {
+                              style: "decimal",
+                              minimumFractionDigits: 2,
                               maximumFractionDigits: 2,
-                            }).format(product?.discount ?? 0)
-                          : 0
+                            })
+
                         }
                         disabled={viewing}
                         onChange={(e) =>
