@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { BsChevronDown, BsX } from "react-icons/bs";
 import { useDebounce } from "@/hooks/useDebouce";
-import { useRouter } from "next/navigation";
 import { FaFilter } from "react-icons/fa";
 
 export interface Filter {
@@ -13,22 +12,27 @@ export interface Filter {
 }
 
 interface FilterProps {
+  filter?: Filter;
   heading?: string;
   noOfProducts?: number;
+  onFilterChange: (param: Filter) => void;
 }
 
-export default function ProductFilter({ heading, noOfProducts }: FilterProps) {
+export default function ProductFilter({
+  filter,
+  heading,
+  noOfProducts,
+  onFilterChange,
+}: FilterProps) {
   const [filterOpen, setFilterOpen] = useState(false);
 
   const [selectedFilters, setSelectedFilters] = useState<Filter | undefined>(
-    undefined,
+    filter,
   );
-  const [min, setMin] = useState<number | undefined>(undefined);
-  const [max, setMax] = useState<number | undefined>(undefined);
-  const minPriceVal = useDebounce(min, 500);
-  const maxPriceVal = useDebounce(max, 500);
-
-  const router = useRouter();
+  const [min, setMin] = useState<number | undefined>(filter!.minPrice);
+  const [max, setMax] = useState<number | undefined>(filter!.maxPrice);
+  const minPriceVal = useDebounce(min, 800);
+  const maxPriceVal = useDebounce(max, 800);
 
   const sortOpts = [
     "Name - asc.",
@@ -44,9 +48,8 @@ export default function ProductFilter({ heading, noOfProducts }: FilterProps) {
       "availability",
     ) as NodeListOf<HTMLInputElement>;
     radioButtons.forEach((radio) => (radio.checked = false));
-    setSelectedFilters(
-      (prev) => ({ ...prev, availability: undefined }) as Filter,
-    );
+    setSelectedFilters((prev) => ({ ...prev, availability: "" }) as Filter);
+    handleFilterChange({ availability: "" } as Filter);
   };
 
   const resetPriceRange = () => {
@@ -56,12 +59,14 @@ export default function ProductFilter({ heading, noOfProducts }: FilterProps) {
     const maxInput = document.querySelector(
       'input[name="maxPrice"]',
     ) as HTMLInputElement;
+
     if (minInput) minInput.valueAsNumber = NaN;
     if (maxInput) maxInput.valueAsNumber = NaN;
+
     setSelectedFilters(
-      (prev) =>
-        ({ ...prev, minPrice: undefined, maxPrice: undefined }) as Filter,
+      (prev) => ({ ...prev, minPrice: NaN, maxPrice: NaN }) as Filter,
     );
+    handleFilterChange({ minPrice: NaN, maxPrice: NaN } as Filter);
   };
 
   //! TODO: ...to be implemented
@@ -72,13 +77,26 @@ export default function ProductFilter({ heading, noOfProducts }: FilterProps) {
       'select[name="sorting"]',
     ) as HTMLSelectElement;
     selectElement.value = "";
-    setSelectedFilters((prev) => ({ ...prev, sorting: undefined }));
+
+    setSelectedFilters((prev) => ({ ...prev, sorting: "" }));
+    handleFilterChange({ sorting: "" } as Filter);
   };
 
   const resetAll = () => {
     resetAvailability();
     resetPriceRange();
     resetSorting();
+
+    onFilterChange({
+      availability: "",
+      minPrice: NaN,
+      maxPrice: NaN,
+      sorting: "",
+    } as Filter);
+  };
+
+  const handleFilterChange = (filter: Filter) => {
+    onFilterChange(filter);
   };
 
   useEffect(() => {
@@ -93,20 +111,6 @@ export default function ProductFilter({ heading, noOfProducts }: FilterProps) {
       );
     }
   }, [minPriceVal, maxPriceVal]);
-
-  useEffect(() => {
-    let sParams = "";
-
-    Object.entries(selectedFilters ?? {}).forEach(
-      ([key, value]) =>
-        value !== undefined &&
-        value !== null &&
-        value !== "" &&
-        !Number.isNaN(value) &&
-        (sParams += `${key}=${value}&`),
-    );
-    router.replace(`?${sParams}`);
-  }, [selectedFilters, router]);
 
   return (
     <div className="w-full md:flex md:flex-col md:relative md:mb-3 md:space-y-2">
@@ -141,6 +145,7 @@ export default function ProductFilter({ heading, noOfProducts }: FilterProps) {
               value !== undefined &&
               value !== null &&
               value !== "" &&
+              Number(value) !== 0 &&
               !Number.isNaN(value) && (
                 <div
                   key={key}
@@ -206,7 +211,12 @@ export default function ProductFilter({ heading, noOfProducts }: FilterProps) {
                               [e.target.name]: e.target.value as string,
                             }) as Filter,
                         );
+
+                        handleFilterChange({
+                          [e.target.name]: e.target.value,
+                        });
                       }}
+                      checked={filter?.availability === opt}
                     />
 
                     <label htmlFor={`availability${idx}`}>{opt}</label>
@@ -227,10 +237,19 @@ export default function ProductFilter({ heading, noOfProducts }: FilterProps) {
                     type="number"
                     name="minPrice"
                     className="w-full p-1 rounded-none bg-transparent border border-stone-200 focus:bg-white focus:focus-within:outline-0 focus:focus-within:ring focus:focus-within:ring-blue-600"
+                    defaultValue={filter?.minPrice}
                     onChange={(e) => {
-                      setMin(e.target.valueAsNumber);
+                      setMin(
+                        !Number.isNaN(e.target.valueAsNumber) ?
+                          e.target.valueAsNumber
+                        : 0,
+                      );
+
+                      handleFilterChange({
+                        [e.target.name]: e.target.value,
+                      });
                     }}
-                    placeholder="From"
+                    placeholder="Min. price"
                   />
 
                   <p>{"-"}</p>
@@ -239,10 +258,19 @@ export default function ProductFilter({ heading, noOfProducts }: FilterProps) {
                     type="number"
                     name="maxPrice"
                     className="w-full p-1 rounded-none bg-transparent border border-stone-200 focus:bg-white focus:focus-within:outline-0 focus:focus-within:ring focus:focus-within:ring-blue-600"
+                    defaultValue={filter?.maxPrice}
                     onChange={(e) => {
-                      setMax(e.target.valueAsNumber);
+                      setMax(
+                        !Number.isNaN(e.target.valueAsNumber) ?
+                          e.target.valueAsNumber
+                        : 0,
+                      );
+
+                      handleFilterChange({
+                        [e.target.name]: e.target.value,
+                      });
                     }}
-                    placeholder="To"
+                    placeholder="Max. price"
                   />
                 </div>
               </div>
@@ -288,6 +316,7 @@ export default function ProductFilter({ heading, noOfProducts }: FilterProps) {
               <select
                 name="sorting"
                 className="p-2 border border-stone-400 focus:focus-within:ring focus:focus-within:ring-blue-600 focus:focus-within:outline-offset-0 focus:focus-within:outline-0 md:w-full md:px-2 md:py-1"
+                defaultValue={filter!.sorting}
                 onChange={(e) => {
                   setSelectedFilters(
                     (prev) =>
@@ -296,6 +325,10 @@ export default function ProductFilter({ heading, noOfProducts }: FilterProps) {
                         [e.target.name]: e.target.value as string,
                       }) as Filter,
                   );
+
+                  handleFilterChange({
+                    [e.target.name]: e.target.value,
+                  });
                 }}>
                 <option value={""}>Select option</option>
                 {sortOpts.map((opt, idx) => (
