@@ -14,16 +14,6 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "clean-ant-257.convex.cloud" },
     ],
   },
-
-  async redirects() {
-    return [
-      // {
-      //   source: "/:path*",
-      //   destination: "/",
-      //   permanent: false,
-      // },
-    ];
-  },
 };
 
 export default nextConfig;
