@@ -2,12 +2,13 @@
 
 import type { Product } from "../(overview)/collection/products/types";
 import Loading from "@/(overview)/collection/products/all/loading";
-import ProductFilter from "./ui/products/product-filter";
+import ProductFilter, { Filter } from "./ui/products/product-filter";
 import { useSearchParams } from "next/navigation";
 import { ProductCard } from "./ui/products/card";
 import { api } from "@/convex/_generated/api";
 import { useQuery } from "convex/react";
 import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 export default function CollectionView({ category }: { category: string }) {
   const products: Product[] | undefined = useQuery(api.products.getProducts, {
@@ -15,6 +16,7 @@ export default function CollectionView({ category }: { category: string }) {
   });
   let displayProducts = products;
 
+  const router = useRouter();
   const searchParams = useSearchParams();
   if (
     searchParams.get("availability") !== "" &&
@@ -83,6 +85,28 @@ export default function CollectionView({ category }: { category: string }) {
     }
   }
 
+  const handleParamsUpdate = (filter: Filter) => {
+    const params = new URLSearchParams(searchParams.toString());
+
+    Object.entries(filter ?? {}).forEach(([key, val]) => {
+      if (
+        val !== "" &&
+        val !== undefined &&
+        val !== null &&
+        !Number.isNaN(val)
+      ) {
+        params.set(key, val);
+      } else if (
+        params.has(key) &&
+        (val === "" || val === undefined || val === null || Number.isNaN(val))
+      ) {
+        params.delete(key);
+      }
+    });
+
+    router.replace(`?${params}`);
+  };
+
   useEffect(() => window.scrollTo(0, 0), []);
 
   if (!products) return <Loading />;
@@ -92,10 +116,21 @@ export default function CollectionView({ category }: { category: string }) {
       <p className="text-4xl font-bold text-stone-900">Products</p>
 
       <div className="w-full space-y-2 sm:max-w-2xl lg:max-w-5xl">
-        <ProductFilter
-          heading={`Filter (${displayProducts?.length ?? 0} products)`}
-          noOfProducts={displayProducts?.length}
-        />
+        {products!.length > 0 && (
+          <ProductFilter
+            filter={
+              {
+                availability: searchParams.get("availability") ?? "",
+                minPrice: searchParams.get("minPrice") ?? NaN,
+                maxPrice: searchParams.get("maxPrice") ?? NaN,
+                sorting: searchParams.get("sorting") ?? "",
+              } as Filter
+            }
+            heading={`Filter (${displayProducts?.length ?? 0} products)`}
+            noOfProducts={displayProducts?.length}
+            onFilterChange={handleParamsUpdate}
+          />
+        )}
 
         <div className="space-y-4">
           <div
