@@ -180,7 +180,7 @@ export default function ProductTable({
 
                       <input
                         type="text"
-                        className={`border-b border-stone-300 bg-transparent focus:focus-within:outline-0 focus:focus-within:ring-0 w-full p-1 ${viewing ? "bg-stone-300 text-stone-700 capitalize" : "focus:focus-within:bg-white"}`}
+                        className={`input border-b border-stone-300 bg-transparent focus:focus-within:outline-0 focus:focus-within:ring-0 w-full p-1 text-stone-800 ${viewing ? "bg-stone-300 text-stone-700 capitalize" : "focus:focus-within:bg-white"}`}
                         defaultValue={
                           product?.dynamic_pricing ?
                             `R ${Math.min(dynamicPricedItem(product)?.prices?.at(0) ?? 0)} - ${Math.max(dynamicPricedItem(product)?.prices?.at(-1) ?? 0)}`
@@ -207,15 +207,28 @@ export default function ProductTable({
                       <p className="font-bold">Discount</p>
                       <input
                         type={viewing ? "text" : "number"}
-                        className={`quantity-input border-b border-stone-300 bg-transparent focus:focus-within:outline-0 focus:focus-within:ring-0 w-full p-1 ${viewing ? "bg-stone-300 text-stone-700" : "focus:focus-within:bg-white"}`}
+                        className={`quantity-input input border-stone-300 bg-transparent focus:focus-within:outline-0 focus:focus-within:ring-0 ${viewing ? "bg-stone-300 text-stone-700" : "focus:focus-within:bg-white"}`}
                         defaultValue={
                           viewing ?
-                            new Intl.NumberFormat("en-ZA", {
-                              style: "percent",
-                              minimumFractionDigits: 0,
+                            product?.discount === 0 ?
+                              0
+                            : `${Number(product?.discount).toLocaleString(
+                                "en-GB",
+                                {
+                                  style: "decimal",
+                                  minimumFractionDigits: 2,
+                                  maximumFractionDigits: 2,
+                                },
+                              )}%`
+
+                          : product?.discount === 0 ?
+                            0
+                          : Number(product?.discount).toLocaleString("en-GB", {
+                              style: "decimal",
+                              minimumFractionDigits: 2,
                               maximumFractionDigits: 2,
-                            }).format(product?.discount ?? 0)
-                          : 0
+                            })
+
                         }
                         disabled={viewing}
                         onChange={(e) =>
@@ -230,7 +243,7 @@ export default function ProductTable({
                       />
                     </div>
 
-                    <div className="w-1/3">
+                    <div className="w-full">
                       <p className="font-bold">Availability</p>
 
                       <select
@@ -247,7 +260,7 @@ export default function ProductTable({
                               },
                           )
                         }
-                        className="quantity-input border-b border-stone-300 bg-transparent focus:focus-within:outline-0 focus:focus-within:ring-0 w-full p-1">
+                        className="select bg-stone-200/80 border-stone-300 focus-within:outline-0 focus:focus-within:outline-0 focus:focus-within:ring-0 w-full px-3">
                         <option value="">Select option</option>
                         <option value="in-stock">In Stock</option>
                         <option value="out-of-stock">Out of Stock</option>
@@ -259,7 +272,7 @@ export default function ProductTable({
                     <div>
                       <p className="font-bold">Description</p>
                       <textarea
-                        className={`border border-stone-300 bg-white focus:focus-within:outline-0 focus:focus-within:ring-0 w-full p-1 ${viewing ? "bg-stone-300 text-stone-700" : "focus:focus-within:bg-white"}`}
+                        className={`textarea px-2 border border-stone-300 bg-white focus:focus-within:outline-0 focus:focus-within:ring-0 w-full p-1 ${viewing ? "bg-stone-300 text-stone-700" : "focus:focus-within:bg-white"}`}
                         defaultValue={product.shortDescription}
                         disabled={viewing}
                         onChange={(e) =>
@@ -286,7 +299,7 @@ export default function ProductTable({
                             className="flex items-start gap-4 p-1">
                             <input
                               type="text"
-                              className={`border-b border-stone-300 bg-transparent focus:focus-within:outline-0 focus:focus-within:ring-0 w-1/2 text-wrap pb-1 ${viewing ? "bg-stone-300 text-stone-700 capitalize" : "focus:focus-within:bg-white"}`}
+                              className={`input border-b border-stone-300 bg-transparent focus:focus-within:outline-0 focus:focus-within:ring-0 w-1/2 text-wrap ${viewing ? "bg-stone-300 text-stone-700 capitalize" : "focus:focus-within:bg-white"}`}
                               defaultValue={option.label}
                               disabled={viewing}
                               onChange={(e) => {
@@ -333,7 +346,7 @@ export default function ProductTable({
                                 <p>{option.value.split(",").join(", ")}</p>
                               </div>
                             : <textarea
-                                className={`border border-stone-300 bg-white focus:focus-within:outline-0 focus:focus-within:ring-0 w-1/2 h-fit p-1 text-stone-700`}
+                                className={`textarea border border-stone-300 bg-white focus:focus-within:outline-0 focus:focus-within:ring-0 w-1/2 h-fit p-1 text-stone-700`}
                                 defaultValue={option.value
                                   .split(",")
                                   .join(", ")}
@@ -376,7 +389,7 @@ export default function ProductTable({
             {!viewing && (
               <button
                 type="button"
-                className="btn btn-success w-min"
+                className="btn btn-success"
                 onClick={() =>
                   handleUpdatedProduct(product?._id as Id<"product">)
                 }>

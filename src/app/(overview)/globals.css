@@ -31,3 +31,11 @@ body {
 .img-slider::-webkit-scrollbar {
   display: none;
 }
+
+.info-cards {
+  scrollbar-width: none;
+}
+
+.info-cards::-webkit-scrollbar {
+  display: none;
+}

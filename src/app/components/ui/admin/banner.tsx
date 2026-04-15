@@ -23,7 +23,8 @@ export default function Banner({ navOpen }: { navOpen: () => void }) {
       <h1 className="text-3xl font-bold capitalize">{bannerTitle}</h1>
 
       <div>
-        <BiSearch size={"1.5em"} />
+        {/* //! NOTE: when functionality is fully implemented unhide this widget for use... */}
+        <BiSearch size={"1.5em"} className="hidden" />
       </div>
     </div>
   );

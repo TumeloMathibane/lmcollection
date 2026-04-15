@@ -69,7 +69,7 @@ export default function AdditionalInfo({
 
               <input
                 type="text"
-                className="border border-stone-300 focus:focus-within:ring focus:focus-within:ring-blue-500 focus:focus-within:outline-0 focus:focus-wthin:rounded-none p-1.5 w-full"
+                className="input bg-transparent border border-stone-300 focus-within:bg-white focus:outline-0 focus:ring focus:ring-blue-400 p-1.5 w-full"
                 placeholder="e.g. Color"
                 name="aflabel"
                 id="aflabel"
@@ -93,7 +93,7 @@ export default function AdditionalInfo({
               <select
                 name="afUnit"
                 id="afUnit"
-                className="border border-stone-300 w-full p-2 pe-2 focus:focus-within:ring focus:focus-within:ring-blue-500 focus:focus-within:outline-0 focus:focus-wthin:rounded-none"
+                className="select bg-stone-100 border border-stone-300 w-full p-2 pe-2 focus-within:outline-0"
                 value={info.unit}
                 onChange={(e) =>
                   e.target.value &&
@@ -120,7 +120,7 @@ export default function AdditionalInfo({
             <select
               name="afType"
               id="afType"
-              className="border border-stone-300 w-full p-2 pe-2 focus:focus-within:ring focus:focus-within:ring-blue-500 focus:focus-within:outline-0 focus:focus-wthin:rounded-none capitalize"
+              className="select bg-stone-100 border border-stone-300 w-full p-2 pe-2 focus-within:outline-0 capitalize"
               value={info.type}
               onChange={(e) =>
                 handleFieldInfoChange({
