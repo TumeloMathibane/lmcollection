@@ -54,7 +54,9 @@ export default function Sidebar() {
           className="w-full"
           target="_blank"
           rel="noopener noreferrer">
-          <button className="btn w-full">Go to shop</button>
+          <button className="btn btn-neutral bg-base-content border border-base-content w-full">
+            Go to shop
+          </button>
         </Link>
       </div>
 

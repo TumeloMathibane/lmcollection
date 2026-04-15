@@ -35,7 +35,7 @@ export default async function Home({
       <h1 className="text-xl font-bold mb-4 w-fit">Admin Overview</h1>
 
       <section className="w-full space-y-4">
-        <div className="flex gap-2 w-full overflow-x-auto border-b border-stone-200 pb-4">
+        <div className="info-cards flex gap-2 w-full overflow-x-auto border-b border-stone-200 pb-4">
           <div className="flex w-full space-x-2">
             <Card
               className="border border-stone-200 rounded-md min-w-1/2 h-fit space-y-2 my-2 px-4"

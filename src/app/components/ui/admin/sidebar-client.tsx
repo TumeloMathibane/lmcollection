@@ -47,7 +47,7 @@ export default function AdminSidebar({
         />
       </aside>
 
-      <section className="flex-1 w-full h-screen overflow-y-auto lg:h-dvh lg:overflow-auto">
+      <section className="flex-1 flex flex-col w-full h-screen overflow-y-auto lg:h-dvh lg:overflow-auto">
         <Banner navOpen={() => setNavOpen(!navOpen)} />
         {children}
       </section>

@@ -1,3 +1,6 @@
+//! TODO: ...continue from here
+//! TODO: Fix spacing between form heading 'Add product' and form...
+
 "use client";
 
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
@@ -294,8 +297,6 @@ export default function AddProductForm() {
         setTimeout(() => {
           setError("");
         }, 8000);
-
-        throw new Error("Incomplete field information.");
       }
     });
 
@@ -303,7 +304,10 @@ export default function AddProductForm() {
       ...prev,
       additional_options: [
         ...prev.additional_options.filter(
-          (info) => info.label !== field.label || info.type !== field.type,
+          (info) =>
+            (info.label !== field.label || info.type !== field.type) &&
+            field.label !== "" &&
+            field.value !== "",
         ),
         field,
       ],
@@ -346,9 +350,9 @@ export default function AddProductForm() {
   }, [prodFormData.additional_options.length]);
 
   return (
-    <form onSubmit={handleOnSubmit} className="space-y-4">
+    <form onSubmit={handleOnSubmit} className="relative space-y-4 xl:h-full">
       {error && (
-        <div className="fixed top-0 left-0 right-0 z-5">
+        <div className="fixed top-0 right-0 left-0 lg:left-75 z-5">
           <div className="ring ring-red-300 text-red-500 bg-red-100 rounded m-5 p-2 relative">
             <BiX
               size={"1.5rem"}
@@ -373,190 +377,181 @@ export default function AddProductForm() {
         </div>
       )}
 
-      <div>
-        <label htmlFor="product_name">Product Name:</label>
-        <input
-          type="text"
-          name="product_name"
-          id="product_name"
-          className="border border-stone-300 focus:focus-within:ring focus:focus-within:ring-blue-500 focus:focus-within:outline-0 focus:focus-wthin:rounded-none p-1.5 w-full"
-          placeholder="e.g. iPhone 14 Pro"
-          value={prodFormData.product_name}
-          onChange={handleInputChange}
-        />
-      </div>
+      <div className="xl:flex xl:gap-4">
+        <div className="space-y-2 xl:w-[60%]">
+          <div className="space-y-2 sm:flex sm:gap-3 xl:flex-col xl:gap-0">
+            <div className="w-full">
+              <label htmlFor="product_name">Product Name:</label>
+              <input
+                type="text"
+                name="product_name"
+                id="product_name"
+                className="input bg-transparent border border-stone-300 focus:focus-within:ring focus:focus-within:ring-blue-500 focus:focus-within:outline-0 focus:focus-wthin:rounded-none p-1.5 w-full"
+                placeholder="e.g. iPhone 14 Pro"
+                value={prodFormData.product_name}
+                onChange={handleInputChange}
+              />
+            </div>
 
-      <div>
-        <label htmlFor="brand">Product Brand:</label>
-        <input
-          type="text"
-          name="brand"
-          id="brand"
-          className="border border-stone-300 focus:focus-within:ring focus:focus-within:ring-blue-500 focus:focus-within:outline-0 focus:focus-wthin:rounded-none p-1.5 w-full"
-          placeholder="e.g. Apple"
-          value={prodFormData.brand}
-          onChange={handleInputChange}
-        />
-      </div>
-
-      <div className="flex flex-col">
-        <label htmlFor="availability">Availability:</label>
-
-        <select
-          className="border border-stone-200 focus:focus-within:ring focus:focus-within:ring-blue-500 focus:focus-within:outline-0 focus:focus-wthin:rounded-none p-1.5 w-full capitalize"
-          name="availability"
-          id="availability"
-          onChange={handleInputChange}>
-          <option value={undefined}>Select availability</option>
-
-          {Array.from(["in-stock", "out-of-stock"]).map((opt, idx) => (
-            <option key={idx} value={opt}>
-              {opt}
-            </option>
-          ))}
-        </select>
-      </div>
-
-      <div>
-        <label htmlFor="product_desc">Description:</label>
-        <textarea
-          name="product_desc"
-          id="product_desc"
-          className="border border-stone-300 focus:focus-within:ring focus:focus-within:ring-blue-500 focus:focus-within:outline-0 focus:focus-wthin:rounded-none p-1.5 w-full"
-          placeholder="Enter product description"
-          value={prodFormData.product_desc}
-          onChange={handleInputChange}
-        />
-      </div>
-
-      <div>
-        <label htmlFor="category">Category:</label>
-
-        <input
-          name="category"
-          id="category"
-          list="categories"
-          className="border border-stone-300 focus:focus-within:ring focus:focus-within:ring-blue-500 focus:focus-within:outline-0 focus:focus-wthin:rounded-none p-1.5 w-full"
-          placeholder="e.g. Smartphones"
-          value={prodFormData.category}
-          onChange={handleInputChange}
-        />
-        <datalist id="categories">
-          {categories?.map((category, index) => (
-            <option key={index} value={category?.name} />
-          ))}
-        </datalist>
-      </div>
-
-      <div>
-        <p>Images:</p>
-
-        <ImageSelector
-          images={prodFormData.images}
-          onImagesChange={(imgs) => {
-            setProdFormData((prev) => ({
-              ...prev,
-              images: [...imgs],
-            }));
-          }}
-        />
-      </div>
-
-      {/* Additional information... */}
-      {prodFormData.additional_options.length > 0 && (
-        <div>
-          <label className="font-bold">Additional Information:</label>
-
-          <div className="mt-2 p-3 space-y-4 border border-gray-300 rounded-md bg-gray-50">
-            {prodFormData.additional_options.map((info, index) => (
-              <div key={index}>
-                <div className="flex items-center gap-3 group">
-                  <label className="underline decoration-1 underline-offset-2">
-                    {info.label}
-                  </label>
-
-                  <span onClick={() => setField(info)}>
-                    <BiEdit size={"1.3rem"} className="text-neutral-800" />
-                  </span>
-
-                  <span onClick={() => handleRemoveField(info)}>
-                    <BiTrash size={"1.3rem"} className="text-red-700" />
-                  </span>
-                </div>
-
-                <div className="mt-1">
-                  {info.type === "text" && (
-                    <p>{(info.value as string).trim()}</p>
-                  )}
-
-                  {info.type === "colors" && (
-                    <div className="flex flex-wrap gap-3 mt-1">
-                      {info.value.split(",").map((color, idx) => (
-                        <div
-                          key={idx}
-                          className="flex flex-col items-center-safe">
-                          <div
-                            className="w-10 h-10 rounded-sm"
-                            style={{ backgroundColor: color }}
-                          />
-                          <p className="w-full perspective-origin-center">
-                            {color}
-                          </p>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-
-                  {(info.type === "options" || info.type === "sizes") && (
-                    <div>
-                      <p>{info.value?.split(",")?.join(", ")}</p>
-                    </div>
-                  )}
-
-                  {info.type === "bulletpoints" && (
-                    <ul className="list-disc list-inside">
-                      {info.value.split(",").map((point, idx) => (
-                        <li key={idx}>{point.trim()}</li>
-                      ))}
-                    </ul>
-                  )}
-                </div>
-              </div>
-            ))}
+            <div className="w-full">
+              <label htmlFor="brand">Product Brand:</label>
+              <input
+                type="text"
+                name="brand"
+                id="brand"
+                className="input border border-stone-300 focus:focus-within:ring focus:focus-within:ring-blue-500 focus:focus-within:outline-0 focus:focus-wthin:rounded-none p-1.5 w-full"
+                placeholder="e.g. Apple"
+                value={prodFormData.brand}
+                onChange={handleInputChange}
+              />
+            </div>
           </div>
-        </div>
-      )}
 
-      {/* Additional info. input component */}
-      <AdditionalInfo
-        info={field}
-        onFieldInfoChange={(field) => handleFieldInfoChange(field)}
-        onAddField={() => handleAddField()}
-        disableSelectables={
-          (
-            prodFormData.additional_options.find(
-              (opt) =>
-                opt?.type === "options" ||
-                opt?.type === "sizes" ||
-                opt?.type === "colors",
-            )
-          ) ?
-            true
-          : false
-        }
-        disabled={prodFormData.images.length === 0}
-      />
+          <div className="space-y-2 sm:flex sm:flex-row-reverse sm:gap-3 xl:flex-col-reverse xl:gap-2">
+            <div className="w-full">
+              <label htmlFor="availability">Availability:</label>
 
-      <div className="space-y-2">
-        <div className="flex gap-3 group">
-          <input
-            type="checkbox"
-            id="dynamicPricing"
-            name="dynamic_pricing"
-            className="checkbox checkbox-md checkbox-neutral peer"
-            checked={prodFormData.dynamic_pricing}
-            onChange={handleInputChange}
-            disabled={
+              <select
+                className="select bg-white border border-stone-200 focus-within:outline-0 p-1.5 w-full capitalize"
+                name="availability"
+                id="availability"
+                onChange={handleInputChange}>
+                <option value={undefined}>Select availability</option>
+
+                {Array.from(["in-stock", "out-of-stock"]).map((opt, idx) => (
+                  <option key={idx} value={opt}>
+                    {opt}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="w-full">
+              <label htmlFor="product_desc">Description:</label>
+              <textarea
+                name="product_desc"
+                id="product_desc"
+                className="textarea border border-stone-300 focus:focus-within:ring focus:focus-within:ring-blue-500 focus:focus-within:outline-0 focus:focus-wthin:rounded-none p-1.5 w-full"
+                placeholder="Enter product description"
+                value={prodFormData.product_desc}
+                onChange={handleInputChange}
+              />
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <label htmlFor="category">Category:</label>
+
+            <input
+              type="text"
+              name="category"
+              id="category"
+              list="categories"
+              className="input border border-stone-300 focus:focus-within:ring focus:focus-within:ring-blue-500 focus:focus-within:outline-0 focus:focus-wthin:rounded-none p-1.5 w-full"
+              placeholder="e.g. Smartphones"
+              value={prodFormData.category}
+              onChange={handleInputChange}
+            />
+            <datalist id="categories">
+              {categories?.map((category, index) => (
+                <option key={index} value={category?.name} />
+              ))}
+            </datalist>
+          </div>
+
+          <div className="xl:hidden">
+            <p>Images:</p>
+
+            <ImageSelector
+              images={prodFormData.images}
+              onImagesChange={(imgs) => {
+                setProdFormData((prev) => ({
+                  ...prev,
+                  images: [...imgs],
+                }));
+              }}
+            />
+          </div>
+
+          {/* Additional information... */}
+          {prodFormData.additional_options.length > 0 && (
+            <div>
+              <label className="font-bold">Additional Information:</label>
+
+              <div className="mt-2 p-3 space-y-4 border border-gray-300 rounded-md bg-gray-50">
+                {prodFormData.additional_options.map(
+                  (info, index) =>
+                    info.label !== "" &&
+                    info.value !== "" && (
+                      <div key={index}>
+                        <div className="flex items-center gap-3 group">
+                          <label className="underline decoration-1 underline-offset-2">
+                            {info.label}
+                          </label>
+
+                          <span onClick={() => setField(info)}>
+                            <BiEdit
+                              size={"1.3rem"}
+                              className="text-neutral-800"
+                            />
+                          </span>
+
+                          <span onClick={() => handleRemoveField(info)}>
+                            <BiTrash size={"1.3rem"} className="text-red-700" />
+                          </span>
+                        </div>
+
+                        <div className="mt-1">
+                          {info.type === "text" && (
+                            <p>{(info.value as string).trim()}</p>
+                          )}
+
+                          {info.type === "colors" && (
+                            <div className="flex flex-wrap gap-3 mt-1">
+                              {info.value.split(",").map((color, idx) => (
+                                <div
+                                  key={idx}
+                                  className="flex flex-col items-center-safe">
+                                  <div
+                                    className="w-10 h-10 rounded-sm"
+                                    style={{ backgroundColor: color }}
+                                  />
+                                  <p className="w-full perspective-origin-center">
+                                    {color}
+                                  </p>
+                                </div>
+                              ))}
+                            </div>
+                          )}
+
+                          {(info.type === "options" ||
+                            info.type === "sizes") && (
+                            <div>
+                              <p>{info.value?.split(",")?.join(", ")}</p>
+                            </div>
+                          )}
+
+                          {info.type === "bulletpoints" && (
+                            <ul className="list-disc list-inside">
+                              {info.value.split(",").map((point, idx) => (
+                                <li key={idx}>{point.trim()}</li>
+                              ))}
+                            </ul>
+                          )}
+                        </div>
+                      </div>
+                    ),
+                )}
+              </div>
+            </div>
+          )}
+
+          {/* Additional info. input component */}
+          <AdditionalInfo
+            info={field}
+            onFieldInfoChange={(field) => handleFieldInfoChange(field)}
+            onAddField={() => handleAddField()}
+            disableSelectables={
               (
                 prodFormData.additional_options.find(
                   (opt) =>
@@ -565,81 +560,123 @@ export default function AddProductForm() {
                     opt?.type === "colors",
                 )
               ) ?
-                false
-              : true
+                true
+              : false
             }
+            disabled={prodFormData.images.length === 0}
           />
 
-          <label
-            htmlFor="dynamicPricing"
-            className="hover:underline underline-offset-3 peer-disabled:cursor-not-allowed peer-disabled:opacity-50">
-            Variable Price
-          </label>
+          <div className="space-y-2">
+            <div className="flex gap-3 group">
+              <input
+                type="checkbox"
+                id="dynamicPricing"
+                name="dynamic_pricing"
+                className="checkbox checkbox-md checkbox-neutral peer"
+                checked={prodFormData.dynamic_pricing}
+                onChange={handleInputChange}
+                disabled={
+                  (
+                    prodFormData.additional_options.find(
+                      (opt) =>
+                        opt?.type === "options" ||
+                        opt?.type === "sizes" ||
+                        opt?.type === "colors",
+                    )
+                  ) ?
+                    false
+                  : true
+                }
+              />
+
+              <label
+                htmlFor="dynamicPricing"
+                className="hover:underline underline-offset-3 peer-disabled:cursor-not-allowed peer-disabled:opacity-50">
+                Variable Price
+              </label>
+            </div>
+          </div>
+
+          <div className="flex gap-2 w-full sm:w-1/2">
+            {!prodFormData.dynamic_pricing ?
+              <div className="w-full">
+                <label htmlFor="price">Price:</label>
+
+                <input
+                  type="number"
+                  title="Enter a valid price with up to 2 decimal places (e.g., 123 or 123.45)"
+                  name="price"
+                  id="price"
+                  className="border border-stone-300 focus:focus-within:ring focus:focus-within:ring-blue-500 focus:focus-within:outline-0 focus:focus-wthin:rounded-none p-2 w-full"
+                  placeholder="e.g. 123 or 123.45"
+                  value={prodFormData.price}
+                  onChange={handleInputChange}
+                />
+              </div>
+            : <div className="flex flex-col w-full">
+                <label htmlFor="pricing_by" className="text-nowrap">
+                  Price varied by:{" "}
+                </label>
+
+                <select
+                  className="p-2.5 focus:outline-0 focus-within:outline-0 border border-stone-300 w-full"
+                  onChange={handleInputChange}
+                  value={prodFormData.pricing_by}
+                  name="pricing_by"
+                  id="pricing_by">
+                  <option value="">Select option</option>
+                  {fieldForPriceVar().map((field, index) => (
+                    <option key={index} value={field.label}>
+                      {field.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            }
+
+            <div className="w-1/2">
+              <label htmlFor="discount" className="truncate">
+                Discount (%):
+              </label>
+              <input
+                type="number"
+                title="Enter a number or decimal with up to 2 decimal places (e.g., 10 or 12.34)"
+                name="discount"
+                id="discount"
+                className="border border-stone-300 focus:focus-within:ring focus:focus-within:ring-blue-500 focus:focus-within:outline-0 focus:focus-wthin:rounded-none p-2 w-full"
+                placeholder="e.g. 10 or 12.34"
+                value={prodFormData.discount}
+                onChange={handleInputChange}
+              />
+            </div>
+          </div>
         </div>
-      </div>
 
-      <div className="flex gap-2 w-full">
-        {!prodFormData.dynamic_pricing ?
-          <div>
-            <label htmlFor="price">Price:</label>
+        <div className="hidden xl:block xl:w-[40%]">
+          <div className="bg-stone-200 p-2 sticky top-14 bottom-0 border-l border-stone-300">
+            <p>Images:</p>
 
-            <input
-              type="number"
-              title="Enter a valid price with up to 2 decimal places (e.g., 123 or 123.45)"
-              name="price"
-              id="price"
-              className="border border-stone-300 focus:focus-within:ring focus:focus-within:ring-blue-500 focus:focus-within:outline-0 focus:focus-wthin:rounded-none p-2 w-full"
-              placeholder="e.g. 123 or 123.45"
-              value={prodFormData.price}
-              onChange={handleInputChange}
+            <ImageSelector
+              images={prodFormData.images}
+              onImagesChange={(imgs) => {
+                setProdFormData((prev) => ({
+                  ...prev,
+                  images: [...imgs],
+                }));
+              }}
             />
           </div>
-        : <div className="flex flex-col w-full">
-            <label htmlFor="pricing_by" className="text-nowrap">
-              Price varied by:{" "}
-            </label>
-
-            <select
-              className="p-2.5 focus:outline-0 focus-within:outline-0 border border-stone-300 w-full"
-              onChange={handleInputChange}
-              value={prodFormData.pricing_by}
-              name="pricing_by"
-              id="pricing_by">
-              <option value="">Select option</option>
-              {fieldForPriceVar().map((field, index) => (
-                <option key={index} value={field.label}>
-                  {field.label}
-                </option>
-              ))}
-            </select>
-          </div>
-        }
-
-        <div className="w-1/2">
-          <label htmlFor="discount" className="truncate">
-            Discount (%):
-          </label>
-          <input
-            type="number"
-            title="Enter a number or decimal with up to 2 decimal places (e.g., 10 or 12.34)"
-            name="discount"
-            id="discount"
-            className="border border-stone-300 focus:focus-within:ring focus:focus-within:ring-blue-500 focus:focus-within:outline-0 focus:focus-wthin:rounded-none p-2 w-full"
-            placeholder="e.g. 10 or 12.34"
-            value={prodFormData.discount}
-            onChange={handleInputChange}
-          />
         </div>
       </div>
 
-      <div className="flex items-center">
+      <div className="w-fit flex items-center gap-3 xl:self-baseline">
         <button type="submit" className="btn btn-success">
           Add Product
         </button>
 
         <button
           type="button"
-          className="w-fit p-3 text-red-700 font-semibold"
+          className="btn bg-transparent border-0 shadow-none w-fit p-3 text-red-700 font-semibold"
           onClick={() => {
             setProdFormData({
               brand: "",

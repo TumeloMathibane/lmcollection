@@ -62,14 +62,25 @@ export default function ImageSelector({
         onChange={handleInputChange}
       />
 
-      <div className="p-2 w-full h-full border border-stone-200 rounded items-center space-y-2">
-        <button
-          type="button"
-          id="images"
-          className="btn"
-          onClick={() => document.getElementById("img-selector")?.click()}>
-          Add image/s
-        </button>
+      <div className="p-2 w-full h-full border border-stone-200 rounded items-center space-y-2 xl:border-0 xl:p-0 xl:py-4">
+        <div className="flex gap-3 items-center justify-between">
+          <button
+            type="button"
+            id="images"
+            className="btn shadow-none"
+            onClick={() => document.getElementById("img-selector")?.click()}>
+            Add image/s
+          </button>
+
+          {images.length >= 3 && (
+            <button
+              type="button"
+              className="btn btn-sm btn-ghost bg-transparent text-error-content"
+              onClick={() => onImagesChange([] as File[])}>
+              Clear images
+            </button>
+          )}
+        </div>
 
         {previews.length > 0 && (
           <div className="flex flex-wrap gap-2">
