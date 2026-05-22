@@ -387,7 +387,7 @@ export default function ProductView({
 
             <div className="flex flex-col justify-between space-y-5 w-full pb-5">
               {product?.shortDescription && (
-                <div className="space-y-2 md:w-fit">
+                <div className="space-y-2">
                   <p className="border-b border-stone-900 pb-2 text-lg font-bold">
                     Description
                   </p>
@@ -398,7 +398,7 @@ export default function ProductView({
               {/* ...followed by text/bulletpoints form of additional option/info */}
               {additional_options?.map((opt, idx) =>
                 opt?.type === "text" ?
-                  <div key={idx} className="space-y-2 md:w-fit">
+                  <div key={idx} className="space-y-2">
                     <p className="border-b border-stone-900 pb-2 text-lg font-bold">
                       {opt?.label}
                     </p>
@@ -406,7 +406,7 @@ export default function ProductView({
                     <div>{opt?.value}</div>
                   </div>
                 : opt?.type === "bulletpoints" ?
-                  <div key={idx} className="space-y-2 md:w-fit">
+                  <div key={idx} className="space-y-2">
                     <p className="border-b border-stone-900 pb-2 text-lg font-bold">
                       {opt?.label}
                     </p>
