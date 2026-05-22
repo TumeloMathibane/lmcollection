@@ -421,7 +421,8 @@ export default function ProductView({
           {product?.availability?.toLowerCase() !== "out-of-stock" && (
             <div className="flex items-center-safe space-x-3 md:w-full md:place-self-end-safe pe-1">
               <button
-                className={`py-2 bg-stone-900 text-stone-200 rounded-full w-full hover:cursor-pointer relative overflow-hidden`}
+                type="button"
+                className={`py-2 bg-stone-900 text-stone-200 rounded-full w-full hover:cursor-pointer hover:bg-stone-700 transition-colors duration-500 relative overflow-hidden`}
                 onClick={() => handleAddToCart()}>
                 Add to cart
               </button>

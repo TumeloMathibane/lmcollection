@@ -37,7 +37,7 @@ export default function Header() {
   }, [pathname]);
 
   return (
-    <div className="bg-stone-950">
+    <div className="bg-stone-900">
       {searchWidgetOpen && (
         <section
           className="hidden md:block w-full h-screen fixed top-0 left-0 right-0 z-10"
@@ -139,7 +139,7 @@ export default function Header() {
 export function CheckoutHeader() {
   return (
     <nav className="border-b border-stone-300 lg:place-items-center-safe h-16">
-      <div className="flex justify-between p-3 w-full place-self-center-safe items-center-safe md:max-w-[750px] lg:max-w-[1100px] lg:px-10">
+      <div className="flex justify-between p-3 w-full place-self-center-safe items-center-safe md:max-w-187.5 lg:max-w-275 lg:px-10">
         <Link href={"/"}>
           <Image src={blackLogo} alt="business-logo" width={"60"} />
         </Link>

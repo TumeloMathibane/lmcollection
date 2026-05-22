@@ -11,10 +11,13 @@ import Loading from "../(overview)/cart/loading";
 import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
+import { useRouter } from "next/navigation";
 
 export default function CartView() {
   const { loading, items, updateItemQty, removeItem, clearCart } =
     useCartStore();
+
+  const router = useRouter();
 
   const products = useQuery(api.products.getProductsByIds, {
     ids: items.map((i) => i.productId as Id<"product">),
@@ -52,9 +55,13 @@ export default function CartView() {
           <p className="text-2xl text-stone-900 text-center font-bold md:text-4xl">
             Your cart is empty
           </p>
-          <Link href="/collection/products/all" className="btn font-bold">
+          {/* <Link href="/collection/products/all" className="btn font-bold">
             Continue shopping
-          </Link>
+          </Link> */}
+
+          <button type="button" className="btn bg-stone-900 text-nowrap dark:text-stone-200" onClick={() => router.push("/collection/products/all")}>
+            Continue shopping
+          </button>
         </div>
       </div>
     );

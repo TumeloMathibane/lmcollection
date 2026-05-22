@@ -76,8 +76,8 @@ export default function SearchWidget({
     <>
       <div
         ref={searchRef}
-        className="bg-stone-950 flex justify-center h-30 max-h-full py-8 md:px-10 lg:px-0">
-        <div className="z-10 w-full md:max-w-[600px] flex flex-col justify-center-safe">
+        className="bg-stone-900 flex justify-center h-30 max-h-full py-8 md:px-10 lg:px-0">
+        <div className="z-10 w-full md:max-w-150 flex flex-col justify-center-safe">
           <div className="w-full flex relative">
             <input
               ref={inputRef}
