@@ -66,7 +66,7 @@ export default async function Home() {
 
         <section
           id="categories"
-          className="space-y-4 py-4 flex flex-col justify-center-safe items-center-safe">
+          className="space-y-4 py-10 flex flex-col justify-center-safe items-center-safe">
           <div>
             {/* //* NOTE: thinking of changing this heading to 'Collections' instead... */}
             <p className="text-4xl text-stone-950 font-bold">Categories</p>
