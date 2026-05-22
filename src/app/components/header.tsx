@@ -37,7 +37,7 @@ export default function Header() {
   }, [pathname]);
 
   return (
-    <div className="bg-stone-900">
+    <div className="bg-stone-950">
       {searchWidgetOpen && (
         <section
           className="hidden md:block w-full h-screen fixed top-0 left-0 right-0 z-10"
