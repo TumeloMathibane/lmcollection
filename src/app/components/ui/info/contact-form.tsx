@@ -33,7 +33,8 @@ export default function ContactForm() {
         placeholder="Comment..."
         className="w-full outline outline-stone-300 focus:outline-stone-500 focus:outline-2 rounded-sm px-3 py-2 h-32 resize-none"
       />
-      <button className="btn my-5 px-10">Submit</button>
+
+      <button type="button" className="btn dark:bg-stone-900 dark:text-stone-100 my-5 px-10">Submit</button>
     </form>
   );
 }

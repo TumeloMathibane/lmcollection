@@ -9,11 +9,13 @@ import { useFavoritesStore } from "../../stores/favorites";
 import { BsSuitHeart, BsSuitHeartFill } from "react-icons/bs";
 import { usePathname } from "next/navigation";
 import { useEffect, useState, useRef } from "react";
+import { useRouter } from "next/navigation";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
 export default function ProductList({ products }: { products: Product[] }) {
   const { toggleFavorite, isFavorite } = useFavoritesStore();
   const pathname = usePathname();
+  const router = useRouter();
 
   const [mounted, setMounted] = useState(false);
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -147,11 +149,15 @@ export default function ProductList({ products }: { products: Product[] }) {
             ),
         )}
         <div className="flex justify-center-safe items-center-safe md:col-span-1">
-          <Link
+          {/* <Link
             href="/collection/products/all"
             className="btn border border-stone-300 text-nowrap">
             View all
-          </Link>
+          </Link> */}
+
+          <button type="button" className="btn dark:bg-stone-900 text-nowrap dark:text-stone-200" onClick={() => router.push("/collection/products/all")}>
+            View all
+          </button>
         </div>
       </div>
 

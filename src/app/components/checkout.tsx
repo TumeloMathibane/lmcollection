@@ -315,9 +315,9 @@ export default function CheckoutMain({
         />
       </div>
 
-      <section className="bg-white z-5 flex place-content-center-safe md:max-w-[750px] md:place-self-center-safe lg:min-w-full">
+      <section className="bg-white z-5 flex place-content-center-safe md:max-w-187.5 md:place-self-center-safe lg:min-w-full">
         <div className="w-full p-3 lg:px-10 lg:w-1/2">
-          <div className="space-y-4 xl:max-w-[470px] xl:float-right">
+          <div className="space-y-4 xl:max-w-117.5 xl:float-right">
             <div className="space-y-4">
               <h1 className="text-2xl font-bold text-shadow-stone-900">
                 Delivery
@@ -599,7 +599,7 @@ export default function CheckoutMain({
 
         {/* !! THIS WILL BE DISPLAYED ON LARGE DISPLAY !! */}
         <div className="hidden lg:block lg:w-1/2 h-screen sticky top-0 bg-stone-100 lg:border-l border-stone-300">
-          <div className="space-y-4 p-10 max-w-[550px]">
+          <div className="space-y-4 p-10 max-w-137.5">
             {outOfStockCount > 0 && (
               <p className="text-sm font-semibold text-red-600">
                 {outOfStockCount} item{outOfStockCount > 1 ? "s are" : " is"}{" "}

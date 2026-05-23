@@ -44,7 +44,7 @@ export function ProductCard({ product }: { product: Product }) {
           </div>
 
           <div className="h-full pt-1">
-            <p className="text-sm md:text-md font-light md:font-extralight hover:cursor-pointer">
+            <p className="text-sm text-stone-400 md:text-md font-light md:font-extralight hover:cursor-pointer">
               {product.brand}
             </p>
 
