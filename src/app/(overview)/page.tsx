@@ -19,6 +19,7 @@ export default async function Home() {
     });
   } catch (err) {
     console.error("Error fetching products for homepage:", err);
+    throw err;
   }
 
   return (
@@ -26,13 +27,17 @@ export default async function Home() {
       <main className="w-full space-y-10 flex flex-col place-content-center-safe">
         <section className="bg-[url('/images/ali-pazani-3w14X-Yxffk-unsplash.jpg')] bg-cover bg-no-repeat grayscale-100 h-screen flex items-center-safe justify-around mask-alpha mask-b-from-70% relative md:mask-b-from-80% md:h-[92vh] md:bg-fill lg:min-h-screen">
           <div className="w-full h-full p-4 space-y-4 flex flex-col justify-center-safe sm:px-15 md:items-center-safe">
-            <p style={{fontFamily: "serif"}} className="text-5xl text-black text-shadow-stone-700 font-extrabold text-wrap max-w-sm md:hidden">
+            <p
+              style={{ fontFamily: "serif" }}
+              className="text-5xl text-black text-shadow-stone-700 font-extrabold text-wrap max-w-sm md:hidden"
+            >
               Like it, Love it, & Wear it
             </p>
 
             <Link
               href="#categories"
-              className="px-6 py-3 bg-stone-600/80 border w-fit h-fit text-xl font-bold border-white text-white">
+              className="px-6 py-3 bg-stone-600/80 border w-fit h-fit text-xl font-bold border-white text-white"
+            >
               Shop now
             </Link>
           </div>
@@ -66,7 +71,8 @@ export default async function Home() {
 
         <section
           id="categories"
-          className="space-y-4 py-4 md:py-10 flex flex-col justify-center-safe items-center-safe">
+          className="space-y-4 py-4 md:py-10 flex flex-col justify-center-safe items-center-safe"
+        >
           <div>
             {/* //* NOTE: thinking of changing this heading to 'Collections' instead... */}
             <p className="text-4xl text-stone-950 font-bold">Categories</p>
@@ -84,11 +90,13 @@ export default async function Home() {
                 Products of interest
               </p>
 
-              {!products || products?.length === 0 ?
+              {!products || products?.length === 0 ? (
                 <p className="font-light text-xl italic">
                   Products not available
                 </p>
-              : <ProductList products={products} />}
+              ) : (
+                <ProductList products={products} />
+              )}
             </div>
           </div>
         </section>
