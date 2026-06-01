@@ -21,13 +21,22 @@ export default function CartSummary({ items, onCartClear }: CartSummaryProps) {
     return items
       .map(
         (item, idx) =>
-          `${idx + 1}. ${item.productName} x${item.productQty} @ ${new Intl.NumberFormat(
+          `> ${idx + 1}. ${item.productName} x${item.productQty} @ ${new Intl.NumberFormat(
             "en-ZA",
             {
               style: "currency",
               currency: "ZAR",
             },
-          ).format(item.productPrice)} each ${Object.keys(item.options).length > 0 ? `(${Object.entries(item.options).map(([key, value]) => `${key}: ${value.includes("=") ? value.split("=")[0] : value}`).join(", ")})` : ""}`,
+          ).format(item.productPrice)} each ${
+            Object.keys(item.options).length > 0
+              ? `(${Object.entries(item.options)
+                  .map(
+                    ([key, value]) =>
+                      `${key}: ${value.includes("=") ? value.split("=")[0] : value}`,
+                  )
+                  .join(", ")})`
+              : ""
+          }`,
       )
       .join("\n");
   };
@@ -64,13 +73,17 @@ export default function CartSummary({ items, onCartClear }: CartSummaryProps) {
 
         <WhatsappBtn
           message={`Hello, I would like to place an order with the following items: 
+
 ${itemListFormat()}
 
-The total amount is ${new Intl.NumberFormat("en-ZA", {
+Total amount: *${new Intl.NumberFormat("en-ZA", {
             style: "currency",
             currency: "ZAR",
-          }).format(total)}.           
-Please let me know how to proceed with the payment and delivery details. Thank you!`}
+          }).format(total)}*.
+
+-------------------------------------------------------------
+
+${"```Please let me know how to proceed with the payment and delivery details. Thank you!```"}`}
         />
       )}
     </>
