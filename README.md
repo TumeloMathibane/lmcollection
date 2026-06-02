@@ -81,7 +81,7 @@ A modern, full-stack e-commerce application built with Next.js, TypeScript, Conv
 
    Configure the following variables in `.env.local`:
    - `NEXTAUTH_SECRET`: Secret key for NextAuth sessions
-   - `NEXTAUTH_URL`: Your application URL (e.g., http://localhost:3000)
+   - `NEXTAUTH_URL`: Your application URL (e.g., <http://localhost:3000>)
    - `CONVEX_DEPLOYMENT`: Your Convex deployment ID
    - `NEXT_PUBLIC_CONVEX_URL`: Your Convex API URL
    - Payment gateway credentials (TCG)
@@ -96,7 +96,7 @@ A modern, full-stack e-commerce application built with Next.js, TypeScript, Conv
 
 ## Project Structure
 
-```
+```text
 src/
 ├── app/                      # Next.js app directory
 │   ├── (overview)/           # Customer pages
