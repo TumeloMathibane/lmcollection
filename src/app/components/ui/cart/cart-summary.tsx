@@ -72,7 +72,10 @@ export default function CartSummary({ items, onCartClear }: CartSummaryProps) {
         // </Link>
 
         <WhatsappBtn
-          message={`Hello, I would like to place an order with the following items: 
+          message={`*Purchase order*
+--------------------------------------------------
+
+Hello, I would like to place an order with the following items: 
 
 ${itemListFormat()}
 
@@ -81,7 +84,7 @@ Total amount: *${new Intl.NumberFormat("en-ZA", {
             currency: "ZAR",
           }).format(total)}*.
 
--------------------------------------------------------------
+--------------------------------------------------
 
 ${"```Please let me know how to proceed with the payment and delivery details. Thank you!```"}`}
         />
