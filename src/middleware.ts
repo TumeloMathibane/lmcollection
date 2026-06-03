@@ -4,13 +4,12 @@ import type { NextRequest } from "next/server";
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
-  const token = await getToken({ req: request });
-  const isAuth = !!token;
-  const isAdminAuthRoute = pathname.startsWith("/admin/auth");
 
   const isOpen =
-    process.env.VERCEL_ENV === "production" &&
-    Date.now() < new Date(`${process.env.NEXT_PUBLIC_LAUNCH_DATE}`).getTime();
+    process.env.VERCEL_ENV === "production"
+      ? Date.now() <
+        new Date(`${process.env.NEXT_PUBLIC_LAUNCH_DATE}`).getTime()
+      : false;
 
   // -------------------------
   // 1. Launch mode
@@ -24,7 +23,10 @@ export async function middleware(request: NextRequest) {
   // -------------------------
   // 2. Admin authentication
   // -------------------------
-  if (pathname.startsWith("/admin") && !isAdminAuthRoute) {
+  if (pathname.startsWith("/admin") && !pathname.startsWith("/admin/auth")) {
+    const token = await getToken({ req: request });
+    const isAuth = !!token;
+
     if (!isAuth) {
       const url = request.nextUrl.clone();
       url.pathname = "/admin/auth/signin";
