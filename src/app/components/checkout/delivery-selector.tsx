@@ -31,6 +31,7 @@ export default function DeliverySelector({ value, onChange }: DeliverySelProp) {
             alt="tcg"
             width={500}
             height={500}
+            priority={false}
           />
         </label>
       </div>
@@ -55,6 +56,7 @@ export default function DeliverySelector({ value, onChange }: DeliverySelProp) {
             alt="paxi"
             width={500}
             height={500}
+            priority={false}
           />
         </label>
       </div>

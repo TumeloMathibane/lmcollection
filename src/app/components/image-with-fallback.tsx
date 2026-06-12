@@ -27,6 +27,7 @@ export default function ImageWithFallback({
       onError={() => setImgSrc(fallbackImage)}
       className="h-full w-full object-cover object-center"
       unoptimized={true}
+      priority={false}
     />
   );
 }

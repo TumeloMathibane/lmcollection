@@ -15,15 +15,28 @@ export default function Footer() {
       <div className="flex p-10 justify-evenly">
         <Link
           href="/"
-          className="hidden md:flex footer-logo size-30 items-center-safe">
-          <Image src={logo} alt="footer-logo" width={500} height={500} />
+          className="hidden md:flex footer-logo size-30 items-center-safe"
+          prefetch={false}
+        >
+          <Image
+            src={logo}
+            alt="footer-logo"
+            width={500}
+            height={500}
+            priority={false}
+          />
         </Link>
         <div className="flex flex-col">
           <p className="text-white font-semibold">Quick links</p>
           {navlinks.map(
             ({ name, href }, key) =>
               name !== "Policies" && (
-                <Link key={key} href={href} className="text-stone-400">
+                <Link
+                  key={key}
+                  href={href}
+                  className="text-stone-400"
+                  prefetch={false}
+                >
                   {name}
                 </Link>
               ),
@@ -37,11 +50,18 @@ export default function Footer() {
                   <Link
                     key={key}
                     href={href}
-                    className="text-white font-semibold">
+                    className="text-white font-semibold"
+                    prefetch={false}
+                  >
                     {name}
                   </Link>
                   {sublinks.map(({ name, href }, index) => (
-                    <Link key={index} href={href} className="text-stone-400">
+                    <Link
+                      key={index}
+                      href={href}
+                      className="text-stone-400"
+                      prefetch={false}
+                    >
                       {name}
                     </Link>
                   ))}
@@ -82,7 +102,8 @@ export function CheckoutFooter() {
                   setOpen(true);
                   setOpenLink(link.name);
                 }}
-                className="text-blue-700 underline underline-offset-3 decoration-blue-700">
+                className="text-blue-700 underline underline-offset-3 decoration-blue-700"
+              >
                 {link.name}
               </label>
             )),
@@ -91,9 +112,11 @@ export function CheckoutFooter() {
 
       {/* Make seperate component for this */}
       <section
-        className={`fixed bottom-0 right-0 left-0 transition-all ${open ? "z-5 backdrop-blur-sm backdrop-brightness-75 h-screen sm:flex sm:flex-col sm:justify-center sm:align-middle" : "z-0 delay-100 h-0 backdrop-blur-none"}`}>
+        className={`fixed bottom-0 right-0 left-0 transition-all ${open ? "z-5 backdrop-blur-sm backdrop-brightness-75 h-screen sm:flex sm:flex-col sm:justify-center sm:align-middle" : "z-0 delay-100 h-0 backdrop-blur-none"}`}
+      >
         <div
-          className={`h-fit bg-white overflow-auto absolute bottom-0 left-0 right-0 transition-all ${open ? "delay-100 max-h-[40em] sm:max-w-[20em] sm:max-h-[35em] sm:top-0 sm:flex sm:place-self-center-safe sm:scale-100" : "max-h-0 sm:w-[20em] sm:top-0 sm:place-self-center-safe sm:scale-0"}`}>
+          className={`h-fit bg-white overflow-auto absolute bottom-0 left-0 right-0 transition-all ${open ? "delay-100 max-h-[40em] sm:max-w-[20em] sm:max-h-[35em] sm:top-0 sm:flex sm:place-self-center-safe sm:scale-100" : "max-h-0 sm:w-[20em] sm:top-0 sm:place-self-center-safe sm:scale-0"}`}
+        >
           {/* //! START HERE... */}
           <div className="fixed right-0 bg-white p-1 sm:top-0">
             <BiX

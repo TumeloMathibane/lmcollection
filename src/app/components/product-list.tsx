@@ -93,32 +93,37 @@ export default function ProductList({ products }: { products: Product[] }) {
       <div
         ref={containerRef}
         data-overflow={hasOverflow}
-        className="prod-list w-full flex overflow-x-auto scroll-smooth snap-mandatory snap-x gap-1 md:pb-4 md:grid md:grid-cols-3 lg:grid-cols-3">
+        className="prod-list w-full flex overflow-x-auto scroll-smooth snap-mandatory snap-x gap-1 md:pb-4 md:grid md:grid-cols-3 lg:grid-cols-3"
+      >
         {products?.map(
           ({ _id, name, price, images }) =>
             !pathname.includes(_id) && (
               <div
                 key={_id}
-                className="w-full relative group hover:cursor-pointer snap-center p-1">
+                className="w-full relative group hover:cursor-pointer snap-center p-1"
+              >
                 <div className="w-45 bg-stone-100 shadow-sm rounded-xl overflow-hidden relative md:w-full md:shadow-md">
                   <div className="absolute top-2 right-2 z-1 lg:translate-x-100 lg:-translate-y-100 lg:translate-z-150 lg:group-hover:translate-0 transition">
-                    {mounted ?
-                      !isFavorite(_id) ?
+                    {mounted ? (
+                      !isFavorite(_id) ? (
                         <BsSuitHeart
                           size={"1.4rem"}
                           className="text-gray-400"
                           onClick={() => toggleFavorite(_id)}
                         />
-                      : <BsSuitHeartFill
+                      ) : (
+                        <BsSuitHeartFill
                           size={"1.4rem"}
                           className="text-red-600"
                           onClick={() => toggleFavorite(_id)}
                         />
-
-                    : <BsSuitHeart size={"1.4rem"} className="text-gray-600" />}
+                      )
+                    ) : (
+                      <BsSuitHeart size={"1.4rem"} className="text-gray-600" />
+                    )}
                   </div>
 
-                  <Link href={`/collection/products/${_id}`}>
+                  <Link href={`/collection/products/${_id}`} prefetch={false}>
                     <figure className="w-full h-35 overflow-hidden flex items-center md:h-56">
                       <div className="w-full h-full transition-all duration-500 group-hover:scale-105">
                         <Image
@@ -128,6 +133,7 @@ export default function ProductList({ products }: { products: Product[] }) {
                           height={500}
                           className="object-cover object-center w-full h-full"
                           unoptimized={true}
+                          priority={false}
                         />
                       </div>
                     </figure>
@@ -155,7 +161,11 @@ export default function ProductList({ products }: { products: Product[] }) {
             View all
           </Link> */}
 
-          <button type="button" className="btn dark:bg-stone-900 text-nowrap dark:text-stone-200" onClick={() => router.push("/collection/products/all")}>
+          <button
+            type="button"
+            className="btn dark:bg-stone-900 text-nowrap dark:text-stone-200"
+            onClick={() => router.push("/collection/products/all")}
+          >
             View all
           </button>
         </div>
@@ -170,7 +180,8 @@ export default function ProductList({ products }: { products: Product[] }) {
             style={{
               opacity: canScrollLeft ? 1 : 0,
               pointerEvents: canScrollLeft ? "auto" : "none",
-            }}>
+            }}
+          >
             <FaChevronLeft />
           </button>
 
@@ -181,7 +192,8 @@ export default function ProductList({ products }: { products: Product[] }) {
             style={{
               opacity: canScrollRight ? 1 : 0,
               pointerEvents: canScrollRight ? "auto" : "none",
-            }}>
+            }}
+          >
             <FaChevronRight />
           </button>
         </>

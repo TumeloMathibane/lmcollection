@@ -11,21 +11,22 @@ export function ProductCard({ product }: { product: Product }) {
     <div className="col-span-1 group hover:cursor-pointer">
       <div className="flex flex-col relative">
         <div className="absolute top-2 right-2 z-2">
-          {!isFavorite(product._id) ?
+          {!isFavorite(product._id) ? (
             <BsSuitHeart
               size={"1.4rem"}
               className="text-gray-400"
               onClick={() => toggleFavorite(product._id)}
             />
-          : <BsSuitHeartFill
+          ) : (
+            <BsSuitHeartFill
               size={"1.4rem"}
               className="text-red-600"
               onClick={() => toggleFavorite(product._id)}
             />
-          }
+          )}
         </div>
 
-        <Link href={`/collection/products/${product._id}`}>
+        <Link href={`/collection/products/${product._id}`} prefetch={false}>
           <div className="w-full relative rounded-md overflow-hidden">
             <figure className="h-52 transition-all ease-in-out duration-500 group-hover:scale-105">
               <ImageWithFallback

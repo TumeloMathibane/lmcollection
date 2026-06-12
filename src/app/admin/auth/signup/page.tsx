@@ -103,7 +103,8 @@ export default function SignUpPage() {
           <div className="flex flex-col gap-2">
             <label
               htmlFor="email"
-              className="text-sm font-medium text-gray-700">
+              className="text-sm font-medium text-gray-700"
+            >
               Email
             </label>
             <input
@@ -120,7 +121,8 @@ export default function SignUpPage() {
           <div className="flex flex-col gap-2">
             <label
               htmlFor="password"
-              className="text-sm font-medium text-gray-700">
+              className="text-sm font-medium text-gray-700"
+            >
               Password
             </label>
             <input
@@ -141,7 +143,8 @@ export default function SignUpPage() {
           <div className="flex flex-col gap-2">
             <label
               htmlFor="confirmPassword"
-              className="text-sm font-medium text-gray-700">
+              className="text-sm font-medium text-gray-700"
+            >
               Confirm Password
             </label>
             <input
@@ -158,7 +161,8 @@ export default function SignUpPage() {
           <button
             type="submit"
             className="w-full bg-indigo-600 text-white py-2 rounded-md hover:bg-indigo-700 disabled:opacity-60 disabled:cursor-not-allowed"
-            disabled={loading}>
+            disabled={loading}
+          >
             {loading ? "⏳ Creating account..." : "Sign Up"}
           </button>
         </form>
@@ -167,7 +171,9 @@ export default function SignUpPage() {
           Already have an account?{" "}
           <Link
             href="/admin/auth/signin"
-            className="text-indigo-600 hover:text-indigo-700 underline">
+            className="text-indigo-600 hover:text-indigo-700 underline"
+            prefetch={false}
+          >
             Sign in
           </Link>
         </p>

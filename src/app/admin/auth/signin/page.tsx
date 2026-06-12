@@ -59,7 +59,8 @@ export default function SignInPage() {
             <div className="flex flex-col gap-2">
               <label
                 htmlFor="email"
-                className="text-sm font-medium text-gray-700">
+                className="text-sm font-medium text-gray-700"
+              >
                 Email
               </label>
               <input
@@ -76,7 +77,8 @@ export default function SignInPage() {
             <div className="flex flex-col gap-2">
               <label
                 htmlFor="password"
-                className="text-sm font-medium text-gray-700">
+                className="text-sm font-medium text-gray-700"
+              >
                 Password
               </label>
               <input
@@ -93,7 +95,8 @@ export default function SignInPage() {
             <button
               type="submit"
               className="w-full bg-indigo-600 text-white py-2 rounded-md hover:bg-indigo-700 disabled:opacity-60 disabled:cursor-not-allowed"
-              disabled={loading}>
+              disabled={loading}
+            >
               {loading ? "⏳ Signing in..." : "Sign In"}
             </button>
           </form>
@@ -102,7 +105,9 @@ export default function SignInPage() {
             Don&apos;t have an account?{" "}
             <Link
               href="/admin/auth/signup"
-              className="text-indigo-600 hover:text-indigo-700 underline">
+              className="text-indigo-600 hover:text-indigo-700 underline"
+              prefetch={false}
+            >
               Sign up
             </Link>
           </p>

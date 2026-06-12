@@ -26,7 +26,9 @@ export default async function Home({
           <div className="flex gap-2">
             <Link
               href="products/add-product"
-              className="btn btn-primary flex items-center-safe rounded-sm">
+              className="btn btn-primary flex items-center-safe rounded-sm"
+              prefetch={false}
+            >
               <span>
                 <BiPlus size={"1.5rem"} />
               </span>

@@ -23,6 +23,7 @@ export default async function Home({
         alt={product?.name || "Product Image"}
         width={500}
         height={500}
+        priority={false}
       />
     </main>
   );

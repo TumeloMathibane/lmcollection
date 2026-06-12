@@ -422,7 +422,8 @@ export default function CheckoutMain({
                   id="province"
                   className="select select-md w-full focus-within:outline-offset-0 focus-within:outline-0 focus-within:border-2 focus-within:border-blue-600"
                   value={data.province}
-                  onChange={handleInputChange}>
+                  onChange={handleInputChange}
+                >
                   <option value="">Select province</option>
                   {states.map((state, key) => (
                     <option key={key} value={state.code}>
@@ -436,7 +437,8 @@ export default function CheckoutMain({
                   id="country"
                   className="select select-md w-full focus-within:outline-offset-0 focus-within:outline-0 focus-within:border-2 focus-within:border-blue-600"
                   value={data.country}
-                  onChange={handleInputChange}>
+                  onChange={handleInputChange}
+                >
                   <option value="">Select country</option>
                   <option value="za">South Africa</option>
                 </select>
@@ -518,6 +520,7 @@ export default function CheckoutMain({
                     width={"500"}
                     height={"500"}
                     className="self-center-safe size-40 h-fit"
+                    priority={false}
                   />
                 </div>
               </div>
@@ -545,7 +548,8 @@ export default function CheckoutMain({
             <div className="py-4">
               <form
                 action={`https://${formAction}/eng/process`}
-                id="payment-form">
+                id="payment-form"
+              >
                 {Object.entries(paymentData).map(([name, value], index) => (
                   <input type="hidden" key={index} name={name} value={value} />
                 ))}
@@ -559,10 +563,11 @@ export default function CheckoutMain({
               <button
                 form="payment-form"
                 className={`w-full btn btn-md rounded-lg ${
-                  status === "error" ? "btn-error text-red-800"
-                  : status === "validated" ?
-                    "btn-success cursor-not-allowed text-white"
-                  : "btn-primary"
+                  status === "error"
+                    ? "btn-error text-red-800"
+                    : status === "validated"
+                      ? "btn-success cursor-not-allowed text-white"
+                      : "btn-primary"
                 }`}
                 onClick={(e: MouseEvent<HTMLButtonElement>) => {
                   validateInput(e);
@@ -571,23 +576,26 @@ export default function CheckoutMain({
                   shippingData.method === "" ||
                   status === "validating" ||
                   availableItems.length === 0
-                }>
-                {status === "error" ?
+                }
+              >
+                {status === "error" ? (
                   <>
                     <MdErrorOutline className="size-8" />
                     {"Error"}
                   </>
-                : status === "validating" ?
+                ) : status === "validating" ? (
                   <>
                     <BiLoaderAlt className="size-8 animate-spin" />
                     {"Processing..."}
                   </>
-                : status === "validated" ?
+                ) : status === "validated" ? (
                   <>
                     <BiCheck className="size-8" />
                     {"Processed!"}
                   </>
-                : "Pay now"}
+                ) : (
+                  "Pay now"
+                )}
               </button>
             </div>
 

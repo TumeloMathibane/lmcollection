@@ -22,12 +22,17 @@ export default function Sidebar() {
   return (
     <div className="flex flex-col items-center-safe w-full h-full bg-gray-100 relative top-0 left-0 p-5 gap-6 border-r border-gray-300">
       <div className="w-full">
-        <Link href={"/admin"} className="w-fit h-fit flex mx-auto">
+        <Link
+          href={"/admin"}
+          className="w-fit h-fit flex mx-auto"
+          prefetch={false}
+        >
           <Image
             src={blackLogo}
             alt={"business-logo"}
             width={100}
             className="h-auto place-self-center-safe"
+            priority={false}
           />
         </Link>
       </div>
@@ -39,7 +44,9 @@ export default function Sidebar() {
               <li key={index} className="p-3 flex justify-center-safe">
                 <Link
                   href={link.href}
-                  className={`${pathName === link.href && "text-gray-400"}`}>
+                  className={`${pathName === link.href && "text-gray-400"}`}
+                  prefetch={false}
+                >
                   {link.name}
                 </Link>
               </li>
@@ -53,7 +60,8 @@ export default function Sidebar() {
           href={"/"}
           className="w-full"
           target="_blank"
-          rel="noopener noreferrer">
+          rel="noopener noreferrer"
+        >
           <button className="btn btn-neutral bg-base-content border border-base-content w-full">
             Go to shop
           </button>
@@ -63,7 +71,7 @@ export default function Sidebar() {
       <div className="w-full">
         <div className="w-full p-2 border-t border-gray-300">
           {/* sidebar footer */}
-          {status === "authenticated" ?
+          {status === "authenticated" ? (
             <div className="flex items-center justify-between">
               <span className="text-sm text-gray-600">
                 {session.user?.email}
@@ -71,14 +79,16 @@ export default function Sidebar() {
 
               <button
                 onClick={() => signOut({ callbackUrl: "/admin/auth/signin" })}
-                className="text-sm text-blue-500 hover:underline">
+                className="text-sm text-blue-500 hover:underline"
+              >
                 Sign out
               </button>
             </div>
-          : status === "loading" && (
+          ) : (
+            status === "loading" && (
               <div className="text-sm text-gray-600">Loading...</div>
             )
-          }
+          )}
         </div>
       </div>
     </div>

@@ -59,7 +59,11 @@ export default function CartView() {
             Continue shopping
           </Link> */}
 
-          <button type="button" className="btn bg-stone-900 text-nowrap dark:text-stone-200" onClick={() => router.push("/collection/products/all")}>
+          <button
+            type="button"
+            className="btn bg-stone-900 text-nowrap dark:text-stone-200"
+            onClick={() => router.push("/collection/products/all")}
+          >
             Continue shopping
           </button>
         </div>
@@ -78,11 +82,14 @@ export default function CartView() {
           {items?.map((item, key) => (
             <div
               key={key}
-              className="w-full py-5 flex border-t first:border-0 border-stone-400 space-x-3 md:space-x-5 xl:space-x-10">
+              className="w-full py-5 flex border-t first:border-0 border-stone-400 space-x-3 md:space-x-5 xl:space-x-10"
+            >
               <div className="overflow-hidden rounded-md shadow-md w-50 h-30">
                 <Link
                   href={`collection/products/${item?.productId}`}
-                  className="w-full h-full">
+                  className="w-full h-full"
+                  prefetch={false}
+                >
                   <Image
                     src={item.productImage}
                     alt={item.productName}
@@ -90,6 +97,7 @@ export default function CartView() {
                     height={500}
                     className="object-cover object-center w-full h-full"
                     unoptimized={true}
+                    priority={false}
                   />
                 </Link>
               </div>
@@ -98,7 +106,9 @@ export default function CartView() {
                 <div className="w-full flex items-center-safe justify-between">
                   <Link
                     href={`collection/products/${item?.productId}`}
-                    className="w-full text-xl font-bold text-stone-950">
+                    className="w-full text-xl font-bold text-stone-950"
+                    prefetch={false}
+                  >
                     {item.productName}
                   </Link>
 
@@ -121,19 +131,17 @@ export default function CartView() {
                   {Object.values(item.options).length > 0 && (
                     <p>
                       {Object.keys(item.options)[0]}:{" "}
-                      {Object.values(item.options)[0].includes("=") ?
-                        Object.values(item.options)[0].split("=")[0]
-                      : Object.values(item.options)[0]}
+                      {Object.values(item.options)[0].includes("=")
+                        ? Object.values(item.options)[0].split("=")[0]
+                        : Object.values(item.options)[0]}
                     </p>
                   )}
                 </div>
 
                 <div className="flex justify-between items-center-safe md:w-full">
-                  {(
-                    productsById.get(item.productId as Id<"product">) &&
-                    productsById.get(item.productId as Id<"product">)
-                      ?.availability !== "out-of-stock"
-                  ) ?
+                  {productsById.get(item.productId as Id<"product">) &&
+                  productsById.get(item.productId as Id<"product">)
+                    ?.availability !== "out-of-stock" ? (
                     <>
                       <div className="w-30 relative">
                         <QuantityInput
@@ -159,7 +167,9 @@ export default function CartView() {
                         }).format(item.productPrice * item.productQty)}
                       </p>
                     </>
-                  : <p className="text-red-600 font-semibold">Out of stock</p>}
+                  ) : (
+                    <p className="text-red-600 font-semibold">Out of stock</p>
+                  )}
                 </div>
               </div>
             </div>

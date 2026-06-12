@@ -14,7 +14,9 @@ export default function Navbar() {
         <Link
           key={key}
           href={href}
-          className={`font-semibold text-stone-600 ${pathname === href && "text-stone-950 underline decoration-2 underline-offset-2"} ${pathname !== href && "hover:underline hover:underline-offset-3"}`}>
+          className={`font-semibold text-stone-600 ${pathname === href && "text-stone-950 underline decoration-2 underline-offset-2"} ${pathname !== href && "hover:underline hover:underline-offset-3"}`}
+          prefetch={false}
+        >
           {name}
         </Link>
       ))}

@@ -24,9 +24,9 @@ export default async function Home({
   const stockValue = products?.reduce(
     (total, product) =>
       total +
-      (product.dynamic_pricing ?
-        (dynamicPricedItem(product)?.totalValue ?? 0)
-      : product?.price),
+      (product.dynamic_pricing
+        ? (dynamicPricedItem(product)?.totalValue ?? 0)
+        : product?.price),
     0,
   );
 
@@ -59,7 +59,9 @@ export default async function Home({
 
         <div className="w-full space-y-2">
           <h1 className="text-xl font-bold text-stone-900">
-            <Link href="/admin/products">Products</Link>
+            <Link href="/admin/products" prefetch={false}>
+              Products
+            </Link>
           </h1>
 
           <div className="w-full max-h-[65dvh] overflow-y-auto z-1 border-b border-stone-300">

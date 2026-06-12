@@ -68,7 +68,8 @@ export default function ImageSelector({
             type="button"
             id="images"
             className="btn shadow-none"
-            onClick={() => document.getElementById("img-selector")?.click()}>
+            onClick={() => document.getElementById("img-selector")?.click()}
+          >
             Add image/s
           </button>
 
@@ -76,7 +77,8 @@ export default function ImageSelector({
             <button
               type="button"
               className="btn btn-sm btn-ghost bg-transparent text-error-content"
-              onClick={() => onImagesChange([] as File[])}>
+              onClick={() => onImagesChange([] as File[])}
+            >
               Clear images
             </button>
           )}
@@ -104,6 +106,7 @@ export default function ImageSelector({
                   className="w-full h-full object-cover rounded"
                   width={100}
                   height={100}
+                  priority={false}
                 />
               </div>
             ))}

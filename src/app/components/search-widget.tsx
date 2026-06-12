@@ -31,16 +31,16 @@ export default function SearchWidget({
       }[]
     | undefined = useQuery(
     api.products.searchProducts,
-    debouncedSearchTerm?.trim() !== "" ?
-      { searchTerm: debouncedSearchTerm, limit: 5 }
-    : "skip",
+    debouncedSearchTerm?.trim() !== ""
+      ? { searchTerm: debouncedSearchTerm, limit: 5 }
+      : "skip",
   );
 
   const suggestions: { name: string }[] | undefined = useQuery(
     api.products.getSearchSuggestion,
-    debouncedSearchTerm?.trim() !== "" ?
-      { searchTerm: debouncedSearchTerm, limit: 5 }
-    : "skip",
+    debouncedSearchTerm?.trim() !== ""
+      ? { searchTerm: debouncedSearchTerm, limit: 5 }
+      : "skip",
   );
 
   useEffect(() => {
@@ -76,7 +76,8 @@ export default function SearchWidget({
     <>
       <div
         ref={searchRef}
-        className="bg-stone-900 flex justify-center h-30 max-h-full py-8 md:px-10 lg:px-0">
+        className="bg-stone-900 flex justify-center h-30 max-h-full py-8 md:px-10 lg:px-0"
+      >
         <div className="z-10 w-full md:max-w-150 flex flex-col justify-center-safe">
           <div className="w-full flex relative">
             <input
@@ -103,13 +104,14 @@ export default function SearchWidget({
               <div className="bg-white flex py-2 px-4 shadow-sm shadow-stone-900">
                 <div className="flex flex-col w-full space-y-2">
                   <div className="flex space-x-4">
-                    {isLoading ?
+                    {isLoading ? (
                       // <BsOpencollective
                       //   className="flex my-5 mx-auto animate-spin"
                       //   size={"3em"}
                       // />
                       <span className="loading loading-bars loading-xl flex my-5 mx-auto" />
-                    : <>
+                    ) : (
+                      <>
                         <div className="w-2/5">
                           <div className="font-semibold text-stone-700">
                             <p>Suggestions:</p>
@@ -117,24 +119,27 @@ export default function SearchWidget({
                           </div>
 
                           <div>
-                            {suggestions && suggestions?.length > 0 ?
+                            {suggestions && suggestions?.length > 0 ? (
                               suggestions?.map((item, index) => (
                                 <p
                                   key={index}
                                   style={{
                                     cursor:
-                                      item?.name !== searchTerm ?
-                                        "pointer"
-                                      : "default",
+                                      item?.name !== searchTerm
+                                        ? "pointer"
+                                        : "default",
                                   }}
                                   className="py-1"
                                   onClick={() =>
                                     setSearchTerm(String(item?.name).trim())
-                                  }>
+                                  }
+                                >
                                   {item?.name}
                                 </p>
                               ))
-                            : <p>No suggestions</p>}
+                            ) : (
+                              <p>No suggestions</p>
+                            )}
                           </div>
                         </div>
 
@@ -144,13 +149,15 @@ export default function SearchWidget({
                             <div className="w-full border-b border-stone-300" />
                           </div>
 
-                          {searchResults && searchResults.length > 0 ?
+                          {searchResults && searchResults.length > 0 ? (
                             searchResults?.map((item, index) => (
                               <Link
                                 href={`/collection/products/${item?._id}`}
                                 key={index}
                                 className="p-2 hover:cursor-pointer hover:bg-stone-800/5"
-                                onClick={() => handleProductClick()}>
+                                onClick={() => handleProductClick()}
+                                prefetch={false}
+                              >
                                 <div className="flex space-x-2">
                                   <div className="h-auto size-15">
                                     <ImageWithFallback
@@ -164,13 +171,16 @@ export default function SearchWidget({
                                 </div>
                               </Link>
                             ))
-                          : <p className="px-2">No products found</p>}
+                          ) : (
+                            <p className="px-2">No products found</p>
+                          )}
                         </div>
                       </>
-                    }
+                    )}
                   </div>
                   <p
-                    className={`${searchResults && searchResults?.length > 0 && "border-t border-stone-400 py-2 "} w-full`}>
+                    className={`${searchResults && searchResults?.length > 0 && "border-t border-stone-400 py-2 "} w-full`}
+                  >
                     Search results for: {searchTerm}
                   </p>
                 </div>

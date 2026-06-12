@@ -13,7 +13,9 @@ export default function Categories() {
             <Link
               href={`/collection/products/all?category=${name}`}
               key={key}
-              className="md:h-auto shadow-lg group hover:cursor-pointer rounded-xl overflow-hidden">
+              className="md:h-auto shadow-lg group hover:cursor-pointer rounded-xl overflow-hidden"
+              prefetch={false}
+            >
               <figure className="w-full h-50 overflow-hidden">
                 <div className="w-full h-full transition-all origin-center duration-500 ease-in-out group-hover:scale-105">
                   <Image
@@ -22,6 +24,7 @@ export default function Categories() {
                     width={400}
                     height={500}
                     className="w-full h-full object-cover object-center"
+                    priority={false}
                   />
                 </div>
               </figure>

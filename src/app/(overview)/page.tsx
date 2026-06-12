@@ -37,6 +37,7 @@ export default async function Home() {
             <Link
               href="#categories"
               className="px-6 py-3 bg-stone-600/80 border w-fit h-fit text-xl font-bold border-white text-white"
+              prefetch={false}
             >
               Shop now
             </Link>
@@ -55,6 +56,7 @@ export default async function Home() {
                 alt="welcome-image"
                 width={500}
                 placeholder="blur"
+                priority={false}
               />
             </div>
           </div>
