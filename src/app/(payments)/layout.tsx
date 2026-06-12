@@ -4,6 +4,7 @@ import "@/globals.css";
 import { ConvexClientProvider } from "../ConvexClientProvider";
 import { CheckoutHeader } from "../components/header";
 import Construction from "@/components/ui/under-construction";
+import ComingSoon from "@/components/coming-soon";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,6 +34,8 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen`}
       >
+        <ComingSoon />
+
         <CheckoutHeader />
 
         <ConvexClientProvider>
