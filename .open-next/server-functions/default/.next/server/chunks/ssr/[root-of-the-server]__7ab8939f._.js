@@ -1,3 +1,0 @@
-module.exports=[93695,(a,b,c)=>{b.exports=a.x("next/dist/shared/lib/no-fallback-error.external.js",()=>require("next/dist/shared/lib/no-fallback-error.external.js"))},62212,a=>{a.n(a.i(66114))},84102,a=>{a.n(a.i(96228))},91306,(a,b,c)=>{},22389,a=>{"use strict";a.s(["default",()=>d,"metadata",()=>c]);var b=a.i(7997);let c={title:"Info"};function d(){return(0,b.jsx)("main",{className:"min-h-[42em] md:min-h-[52em] lg:min-h-[64em] xl:min-h-[22em]",children:(0,b.jsx)("p",{children:"Info page; consists of About, Policy, & Contact page"})})}}];
-
-//# sourceMappingURL=%5Broot-of-the-server%5D__7ab8939f._.js.map

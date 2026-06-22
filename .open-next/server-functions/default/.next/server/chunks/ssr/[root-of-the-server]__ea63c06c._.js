@@ -1,3 +1,0 @@
-module.exports=[93695,(a,b,c)=>{b.exports=a.x("next/dist/shared/lib/no-fallback-error.external.js",()=>require("next/dist/shared/lib/no-fallback-error.external.js"))},62212,a=>{a.n(a.i(66114))},86732,a=>{a.n(a.i(33939))},11202,(a,b,c)=>{},39615,a=>{"use strict";a.s(["default",()=>d,"metadata",()=>c]);var b=a.i(7997);let c={title:"Customers"};async function d(){return(0,b.jsx)("main",{className:"p-4 space-y-4 flex flex-col",children:(0,b.jsx)("section",{children:(0,b.jsx)("p",{className:"text-xl font-bold",children:"Customers..."})})})}}];
-
-//# sourceMappingURL=%5Broot-of-the-server%5D__ea63c06c._.js.map

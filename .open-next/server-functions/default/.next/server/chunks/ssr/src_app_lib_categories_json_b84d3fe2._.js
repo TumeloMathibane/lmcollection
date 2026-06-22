@@ -1,3 +1,0 @@
-module.exports=[21055,a=>{a.v(JSON.parse('{"categories":[{"description":"Mobile devices","image":"/category-img/cellphones.jpg","name":"smartphones"},{"description":"Latest fashion","image":"/category-img/clothing.jpg","name":"clothing"},{"description":"Hair products","image":"/category-img/hair.jpg","name":"hair"},{"description":"Personal computer","image":"/category-img/laptops.jpg","name":"laptops"},{"description":"Footwear","image":"/category-img/shoes.jpg","name":"footwear"},{"description":"Other products...","image":"","name":"other"}]}'))}];
-
-//# sourceMappingURL=src_app_lib_categories_json_b84d3fe2._.js.map
