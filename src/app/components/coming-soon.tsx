@@ -16,7 +16,7 @@ export default function ComingSoon() {
   }
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center dark:bg-black bg-white bg-opacity-50 z-50 scrollbar-hidden bg-[url('/images/ali-pazani-3w14X-Yxffk-unsplash.jpg')] bg-cover bg-no-repeat">
+    <div className="fixed inset-0 flex items-center justify-center dark:bg-black bg-white bg-opacity-50 z-50 scrollbar-hidden bg-[url(/images/ali-pazani-3w14X-Yxffk-unsplash.jpg)] bg-cover bg-no-repeat">
       <div className="absolute top-0 right-0 bottom-0 left-0 min-h-dvh backdrop-brightness-50 backdrop-blur-[2px] grayscale-100" />
 
       <div className="text-center w-[90%] max-w-md dark:bg-white bg-black rounded-lg shadow-lg p-8 z-1">
