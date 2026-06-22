@@ -1,0 +1,3 @@
+module.exports=[12855,a=>{"use strict";a.s(["default",()=>f],12855);var b=a.i(87924),c=a.i(71987),d=a.i(72131);let e="https://placehold.jp/ffffff/595959/500x500.png?text=No%20Image&css=%7B%22border-radius%22%3A%2215px%22%2C%22background%22%3A%22%20-webkit-gradient(linear%2C%20left%20top%2C%20left%20bottom%2C%20from(%23666666)%2C%20to(%23cccccc))%22%7D";function f({src:a,alt:f}){let[g,h]=(0,d.useState)(a??e);return(0,b.jsx)(c.default,{src:g??e,alt:f??"",width:500,height:500,onLoad:a=>0===a.currentTarget.naturalHeight&&h(e),onError:()=>h(e),className:"h-full w-full object-cover object-center",unoptimized:!0,priority:!1})}}];
+
+//# sourceMappingURL=src_app_components_image-with-fallback_tsx_3446778e._.js.map

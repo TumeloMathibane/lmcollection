@@ -4,12 +4,14 @@
   "private": true,
   "scripts": {
     "dev": "NODE_OPTIONS='--network-family-autoselection-attempt-timeout=500' next dev --turbopack",
-    "preview": "dotenv -e .env.preview -- next dev -p 4000 --turbopack",
     "build": "next build --turbopack",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
+    "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy"
   },
   "dependencies": {
+    "@opennextjs/cloudflare": "^1.19.11",
     "axios": "^1.12.2",
     "bcryptjs": "^3.0.3",
     "convex": "1.39",
@@ -35,6 +37,10 @@
     "eslint": "^9",
     "eslint-config-next": "15.5.3",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "typescript": "^5",
+    "wrangler": "^4.103.0"
+  },
+  "resolutions": {
+    "sharp": "https://npmjs.org"
   }
 }

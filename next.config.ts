@@ -12,6 +12,7 @@ const nextConfig: NextConfig = {
         hostname: "brave-cheetah-312.convex.cloud/",
       },
     ],
+    unoptimized: true,
   },
 };
 
