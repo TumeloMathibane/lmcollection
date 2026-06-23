@@ -5,10 +5,7 @@ import { compare } from "bcryptjs";
 import { ConvexHttpClient } from "convex/browser";
 import { api } from "@/convex/_generated/api";
 
-// const convex = new ConvexHttpClient(process.env.NEXT_PUBLIC_CONVEX_URL ?? "");
-const convex = new ConvexHttpClient("https://clean-ant-257.convex.cloud", {
-  logger: true,
-});
+const convex = new ConvexHttpClient(process.env.NEXT_PUBLIC_CONVEX_URL ?? "");
 
 export const authOptions: NextAuthOptions = {
   providers: [
