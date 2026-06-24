@@ -25,4 +25,10 @@
     // see https://opennext.js.org/cloudflare/howtos/image
     "binding": "IMAGES",
   },
+  "vars": {
+    "NEXT_PUBLIC_CONVEX_URL": "https://brave-cheetah-312.convex.cloud",
+    "NEXT_PUBLIC_LAUNCH_DATE": "2026-07-01T00:00:00Z",
+    "NEXT_PUBLIC_WHATSAPP_PHONE_NUMBER": "27671120273",
+    "NEXTAUTH_URL": "https://lmcollection.tumelomathibane7.workers.dev/api/auth/",
+  },
 }
