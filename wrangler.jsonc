@@ -27,7 +27,7 @@
   },
   "vars": {
     "NEXT_PUBLIC_CONVEX_URL": "https://brave-cheetah-312.convex.cloud",
-    "NEXT_PUBLIC_LAUNCH_DATE": "2026-06-10T00:00:00",
+    "NEXT_PUBLIC_LAUNCH_DATE": "2026-06-10 00:00",
     "NEXT_PUBLIC_WHATSAPP_PHONE_NUMBER": "27671120273",
     "NEXTAUTH_URL": "https://lmcollection.tumelomathibane7.workers.dev/api/auth",
   },
