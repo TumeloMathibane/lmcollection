@@ -6,16 +6,12 @@ export default function ComingSoon() {
     : false;
 
   if (isOpen) return null;
-  else {
-    if (typeof document !== "undefined") {
-      document.body.style.overflow = "hidden";
-    }
+  else if (typeof document !== "undefined") {
+    document.body.style.overflow = "hidden";
 
-    if (typeof window !== "undefined") {
-      setTimeout(() => {
-        window.location.href = "/coming-soon";
-      }, 3000);
-    }
+    setTimeout(() => {
+      window.location.href = "/coming-soon";
+    }, 3000);
   }
 
   return (
