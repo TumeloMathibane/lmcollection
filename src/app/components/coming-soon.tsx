@@ -1,6 +1,12 @@
 "use client";
 
 export default function ComingSoon() {
+  console.log(
+    process.env.NEXT_PUBLIC_LAUNCH_DATE
+      ? `NEXT_PUBLIC_LAUNCH_DATE: ${process.env.NEXT_PUBLIC_LAUNCH_DATE}`
+      : "NEXT_PUBLIC_LAUNCH_DATE: UNDEFINED",
+  );
+
   const isOpen = process.env.NEXT_PUBLIC_LAUNCH_DATE
     ? Date.now() > new Date(`${process.env.NEXT_PUBLIC_LAUNCH_DATE}`).getTime()
     : false;
