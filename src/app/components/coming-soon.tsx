@@ -1,7 +1,6 @@
 "use client";
 
 export default function ComingSoon() {
-  console.log("NEXT_PUBLIC_LAUNCH_DATE: ", process.env.NEXT_PUBLIC_LAUNCH_DATE);
   const isOpen = process.env.NEXT_PUBLIC_LAUNCH_DATE
     ? Date.now() > new Date(`${process.env.NEXT_PUBLIC_LAUNCH_DATE}`).getTime()
     : false;
@@ -11,9 +10,12 @@ export default function ComingSoon() {
     if (typeof document !== "undefined") {
       document.body.style.overflow = "hidden";
     }
-    setTimeout(() => {
-      window.location.href = "/coming-soon";
-    }, 3000);
+
+    if (typeof window !== "undefined") {
+      setTimeout(() => {
+        window.location.href = "/coming-soon";
+      }, 3000);
+    }
   }
 
   return (
