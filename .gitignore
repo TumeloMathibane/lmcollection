@@ -18,6 +18,9 @@
 /.open-next
 /out/
 
+# Cloudflare local state
+/.wrangler/
+
 
 # production
 /build
