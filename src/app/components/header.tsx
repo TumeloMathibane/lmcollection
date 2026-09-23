@@ -13,7 +13,7 @@ import SearchWidget from "./search-widget";
 
 export default function Header() {
   const totalItems = useCartStore((state) =>
-    state.items.reduce((total, item) => total + item.productQty, 0),
+    state.items.reduce((total, item) => total + item.productQty, 0)
   );
 
   const [navOpen, setNavOpen] = useState(false);
@@ -134,7 +134,7 @@ export default function Header() {
                 >
                   {name}
                 </Link>
-              ),
+              )
           )}
         </nav>
       </section>

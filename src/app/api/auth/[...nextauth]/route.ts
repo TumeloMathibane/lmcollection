@@ -7,13 +7,13 @@ import { api } from "@/convex/_generated/api";
 
 const convex = new ConvexHttpClient(process.env.NEXT_PUBLIC_CONVEX_URL ?? "");
 
-export const authOptions: NextAuthOptions = {
+const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
       name: "Credentials",
       credentials: {
         email: { label: "Email", type: "email" },
-        password: { label: "Password", type: "password" },
+        password: { label: "Password", type: "password" }
       },
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) {
@@ -22,7 +22,7 @@ export const authOptions: NextAuthOptions = {
 
         // Find user in Convex
         const user = await convex.query(api.users.getUserByEmail, {
-          email: credentials.email,
+          email: credentials.email
         });
 
         if (!user) {
@@ -32,7 +32,7 @@ export const authOptions: NextAuthOptions = {
         // Check password
         const isPasswordValid = await compare(
           credentials.password,
-          user.hashedPassword,
+          user.hashedPassword
         );
 
         if (!isPasswordValid) {
@@ -44,18 +44,18 @@ export const authOptions: NextAuthOptions = {
           id: user._id,
           email: user.email,
           name: user.name,
-          role: user.role,
+          role: user.role
         };
-      },
-    }),
+      }
+    })
   ],
 
   session: {
-    strategy: "jwt",
+    strategy: "jwt"
   },
 
   pages: {
-    signIn: "/admin/auth/signin",
+    signIn: "/admin/auth/signin"
   },
 
   callbacks: {
@@ -73,10 +73,10 @@ export const authOptions: NextAuthOptions = {
         session.user.id = token.id as string;
       }
       return session;
-    },
+    }
   },
 
-  secret: process.env.NEXTAUTH_SECRET,
+  secret: process.env.NEXTAUTH_SECRET
 };
 
 const handler = NextAuth(authOptions);

@@ -12,7 +12,9 @@ export default function ComingSoon() {
     }
 
     setTimeout(() => {
-      window.location.href = "/coming-soon";
+      if (typeof window !== "undefined") {
+        window.location.href = "/coming-soon";
+      }
     }, 3000);
   }
 

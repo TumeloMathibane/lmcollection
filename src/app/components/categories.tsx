@@ -1,10 +1,11 @@
 "use client";
 
-import { categories } from "../lib/categories.json";
+import locCategories from "../lib/categories.json";
 import Link from "next/link";
 import Image from "next/image";
 
 export default function Categories() {
+  const { categories } = locCategories;
   return (
     <div className="grid grid-cols-2 sm:grid-cols-3 md:gap-3 gap-2 text-black">
       {categories?.map(({ name, image, description }, key) => {

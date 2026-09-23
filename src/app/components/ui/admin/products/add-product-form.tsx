@@ -8,7 +8,7 @@ import ImageSelector from "./previewImages";
 import AdditionalInfo from "./additionalInfo";
 import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
-import { categories } from "@/lib/categories.json";
+import locCategories from "@/lib/categories.json";
 import { BiCheckCircle, BiEdit, BiTrash, BiX } from "react-icons/bi";
 import { ConvexError } from "convex/values";
 
@@ -33,6 +33,8 @@ interface ProductFormData {
 }
 
 export default function AddProductForm() {
+  const { categories } = locCategories;
+
   const [prodFormData, setProdFormData] = useState<ProductFormData>({
     brand: "",
     product_name: "",
@@ -44,14 +46,14 @@ export default function AddProductForm() {
     images: [],
     additional_options: [],
     dynamic_pricing: false,
-    pricing_by: "",
+    pricing_by: ""
   });
 
   const [field, setField] = useState<AdditionalInfoField>({
     label: "",
     type: "",
     value: "",
-    unit: "",
+    unit: ""
   });
 
   const [error, setError] = useState<string>("");
@@ -67,7 +69,7 @@ export default function AddProductForm() {
       "image/jpeg",
       "image/jpg",
       "image/png",
-      "image/webp",
+      "image/webp"
     ];
 
     return validImageTypes.includes(file.type);
@@ -116,7 +118,7 @@ export default function AddProductForm() {
     }
 
     const field = formData.additional_options.find(
-      (info) => info.label === formData.pricing_by,
+      (info) => info.label === formData.pricing_by
     );
 
     if (field) {
@@ -127,7 +129,7 @@ export default function AddProductForm() {
 
         if (parts.length !== 2 || isNaN(Number(parts[1]))) {
           setError(
-            `Please ensure that the price variations for "${prodFormData.pricing_by}" are correctly formatted as "option=price"; where option can be text or number/s, and price is a positive number; separated by commas.`,
+            `Please ensure that the price variations for "${prodFormData.pricing_by}" are correctly formatted as "option=price"; where option can be text or number/s, and price is a positive number; separated by commas.`
           );
 
           setTimeout(() => {
@@ -143,7 +145,7 @@ export default function AddProductForm() {
   };
 
   const handleInputChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
     const target = e.target as HTMLElement;
 
@@ -152,10 +154,11 @@ export default function AddProductForm() {
     setProdFormData((prev) => ({
       ...prev,
       [name]:
-        name === "price" || name === "discount" || name === "quantity" ?
-          (value ?? undefined)
-        : name === "dynamic_pricing" ? checked
-        : value,
+        name === "price" || name === "discount" || name === "quantity"
+          ? (value ?? undefined)
+          : name === "dynamic_pricing"
+            ? checked
+            : value
     }));
   };
 
@@ -165,7 +168,7 @@ export default function AddProductForm() {
     //! validate required text fields
     if (validateFormData(prodFormData) !== "") {
       setError(
-        `Please fill in the required fields: ${validateFormData(prodFormData)}.`,
+        `Please fill in the required fields: ${validateFormData(prodFormData)}.`
       );
 
       setTimeout(() => {
@@ -179,7 +182,7 @@ export default function AddProductForm() {
     for (const file of prodFormData.images) {
       if (!validateImageFile(file)) {
         setError(
-          `Invalid image file type: ${file.name}. Please upload JPEG, JPG, PNG, GIF, or WEBP images only.`,
+          `Invalid image file type: ${file.name}. Please upload JPEG, JPG, PNG, GIF, or WEBP images only.`
         );
         setTimeout(() => {
           setError("");
@@ -201,14 +204,14 @@ export default function AddProductForm() {
       label: info.label,
       type: info.type,
       value: info.value,
-      unit: info.unit,
+      unit: info.unit
     }));
 
     // Call the mutation to add the product
     try {
       // Generate upload URLs for each image
       const uploadUrls = await Promise.all(
-        prodFormData.images.map(async () => await generateUploadURL()),
+        prodFormData.images.map(async () => await generateUploadURL())
       );
 
       const imageUploadIds = await Promise.all(
@@ -216,25 +219,24 @@ export default function AddProductForm() {
           const response = await fetch(uploadUrls[index], {
             method: "POST",
             headers: {
-              "Content-Type": file!.type,
+              "Content-Type": file!.type
             },
-            body: file,
+            body: file
           });
 
           return (await response.json()).storageId;
-        }),
+        })
       );
 
       const productId = await addProductMutation({
         brand: prodFormData.brand,
         name: prodFormData.product_name,
-        price:
-          prodFormData.dynamic_pricing ?
-            (Number(
+        price: prodFormData.dynamic_pricing
+          ? (Number(
               additional_options
                 .find((info) => info.label === prodFormData.pricing_by)
                 ?.value?.split(",")[0]
-                .split("=")[1],
+                .split("=")[1]
             ) ?? 0)
           : Number(prodFormData.price ?? 0),
         discount: Number(prodFormData.discount),
@@ -244,7 +246,7 @@ export default function AddProductForm() {
         images: imageUploadIds,
         additional_options: additional_options,
         dynamic_pricing: prodFormData.dynamic_pricing,
-        pricing_by: prodFormData.pricing_by,
+        pricing_by: prodFormData.pricing_by
       });
 
       if (productId) {
@@ -260,7 +262,7 @@ export default function AddProductForm() {
           images: [],
           additional_options: [],
           dynamic_pricing: false,
-          pricing_by: "",
+          pricing_by: ""
         });
 
         setSuccessMsg("Product added successfully!");
@@ -271,9 +273,9 @@ export default function AddProductForm() {
       }
     } catch (error) {
       const message =
-        error instanceof ConvexError ?
-          (error.data as { message: string }).message
-        : "Server error: Error adding product. Please try again.";
+        error instanceof ConvexError
+          ? (error.data as { message: string }).message
+          : "Server error: Error adding product. Please try again.";
 
       setError(message);
 
@@ -307,17 +309,17 @@ export default function AddProductForm() {
           (info) =>
             (info.label !== field.label || info.type !== field.type) &&
             field.label !== "" &&
-            field.value !== "",
+            field.value !== ""
         ),
-        field,
-      ],
+        field
+      ]
     }));
 
     setField({
       label: "",
       type: "",
       value: "",
-      unit: "",
+      unit: ""
     });
   };
 
@@ -325,8 +327,8 @@ export default function AddProductForm() {
     setProdFormData((prev) => ({
       ...prev,
       additional_options: prev.additional_options.filter(
-        (info) => info.label !== field.label || info.type !== field.type,
-      ),
+        (info) => info.label !== field.label || info.type !== field.type
+      )
     }));
   };
 
@@ -335,7 +337,7 @@ export default function AddProductForm() {
       (option) =>
         option?.type === "colors" ||
         option?.type === "sizes" ||
-        option?.type === "options",
+        option?.type === "options"
     );
   };
 
@@ -344,7 +346,7 @@ export default function AddProductForm() {
       setProdFormData((prev) => ({
         ...prev,
         dynamic_pricing: false,
-        pricing_by: "",
+        pricing_by: ""
       }));
     }
   }, [prodFormData.additional_options.length]);
@@ -415,7 +417,8 @@ export default function AddProductForm() {
                 className="select bg-white border border-stone-200 focus-within:outline-0 p-1.5 w-full capitalize"
                 name="availability"
                 id="availability"
-                onChange={handleInputChange}>
+                onChange={handleInputChange}
+              >
                 <option value={undefined}>Select availability</option>
 
                 {Array.from(["in-stock", "out-of-stock"]).map((opt, idx) => (
@@ -467,7 +470,7 @@ export default function AddProductForm() {
               onImagesChange={(imgs) => {
                 setProdFormData((prev) => ({
                   ...prev,
-                  images: [...imgs],
+                  images: [...imgs]
                 }));
               }}
             />
@@ -511,7 +514,8 @@ export default function AddProductForm() {
                               {info.value.split(",").map((color, idx) => (
                                 <div
                                   key={idx}
-                                  className="flex flex-col items-center-safe">
+                                  className="flex flex-col items-center-safe"
+                                >
                                   <div
                                     className="w-10 h-10 rounded-sm"
                                     style={{ backgroundColor: color }}
@@ -540,7 +544,7 @@ export default function AddProductForm() {
                           )}
                         </div>
                       </div>
-                    ),
+                    )
                 )}
               </div>
             </div>
@@ -552,16 +556,14 @@ export default function AddProductForm() {
             onFieldInfoChange={(field) => handleFieldInfoChange(field)}
             onAddField={() => handleAddField()}
             disableSelectables={
-              (
-                prodFormData.additional_options.find(
-                  (opt) =>
-                    opt?.type === "options" ||
-                    opt?.type === "sizes" ||
-                    opt?.type === "colors",
-                )
-              ) ?
-                true
-              : false
+              prodFormData.additional_options.find(
+                (opt) =>
+                  opt?.type === "options" ||
+                  opt?.type === "sizes" ||
+                  opt?.type === "colors"
+              )
+                ? true
+                : false
             }
             disabled={prodFormData.images.length === 0}
           />
@@ -576,29 +578,28 @@ export default function AddProductForm() {
                 checked={prodFormData.dynamic_pricing}
                 onChange={handleInputChange}
                 disabled={
-                  (
-                    prodFormData.additional_options.find(
-                      (opt) =>
-                        opt?.type === "options" ||
-                        opt?.type === "sizes" ||
-                        opt?.type === "colors",
-                    )
-                  ) ?
-                    false
-                  : true
+                  prodFormData.additional_options.find(
+                    (opt) =>
+                      opt?.type === "options" ||
+                      opt?.type === "sizes" ||
+                      opt?.type === "colors"
+                  )
+                    ? false
+                    : true
                 }
               />
 
               <label
                 htmlFor="dynamicPricing"
-                className="hover:underline underline-offset-3 peer-disabled:cursor-not-allowed peer-disabled:opacity-50">
+                className="hover:underline underline-offset-3 peer-disabled:cursor-not-allowed peer-disabled:opacity-50"
+              >
                 Variable Price
               </label>
             </div>
           </div>
 
           <div className="flex gap-2 w-full sm:w-1/2">
-            {!prodFormData.dynamic_pricing ?
+            {!prodFormData.dynamic_pricing ? (
               <div className="w-full">
                 <label htmlFor="price">Price:</label>
 
@@ -613,7 +614,8 @@ export default function AddProductForm() {
                   onChange={handleInputChange}
                 />
               </div>
-            : <div className="flex flex-col w-full">
+            ) : (
+              <div className="flex flex-col w-full">
                 <label htmlFor="pricing_by" className="text-nowrap">
                   Price varied by:{" "}
                 </label>
@@ -623,7 +625,8 @@ export default function AddProductForm() {
                   onChange={handleInputChange}
                   value={prodFormData.pricing_by}
                   name="pricing_by"
-                  id="pricing_by">
+                  id="pricing_by"
+                >
                   <option value="">Select option</option>
                   {fieldForPriceVar().map((field, index) => (
                     <option key={index} value={field.label}>
@@ -632,7 +635,7 @@ export default function AddProductForm() {
                   ))}
                 </select>
               </div>
-            }
+            )}
 
             <div className="w-1/2">
               <label htmlFor="discount" className="truncate">
@@ -661,7 +664,7 @@ export default function AddProductForm() {
               onImagesChange={(imgs) => {
                 setProdFormData((prev) => ({
                   ...prev,
-                  images: [...imgs],
+                  images: [...imgs]
                 }));
               }}
             />
@@ -689,16 +692,17 @@ export default function AddProductForm() {
               images: [],
               additional_options: [],
               dynamic_pricing: false,
-              pricing_by: "",
+              pricing_by: ""
             });
 
             setField({
               label: "",
               type: "",
               value: "",
-              unit: "",
+              unit: ""
             });
-          }}>
+          }}
+        >
           Clear form
         </button>
       </div>

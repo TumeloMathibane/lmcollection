@@ -7,15 +7,15 @@ export default async function Page() {
 
   try {
     const response = await fetch(
-      process.env.VERCEL_ENV === "production" ?
-        `https://${process.env.VERCEL_URL}/notify`
-      : "http://localhost:3000/notify",
+      process.env.VERCEL_ENV === "production"
+        ? `https://${process.env.VERCEL_URL}/notify`
+        : "http://localhost:3000/notify",
       {
         method: "GET",
         headers: {
-          "Content-Type": "application/json",
-        },
-      },
+          "Content-Type": "application/json"
+        }
+      }
     );
     if (!response.ok) {
       throw new Error(`Error fetching payment status: ${response.statusText}`);
@@ -26,7 +26,7 @@ export default async function Page() {
     Object.entries(data.message).map(
       ([key, val]) =>
         key !== "signature" &&
-        (pfString += `${key}=${encodeURIComponent(String(val).trim()).replace(/%20/g, "+")}&`),
+        (pfString += `${key}=${encodeURIComponent(String(val).trim()).replace(/%20/g, "+")}&`)
     );
     if (pfString.endsWith("&")) {
       pfString = pfString.slice(0, -1);
@@ -37,20 +37,20 @@ export default async function Page() {
 
     // * CHECK 4: validate data through POST request to payfast server (server to server comms.)
     const paymentStatus = await fetch(
-      process.env.VERCEL_ENV === "production" ?
-        "https://www.payfast.co.za/eng/query/validate"
-      : "https://sandbox.payfast.co.za/eng/query/validate",
+      process.env.VERCEL_ENV === "production"
+        ? "https://www.payfast.co.za/eng/query/validate"
+        : "https://sandbox.payfast.co.za/eng/query/validate",
       {
         method: "POST",
         headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
+          "Content-Type": "application/x-www-form-urlencoded"
         },
-        body: pfString,
-      },
+        body: pfString
+      }
     );
     if (!paymentStatus.ok) {
       throw new Error(
-        `Error validating payment status with Payfast server: ${paymentStatus.statusText}`,
+        `Error validating payment status with Payfast server: ${paymentStatus.statusText}`
       );
     }
     const check4 = (await paymentStatus.text()) === "VALID";

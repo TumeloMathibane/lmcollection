@@ -8,7 +8,7 @@ import { CheckoutFooter } from "./footer";
 import { MdErrorOutline } from "react-icons/md";
 import { useCartStore } from "../../stores/cart";
 import { useQuery } from "convex/react";
-import { states } from "../lib/sa_provinces.json";
+import provincesData from "../lib/sa_provinces.json";
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
 import OrderSummaryWidget, { OrderSummary } from "./order-summary";
@@ -16,6 +16,8 @@ import DeliverySelector from "./checkout/delivery-selector";
 import Loading from "../(payments)/payments/checkout/loading";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+
+const { states } = provincesData;
 
 export type MerchantProp = {
   m_key: string;
@@ -30,12 +32,12 @@ export default function CheckoutMain({
   m_id,
   passphrase,
   formAction,
-  gatewayURL,
+  gatewayURL
 }: MerchantProp) {
   const { items } = useCartStore();
 
   const cItems = useQuery(api.products.getProductsByIds, {
-    ids: items.map((i) => i.productId as Id<"product">),
+    ids: items.map((i) => i.productId as Id<"product">)
   });
 
   const cItemsById = useMemo(
@@ -43,9 +45,9 @@ export default function CheckoutMain({
       new Map(
         (cItems ?? [])
           .filter((item) => item !== null)
-          .map((item) => [item._id, item]),
+          .map((item) => [item._id, item])
       ),
-    [cItems],
+    [cItems]
   );
 
   const availableItems = useMemo(
@@ -53,9 +55,9 @@ export default function CheckoutMain({
       items.filter(
         (item) =>
           cItemsById.get(item.productId as Id<"product">)?.availability ===
-          "in-stock",
+          "in-stock"
       ),
-    [items, cItemsById],
+    [items, cItemsById]
   );
 
   const outOfStockCount = items.length - availableItems.length;
@@ -64,9 +66,9 @@ export default function CheckoutMain({
     () =>
       availableItems.reduce(
         (total, item) => total + item.productPrice * item.productQty,
-        0,
+        0
       ),
-    [availableItems],
+    [availableItems]
   );
 
   const [cartTotal, setCartTotal] = useState<number>(0);
@@ -83,7 +85,7 @@ export default function CheckoutMain({
     postal_code: "",
     province: "",
     country: "",
-    save_info: false,
+    save_info: false
   });
   const [shippingData, setShippingData] = useState({
     method: "",
@@ -95,7 +97,7 @@ export default function CheckoutMain({
     city: "",
     postal_code: "",
     province: "",
-    country: "",
+    country: ""
   });
   const [paymentData, setPaymentData] = useState({
     merchant_id: m_id,
@@ -107,7 +109,7 @@ export default function CheckoutMain({
     name_last: "",
     m_payment_id: "",
     amount: cartTotal,
-    item_name: "",
+    item_name: ""
   });
 
   const ordersCount = useQuery(api.orders.orderCount) ?? 0;
@@ -124,12 +126,12 @@ export default function CheckoutMain({
     typeof window !== "undefined" ? window.document.referrer : "";
 
   const handleInputChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.currentTarget;
     setData((prevVal) => ({
       ...prevVal,
-      [name]: value,
+      [name]: value
     }));
 
     if (shippingData.hasOwnProperty(name)) {
@@ -139,7 +141,7 @@ export default function CheckoutMain({
     if (paymentData.hasOwnProperty(name)) {
       setPaymentData((prevVal) => ({
         ...prevVal,
-        [name]: name === "amount" ? Number(value).toFixed(2) : value,
+        [name]: name === "amount" ? Number(value).toFixed(2) : value
       }));
     }
 
@@ -147,7 +149,7 @@ export default function CheckoutMain({
       const { name, value, checked } = e.currentTarget;
       setData((prevVal) => ({
         ...prevVal,
-        [name]: name === "save_info" ? checked : value,
+        [name]: name === "save_info" ? checked : value
       }));
     }
   };
@@ -229,10 +231,10 @@ export default function CheckoutMain({
           fName: data?.name_first,
           lName: data?.name_last,
           contact:
-            data?.cell_number !== "" ? data?.cell_number : data?.email_address,
+            data?.cell_number !== "" ? data?.cell_number : data?.email_address
         },
         shipping_details: shippingData,
-        items: availableItems,
+        items: availableItems
       };
       localStorage.setItem("orderData", JSON.stringify(orderData));
       e.currentTarget.form?.submit();
@@ -252,13 +254,13 @@ export default function CheckoutMain({
       const orderId = generatePaymentId(
         currentDate,
         cartTotal,
-        passphrase,
+        passphrase
       ) as string;
 
       setPaymentData((prevVal) => ({
         ...prevVal,
         item_name: `LMCOrder#${orderId}${c_orders.toString()}`,
-        m_payment_id: orderId,
+        m_payment_id: orderId
       }));
     };
 
@@ -269,7 +271,7 @@ export default function CheckoutMain({
   useEffect(() => {
     setPaymentData((prevVal) => ({
       ...prevVal,
-      amount: Number(cartTotal.toFixed(2)),
+      amount: Number(cartTotal.toFixed(2))
     }));
   }, [cartTotal]);
 
@@ -477,7 +479,7 @@ export default function CheckoutMain({
                               ...prevVal,
                               [key]: value,
                               type: "",
-                              price: 0,
+                              price: 0
                             }))
                           }
                         />
@@ -489,7 +491,7 @@ export default function CheckoutMain({
                           onChange={(key, value) =>
                             setShippingData((prevVal) => ({
                               ...prevVal,
-                              [key]: value,
+                              [key]: value
                             }))
                           }
                         />
