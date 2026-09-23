@@ -52,3 +52,5 @@ scripts.*
 policy.lm.md
 access_key.git.txt
 todo.*
+/.vscode/
+.env.yarn
