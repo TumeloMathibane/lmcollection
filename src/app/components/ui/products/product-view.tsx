@@ -78,30 +78,30 @@ export default function ProductView({
     });
   };
 
-  useEffect(() => window.scrollTo(0, 0), []);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
-  useEffect(
-    () =>
-      setCartItem({
-        productId: product?._id ?? "",
-        productName: product?.name ?? "",
-        productPrice: product?.price ?? 0,
-        productQty: 1,
-        productCategory: product?.category ?? "",
-        productImage: product?.images[0] ?? "",
-        options: Object.fromEntries(
-          additional_options
-            ?.filter(
-              (opt) =>
-                opt?.type === "options" ||
-                opt?.type === "colors" ||
-                opt?.type === "sizes",
-            )
-            ?.map((opt) => [opt?.label, opt?.value?.split(",")[0]]) ?? [],
-        ),
-      }),
-    [product, additional_options],
-  );
+  useEffect(() => {
+    setCartItem({
+      productId: product?._id ?? "",
+      productName: product?.name ?? "",
+      productPrice: product?.price ?? 0,
+      productQty: 1,
+      productCategory: product?.category ?? "",
+      productImage: product?.images[0] ?? "",
+      options: Object.fromEntries(
+        additional_options
+          ?.filter(
+            (opt) =>
+              opt?.type === "options" ||
+              opt?.type === "colors" ||
+              opt?.type === "sizes",
+          )
+          ?.map((opt) => [opt?.label, opt?.value?.split(",")[0]]) ?? [],
+      ),
+    });
+  }, [product, additional_options]);
 
   if (product === undefined) {
     return <Loading />;

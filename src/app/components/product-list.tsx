@@ -21,7 +21,9 @@ export default function ProductList({ products }: { products: Product[] }) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [hasOverflow, setHasOverflow] = useState(false);
 
-  useEffect(() => setMounted(true), []);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     const el = containerRef.current;

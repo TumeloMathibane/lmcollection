@@ -12,7 +12,7 @@ import { useRouter } from "next/navigation";
 
 export default function CollectionView({ category }: { category: string }) {
   const products: Product[] | undefined = useQuery(api.products.getProducts, {
-    category: category === "" ? undefined : category,
+    category: category === "" ? undefined : category
   });
   let displayProducts = products;
 
@@ -25,11 +25,11 @@ export default function CollectionView({ category }: { category: string }) {
   ) {
     if (searchParams.get("availability") === "In stock") {
       displayProducts = displayProducts?.filter(
-        (product) => product?.availability === "in-stock",
+        (product) => product?.availability === "in-stock"
       );
     } else {
       displayProducts = displayProducts?.filter(
-        (product) => product?.availability === "out-of-stock",
+        (product) => product?.availability === "out-of-stock"
       );
     }
   }
@@ -45,7 +45,7 @@ export default function CollectionView({ category }: { category: string }) {
     displayProducts = displayProducts?.filter(
       (product) =>
         product?.price >= Number(searchParams.get("minPrice")) &&
-        product?.price <= Number(searchParams.get("maxPrice")),
+        product?.price <= Number(searchParams.get("maxPrice"))
     );
   } else if (
     Number.isNaN(searchParams.get("minPrice")) &&
@@ -107,7 +107,9 @@ export default function CollectionView({ category }: { category: string }) {
     router.replace(`?${params}`);
   };
 
-  useEffect(() => window.scrollTo(0, 0), []);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   if (!products) return <Loading />;
 
@@ -123,7 +125,7 @@ export default function CollectionView({ category }: { category: string }) {
                 availability: searchParams.get("availability") ?? "",
                 minPrice: searchParams.get("minPrice") ?? NaN,
                 maxPrice: searchParams.get("maxPrice") ?? NaN,
-                sorting: searchParams.get("sorting") ?? "",
+                sorting: searchParams.get("sorting") ?? ""
               } as Filter
             }
             heading={`Filter (${displayProducts?.length ?? 0} products)`}
@@ -134,21 +136,23 @@ export default function CollectionView({ category }: { category: string }) {
 
         <div className="space-y-4">
           <div
-            className={`grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-4`}>
-            {displayProducts?.length === 0 ?
+            className={`grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-4`}
+          >
+            {displayProducts?.length === 0 ? (
               <div className="col-span-full">
                 <p className="text-2xl font-bold text-stone-900 text-center xl:py-2">
                   No products
                 </p>
               </div>
-            : displayProducts?.map((product) => {
+            ) : (
+              displayProducts?.map((product) => {
                 return (
                   <div key={product?._id}>
                     <ProductCard product={product} />
                   </div>
                 );
               })
-            }
+            )}
           </div>
         </div>
       </div>

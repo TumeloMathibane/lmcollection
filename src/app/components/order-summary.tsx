@@ -23,17 +23,16 @@ export default function OrderSummaryWidget({
   const [subTotal, setSubTotal] = useState<number>(cartTotal);
   const [cTotal, setCTotal] = useState<number>(subTotal);
 
-  useEffect(
-    () =>
-      items &&
+  useEffect(() => {
+    if (items) {
       setSubTotal(
         items.reduce(
           (total, item) => total + item.productPrice * item.productQty,
           0,
         ),
-      ),
-    [items],
-  );
+      );
+    }
+  }, [items]);
 
   useEffect(() => {
     if (shippingPrice !== undefined) setCTotal(subTotal + shippingPrice);
@@ -144,17 +143,16 @@ export function OrderSummary({
   const [subTotal, setSubTotal] = useState<number>(cartTotal);
   const [cTotal, setcTotal] = useState<number>(subTotal);
 
-  useEffect(
-    () =>
-      items &&
+  useEffect(() => {
+    if (items) {
       setSubTotal(
         items.reduce(
           (total, item) => total + item.productPrice * item.productQty,
           0,
         ),
-      ),
-    [items],
-  );
+      );
+    }
+  }, [items]);
 
   useEffect(() => {
     if (shippingPrice !== undefined) setcTotal(subTotal + shippingPrice);
