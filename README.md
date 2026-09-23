@@ -63,7 +63,7 @@ A modern, full-stack e-commerce application built with Next.js, TypeScript, Conv
 1. **Clone the repository**
 
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/TumeloMathibane/lmcollection.git
    cd lmcollection
    ```
 
@@ -85,6 +85,24 @@ A modern, full-stack e-commerce application built with Next.js, TypeScript, Conv
    - `CONVEX_DEPLOYMENT`: Your Convex deployment ID
    - `NEXT_PUBLIC_CONVEX_URL`: Your Convex API URL
    - Payment gateway credentials (TCG)
+
+   #### Generate a NextAuth secret
+
+   Generate a cryptographically secure secret with OpenSSL:
+
+   ```bash
+   openssl rand -base64 32
+   ```
+
+   Copy the generated value into `.env.local`:
+
+   ```dotenv
+   NEXTAUTH_SECRET="your-generated-secret"
+   ```
+
+   Keep this value private and use a separate secret for each environment. Do not
+   commit `.env.local` or the secret itself to version control. In production, add
+   `NEXTAUTH_SECRET` through your hosting provider's environment-variable settings.
 
 4. **Run the development server**
 
