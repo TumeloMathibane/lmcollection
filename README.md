@@ -23,7 +23,7 @@ A modern, full-stack e-commerce application built with Next.js, TypeScript, Conv
 - **Search & Filter**: Full-text search across products, categories, and descriptions
 - **Shopping Cart**: Add/remove items, persistent cart state using Zustand
 - **Checkout**: Streamlined checkout process with delivery options
-- **Payment Processing**: Integrated payment gateway via TCG (Trusted Checkout Gateway)
+- **Payment Processing**: Integrated payment gateway via PayFast
 - **Order Tracking**: Track orders from placement to delivery
 - **User Accounts**: Create accounts and manage user profiles
 - **Responsive Design**: Mobile-first design with DaisyUI components
@@ -39,9 +39,9 @@ A modern, full-stack e-commerce application built with Next.js, TypeScript, Conv
 
 ## Tech Stack
 
-- **Framework**: [Next.js](https://nextjs.org) 15.5.9 with App Router
+- **Framework**: [Next.js](https://nextjs.org) 15.5.26 with App Router
 - **Language**: [TypeScript](https://www.typescriptlang.org)
-- **Backend**: [Convex](https://convex.dev) - Backend as a Service
+- **Backend**: [Convex](https://convex.dev) 1.46.0 - Backend as a Service
 - **Authentication**: [NextAuth](https://next-auth.js.org) 4.24.13
 - **State Management**: [Zustand](https://zustand-demo.vercel.app) 5.0.8
 - **Styling**: [TailwindCSS](https://tailwindcss.com) 4 with PostCSS
@@ -50,12 +50,13 @@ A modern, full-stack e-commerce application built with Next.js, TypeScript, Conv
 - **HTTP Client**: [Axios](https://axios-http.com) 1.12.2
 - **Encryption**: [bcryptjs](https://github.com/dcodeIO/bcrypt.js), [md5](https://www.npmjs.com/package/md5)
 - **ID Generation**: [UUID](https://www.npmjs.com/package/uuid) 11
+- **Deployment**: [OpenNext for Cloudflare](https://opennext.js.org/cloudflare) with Wrangler
 
 ## Getting Started
 
 ### Prerequisites
 
-- Node.js 18+ and npm or yarn
+- Node.js 20+ and npm or yarn
 - Git
 
 ### Installation
@@ -75,16 +76,17 @@ A modern, full-stack e-commerce application built with Next.js, TypeScript, Conv
 
 3. **Set up environment variables**
 
-   ```bash
-   cp .env.local.example .env.local
-   ```
-
-   Configure the following variables in `.env.local`:
+   Create `.env.local` and configure the following variables:
    - `NEXTAUTH_SECRET`: Secret key for NextAuth sessions
    - `NEXTAUTH_URL`: Your application URL (e.g., <http://localhost:3000>)
-   - `CONVEX_DEPLOYMENT`: Your Convex deployment ID
+   - `CONVEX_DEPLOY_KEY`: Your Convex deployment key
    - `NEXT_PUBLIC_CONVEX_URL`: Your Convex API URL
-   - Payment gateway credentials (TCG)
+   - `NEXT_PUBLIC_LAUNCH_DATE`: Application launch date and time
+   - `PAYFAST_MERCHANT_KEY`: PayFast merchant key
+   - `PAYFAST_MERCHANT_ID`: PayFast merchant ID
+   - `PAYFAST_SALT_PASSPHRASE`: PayFast passphrase
+   - `NEXT_PUBLIC_PAYFAST_URL`: PayFast checkout URL
+   - `NEXT_PUBLIC_WHATSAPP_PHONE_NUMBER`: WhatsApp contact number
 
    #### Generate a NextAuth secret
 
@@ -115,6 +117,12 @@ A modern, full-stack e-commerce application built with Next.js, TypeScript, Conv
 ## Project Structure
 
 ```text
+convex/                       # Convex backend functions & schema
+├── schema.ts                 # Database schema
+├── products.ts               # Product mutations & queries
+├── orders.ts                 # Order management
+├── users.ts                  # User management
+└── _generated/               # Auto-generated Convex types
 src/
 ├── app/                      # Next.js app directory
 │   ├── (overview)/           # Customer pages
@@ -135,12 +143,6 @@ src/
 │   │   ├── auth/             # NextAuth configuration
 │   │   └── types/            # TypeScript type definitions
 │   └── components/           # Reusable React components
-├── convex/                   # Convex backend functions & schema
-│   ├── schema.ts             # Database schema
-│   ├── products.ts           # Product mutations & queries
-│   ├── orders.ts             # Order management
-│   ├── users.ts              # User management
-│   └── _generated/           # Auto-generated Convex types
 ├── stores/                   # Zustand state stores
 │   ├── cart.ts               # Shopping cart state
 │   └── favorites.ts          # Favorites management
@@ -156,7 +158,7 @@ src/
 
 ```bash
 npm run dev              # Start dev server with Turbopack
-npm run preview         # Preview with .env.preview
+npm run preview              # Build and preview the Cloudflare deployment
 ```
 
 ### Build & Production
@@ -165,15 +167,17 @@ npm run preview         # Preview with .env.preview
 npm run build           # Build for production
 npm start               # Start production server
 npm run lint            # Run ESLint
+npm run deploy           # Build and deploy to Cloudflare
 ```
 
 ## Available Scripts
 
 - `npm run dev` - Start development server with Turbopack
-- `npm run preview` - Run preview environment using .env.preview
+- `npm run preview` - Build and preview the Cloudflare deployment with Wrangler
 - `npm run build` - Build application for production
 - `npm start` - Start production server
 - `npm run lint` - Run ESLint code linter
+- `npm run deploy` - Build and deploy the application to Cloudflare
 
 ## Key Features
 
