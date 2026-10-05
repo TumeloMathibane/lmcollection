@@ -7,7 +7,7 @@ import { useSession } from "next-auth/react";
 import Sidebar from "./sidebar";
 
 export default function AdminSidebar({
-  children,
+  children
 }: {
   children: React.ReactNode;
 }) {
@@ -36,7 +36,8 @@ export default function AdminSidebar({
       )}
 
       <aside
-        className={`min-h-dvh w-full absolute top-0 bottom-0 left-0 flex z-5 transition-all ${navOpen ? "translate-0" : "-translate-x-full"} lg:relative lg:translate-0 lg:w-fit lg:h-screen`}>
+        className={`min-h-dvh w-full absolute top-0 bottom-0 left-0 flex z-5 transition-all ${navOpen ? "translate-0" : "-translate-x-full"} lg:relative lg:translate-0 lg:w-fit lg:h-screen`}
+      >
         <div className="h-full w-72 z-5">
           <Sidebar />
         </div>

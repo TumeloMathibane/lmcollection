@@ -1,6 +1,3 @@
-//! TODO: ...continue from here
-//! TODO: Fix spacing between form heading 'Add product' and form...
-
 "use client";
 
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";

@@ -15,7 +15,7 @@ import { BsSuitHeart, BsSuitHeartFill } from "react-icons/bs";
 import ImageCarousel from "../../image-carousel";
 
 export default function ProductView({
-  productId,
+  productId
 }: {
   productId: Id<"product">;
 }) {
@@ -25,8 +25,8 @@ export default function ProductView({
   const product: Product | null | undefined = useQuery(
     api.products.getProduct,
     {
-      id: productId,
-    },
+      id: productId
+    }
   );
 
   const additional_options: { [key: string]: string }[] | undefined =
@@ -38,10 +38,9 @@ export default function ProductView({
     productQty: 1,
     productCategory: "",
     productImage: "",
-    options: {},
+    options: {}
   });
 
-  //! TODO: implement a component for notifying customer that item is added successfully
   const [cartRes, setCartRes] = useState<{
     success: boolean;
     action: "added" | "updated";
@@ -71,10 +70,10 @@ export default function ProductView({
             (opt) =>
               opt?.type === "options" ||
               opt?.type === "colors" ||
-              opt?.type === "sizes",
+              opt?.type === "sizes"
           )
-          ?.map((opt) => [opt?.label, opt?.value?.split(",")[0]]) ?? [],
-      ),
+          ?.map((opt) => [opt?.label, opt?.value?.split(",")[0]]) ?? []
+      )
     });
   };
 
@@ -96,10 +95,10 @@ export default function ProductView({
             (opt) =>
               opt?.type === "options" ||
               opt?.type === "colors" ||
-              opt?.type === "sizes",
+              opt?.type === "sizes"
           )
-          ?.map((opt) => [opt?.label, opt?.value?.split(",")[0]]) ?? [],
-      ),
+          ?.map((opt) => [opt?.label, opt?.value?.split(",")[0]]) ?? []
+      )
     });
   }, [product, additional_options]);
 
@@ -147,7 +146,7 @@ export default function ProductView({
               <p>
                 {new Intl.NumberFormat("en-ZA", {
                   style: "currency",
-                  currency: "ZAR",
+                  currency: "ZAR"
                 }).format(cartItem?.productPrice)}
               </p>
             </div>
@@ -162,7 +161,7 @@ export default function ProductView({
 
                   {/* dynamic options of type sizes */}
                   {additional_options?.find(
-                    (opt) => opt?.label === product?.pricing_by,
+                    (opt) => opt?.label === product?.pricing_by
                   )?.type === "sizes" && (
                     <SizeInput
                       size={
@@ -180,14 +179,14 @@ export default function ProductView({
                           ...prev,
                           options: {
                             ...prev.options,
-                            [product?.pricing_by as string]: size,
+                            [product?.pricing_by as string]: size
                           },
-                          productPrice: Number(size.split("=")[1]),
+                          productPrice: Number(size.split("=")[1])
                         }))
                       }
                       unit={
                         additional_options?.find(
-                          (opt) => opt.label === product?.pricing_by,
+                          (opt) => opt.label === product?.pricing_by
                         )?.unit as string
                       }
                     />
@@ -195,7 +194,7 @@ export default function ProductView({
 
                   {/* dynamic options of type colors */}
                   {additional_options?.find(
-                    (opt) => opt?.label === product?.pricing_by,
+                    (opt) => opt?.label === product?.pricing_by
                   )?.type === "colors" && (
                     <div className="w-full flex flex-wrap items-center-safe gap-3">
                       {additional_options
@@ -211,11 +210,12 @@ export default function ProductView({
                                 options: {
                                   ...prev.options,
                                   [additional_options?.find(
-                                    (opt) => opt.label === product?.pricing_by,
-                                  )?.label as string]: color.trim(),
-                                },
+                                    (opt) => opt.label === product?.pricing_by
+                                  )?.label as string]: color.trim()
+                                }
                               }))
-                            }>
+                            }
+                          >
                             <span
                               style={{ backgroundColor: color.trim() }}
                               className="w-full h-full rounded-full"
@@ -227,7 +227,7 @@ export default function ProductView({
 
                   {/* dynamic options of type options */}
                   {additional_options?.find(
-                    (opt) => opt?.label === product?.pricing_by,
+                    (opt) => opt?.label === product?.pricing_by
                   )?.type === "options" && (
                     <OptionInput
                       opt={cartItem.options?.[product?.pricing_by] as string}
@@ -239,7 +239,7 @@ export default function ProductView({
                       }
                       unit={
                         additional_options?.find(
-                          (opt) => opt.label === product?.pricing_by,
+                          (opt) => opt.label === product?.pricing_by
                         )?.unit as string
                       }
                       onOptionChange={(option) =>
@@ -248,10 +248,10 @@ export default function ProductView({
                           options: {
                             ...prev.options,
                             [additional_options?.find(
-                              (opt) => opt.label === product?.pricing_by,
-                            )?.label as string]: option,
+                              (opt) => opt.label === product?.pricing_by
+                            )?.label as string]: option
                           },
-                          productPrice: Number(option.split("=")[1].trim()),
+                          productPrice: Number(option.split("=")[1].trim())
                         }))
                       }
                     />
@@ -288,11 +288,12 @@ export default function ProductView({
                                 options: {
                                   ...prev.options,
                                   [additional_options?.find(
-                                    (opt) => opt.type === "colors",
-                                  )?.label as string]: color.trim(),
-                                },
+                                    (opt) => opt.type === "colors"
+                                  )?.label as string]: color.trim()
+                                }
                               }))
-                            }>
+                            }
+                          >
                             <span
                               style={{ backgroundColor: color.trim() }}
                               className="w-full h-full rounded-full"
@@ -322,7 +323,7 @@ export default function ProductView({
                       size={
                         cartItem.options?.[
                           additional_options?.find(
-                            (opt) => opt.type === "sizes",
+                            (opt) => opt.type === "sizes"
                           )?.label as string
                         ] as string
                       }
@@ -338,9 +339,9 @@ export default function ProductView({
                           options: {
                             ...prev.options,
                             [additional_options?.find(
-                              (opt) => opt.type === "sizes",
-                            )?.label as string]: value.trim(),
-                          },
+                              (opt) => opt.type === "sizes"
+                            )?.label as string]: value.trim()
+                          }
                         }))
                       }
                       unit={
@@ -359,7 +360,7 @@ export default function ProductView({
               additional_options
                 ?.filter(
                   (opt) =>
-                    opt.type === "options" && product?.pricing_by !== opt.label,
+                    opt.type === "options" && product?.pricing_by !== opt.label
                 )
                 ?.map((opt, index) => (
                   <div key={index} className="w-full">
@@ -377,8 +378,8 @@ export default function ProductView({
                           ...prev,
                           options: {
                             ...prev.options,
-                            [opt.label as string]: value.trim(),
-                          },
+                            [opt.label as string]: value.trim()
+                          }
                         }))
                       }
                     />
@@ -397,7 +398,7 @@ export default function ProductView({
 
               {/* ...followed by text/bulletpoints form of additional option/info */}
               {additional_options?.map((opt, idx) =>
-                opt?.type === "text" ?
+                opt?.type === "text" ? (
                   <div key={idx} className="space-y-2">
                     <p className="border-b border-stone-900 pb-2 text-lg font-bold">
                       {opt?.label}
@@ -405,7 +406,7 @@ export default function ProductView({
 
                     <div>{opt?.value}</div>
                   </div>
-                : opt?.type === "bulletpoints" ?
+                ) : opt?.type === "bulletpoints" ? (
                   <div key={idx} className="space-y-2">
                     <p className="border-b border-stone-900 pb-2 text-lg font-bold">
                       {opt?.label}
@@ -413,7 +414,7 @@ export default function ProductView({
 
                     <div>{opt?.value}</div>
                   </div>
-                : null,
+                ) : null
               )}
             </div>
           </div>
@@ -423,22 +424,24 @@ export default function ProductView({
               <button
                 type="button"
                 className={`py-2 bg-stone-900 text-stone-200 rounded-full w-full hover:cursor-pointer hover:bg-stone-700 transition-colors duration-500 relative overflow-hidden`}
-                onClick={() => handleAddToCart()}>
+                onClick={() => handleAddToCart()}
+              >
                 Add to cart
               </button>
 
-              {isFavorite(productId) ?
+              {isFavorite(productId) ? (
                 <BsSuitHeartFill
                   size={"2rem"}
                   className="text-red-600"
                   onClick={() => toggleFavorite(productId)}
                 />
-              : <BsSuitHeart
+              ) : (
+                <BsSuitHeart
                   size={"2rem"}
                   className="text-gray-400"
                   onClick={() => toggleFavorite(productId)}
                 />
-              }
+              )}
             </div>
           )}
         </section>
@@ -447,10 +450,11 @@ export default function ProductView({
       {cartRes && (
         <div className="w-full h-14 fixed bottom-0 left-0 right-0 z-5 p-2">
           <div
-            className={`w-full h-full flex items-center-safe justify-center text-stone-200 font-bold ${cartRes.success ? "bg-green-500" : "bg-red-500"}`}>
-            {cartRes.action === "added" ?
-              "Item added to cart successfully!"
-            : `Cart updated successfully! New quantity: ${cartRes.newQty}`}
+            className={`w-full h-full flex items-center-safe justify-center text-stone-200 font-bold ${cartRes.success ? "bg-green-500" : "bg-red-500"}`}
+          >
+            {cartRes.action === "added"
+              ? "Item added to cart successfully!"
+              : `Cart updated successfully! New quantity: ${cartRes.newQty}`}
           </div>
         </div>
       )}

@@ -7,7 +7,7 @@ import { api } from "@/convex/_generated/api";
 import Link from "next/link";
 
 export default async function Home({
-  searchParams,
+  searchParams
 }: {
   searchParams: Promise<{ view?: string; edit?: string }>;
 }) {
@@ -27,7 +27,7 @@ export default async function Home({
       (product.dynamic_pricing
         ? (dynamicPricedItem(product)?.totalValue ?? 0)
         : product?.price),
-    0,
+    0
   );
 
   return (

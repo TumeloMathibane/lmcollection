@@ -4,8 +4,9 @@ import { v } from "convex/values";
 export default defineSchema({
   category: defineTable({
     name: v.string(),
+    description: v.string(),
     no_of_items: v.number(),
-    image: v.optional(v.string()),
+    image: v.optional(v.id("_storage"))
   }).searchIndex("search_name", { searchField: "name" }),
   product: defineTable({
     brand: v.string(),
@@ -19,7 +20,7 @@ export default defineSchema({
     additional_options: v.array(v.record(v.string(), v.string())),
     dynamic_pricing: v.boolean(),
     pricing_by: v.string(),
-    sale: v.optional(v.string()),
+    sale: v.optional(v.string())
   })
     .searchIndex("search_brand", { searchField: "brand" })
     .searchIndex("search_name", { searchField: "name" })
@@ -32,8 +33,8 @@ export default defineSchema({
     items: v.array(
       v.record(
         v.string(),
-        v.union(v.string(), v.number(), v.record(v.string(), v.string())),
-      ),
+        v.union(v.string(), v.number(), v.record(v.string(), v.string()))
+      )
     ),
     totalPrice: v.number(),
     customer_details: v.record(v.string(), v.string()),
@@ -42,21 +43,21 @@ export default defineSchema({
       v.literal("received"),
       v.literal("pending"),
       v.literal("delivered"),
-      v.literal("cancelled"),
-    ),
+      v.literal("cancelled")
+    )
   }),
   customers: defineTable({
     name_first: v.string(),
     name_last: v.string(),
     contact: v.string(),
     secondary_contact: v.string(),
-    address: v.record(v.string(), v.string()),
+    address: v.record(v.string(), v.string())
   }),
   users: defineTable({
     name: v.string(),
     email: v.string(),
     hashedPassword: v.string(),
     role: v.string(), // "user" or "admin"
-    createdAt: v.number(),
-  }).index("by_email", ["email"]),
+    createdAt: v.number()
+  }).index("by_email", ["email"])
 });

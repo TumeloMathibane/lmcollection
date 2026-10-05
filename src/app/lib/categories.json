@@ -1,32 +1,32 @@
 {
   "categories": [
     {
-      "description": "Mobile devices",
+      "description": "Latest smartphones",
       "image": "/category-img/cellphones.jpg",
       "name": "smartphones"
     },
     {
-      "description": "Latest fashion",
+      "description": "Clothing and apparel",
       "image": "/category-img/clothing.jpg",
       "name": "clothing"
     },
     {
-      "description": "Hair products",
+      "description": "Hair care and styling products",
       "image": "/category-img/hair.jpg",
       "name": "hair"
     },
     {
-      "description": "Personal computer",
+      "description": "Laptops and computers",
       "image": "/category-img/laptops.jpg",
       "name": "laptops"
     },
     {
-      "description": "Footwear",
+      "description": "Footwear and shoes",
       "image": "/category-img/shoes.jpg",
       "name": "footwear"
     },
     {
-      "description": "Other products...",
+      "description": "Other household items",
       "image": "",
       "name": "other"
     }
