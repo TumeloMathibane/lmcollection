@@ -446,7 +446,7 @@ export default function CheckoutMain({
                 </select>
               </div>
 
-              {/* //! TODO: finish up and test */}
+              {/* //! NOTE: finish up and test */}
               {/* <div className="flex space-x-2">
                 <input
                   type="checkbox"

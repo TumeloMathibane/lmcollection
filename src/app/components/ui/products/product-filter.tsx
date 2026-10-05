@@ -22,12 +22,12 @@ export default function ProductFilter({
   filter,
   heading,
   noOfProducts,
-  onFilterChange,
+  onFilterChange
 }: FilterProps) {
   const [filterOpen, setFilterOpen] = useState(false);
 
   const [selectedFilters, setSelectedFilters] = useState<Filter | undefined>(
-    filter,
+    filter
   );
   const [min, setMin] = useState<number | undefined>(filter!.minPrice);
   const [max, setMax] = useState<number | undefined>(filter!.maxPrice);
@@ -40,12 +40,12 @@ export default function ProductFilter({
     "Price - asc.",
     "Price - desc.",
     "Rating - asc.",
-    "Rating - desc.",
+    "Rating - desc."
   ];
 
   const resetAvailability = () => {
     const radioButtons = document.getElementsByName(
-      "availability",
+      "availability"
     ) as NodeListOf<HTMLInputElement>;
     radioButtons.forEach((radio) => (radio.checked = false));
     setSelectedFilters((prev) => ({ ...prev, availability: "" }) as Filter);
@@ -54,27 +54,27 @@ export default function ProductFilter({
 
   const resetPriceRange = () => {
     const minInput = document.querySelector(
-      'input[name="minPrice"]',
+      'input[name="minPrice"]'
     ) as HTMLInputElement;
     const maxInput = document.querySelector(
-      'input[name="maxPrice"]',
+      'input[name="maxPrice"]'
     ) as HTMLInputElement;
 
     if (minInput) minInput.valueAsNumber = NaN;
     if (maxInput) maxInput.valueAsNumber = NaN;
 
     setSelectedFilters(
-      (prev) => ({ ...prev, minPrice: NaN, maxPrice: NaN }) as Filter,
+      (prev) => ({ ...prev, minPrice: NaN, maxPrice: NaN }) as Filter
     );
     handleFilterChange({ minPrice: NaN, maxPrice: NaN } as Filter);
   };
 
-  //! TODO: ...to be implemented
+  //! NOTE: ...to be implemented
   // const resetRating = () => {}
 
   const resetSorting = () => {
     const selectElement = document.querySelector(
-      'select[name="sorting"]',
+      'select[name="sorting"]'
     ) as HTMLSelectElement;
     selectElement.value = "";
 
@@ -91,7 +91,7 @@ export default function ProductFilter({
       availability: "",
       minPrice: NaN,
       maxPrice: NaN,
-      sorting: "",
+      sorting: ""
     } as Filter);
   };
 
@@ -106,8 +106,8 @@ export default function ProductFilter({
           ({
             ...prev,
             minPrice: minPriceVal,
-            maxPrice: maxPriceVal,
-          }) as Filter,
+            maxPrice: maxPriceVal
+          }) as Filter
       );
     }
   }, [minPriceVal, maxPriceVal]);
@@ -117,7 +117,8 @@ export default function ProductFilter({
       <div className="flex items-center justify-between">
         <div
           className="group w-fit flex items-center-safe gap-2 md:h-fit md:space-x-2"
-          onClick={() => setFilterOpen(!filterOpen)}>
+          onClick={() => setFilterOpen(!filterOpen)}
+        >
           <p className="md:text-stone-500 md:group-hover:text-black md:group-hover:cursor-pointer">
             Filter & sort
           </p>
@@ -131,9 +132,9 @@ export default function ProductFilter({
 
         <div>
           <p className="text-nowrap font-light text-stone-500">
-            {noOfProducts && noOfProducts > 1 ?
-              `${noOfProducts} products`
-            : noOfProducts === 1 && `${noOfProducts} product`}
+            {noOfProducts && noOfProducts > 1
+              ? `${noOfProducts} products`
+              : noOfProducts === 1 && `${noOfProducts} product`}
           </p>
         </div>
       </div>
@@ -149,14 +150,18 @@ export default function ProductFilter({
               !Number.isNaN(value) && (
                 <div
                   key={key}
-                  className="inline-flex items-center gap-1 bg-stone-200 text-stone-700 px-2 py-1 rounded">
+                  className="inline-flex items-center gap-1 bg-stone-200 text-stone-700 px-2 py-1 rounded"
+                >
                   <p className="text-sm">{`${
-                    String(key).toLowerCase() === "availability" ?
-                      "Availability"
-                    : String(key) === "sorting" ? "Sorting"
-                    : String(key) === "minPrice" ? "Min. Price"
-                    : String(key) === "maxPrice" ? "Max. Price"
-                    : key
+                    String(key).toLowerCase() === "availability"
+                      ? "Availability"
+                      : String(key) === "sorting"
+                        ? "Sorting"
+                        : String(key) === "minPrice"
+                          ? "Min. Price"
+                          : String(key) === "maxPrice"
+                            ? "Max. Price"
+                            : key
                   }: ${key === "minPrice" || key === "maxPrice" ? `${new Intl.NumberFormat("en-ZA", { style: "currency", currency: "ZAR", minimumFractionDigits: 0, maximumFractionDigits: 2 }).format(Number(value))}` : value}`}</p>
                   <BsX
                     size={"0.75rem"}
@@ -170,14 +175,16 @@ export default function ProductFilter({
                     }}
                   />
                 </div>
-              ),
+              )
           )}
       </div>
 
       <div
-        className={`fixed top-0 right-0 bottom-0 left-0 flex justify-end transition-all ${filterOpen ? "z-10 backdrop-blur-sm" : "delay-100 backdrop-none -z-1 md:delay-0"} md:backdrop-blur-none md:w-full md:relative md:flex`}>
+        className={`fixed top-0 right-0 bottom-0 left-0 flex justify-end transition-all ${filterOpen ? "z-10 backdrop-blur-sm" : "delay-100 backdrop-none -z-1 md:delay-0"} md:backdrop-blur-none md:w-full md:relative md:flex`}
+      >
         <div
-          className={`w-74 min-h-dvh bg-stone-300 flex flex-col transition-all ${filterOpen ? "translate-0" : "translate-x-full"} md:translate-0 md:min-h-0 md:w-full md:bg-white md:px-4 md:border-t md:border-stone-200 md:overflow-hidden ${filterOpen ? "md:max-h-[90vh] md:py-2" : "md:py-0 md:max-h-0"}`}>
+          className={`w-74 min-h-dvh bg-stone-300 flex flex-col transition-all ${filterOpen ? "translate-0" : "translate-x-full"} md:translate-0 md:min-h-0 md:w-full md:bg-white md:px-4 md:border-t md:border-stone-200 md:overflow-hidden ${filterOpen ? "md:max-h-[90vh] md:py-2" : "md:py-0 md:max-h-0"}`}
+        >
           <div className="w-full bg-stone-950 text-white font-bold md:hidden">
             <p className="p-4 mx-2">{heading}</p>
             <BsX
@@ -208,12 +215,12 @@ export default function ProductFilter({
                           (prev) =>
                             ({
                               ...prev,
-                              [e.target.name]: e.target.value as string,
-                            }) as Filter,
+                              [e.target.name]: e.target.value as string
+                            }) as Filter
                         );
 
                         handleFilterChange({
-                          [e.target.name]: e.target.value,
+                          [e.target.name]: e.target.value
                         });
                       }}
                       checked={filter?.availability === opt}
@@ -240,13 +247,13 @@ export default function ProductFilter({
                     defaultValue={filter?.minPrice}
                     onChange={(e) => {
                       setMin(
-                        !Number.isNaN(e.target.valueAsNumber) ?
-                          e.target.valueAsNumber
-                        : 0,
+                        !Number.isNaN(e.target.valueAsNumber)
+                          ? e.target.valueAsNumber
+                          : 0
                       );
 
                       handleFilterChange({
-                        [e.target.name]: e.target.value,
+                        [e.target.name]: e.target.value
                       });
                     }}
                     placeholder="Min. price"
@@ -261,13 +268,13 @@ export default function ProductFilter({
                     defaultValue={filter?.maxPrice}
                     onChange={(e) => {
                       setMax(
-                        !Number.isNaN(e.target.valueAsNumber) ?
-                          e.target.valueAsNumber
-                        : 0,
+                        !Number.isNaN(e.target.valueAsNumber)
+                          ? e.target.valueAsNumber
+                          : 0
                       );
 
                       handleFilterChange({
-                        [e.target.name]: e.target.value,
+                        [e.target.name]: e.target.value
                       });
                     }}
                     placeholder="Max. price"
@@ -322,14 +329,15 @@ export default function ProductFilter({
                     (prev) =>
                       ({
                         ...prev,
-                        [e.target.name]: e.target.value as string,
-                      }) as Filter,
+                        [e.target.name]: e.target.value as string
+                      }) as Filter
                   );
 
                   handleFilterChange({
-                    [e.target.name]: e.target.value,
+                    [e.target.name]: e.target.value
                   });
-                }}>
+                }}
+              >
                 <option value={""}>Select option</option>
                 {sortOpts.map((opt, idx) => (
                   <option key={idx} value={opt}>
@@ -342,7 +350,8 @@ export default function ProductFilter({
 
           <p
             className="mx-6 w-fit underline underline-offset-2 text-stone-500 hover:text-red-600 hover:font-semibold transition-all ease-in-out hover:cursor-pointer md:mx-4"
-            onClick={() => resetAll()}>
+            onClick={() => resetAll()}
+          >
             Reset
           </p>
         </div>
